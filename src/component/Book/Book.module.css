@@ -1,0 +1,8 @@
+.body__card {
+    padding: 1.2rem;
+}
+
+.body__list {
+    display: flex;
+    flex-wrap: wrap;
+}

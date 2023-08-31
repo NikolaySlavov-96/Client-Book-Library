@@ -1,0 +1,6 @@
+.card__art {
+    height: 300px;
+    width: 300px;
+    margin: 0 1rem 1rem 0;
+    background-color: lightblue;
+}
