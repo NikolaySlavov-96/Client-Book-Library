@@ -1,6 +1,43 @@
 .card__art {
     height: 300px;
     width: 300px;
-    margin: 0 1rem 1rem 0;
+    margin: 0 2rem 2rem 0;
     background-color: lightblue;
+    border-radius: 20px;
+    -webkit-box-shadow: 0px 10px 13px -7px #000000, 29px 12px 19px 11px rgba(81, 81, 81, 0);
+    box-shadow: 0px 10px 13px -7px #000000, 29px 12px 19px 11px rgba(81, 81, 81, 0);
+    overflow: hidden;
+    position: relative;
+}
+
+.card__img img {
+    position: absolute;
+    top: 25px;
+    left: 55px;
+    width: 65%;
+    opacity: 90%;
+    margin-top: 4px;
+}
+
+.card__img img:hover {
+    opacity: 10%;
+}
+
+.card__art h1 {
+    margin: 3px 0 40px 0;
+    /* margin-bottom: 20px; */
+}
+
+.card__info p {
+    margin: 2px;
+    margin-bottom: 8px;
+}
+
+.card__link {
+    position: absolute;
+    left: 45%;
+    cursor: pointer;
+    bottom: 10px;
+    text-decoration: none;
+
 }

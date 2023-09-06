@@ -10,7 +10,7 @@ export const Book = () => {
 
     return (
         <section className={style["body__card"]}>
-            <h1>Catalog with products</h1>
+            <h1>Catalog with Books</h1>
             <div className={style["body__list"]}>
                 {book?.rows && book?.rows?.map(e => <BookCard key={e.id} {...e} />)}
                 {!book?.rows?.length && (<h2>There are no items added yet.</h2>)}
