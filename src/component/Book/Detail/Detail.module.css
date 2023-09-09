@@ -1,7 +1,43 @@
 .detail__card {
-
+    width: 35%;
+    margin: 2rem auto;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: lightblue;
+    border-radius: 2rem;
+    padding: 2rem 2rem 4rem 2rem;
 }
 
-.detail__card img {
+.backward {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.btn {
+    border: none;
+}
+
+.btn i {
+    scale: 2;
+    color: #2f394b;
+}
+
+.container__img {
+    margin-right: 2rem;
+}
+
+.container__img img {
     width: 200px;
+}
+
+.container__book {}
+
+.container__functionality {
+    display: flex;
+    justify-content: space-between;
+    /* flex-wrap: wrap; */
+}
+
+.container__functionality p {
+    text-align: center;
 }
