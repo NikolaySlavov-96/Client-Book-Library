@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useService } from "../../../hooks/useService";
 import { bookServiceFactory } from "../../../services/book";
 
@@ -12,6 +12,7 @@ export const Detail = () => {
     const [book, setBook] = useState({});
     const bookService = useService(bookServiceFactory);
     const { username } = useAuthContext();
+    const navigate = useNavigate();
 
     useEffect(() => {
         bookService.getProduct(id)
@@ -22,14 +23,26 @@ export const Detail = () => {
 
     return (
         <section className={style['detail__card']}>
-            <p>{book.id}</p>
-            <p>{book.author}</p>
-            <p>{book.booktitle}</p>
-            <img src={book.image} alt={book.booktile} />
-            <p>{book.genre}</p>
+            <div className={style['backward']}>
+                <button className={style['btn']} onClick={() => navigate(-1)}><i class="fas fa-chevron-circle-left"></i></button>
+            </div>
+            <div className={style['container__img']}>
+                <img src={book.image} alt={book.booktile} />
+            </div>
+            <div className={style['container__book']}>
+                <p>Book Id:<span>{book.id}</span></p>
+                <p>Book Title:<span>{book.booktitle}</span></p>
+                <p>Book Author:<span>{book.author}</span></p>
+                <p>Book Genre:<span>{book.genre || 'ol'}</span></p>
+            </div>
 
-            {!username && (<><p>Adding in For Purchase</p> <p>Adding in Purchase</p></>)
-            }
+            <div className={style['container__functionality']}>
+                {!username && (<><p>Adding in For Purchase</p>
+                    <p>Adding in Purchase</p>
+                    <p> Adding in For Reading</p>
+                    <p>Adding in Reading </p></>)
+                }
+            </div>
         </section>
     );
 }
