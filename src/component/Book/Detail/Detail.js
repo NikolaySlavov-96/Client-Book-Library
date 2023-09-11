@@ -24,7 +24,7 @@ export const Detail = () => {
     return (
         <section className={style['detail__card']}>
             <div className={style['backward']}>
-                <button className={style['btn']} onClick={() => navigate(-1)}><i class="fas fa-chevron-circle-left"></i></button>
+                <button className={style['btn']} onClick={() => navigate(-1)}><i className="fas fa-chevron-circle-left"></i></button>
             </div>
             <div className={style['container__img']}>
                 <img src={book.image} alt={book.booktile} />
@@ -37,9 +37,9 @@ export const Detail = () => {
             </div>
 
             <div className={style['container__functionality']}>
-                {!username && (<><p>Adding in For Purchase</p>
+                {username && (<><p>Adding in For Purchase</p>
                     <p>Adding in Purchase</p>
-                    <p> Adding in For Reading</p>
+                    <p>Adding in For Reading</p>
                     <p>Adding in Reading </p></>)
                 }
             </div>
