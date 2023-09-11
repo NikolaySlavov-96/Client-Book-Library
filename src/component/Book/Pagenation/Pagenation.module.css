@@ -1,0 +1,6 @@
+.pagination__container {}
+
+.pagination__container p {
+    display: inline-block;
+    margin: 0 20px 0 20px;
+}
