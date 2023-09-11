@@ -9,15 +9,17 @@ const BookContext = createContext();
 export const BookProvider = ({ children }) => {
     const navigate = useNavigate();
     const [book, setBook] = useState({});
+    const [limit, setLimit] = useState(12);
+    const [page, setPage] = useState(1);
     const bookService = useService(bookServiceFactory);
 
+    
     useEffect(() => {
-        bookService.getProducts()
-            .then(req => {
-                console.log(req);
+        bookService.getProducts({ page, limit })
+        .then(req => {
                 setBook(req);
             });
-    }, []);
+    }, [page, limit]);
 
     const getProduct = (id) => {
         return book.find(prod => prod._id === id);
@@ -45,6 +47,10 @@ export const BookProvider = ({ children }) => {
     }
 
     const contextValue = {
+        setLimit,
+        limit,
+        setPage,
+        page,
         book,
         getProduct,
         onSubmitCreateProduct,
