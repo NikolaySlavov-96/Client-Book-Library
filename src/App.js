@@ -13,8 +13,9 @@ function App() {
         <AuthProvide>
             <BookProvider>
                 <Routes>
-                    <Route path='/' element={<Home />} />
-                    <Route path='/book' element={<Book />} />
+                    {/* <Route path='/' element={<Home />} /> */}
+                    <Route path='/' element={<Book />} />
+                    {/* <Route path='/book' element={<Book />} /> */}
                     <Route path='/book/:id' element={<Detail />} />
                 </Routes>
             </BookProvider>
