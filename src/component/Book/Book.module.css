@@ -3,6 +3,9 @@
     text-align: center;
     width: 80%;
     margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .body__list {

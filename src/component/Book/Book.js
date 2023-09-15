@@ -3,6 +3,7 @@ import { BookCard } from "./Cards/BookCard";
 
 import style from './Book.module.css';
 import { Pagenation } from "./Pagenation/Pagenation";
+import { Filter } from "./Filter/Filter";
 
 export const Book = () => {
 
@@ -11,11 +12,12 @@ export const Book = () => {
     return (
         <section className={style["body__card"]}>
             <h1>Catalog with Books</h1>
+            <Filter />
             <div className={style["body__list"]}>
                 {book?.rows && book?.rows?.map(e => <BookCard key={e.id} {...e} />)}
                 {!book?.rows?.length && (<h2>There are no items added yet.</h2>)}
             </div>
-                <Pagenation books={book?.count} />
+            <Pagenation books={book?.count} />
         </section >
     );
 }
