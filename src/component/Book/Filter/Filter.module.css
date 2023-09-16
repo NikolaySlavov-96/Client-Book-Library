@@ -20,3 +20,14 @@
 .container__limit {
     margin: 0 2rem 0 1rem;
 }
+
+.container__limit label {
+    margin-right: 0.5rem;
+    position: relative;
+}
+
+.container__limit select {
+    width: 50px;
+    border-radius: 6px;
+    position: relative;
+}

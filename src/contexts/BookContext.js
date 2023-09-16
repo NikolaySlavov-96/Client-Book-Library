@@ -46,6 +46,11 @@ export const BookProvider = ({ children }) => {
         navigate('/product/catalog');
     }
 
+    const onSubmitSeachWithInput = async (input) => {
+        console.log(input)
+        //TO DO Implement Search
+    }
+
     const contextValue = {
         setLimit,
         limit,
@@ -56,6 +61,7 @@ export const BookProvider = ({ children }) => {
         onSubmitCreateProduct,
         onSubmitEditProduct,
         onSubmitDeleteProduct,
+        onSubmitSeachWithInput,
     }
 
     return (
