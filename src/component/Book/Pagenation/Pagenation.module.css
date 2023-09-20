@@ -1,6 +1,15 @@
 .pagination__container {}
 
-.pagination__container p {
+.page {
+    padding: 5px 10px;
+    border: 1px solid black;
+    border-radius: 4px;
+    margin: 0.2rem;
+}
+
+.page__current {
     display: inline-block;
-    margin: 0 20px 0 20px;
+    background-color: green;
+    margin: 0;
+    padding: 8px 14px;
 }
