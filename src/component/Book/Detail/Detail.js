@@ -6,6 +6,7 @@ import { bookServiceFactory } from "../../../services/book";
 import style from './Detail.module.css';
 import { useAuthContext } from "../../../contexts/AuthContext";
 
+
 export const Detail = () => {
 
     const { id } = useParams();

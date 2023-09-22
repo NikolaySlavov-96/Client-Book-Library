@@ -33,8 +33,8 @@ async function requester(method, token, url, inputDate) {
         return data;
 
     } catch (err) {
-        // alert(err.message);
-        // throw err;
+        alert(err.message);
+        throw err;
     }
 }
 

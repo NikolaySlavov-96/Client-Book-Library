@@ -1,8 +1,8 @@
 import { createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { authServiceFactory } from "../services/auth";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-
 
 
 const AuthContext = createContext();
@@ -22,7 +22,7 @@ export const AuthProvide = ({ children }) => {
         try {
             const data = await authService.register(value);
             setAuth(data);
-            navigate('/product/catalog');
+            navigate('/');
 
         } catch (err) {
             console.log(err.message);
@@ -33,7 +33,7 @@ export const AuthProvide = ({ children }) => {
         try {
             const data = await authService.login(value);
             setAuth(data);
-            navigate('/product/catalog');
+            navigate('/');
 
         } catch (err) {
             console.log(err.message)
