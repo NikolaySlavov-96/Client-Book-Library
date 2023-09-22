@@ -29,26 +29,26 @@ export const BookProvider = ({ children }) => {
         const prod = await bookService.createProduct(data);
 
         setBook(p => [...p, prod]);
-        navigate('/product/catalog');
+        navigate('/');
     }
 
     const onSubmitEditProduct = async (data) => {
         const prod = await bookService.editProduct(data._id, data);
 
         setBook(p => p.map(x => x._id === data._id ? prod : x));
-        navigate('/product/catalog');
+        navigate('/');
     }
 
     const onSubmitDeleteProduct = async (id) => {
         await bookService.deleteProduct(id);
 
         setBook(p => p.filter(prod => prod._id !== id));
-        navigate('/product/catalog');
+        navigate('/');
     }
 
-    const onSubmitSeachWithInput = async (input) => {
-        console.log(input)
-        //TO DO Implement Search
+    const onSubmitSeachWithInput = async ({search}) => {
+        const book = await bookService.searchBook(search, {page, limit})
+        setBook(book);
     }
 
     const contextValue = {
