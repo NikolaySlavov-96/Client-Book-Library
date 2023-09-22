@@ -5,7 +5,7 @@
     flex-wrap: wrap;
     background-color: lightblue;
     border-radius: 2rem;
-    padding: 2rem 2rem 4rem 2rem;
+    padding: 2rem 2rem 2rem 2rem;
 }
 
 .backward {
@@ -30,18 +30,28 @@
     width: 200px;
 }
 
-.container__book {}
+.container__book {
+    margin-bottom: 2rem;
+}
 
 .container__book span {
     margin-left: 6px;
 }
 
-.container__functionality {
-    display: flex;
-    justify-content: space-between;
-    /* flex-wrap: wrap; */
+.functionality {
+    text-align: center;
 }
 
-.container__functionality p {
-    text-align: center;
+.functionality button {
+    margin: 1rem;
+    width: 180px;
+    padding: 10px 6px;
+}
+
+.functionality__purchase {
+    width: 100%;
+}
+
+.functionality__reagin {
+    width: 100%;
 }

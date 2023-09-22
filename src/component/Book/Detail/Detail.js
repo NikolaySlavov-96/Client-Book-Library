@@ -22,6 +22,12 @@ export const Detail = () => {
             })
     }, [id]);
 
+    const bookCreateFn = async (type) => {
+        const { id } = book;
+        const result = await bookService.createProduct({ book_id: id }, type);
+        console.log(result); // To Do show message
+    }
+
     return (
         <section className={style['detail__card']}>
             <div className={style['backward']}>
@@ -37,13 +43,19 @@ export const Detail = () => {
                 <p>Book Genre:<span>{book.genre || 'null'}</span></p>
             </div>
 
-            <div className={style['container__functionality']}>
-                {email && (<><p>Adding in For Purchase</p>
-                    <p>Adding in Purchase</p>
-                    <p>Adding in For Reading</p>
-                    <p>Adding in Reading </p></>)
-                }
-            </div>
+            {email && (
+                <>
+                    <div className={`${style['functionality__purchase']} ${style['functionality']}`}>
+                        <button onClick={() => bookCreateFn('forpurchase')}>Adding in For Purchase</button>
+                        <button onClick={() => bookCreateFn('purchase')}>Adding in Purchase</button>
+                    </div>
+                    <div className={`${style['functionality__reagin']} ${style['functionality']}`}>
+                        <button onClick={() => bookCreateFn('forreading')}>Adding in For Reading</button>
+                        <button onClick={() => bookCreateFn('reading')}>Adding in Reading</button>
+                    </div>
+                </>
+            )
+            }
         </section>
     );
 }
