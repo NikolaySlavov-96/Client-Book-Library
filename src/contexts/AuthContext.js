@@ -53,7 +53,7 @@ export const AuthProvide = ({ children }) => {
         isAuthenticated: !!auth.accessToken,
         email: auth.email,
         accessToken: auth.accessToken,
-        userId: auth._id,
+        userId: auth.id,
     }
 
     return (
