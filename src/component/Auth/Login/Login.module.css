@@ -1,0 +1,45 @@
+.login__section {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.form__container {
+    width: 40%;
+    margin: 0 auto;
+    padding: 2rem 1rem 1.5rem 1rem;
+    border: none;
+    border-radius: 3rem;
+    display: flex;
+    justify-content: center;
+}
+
+.form__container form div {
+    margin-bottom: 1rem;
+}
+
+label {
+    margin-right: 0.30rem;
+}
+
+input {
+    border: none;
+    padding: 4px 6px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.14);
+}
+
+form div {
+    text-align: right;
+}
+
+.btn-login {
+    margin-bottom: 2rem ;
+}
+
+.login__account {
+    margin: 0;
+}
+
+.login__account a {
+    text-decoration: none;
+}
