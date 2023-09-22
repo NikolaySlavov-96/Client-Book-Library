@@ -32,6 +32,10 @@
 
 .container__book {}
 
+.container__book span {
+    margin-left: 6px;
+}
+
 .container__functionality {
     display: flex;
     justify-content: space-between;
