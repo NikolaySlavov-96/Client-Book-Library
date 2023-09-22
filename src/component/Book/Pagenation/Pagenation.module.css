@@ -1,4 +1,6 @@
-.pagination__container {}
+.pagination__container {
+    width: 100%;
+}
 
 .page {
     padding: 5px 10px;
@@ -9,7 +11,7 @@
 
 .page__current {
     display: inline-block;
-    background-color: green;
+    background-color: lightskyblue;
     margin: 0;
     padding: 8px 14px;
 }
