@@ -51,7 +51,7 @@ export const AuthProvide = ({ children }) => {
         onSubmitLogin,
         onSubmitLogout,
         isAuthenticated: !!auth.accessToken,
-        username: auth.username,
+        email: auth.email,
         accessToken: auth.accessToken,
         userId: auth._id,
     }

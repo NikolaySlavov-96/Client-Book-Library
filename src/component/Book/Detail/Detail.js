@@ -12,7 +12,7 @@ export const Detail = () => {
     const { id } = useParams();
     const [book, setBook] = useState({});
     const bookService = useService(bookServiceFactory);
-    const { username } = useAuthContext();
+    const { email } = useAuthContext();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -34,11 +34,11 @@ export const Detail = () => {
                 <p>Book Id:<span>{book.id}</span></p>
                 <p>Book Title:<span>{book.booktitle}</span></p>
                 <p>Book Author:<span>{book.author}</span></p>
-                <p>Book Genre:<span>{book.genre || 'ol'}</span></p>
+                <p>Book Genre:<span>{book.genre || 'null'}</span></p>
             </div>
 
             <div className={style['container__functionality']}>
-                {username && (<><p>Adding in For Purchase</p>
+                {email && (<><p>Adding in For Purchase</p>
                     <p>Adding in Purchase</p>
                     <p>Adding in For Reading</p>
                     <p>Adding in Reading </p></>)
