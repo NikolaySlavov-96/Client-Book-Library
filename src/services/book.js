@@ -13,11 +13,14 @@ export const bookServiceFactory = (token) => {
 
     const deleteProduct = async (id) => request.remove('/book/book/' + id);
 
+    const searchBook = async (data, {page, limit}) => request.get(`/book/search?search=${data}&limit=${limit}&page=${page}`)
+
     return {
         getProducts,
         getProduct,
         createProduct,
         editProduct,
         deleteProduct,
+        searchBook,
     }
 }
