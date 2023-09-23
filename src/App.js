@@ -8,17 +8,23 @@ import { Book } from './component/Book/Book';
 import { Detail } from './component/Book/Detail/Detail';
 import { Login } from './component/Auth/Login/Login';
 import { Register } from './component/Auth/Register/Register';
+import { Header } from './component/Header/Header';
+import { UserBook } from './component/Book/UserBook/UserBook';
 
 
 function App() {
     return (
         <AuthProvide>
+
+            <Header />
+
             <BookProvider>
                 <Routes>
                     {/* <Route path='/' element={<Home />} /> */}
                     <Route path='/' element={<Book />} />
-                    {/* <Route path='/book' element={<Book />} /> */}
+                    <Route path='/book' element={<Book />} />
                     <Route path='/book/:id' element={<Detail />} />
+                    <Route path='/userbook/:id' element={<UserBook />} />
                     <Route path='/auth/login' element={<Login />} />
                     <Route path='/auth/register' element={<Register />} />
                 </Routes>
