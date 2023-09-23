@@ -13,7 +13,10 @@ export const bookServiceFactory = (token) => {
 
     const deleteProduct = async (id) => request.remove('/book/book/' + id);
 
-    const searchBook = async (data, {page, limit}) => request.get(`/book/search?search=${data}&limit=${limit}&page=${page}`)
+    const searchBook = async (data, { page, limit }) => request.get(`/book/search?search=${data}&limit=${limit}&page=${page}`)
+
+    // const getUserBooks = async (type, { page, limit }) => request.get(`/users/${type}?limit=${limit}&page=${page}`);
+    const getUserBooks = async (type) => request.get(`/users/${type}`);
 
     return {
         getProducts,
@@ -22,5 +25,6 @@ export const bookServiceFactory = (token) => {
         editProduct,
         deleteProduct,
         searchBook,
+        getUserBooks,
     }
 }
