@@ -7,9 +7,3 @@
     justify-content: center;
     flex-wrap: wrap;
 }
-
-.body__list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
