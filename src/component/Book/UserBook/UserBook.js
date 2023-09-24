@@ -1,30 +1,26 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom"
 import { useService } from "../../../hooks/useService";
 import { bookServiceFactory } from "../../../services/book";
 import { BodyCard } from "../BodyCard/BodyCard";
 
 import style from './UserBook.module.css';
+import { useBookContext } from "../../../contexts/BookContext";
 
 
 export const UserBook = () => {
 
-    const bookService = useService(bookServiceFactory);
-    const [userBook, setUserBook] = useState({});
-
+    const { setType } = useBookContext({});
     const { id } = useParams();
-    
+
     useEffect(() => {
-        bookService.getUserBooks(id)
-            .then(req => {
-                setUserBook(req);
-            })
+        setType(id);
     }, [id]);
-    
+
     return (
         <section className={style["body__card"]}>
             <h1>Catalog with {id} Books</h1>
-            <BodyCard book={userBook} />
+            <BodyCard />
         </section>
     );
 }

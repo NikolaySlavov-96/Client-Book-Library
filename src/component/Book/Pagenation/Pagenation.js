@@ -3,10 +3,8 @@ import { useBookContext } from "../../../contexts/BookContext";
 import style from './Pagenation.module.css';
 
 
-export const Pagenation = ({ books }) => {
-
-    const { setPage, page, limit } = useBookContext({});
-    const count = Math.ceil(books / limit) || 0;
+export const Pagenation = ({ count, page }) => {
+    const { setPage } = useBookContext({});
 
     return (
         <div className={style['pagination__container']}>
