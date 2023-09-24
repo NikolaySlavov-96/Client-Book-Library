@@ -11,15 +11,23 @@ export const BookProvider = ({ children }) => {
     const [book, setBook] = useState({});
     const [limit, setLimit] = useState(12);
     const [page, setPage] = useState(1);
+    const [type, setType] = useState('book');
     const bookService = useService(bookServiceFactory);
 
-    
+    const data = {
+        'book': 'getProducts',
+        'forpurchase': 'getUserBooks',
+        'purchase': 'getUserBooks',
+        'forreading': 'getUserBooks',
+        'reading': 'getUserBooks',
+    }
+
     useEffect(() => {
-        bookService.getProducts({ page, limit })
-        .then(req => {
+        bookService[data[type]]({ page, limit }, type)
+            .then(req => {
                 setBook(req);
             });
-    }, [page, limit]);
+    }, [page, limit, type]);
 
     const getProduct = (id) => {
         return book.find(prod => prod._id === id);
@@ -46,9 +54,9 @@ export const BookProvider = ({ children }) => {
         navigate('/');
     }
 
-    const onSubmitSeachWithInput = async ({search}) => {
-        const book = await bookService.searchBook(search, {page, limit})
-        setBook(book);
+    const onSubmitSeachWithInput = async ({ search }) => {
+        const result = await bookService.searchBook(search, { page, limit }, 'book'); //type === book
+        setBook(result);
     }
 
     const contextValue = {
@@ -62,6 +70,7 @@ export const BookProvider = ({ children }) => {
         onSubmitEditProduct,
         onSubmitDeleteProduct,
         onSubmitSeachWithInput,
+        setType,
     }
 
     return (
