@@ -1,0 +1,39 @@
+.navigation__container {
+    margin: 1rem 1rem 0 1rem;
+    background-color: lightcoral;
+    border-radius: 1rem;
+}
+
+.navigation__nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navigation__nav h1 {
+    margin-left: 2rem;
+}
+
+.navigation__ul {
+    margin-right: 2rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.navigation__ul li {
+    list-style: none;
+    color: green;
+    padding: 6px 12px;
+    background-color: lightskyblue;
+    border-radius: 8px;
+}
+
+.navigation__ul li:hover {
+    background-color: white;
+    padding: 4px 10px;
+    border: 2px solid lightskyblue;
+}
+
+.navigation__ul li a {
+    text-decoration: none;
+}
