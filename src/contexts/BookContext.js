@@ -15,15 +15,16 @@ export const BookProvider = ({ children }) => {
     const bookService = useService(bookServiceFactory);
 
     const data = {
-        'book': 'getProducts',
-        'forpurchase': 'getUserBooks',
-        'purchase': 'getUserBooks',
-        'forreading': 'getUserBooks',
-        'reading': 'getUserBooks',
+        'book': () => bookService.getProducts({ page, limit }, type),
+        'forpurchase': () => bookService.getUserBooks({ page, limit }, type),
+        'purchase': () => bookService.getUserBooks({ page, limit }, type),
+        'forreading': () => bookService.getUserBooks({ page, limit }, type),
+        'reading': () => bookService.getUserBooks({ page, limit }, type),
     }
 
+    console.log(type)
     useEffect(() => {
-        bookService[data[type]]({ page, limit }, type)
+        data[type]()
             .then(req => {
                 setBook(req);
             });

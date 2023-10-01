@@ -15,7 +15,7 @@ export const bookServiceFactory = (token) => {
 
     const searchBook = async (data, { page, limit }, type) => request.get(`/${type}/search?search=${data}&limit=${limit}&page=${page}`)
 
-    const getUserBooks = async (type, { page, limit }) => request.get(`/users/${type}?limit=${limit}&page=${page}`);
+    const getUserBooks = async ({ page, limit }, type) => request.get(`/users/${type}?limit=${limit}&page=${page}`);
 
     return {
         getProducts,
