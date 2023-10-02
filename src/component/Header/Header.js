@@ -24,10 +24,10 @@ export const Header = () => {
 
                     {
                         email && (<>
-                            <li><NavLink to='/userbook/forreading'>For Reading</NavLink></li>
-                            <li><NavLink to='/userbook/reading'>Reading</NavLink></li>
                             <li><NavLink to='/userbook/forpurchase'>For Purchase</NavLink></li>
                             <li><NavLink to='/userbook/purchase'>Purchase</NavLink></li>
+                            <li><NavLink to='/userbook/forreading'>For Reading</NavLink></li>
+                            <li><NavLink to='/userbook/reading'>Reading</NavLink></li>
                             <li><NavLink to='/auth/logout'>Logout</NavLink></li>
                         </>)
                     }
