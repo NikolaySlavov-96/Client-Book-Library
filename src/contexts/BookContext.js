@@ -22,7 +22,6 @@ export const BookProvider = ({ children }) => {
         'reading': () => bookService.getUserBooks({ page, limit }, type),
     }
 
-    console.log(type)
     useEffect(() => {
         data[type]()
             .then(req => {
