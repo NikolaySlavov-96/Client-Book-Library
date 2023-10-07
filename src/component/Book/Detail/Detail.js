@@ -5,6 +5,7 @@ import { bookServiceFactory } from "../../../services/book";
 
 import style from './Detail.module.css';
 import { useAuthContext } from "../../../contexts/AuthContext";
+import { useHeadContext } from "../../../contexts/HeadContext";
 
 
 export const Detail = () => {
@@ -15,9 +16,12 @@ export const Detail = () => {
     const { email } = useAuthContext();
     const navigate = useNavigate();
 
+    const { setTitle } = useHeadContext();
+
     useEffect(() => {
         bookService.getProduct(id)
             .then(req => {
+                setTitle(req[0].booktitle);
                 setBook(req[0]);
             })
     }, [id]);
