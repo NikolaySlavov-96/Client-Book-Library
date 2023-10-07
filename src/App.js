@@ -10,26 +10,30 @@ import { Login } from './component/Auth/Login/Login';
 import { Register } from './component/Auth/Register/Register';
 import { Header } from './component/Header/Header';
 import { UserBook } from './component/Book/UserBook/UserBook';
+import { MetaData } from './component/Head/Helmet';
+import { HeadProvider } from './contexts/HeadContext';
 
 
 function App() {
     return (
-        <AuthProvide>
+        <HeadProvider>
+            <MetaData />
+            <AuthProvide>
+                <Header />
 
-            <Header />
-
-            <BookProvider>
-                <Routes>
-                    {/* <Route path='/' element={<Home />} /> */}
-                    <Route path='/' element={<Book />} />
-                    <Route path='/book' element={<Book />} />
-                    <Route path='/book/:id' element={<Detail />} />
-                    <Route path='/userbook/:id' element={<UserBook />} />
-                    <Route path='/auth/login' element={<Login />} />
-                    <Route path='/auth/register' element={<Register />} />
-                </Routes>
-            </BookProvider>
-        </AuthProvide>
+                <BookProvider>
+                    <Routes>
+                        {/* <Route path='/' element={<Home />} /> */}
+                        <Route path='/' element={<Book />} />
+                        <Route path='/book' element={<Book />} />
+                        <Route path='/book/:id' element={<Detail />} />
+                        <Route path='/userbook/:id' element={<UserBook />} />
+                        <Route path='/auth/login' element={<Login />} />
+                        <Route path='/auth/register' element={<Register />} />
+                    </Routes>
+                </BookProvider>
+            </AuthProvide>
+        </HeadProvider>
     );
 }
 
