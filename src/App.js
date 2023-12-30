@@ -12,6 +12,7 @@ import { Header } from './component/Header/Header';
 import { UserBook } from './component/Book/UserBook/UserBook';
 import { MetaData } from './component/Head/Helmet';
 import { HeadProvider } from './contexts/HeadContext';
+import { Create } from './component/Book/Create/Create';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
                         {/* <Route path='/' element={<Home />} /> */}
                         <Route path='/' element={<Book />} />
                         <Route path='/book' element={<Book />} />
+                        <Route path='/create' element={<Create />} />
                         <Route path='/book/:id' element={<Detail />} />
                         {/* <Route path='/userbook/:id' element={<UserBook />} /> */}
                         <Route path='/auth/login' element={<Login />} />
