@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"
-import { useService } from "../../../hooks/useService";
-import { bookServiceFactory } from "../../../services/book";
 
 import style from './Detail.module.css';
+
+import { useService } from "../../../hooks/useService";
+import { bookServiceFactory } from "../../../services/book";
 import { useAuthContext } from "../../../contexts/AuthContext";
 import { useHeadContext } from "../../../contexts/HeadContext";
+import { useBookContext } from "../../../contexts/BookContext";
 
 
 export const Detail = () => {
@@ -14,6 +16,7 @@ export const Detail = () => {
     const [book, setBook] = useState({});
     const bookService = useService(bookServiceFactory);
     const { email } = useAuthContext();
+    const { addingBookInList } = useService(useBookContext)
     const navigate = useNavigate();
 
     const { setTitle } = useHeadContext();
@@ -26,11 +29,6 @@ export const Detail = () => {
             })
     }, [id]);
 
-    const bookCreateFn = async (type) => {
-        const { id } = book;
-        const result = await bookService.createProduct({ book_id: id }, type);
-        console.log(result); // To Do show message
-    }
 
     return (
         <section className={style['detail__card']}>
@@ -50,12 +48,12 @@ export const Detail = () => {
             {email && (
                 <>
                     <div className={`${style['functionality__purchase']} ${style['functionality']}`}>
-                        <button onClick={() => bookCreateFn('forpurchase')}>Adding in For Purchase</button>
-                        <button onClick={() => bookCreateFn('purchase')}>Adding in Purchase</button>
+                        <button onClick={() => addingBookInList(book.id, 'forpurchase')}>Adding in For Purchase</button>
+                        <button onClick={() => addingBookInList(book.id, 'purchase')}>Adding in Purchase</button>
                     </div>
                     <div className={`${style['functionality__reagin']} ${style['functionality']}`}>
-                        <button onClick={() => bookCreateFn('forreading')}>Adding in For Reading</button>
-                        <button onClick={() => bookCreateFn('reading')}>Adding in Reading</button>
+                        <button onClick={() => addingBookInList(book.id, 'forreading')}>Adding in For Reading</button>
+                        <button onClick={() => addingBookInList(book.id, 'reading')}>Adding in Reading</button>
                     </div>
                 </>
             )
