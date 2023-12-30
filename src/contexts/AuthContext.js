@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { authServiceFactory } from "../services/auth";
@@ -11,6 +11,7 @@ export const AuthProvide = ({ children }) => {
     const [auth, setAuth] = useLocalStorage('auth', {});
     const navigate = useNavigate();
     const authService = authServiceFactory(auth.accessToken);
+    const [error, setError] = useState([]);
 
     const onSubmitRegister = async (value) => {
         const { rePassword, ...othDate } = value;
@@ -25,7 +26,7 @@ export const AuthProvide = ({ children }) => {
             navigate('/');
 
         } catch (err) {
-            console.log(err.message);
+            setError(err.message);
         }
     }
 
@@ -36,7 +37,7 @@ export const AuthProvide = ({ children }) => {
             navigate('/');
 
         } catch (err) {
-            console.log(err.message)
+            setError(err.message);
         }
     }
 
@@ -54,6 +55,7 @@ export const AuthProvide = ({ children }) => {
         email: auth.email,
         accessToken: auth.accessToken,
         userId: auth.id,
+        error,
     }
 
     return (
