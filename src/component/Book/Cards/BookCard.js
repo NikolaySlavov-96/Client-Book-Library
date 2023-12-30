@@ -12,7 +12,7 @@ export const BookCard = ({ author, booktitle, genre, owner, id, image }) => {
             <h1>{booktitle}</h1>
             <div className={style['card__info']}>
                 <p>Title: <span >{booktitle}</span></p>
-                <p>Author: <span >{author}</span></p>
+                <p>Author: <span >{author.name}</span></p>
                 <p>Genre: <span >{genre}</span></p>
             </div>
             <div className={style['card__link']}>
