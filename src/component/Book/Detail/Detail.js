@@ -21,8 +21,8 @@ export const Detail = () => {
     useEffect(() => {
         bookService.getProduct(id)
             .then(req => {
-                setTitle(req[0].booktitle);
-                setBook(req[0]);
+                setTitle(req.booktitle);
+                setBook(req);
             })
     }, [id]);
 
@@ -43,7 +43,7 @@ export const Detail = () => {
             <div className={style['container__book']}>
                 <p>Book Id:<span>{book.id}</span></p>
                 <p>Book Title:<span>{book.booktitle}</span></p>
-                <p>Book Author:<span>{book.author}</span></p>
+                <p>Book Author:<span>{book?.author?.name}</span></p>
                 <p>Book Genre:<span>{book.genre || 'null'}</span></p>
             </div>
 
