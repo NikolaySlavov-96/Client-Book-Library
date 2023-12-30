@@ -1,0 +1,38 @@
+.create__section {
+    text-align: center;
+    width: 40%;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+}
+
+.form__container {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1rem 1.5rem 1rem;
+    border: none;
+    border-radius: 3rem;
+}
+
+.form__container form div {
+    margin-bottom: 1rem;
+}
+
+label {
+    margin-right: 0.30rem;
+}
+
+input {
+    border: none;
+    padding: 4px 6px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.14);
+}
+
+input::placeholder {
+    color: rgb(14, 16, 10);
+    letter-spacing: 2px;
+}
+
+form div {
+    text-align: right;
+}
