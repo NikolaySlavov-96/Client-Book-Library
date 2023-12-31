@@ -16,7 +16,8 @@ export const Detail = () => {
     const [book, setBook] = useState({});
     const bookService = useService(bookServiceFactory);
     const { email } = useAuthContext();
-    const { addingBookInList } = useService(useBookContext)
+    const { addingBookInList } = useService(useBookContext);
+    const [bookState, setBookState] = useState('');
     const navigate = useNavigate();
 
     const { setTitle } = useHeadContext();
@@ -26,9 +27,14 @@ export const Detail = () => {
             .then(req => {
                 setTitle(req.booktitle);
                 setBook(req);
+                setBookState(req.bookState);
             })
     }, [id]);
 
+    const changeState = (id, state) => {
+        addingBookInList(id, state);
+        setBookState(state)
+    }
 
     return (
         <section className={style['detail__card']}>
@@ -48,12 +54,20 @@ export const Detail = () => {
             {email && (
                 <>
                     <div className={`${style['functionality__purchase']} ${style['functionality']}`}>
-                        <button onClick={() => addingBookInList(book.id, 'forpurchase')}>Adding in For Purchase</button>
-                        <button onClick={() => addingBookInList(book.id, 'purchase')}>Adding in Purchase</button>
+                        {
+                            bookState === 'forpurchase' ? (<button disabled >Adding in For Purchase</button>) : (<button onClick={() => changeState(book.id, 'forpurchase')}>Adding in For Purchase</button>)
+                        }
+                        {
+                            bookState === 'purchase' ? (<button disabled >Adding in Purchase</button>) : (<button onClick={() => changeState(book.id, 'purchase')}>Adding in Purchase</button>)
+                        }
                     </div>
                     <div className={`${style['functionality__reagin']} ${style['functionality']}`}>
-                        <button onClick={() => addingBookInList(book.id, 'forreading')}>Adding in For Reading</button>
-                        <button onClick={() => addingBookInList(book.id, 'reading')}>Adding in Reading</button>
+                        {
+                            bookState === 'forreading' ? (<button disabled >Adding in For Reading</button>) : (<button onClick={() => changeState(book.id, 'forreading')}>Adding in For Reading</button>)
+                        }
+                        {
+                            bookState === 'reading' ? (<button disabled >Adding in Reading</button>) : (<button onClick={() => changeState(book.id, 'reading')}>Adding in Reading</button>)
+                        }
                     </div>
                 </>
             )
