@@ -2,8 +2,6 @@
     width: 100%;
     height: 3rem;
     margin-bottom: 2rem;
-    background-color: lightskyblue;
-    border-radius: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -23,6 +21,7 @@
 .search__form button {
     height: 26px;
     width: 80px;
+    background-color: var(--btn__li);
 }
 
 .container__limit {

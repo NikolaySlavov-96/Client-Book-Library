@@ -3,7 +3,7 @@
     margin: 2rem auto;
     display: flex;
     flex-wrap: wrap;
-    background-color: lightblue;
+    background-color: var(--fundColor);
     border-radius: 2rem;
     padding: 2rem 2rem 2rem 2rem;
 }
@@ -19,7 +19,7 @@
 
 .btn i {
     scale: 2;
-    color: #2f394b;
+    color: var(--backward)
 }
 
 .container__img {
@@ -46,6 +46,13 @@
     margin: 1rem;
     width: 180px;
     padding: 10px 6px;
+    background-color: var(--btn__li);
+    border: none;
+}
+
+.functionality button:hover {
+    cursor: pointer;
+    background-color: var(--btn__li-hover);
 }
 
 .functionality__purchase {

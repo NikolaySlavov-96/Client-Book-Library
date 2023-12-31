@@ -1,3 +1,38 @@
 .App {
   text-align: center;
 }
+
+:root {
+  --fundColor: #ecbb00;
+  --btn__li: #FFEFCA;
+  --btn__li-hover: #B4AA99;
+  --btn__li-text: #4D4637;
+  --backward: #2f394b;
+  --design: rgb(93, 93, 103);
+  --input-placeholder: rgb(8, 1, 1);
+  --input-bg: rgba(155, 7, 7, 0.475);
+}
+
+
+.global__bg-radius {
+  background-color: var(--fundColor);
+  border-radius: 1rem;
+}
+
+.disabled {
+  color: white;
+}
+
+a,
+button,
+li {
+  text-decoration: none;
+  color: var(--btn__li-text);
+  border: none;
+}
+
+a,
+button,
+li {
+  border-radius: 8px;
+}

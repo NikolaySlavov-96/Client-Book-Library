@@ -13,6 +13,7 @@ import { UserBook } from './component/Book/UserBook/UserBook';
 import { MetaData } from './component/Head/Helmet';
 import { HeadProvider } from './contexts/HeadContext';
 import { Create } from './component/Book/Create/Create';
+import { Footer } from './component/Footer/Footer';
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
                     </Routes>
                 </BookProvider>
             </AuthProvide>
+            <Footer />
         </HeadProvider>
     );
 }

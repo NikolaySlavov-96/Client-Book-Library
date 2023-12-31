@@ -10,7 +10,7 @@ export const Header = () => {
     const name = email?.split('@')[0];
 
     return (
-        <header className={style['navigation__container']}>
+        <header className={`global__bg-radius ${style['navigation__container']}`}>
             <nav className={style['navigation__nav']}>
                 <h1>Hello {name ? name : 'Guest'}</h1>
                 <ul className={style['navigation__ul']}>

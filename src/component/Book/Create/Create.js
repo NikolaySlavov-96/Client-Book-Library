@@ -25,10 +25,10 @@ export const Create = () => {
                 {error}
             </div>
             )}
-            <div className={`${style["form__container"]} shadow`}>
+            <div className={`${style["form__container"]} global__bg-radius`}>
                 <form onSubmit={onSubmit}>
                     <div>
-                        <label htmlFor="articul">Author Name:</label>
+                        <label htmlFor="author">Author Name:</label>
                         <input type="text" name="author" id="author" placeholder="Name author" value={values.author} onChange={changeHandler} onBlur={changeHandler} />
                         {errors.author && (<p className='error'>{errors.author}</p>)}
                     </div >
@@ -39,17 +39,17 @@ export const Create = () => {
                         {errors.image && (<p className='error'>{errors.image}</p>)}
                     </div >
                     <div>
-                        <label htmlFor="mark">Booktitle:</label>
+                        <label htmlFor="booktitle">Booktitle:</label>
                         <input type="text" name="booktitle" id="booktitle" placeholder="Book Name" value={values.booktitle} onChange={changeHandler} onBlur={changeHandler} />
                         {errors.booktitle && (<p className='error'>{errors.booktitle}</p>)}
                     </div >
                     <div>
-                        <label htmlFor="model">Genge of Book:</label>
+                        <label htmlFor="genge">Genge of Book:</label>
                         <input type="text" name="genge" id="genge" placeholder="Genge of Book" value={values.genge} onChange={changeHandler} onBlur={changeHandler} />
                         {errors.genge && (<p className='error'>{errors.genge}</p>)}
                     </div >
 
-                    <button className="btn">Create new Book</button >
+                    <button>Create new Book</button >
                 </form >
             </div >
         </section >
