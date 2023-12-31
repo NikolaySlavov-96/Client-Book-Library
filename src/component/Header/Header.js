@@ -6,7 +6,7 @@ import style from './Header.module.css';
 
 export const Header = () => {
 
-    const { email } = useAuthContext();
+    const { email, onSubmitLogout } = useAuthContext();
     const name = email?.split('@')[0];
 
     return (
@@ -29,7 +29,7 @@ export const Header = () => {
                             <li><NavLink to='/userbook/purchase'>Purchase</NavLink></li>
                             <li><NavLink to='/userbook/forreading'>For Reading</NavLink></li>
                             <li><NavLink to='/userbook/reading'>Reading</NavLink></li>
-                            <li><NavLink to='/auth/logout'>Logout</NavLink></li>
+                            <li><a onClick={() => onSubmitLogout()}>Logout</a></li>
                         </>)
                     }
                 </ul>

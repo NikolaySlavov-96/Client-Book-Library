@@ -1,6 +1,7 @@
 .login__section {
     text-align: center;
-    margin-bottom: 3rem;
+    width: 50%;
+    margin: 2rem auto 3rem;
 }
 
 .form__container {
@@ -25,7 +26,7 @@ input {
     border: none;
     padding: 4px 6px;
     border-radius: 8px;
-    background-color: rgba(0, 0, 0, 0.14);
+    background-color: var(--input-placeholder);
 }
 
 form div {
@@ -38,8 +39,4 @@ form div {
 
 .login__account {
     margin: 0;
-}
-
-.login__account a {
-    text-decoration: none;
 }
