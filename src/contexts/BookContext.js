@@ -38,7 +38,7 @@ export const BookProvider = ({ children }) => {
         try {
             const prod = await bookService.createProduct(data);
 
-            setBook(p => [...p, prod]);
+            // setBook(p => [...p, prod]);
             navigate('/');
         } catch (err) {
             setError(err.message);
