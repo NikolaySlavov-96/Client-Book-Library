@@ -8,6 +8,7 @@ import { bookServiceFactory } from "../../../services/book";
 import { useAuthContext } from "../../../contexts/AuthContext";
 import { useHeadContext } from "../../../contexts/HeadContext";
 import { useBookContext } from "../../../contexts/BookContext";
+import { CustomSelect } from "../../CustomSelect/CustomSelect";
 
 
 export const Detail = () => {
@@ -20,7 +21,10 @@ export const Detail = () => {
     const [bookState, setBookState] = useState('');
     const navigate = useNavigate();
 
+    const [options, setOptions] = useState([])
+
     const { setTitle } = useHeadContext();
+
 
     useEffect(() => {
         bookService.getProduct(id)
@@ -28,13 +32,18 @@ export const Detail = () => {
                 setTitle(req.booktitle);
                 setBook(req);
                 setBookState(req.bookState);
+                const bookInList = books(bookState);
+                setOptions(bookInList);
             })
     }, [id]);
 
-    const changeState = (id, state) => {
+    const changeState = (e, id) => {
+        const state = e.value
+        console.log(e, id, state)
         addingBookInList(id, state);
         setBookState(state)
     }
+
 
     return (
         <section className={style['detail__card']}>
@@ -52,26 +61,43 @@ export const Detail = () => {
             </div>
 
             {email && (
-                <>
-                    <div className={`${style['functionality__purchase']} ${style['functionality']}`}>
-                        {
-                            bookState === 'forpurchase' ? (<button className="disabled" disabled >Adding in For Purchase</button>) : (<button onClick={() => changeState(book.id, 'forpurchase')}>Adding in For Purchase</button>)
-                        }
-                        {
-                            bookState === 'purchase' ? (<button className="disabled" disabled >Adding in Purchase</button>) : (<button onClick={() => changeState(book.id, 'purchase')}>Adding in Purchase</button>)
-                        }
-                    </div>
-                    <div className={`${style['functionality__reagin']} ${style['functionality']}`}>
-                        {
-                            bookState === 'forreading' ? (<button className="disabled" disabled >Adding in For Reading</button>) : (<button onClick={() => changeState(book.id, 'forreading')}>Adding in For Reading</button>)
-                        }
-                        {
-                            bookState === 'reading' ? (<button className="disabled" disabled >Adding in Reading</button>) : (<button onClick={() => changeState(book.id, 'reading')}>Adding in Reading</button>)
-                        }
-                    </div>
-                </>
+                <div className={`${style['functionality__reagin']} ${style['functionality']}`}>
+                    <CustomSelect
+                        options={options}
+                        placeHolder='Please select...'
+                        onChange={(e) => changeState(e, book.id)}
+                    />
+                </div>
             )
             }
         </section>
     );
+}
+
+const books = (bookState) => {
+
+    const valueOfLabels = [
+        {
+            label: "Adding in For Purchase",
+            value: "forpurchase",
+        },
+        {
+            label: "Adding in Purchase",
+            value: "purchase",
+        },
+        {
+            label: "Adding in For Reading",
+            value: "forreading",
+        },
+        {
+            label: "Adding in Reading",
+            value: "reading",
+        },
+        {
+            label: "Adding in Listening",
+            value: "listening",
+        },
+    ]
+
+    return valueOfLabels.filter((b) => b.value !== bookState)
 }
