@@ -1,5 +1,4 @@
-const HOST = 'http://192.168.88.65:3030';
-// const HOST = 'https://api-books.slavo-v.dev';
+const HOST = 'https://api-books.slavo-v.dev';
 
 async function requester(method, token, url, inputDate) {
     const options = {
