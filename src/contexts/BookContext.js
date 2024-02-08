@@ -67,6 +67,15 @@ export const BookProvider = ({ children }) => {
         }
     }
 
+    const addingBookInList = async (id, type) => {
+        try {
+            const result = await bookService.addinBookInLib({ book_id: id }, type);
+            console.log(result);
+        } catch (err) {
+            setError(err.message);
+        }
+    }
+
     const contextValue = {
         setLimit,
         limit,
@@ -79,6 +88,7 @@ export const BookProvider = ({ children }) => {
         onSubmitEditProduct,
         onSubmitDeleteProduct,
         onSubmitSeachWithInput,
+        addingBookInList,
     }
 
     return (
