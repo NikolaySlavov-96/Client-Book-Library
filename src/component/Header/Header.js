@@ -25,10 +25,7 @@ export const Header = () => {
                     {
                         email && (<>
                             <li><NavLink to='/create'>Create</NavLink></li>
-                            <li><NavLink to='/userbook/forpurchase'>For Purchase</NavLink></li>
-                            <li><NavLink to='/userbook/purchase'>Purchase</NavLink></li>
-                            <li><NavLink to='/userbook/forreading'>For Reading</NavLink></li>
-                            <li><NavLink to='/userbook/reading'>Reading</NavLink></li>
+                            <li><NavLink to='/collections'>Collections Of Books</NavLink></li>
                             <li><a onClick={() => onSubmitLogout()}>Logout</a></li>
                         </>)
                     }

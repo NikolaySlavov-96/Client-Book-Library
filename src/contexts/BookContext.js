@@ -11,24 +11,15 @@ export const BookProvider = ({ children }) => {
     const [book, setBook] = useState({});
     const [limit, setLimit] = useState(12);
     const [page, setPage] = useState(1);
-    const [type, setType] = useState('book');
     const bookService = useService(bookServiceFactory);
     const [error, setError] = useState([]);
 
-    const data = {
-        'book': () => bookService.getProducts({ page, limit }, type),
-        'forpurchase': () => bookService.getUserBooks({ page, limit }, type),
-        'purchase': () => bookService.getUserBooks({ page, limit }, type),
-        'forreading': () => bookService.getUserBooks({ page, limit }, type),
-        'reading': () => bookService.getUserBooks({ page, limit }, type),
-    }
-
     useEffect(() => {
-        data[type]()
+        bookService.getProducts({page, limit}, 'book')
             .then(req => {
                 setBook(req);
             });
-    }, [page, limit, type]);
+    }, [page, limit]);
 
     const getProduct = (id) => {
         return book.find(prod => prod._id === id);
@@ -76,15 +67,6 @@ export const BookProvider = ({ children }) => {
         }
     }
 
-    const addingBookInList = async (id, type) => {
-        try {
-            const result = await bookService.addinBookInLib({ book_id: id }, type);
-            console.log(result);
-        } catch (err) {
-            setError(err.message);
-        }
-    }
-
     const contextValue = {
         setLimit,
         limit,
@@ -97,8 +79,6 @@ export const BookProvider = ({ children }) => {
         onSubmitEditProduct,
         onSubmitDeleteProduct,
         onSubmitSeachWithInput,
-        setType,
-        addingBookInList,
     }
 
     return (
