@@ -14,7 +14,6 @@ import { MetaData } from './component/Head/Helmet';
 import { HeadProvider } from './contexts/HeadContext';
 import { Create } from './component/Book/Create/Create';
 import { Footer } from './component/Footer/Footer';
-import { CollectionProvider } from './contexts/CollectionContext';
 
 
 function App() {
@@ -25,19 +24,16 @@ function App() {
                 <Header />
 
                 <BookProvider>
-                    <CollectionProvider>
-                        <Routes>
-                            {/* <Route path='/' element={<Home />} /> */}
-                            <Route path='/' element={<Book />} />
-                            <Route path='/book' element={<Book />} />
-                            <Route path='/create' element={<Create />} />
-                            <Route path='/book/:id' element={<Detail />} />
-                            {/* <Route path='/userbook/:id' element={<UserBook />} /> */}
-                            <Route path='/collections' element={<UserCollectionBook />} />
-                            <Route path='/auth/login' element={<Login />} />
-                            <Route path='/auth/register' element={<Register />} />
-                        </Routes>
-                    </CollectionProvider>
+                    <Routes>
+                        {/* <Route path='/' element={<Home />} /> */}
+                        <Route path='/' element={<Book />} />
+                        <Route path='/book' element={<Book />} />
+                        <Route path='/create' element={<Create />} />
+                        <Route path='/book/:id' element={<Detail />} />
+                        <Route path='/collections' element={<UserCollectionBook />} />
+                        <Route path='/auth/login' element={<Login />} />
+                        <Route path='/auth/register' element={<Register />} />
+                    </Routes>
                 </BookProvider>
             </AuthProvide>
             <Footer />
