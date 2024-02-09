@@ -95,7 +95,7 @@ const books = (bookState) => {
         },
         {
             label: "Adding in Listening",
-            value: "listening",
+            value: "listened",
         },
     ]
 
