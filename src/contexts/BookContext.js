@@ -21,9 +21,11 @@ export const BookProvider = ({ children }) => {
         'purchase': () => bookService.getUserBooks({ page, limit }, type),
         'forreading': () => bookService.getUserBooks({ page, limit }, type),
         'reading': () => bookService.getUserBooks({ page, limit }, type),
+        'listened': () => bookService.getUserBooks({ page, limit }, type),
     }
 
     useEffect(() => {
+        setBook({})
         if (type !== '') {
             data[type]()
                 .then(req => {
@@ -101,6 +103,7 @@ export const BookProvider = ({ children }) => {
         onSubmitSeachWithInput,
         addingBookInList,
         setType,
+        type,
     }
 
     return (
