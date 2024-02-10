@@ -47,6 +47,15 @@ export const AuthProvide = ({ children }) => {
         navigate('/')
     }
 
+    const verifyAccoountWithToken = async (token) => {
+        try {
+            const res = await authService.verifyToken(token);
+            navigate('/auth/login')
+        } catch (err) {
+            navigate('/auth')
+        }
+    }
+
     const contextValue = {
         onSubmitRegister,
         onSubmitLogin,
@@ -56,6 +65,7 @@ export const AuthProvide = ({ children }) => {
         accessToken: auth.accessToken,
         userId: auth.id,
         error,
+        verifyAccoountWithToken,
     }
 
     return (

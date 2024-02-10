@@ -14,6 +14,7 @@ import { MetaData } from './component/Head/Helmet';
 import { HeadProvider } from './contexts/HeadContext';
 import { Create } from './component/Book/Create/Create';
 import { Footer } from './component/Footer/Footer';
+import { VerifyAccount } from './component/Auth/VerifyAccount/VerifyAccount';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
                         <Route path='/collections' element={<UserCollectionBook />} />
                         <Route path='/auth/login' element={<Login />} />
                         <Route path='/auth/register' element={<Register />} />
+                        <Route path='/auth/verify/:verifyToken' element={<VerifyAccount />} />
                     </Routes>
                 </BookProvider>
             </AuthProvide>
