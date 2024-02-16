@@ -17,7 +17,7 @@ export const Login = () => {
         password: ['required'],
     });
     return (
-        <section className={style["login__section"]}>
+        <section className={`global__bg-radius ${style["login__section"]}`}>
             <h1 className={style["login__title"]}>Login Page</h1>
             <div className={`shadow ${style["form__container"]}`}>
                 <form onSubmit={onSubmit}>

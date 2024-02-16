@@ -11,8 +11,9 @@ export const BookProvider = ({ children }) => {
     const [book, setBook] = useState({});
     const [limit, setLimit] = useState(12);
     const [page, setPage] = useState(1);
-    const [type, setType] = useState('book');
+    const [type, setType] = useState('');
     const bookService = useService(bookServiceFactory);
+    const [error, setError] = useState([]);
 
     const data = {
         'book': () => bookService.getProducts({ page, limit }, type),
@@ -20,13 +21,17 @@ export const BookProvider = ({ children }) => {
         'purchase': () => bookService.getUserBooks({ page, limit }, type),
         'forreading': () => bookService.getUserBooks({ page, limit }, type),
         'reading': () => bookService.getUserBooks({ page, limit }, type),
+        'listened': () => bookService.getUserBooks({ page, limit }, type),
     }
 
     useEffect(() => {
-        data[type]()
-            .then(req => {
-                setBook(req);
-            });
+        setBook({})
+        if (type !== '') {
+            data[type]()
+                .then(req => {
+                    setBook(req);
+                });
+        }
     }, [page, limit, type]);
 
     const getProduct = (id) => {
@@ -34,29 +39,54 @@ export const BookProvider = ({ children }) => {
     }
 
     const onSubmitCreateProduct = async (data) => {
-        const prod = await bookService.createProduct(data);
+        try {
+            const prod = await bookService.createProduct(data);
 
-        setBook(p => [...p, prod]);
-        navigate('/');
+            // setBook(p => [...p, prod]);
+            navigate('/');
+        } catch (err) {
+            setError(err.message);
+        }
     }
 
     const onSubmitEditProduct = async (data) => {
-        const prod = await bookService.editProduct(data._id, data);
+        try {
+            const prod = await bookService.editProduct(data._id, data);
 
-        setBook(p => p.map(x => x._id === data._id ? prod : x));
-        navigate('/');
+            setBook(p => p.map(x => x._id === data._id ? prod : x));
+            navigate('/');
+        } catch (err) {
+            setError(err.message);
+        }
     }
 
     const onSubmitDeleteProduct = async (id) => {
-        await bookService.deleteProduct(id);
+        try {
+            await bookService.deleteProduct(id);
 
-        setBook(p => p.filter(prod => prod._id !== id));
-        navigate('/');
+            setBook(p => p.filter(prod => prod._id !== id));
+            navigate('/');
+        } catch (err) {
+            setError(err.message);
+        }
     }
 
     const onSubmitSeachWithInput = async ({ search }) => {
-        const result = await bookService.searchBook(search, { page, limit }, 'book'); //type === book
-        setBook(result);
+        try {
+            const result = await bookService.searchBook(search, { page, limit }, 'book'); //type === book
+            setBook(result);
+        } catch (err) {
+            setError(err.message);
+        }
+    }
+
+    const addingBookInList = async (id, type) => {
+        try {
+            const result = await bookService.addinBookInLib({ book_id: id }, type);
+            console.log(result);
+        } catch (err) {
+            setError(err.message);
+        }
     }
 
     const contextValue = {
@@ -65,12 +95,15 @@ export const BookProvider = ({ children }) => {
         setPage,
         page,
         book,
+        error,
         getProduct,
         onSubmitCreateProduct,
         onSubmitEditProduct,
         onSubmitDeleteProduct,
         onSubmitSeachWithInput,
+        addingBookInList,
         setType,
+        type,
     }
 
     return (

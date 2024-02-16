@@ -1,7 +1,5 @@
 .navigation__container {
     margin: 1rem 1rem 0 1rem;
-    background-color: lightcoral;
-    border-radius: 1rem;
 }
 
 .navigation__nav {
@@ -22,18 +20,10 @@
 
 .navigation__ul li {
     list-style: none;
-    color: green;
     padding: 6px 12px;
-    background-color: lightskyblue;
-    border-radius: 8px;
+    background-color: var(--btn__li);
 }
 
 .navigation__ul li:hover {
-    background-color: white;
-    padding: 4px 10px;
-    border: 2px solid lightskyblue;
-}
-
-.navigation__ul li a {
-    text-decoration: none;
+    background-color: var(--btn__li-hover);
 }

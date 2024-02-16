@@ -31,7 +31,7 @@ export const Register = () => {
     }
 
     return (
-        <section className={style["register__section"]}>
+        <section className={`global__bg-radius ${style["register__section"]}`}>
             <div className={`shadow ${style["form__container"]}`}>
                 <form onSubmit={onSubmit}>
                     <div className="email">

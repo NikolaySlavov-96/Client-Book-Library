@@ -11,7 +11,7 @@
 
 .page__current {
     display: inline-block;
-    background-color: lightskyblue;
+    background-color: var(--fundColor);
     margin: 0;
     padding: 8px 14px;
 }

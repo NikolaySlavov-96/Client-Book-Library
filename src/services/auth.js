@@ -11,10 +11,13 @@ export const authServiceFactory = (token) => {
 
     const checkField = async () => request.get('/auth/check');
 
+    const verifyToken = async (token) => request.post('/auth/verify', { verifyToken: token });
+
     return {
         register,
         login,
         logout,
         checkField,
+        verifyToken,
     }
 }

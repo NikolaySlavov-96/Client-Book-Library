@@ -19,7 +19,7 @@ export const Filter = () => {
     }
 
     return (
-        <div className={style['filter__container']}>
+        <div className={`global__bg-radius ${style['filter__container']}`}>
             <div className={style['container__search']}>
                 <form className={style["search__form"]} onSubmit={onSubmit}>
                     <input type="text" name='search' id='search' placeholder='Search' value={values.search} onChange={changeHandler} />

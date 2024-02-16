@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"
-import { useService } from "../../../hooks/useService";
-import { bookServiceFactory } from "../../../services/book";
 
 import style from './Detail.module.css';
+
+import { useService } from "../../../hooks/useService";
+import { bookServiceFactory } from "../../../services/book";
 import { useAuthContext } from "../../../contexts/AuthContext";
 import { useHeadContext } from "../../../contexts/HeadContext";
+import { useBookContext } from "../../../contexts/BookContext";
+import { CustomSelect } from "../../CustomSelect/CustomSelect";
 
 
 export const Detail = () => {
@@ -14,23 +17,33 @@ export const Detail = () => {
     const [book, setBook] = useState({});
     const bookService = useService(bookServiceFactory);
     const { email } = useAuthContext();
+    const { addingBookInList } = useService(useBookContext);
+    const [bookState, setBookState] = useState('');
     const navigate = useNavigate();
 
+    const [options, setOptions] = useState([])
+
     const { setTitle } = useHeadContext();
+
 
     useEffect(() => {
         bookService.getProduct(id)
             .then(req => {
-                setTitle(req[0].booktitle);
-                setBook(req[0]);
+                setTitle(req.booktitle);
+                setBook(req);
+                setBookState(req.bookState);
+                const bookInList = books(bookState);
+                setOptions(bookInList);
             })
     }, [id]);
 
-    const bookCreateFn = async (type) => {
-        const { id } = book;
-        const result = await bookService.createProduct({ book_id: id }, type);
-        console.log(result); // To Do show message
+    const changeState = (e, id) => {
+        const state = e.value
+        console.log(e, id, state)
+        addingBookInList(id, state);
+        setBookState(state)
     }
+
 
     return (
         <section className={style['detail__card']}>
@@ -43,23 +56,48 @@ export const Detail = () => {
             <div className={style['container__book']}>
                 <p>Book Id:<span>{book.id}</span></p>
                 <p>Book Title:<span>{book.booktitle}</span></p>
-                <p>Book Author:<span>{book.author}</span></p>
+                <p>Book Author:<span>{book?.author?.name}</span></p>
                 <p>Book Genre:<span>{book.genre || 'null'}</span></p>
             </div>
 
             {email && (
-                <>
-                    <div className={`${style['functionality__purchase']} ${style['functionality']}`}>
-                        <button onClick={() => bookCreateFn('forpurchase')}>Adding in For Purchase</button>
-                        <button onClick={() => bookCreateFn('purchase')}>Adding in Purchase</button>
-                    </div>
-                    <div className={`${style['functionality__reagin']} ${style['functionality']}`}>
-                        <button onClick={() => bookCreateFn('forreading')}>Adding in For Reading</button>
-                        <button onClick={() => bookCreateFn('reading')}>Adding in Reading</button>
-                    </div>
-                </>
+                <div className={`${style['functionality__reagin']} ${style['functionality']}`}>
+                    <CustomSelect
+                        options={options}
+                        placeHolder='Please select...'
+                        onChange={(e) => changeState(e, book.id)}
+                    />
+                </div>
             )
             }
         </section>
     );
+}
+
+const books = (bookState) => {
+
+    const valueOfLabels = [
+        {
+            label: "Adding in For Purchase",
+            value: "forpurchase",
+        },
+        {
+            label: "Adding in Purchase",
+            value: "purchase",
+        },
+        {
+            label: "Adding in For Reading",
+            value: "forreading",
+        },
+        {
+            label: "Adding in Reading",
+            value: "reading",
+        },
+        {
+            label: "Adding in Listening",
+            value: "listened",
+        },
+    ]
+
+    return valueOfLabels.filter((b) => b.value !== bookState)
 }
