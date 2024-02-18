@@ -1,6 +1,6 @@
 #Introduction of Project
 
-The idea of myp project is that all the books you have read or want to read are in one place easily accessibile and without repetition.
+The idea of my project is that all the books you have read or want to read are in one place easily accessibile and without repetition.
 In it you can add book from any user with an account. You can view the project at: https://books.slavo-v.dev
 
 #Functionality
