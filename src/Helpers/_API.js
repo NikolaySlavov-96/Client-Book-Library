@@ -1,4 +1,5 @@
-const HOST = 'https://api-books.slavo-v.dev';
+const HOST = 'http://localhost:8080';
+// const HOST = 'https://api-books.slavo-v.dev';
 
 async function requester(method, token, url, inputDate) {
     const options = {
@@ -31,12 +32,11 @@ async function requester(method, token, url, inputDate) {
         return data;
 
     } catch (err) {
-        alert(err.message);
         throw err;
     }
 }
 
-export const requesterFactory = (token) => {
+const requesterFactory = (token) => {
     return {
         get: requester.bind(null, 'GET', token),
         post: requester.bind(null, 'POST', token),
@@ -44,3 +44,5 @@ export const requesterFactory = (token) => {
         remove: requester.bind(null, 'DELETE', token),
     }
 }
+
+export default requesterFactory;

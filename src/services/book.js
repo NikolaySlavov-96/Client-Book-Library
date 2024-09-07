@@ -1,17 +1,19 @@
-import { requesterFactory } from './requester';
+import { API } from '../Helpers';
+
+const PREFIX = '/api/book'
 
 export const bookServiceFactory = (token) => {
-    const request = requesterFactory(token);
+    const request = API(token);
 
-    const getProducts = async ({ page, limit }) => request.get(`/book/book?limit=${limit}&page=${page}`);
+    const getProducts = async ({ page, limit }) => request.get(`${PREFIX}?limit=${limit}&page=${page}`);
 
-    const getProduct = async (id) => request.get('/book/book/' + id);
+    const getProduct = async (id) => request.get(`${PREFIX}` + id);
 
-    const createProduct = async (data) => request.post(`/book/book`, data);
+    const createProduct = async (data) => request.post(`${PREFIX}`, data);
 
-    const editProduct = async (id, data) => request.put('/book/book/' + id, data);
+    const editProduct = async (id, data) => request.put(`${PREFIX}` + id, data);
 
-    const deleteProduct = async (id) => request.remove('/book/book/' + id);
+    const deleteProduct = async (id) => request.remove(`${PREFIX}` + id);
 
     const searchBook = async (data, { page, limit }, type) => request.get(`/${type}/search?search=${data}&limit=${limit}&page=${page}`)
 

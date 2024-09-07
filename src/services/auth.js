@@ -1,17 +1,19 @@
-import { requesterFactory } from './requester';
+import { API } from '../Helpers';
+
+const PREFIX = '/api/auth';
 
 export const authServiceFactory = (token) => {
-    const request = requesterFactory(token);
+    const request = API(token);
 
-    const register = async (data) => request.post('/auth/register', data);
+    const register = async (data) => request.post(`${PREFIX}/register`, data);
 
-    const login = async (data) => request.post('/auth/login', data);
+    const login = async (data) => request.post(`${PREFIX}/login`, data);
 
-    const logout = async (data) => request.post('/auth/logout', data);
+    const logout = async (data) => request.post(`${PREFIX}/logout`, data);
 
-    const checkField = async () => request.get('/auth/check');
+    const checkField = async () => request.get(`${PREFIX}/check`);
 
-    const verifyToken = async (token) => request.post('/auth/verify', { verifyToken: token });
+    const verifyToken = async (token) => request.post(`${PREFIX}/verify`, { verifyToken: token });
 
     return {
         register,
