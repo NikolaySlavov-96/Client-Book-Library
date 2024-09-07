@@ -71,7 +71,7 @@ export const BookProvider = ({ children }) => {
         }
     }
 
-    const onSubmitSeachWithInput = async ({ search }) => {
+    const onSubmitSearchWithInput = async ({ search }) => {
         try {
             const result = await bookService.searchBook(search, { page, limit }, 'book'); //type === book
             setBook(result);
@@ -100,7 +100,7 @@ export const BookProvider = ({ children }) => {
         onSubmitCreateProduct,
         onSubmitEditProduct,
         onSubmitDeleteProduct,
-        onSubmitSeachWithInput,
+        onSubmitSearchWithInput,
         addingBookInList,
         setType,
         type,
