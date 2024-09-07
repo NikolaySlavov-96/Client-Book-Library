@@ -7,6 +7,7 @@ import { BookProvider } from './contexts/BookContext';
 
 import { Header, Helmet, Footer } from './component/UI';
 import { VerifyAccount, Register, Login, Books, CreateBook, DetailsForBook } from './component/Screens';
+import ModalContainer from './component/Modals';
 
 import ROUT_NAMES from './Constants/routNames';
 import { SocketProvider } from './contexts/SocketContext';
@@ -31,6 +32,7 @@ const App = () => {
                             <Route path={ROUT_NAMES.REGISTER} element={<Register />} />
                             <Route path={ROUT_NAMES.VERIFY_TOKEN} element={<VerifyAccount />} />
                         </Routes>
+                        <ModalContainer />
                     </SocketProvider>
                 </BookProvider>
             </AuthProvide>

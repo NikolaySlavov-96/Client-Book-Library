@@ -1,0 +1,15 @@
+.container {
+    position: absolute;
+    padding: 2px 40px;
+    top: 80px;
+    background-color: antiquewhite;
+    border-radius: 20px;
+    right: 1rem;
+    opacity: 0;
+    box-shadow: 0 4px 8px rgba(0, 9,0, 0.2);
+    transition: opacity 1s ease-in-out;
+}
+
+.visible {
+    opacity: 1;
+}
