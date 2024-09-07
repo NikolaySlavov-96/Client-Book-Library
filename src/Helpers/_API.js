@@ -1,5 +1,4 @@
-const HOST = 'http://localhost:8080';
-// const HOST = 'https://api-books.slavo-v.dev';
+import { HOST } from '../Constants/connectionData';
 
 async function requester(method, token, url, inputDate) {
     const options = {

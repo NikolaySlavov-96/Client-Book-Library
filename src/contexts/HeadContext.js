@@ -12,7 +12,7 @@ export const HeadProvider = ({ children }) => {
     }
 
     return (
-        <HeadContext.Provider value={contextValue} >
+        <HeadContext.Provider value={contextValue}>
             {children}
         </HeadContext.Provider >
     )
