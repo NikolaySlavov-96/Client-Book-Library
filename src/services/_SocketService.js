@@ -5,7 +5,10 @@ import { HOST } from "../Constants/connectionData";
 let socket;
 
 const connect = () => {
-    socket = io(HOST);
+    socket = io(HOST, {
+        path: '/bookHub',
+        cors: { origin: '*', },
+    });
 
     socket.on('connect', () => {
         console.log('Socket Connected');
@@ -35,7 +38,7 @@ const unsubscribeFromEvent = (event, callback) => {
 };
 
 const sendData = (event, data) => {
-    if(socket) {
+    if (socket) {
         socket.emit(event, data);
     }
 }
