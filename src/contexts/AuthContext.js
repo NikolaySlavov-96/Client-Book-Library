@@ -33,7 +33,10 @@ export const AuthProvide = ({ children }) => {
     const onSubmitLogin = async (value) => {
         try {
             const data = await authService.login(value);
-            setAuth(data);
+
+            // After Login from Response get message and visualize on user for better UI
+            console.log("🚀 ~ onSubmitLogin ~ data:", data.message)
+            setAuth(data.userInfo);
             navigate('/');
 
         } catch (err) {

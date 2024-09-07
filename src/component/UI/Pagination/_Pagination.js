@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import style from './Pagination.module.css';
 
 
@@ -32,4 +34,4 @@ const _Pagination = ({ count, page, onSubmit }) => {
     );
 }
 
-export default _Pagination;
+export default memo(_Pagination);

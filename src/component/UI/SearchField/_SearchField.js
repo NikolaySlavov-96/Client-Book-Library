@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import style from './Search.module.css';
 
 const _SearchField = ({ onSubmit, changeHandler, values }) => {
@@ -9,4 +11,4 @@ const _SearchField = ({ onSubmit, changeHandler, values }) => {
     );
 }
 
-export default _SearchField;
+export default memo(_SearchField);

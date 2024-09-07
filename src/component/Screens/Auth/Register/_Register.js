@@ -1,9 +1,11 @@
+import { memo } from 'react';
+
 import { Link } from 'react-router-dom';
-import style from './Register.module.css';
 
 import { useAuthContext } from '../../../../contexts/AuthContext';
 import { useForm } from '../../../../hooks/useForm';
 
+import style from './Register.module.css';
 
 const _Register = () => {
     const { onSubmitRegister } = useAuthContext();
@@ -66,4 +68,4 @@ const _Register = () => {
     );
 }
 
-export default _Register;
+export default memo(_Register);

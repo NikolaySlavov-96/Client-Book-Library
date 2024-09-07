@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+
 import { useAuthContext } from '../../../../contexts/AuthContext';
 
 // import style from './Login.module.css';
@@ -18,4 +19,4 @@ const _VerifyAccount = () => {
     return (<></>);
 }
 
-export default _VerifyAccount;
+export default memo(_VerifyAccount);

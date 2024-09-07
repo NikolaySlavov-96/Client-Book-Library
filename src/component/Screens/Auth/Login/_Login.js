@@ -1,9 +1,10 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import style from './Login.module.css';
 
 import { useAuthContext } from '../../../../contexts/AuthContext';
 import { useForm } from '../../../../hooks/useForm';
 
+import style from './Login.module.css';
 
 const _Login = () => {
 
@@ -41,4 +42,4 @@ const _Login = () => {
     );
 }
 
-export default _Login;
+export default memo(_Login);

@@ -1,4 +1,6 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
+
 import style from './Footer.module.css';
 
 const _Footer = () => {
@@ -11,4 +13,4 @@ const _Footer = () => {
     );
 }
 
-export default _Footer;
+export default memo(_Footer);

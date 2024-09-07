@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
-
-import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { memo, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+
 import { useHeadContext } from '../../../contexts/HeadContext';
 
 const _Helmet = () => {
@@ -39,4 +39,4 @@ const _Helmet = () => {
     )
 }
 
-export default _Helmet;
+export default memo(_Helmet);
