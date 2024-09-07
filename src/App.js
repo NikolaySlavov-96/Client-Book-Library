@@ -1,32 +1,28 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 
+import { HeadProvider } from './contexts/HeadContext';
 import { AuthProvide } from './contexts/AuthContext';
 import { BookProvider } from './contexts/BookContext';
-import { Home } from './component/Home/Home';
+
 import { Book } from './component/Book/Book';
 import { Detail } from './component/Book/Detail/Detail';
-import { Login } from './component/Auth/Login/Login';
-import { Register } from './component/Auth/Register/Register';
-import { Header } from './component/Header/Header';
 import { UserCollectionBook } from './component/Book/UserCollectionBook/UserCollectionBook';
-import { MetaData } from './component/Head/Helmet';
-import { HeadProvider } from './contexts/HeadContext';
 import { Create } from './component/Book/Create/Create';
-import { Footer } from './component/Footer/Footer';
-import { VerifyAccount } from './component/Auth/VerifyAccount/VerifyAccount';
+
+import { Header, Helmet, Footer } from './component/UI';
+import { VerifyAccount, Register, Login } from './component/Screens';
 
 
 function App() {
     return (
         <HeadProvider>
-            <MetaData />
+            <Helmet />
             <AuthProvide>
                 <Header />
 
                 <BookProvider>
                     <Routes>
-                        {/* <Route path='/' element={<Home />} /> */}
                         <Route path='/' element={<Book />} />
                         <Route path='/book' element={<Book />} />
                         <Route path='/create' element={<Create />} />

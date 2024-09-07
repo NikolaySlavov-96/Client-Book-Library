@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAuthContext } from '../../../contexts/AuthContext';
+import { useAuthContext } from '../../../../contexts/AuthContext';
 
 // import style from './Login.module.css';
 
 
-export const VerifyAccount = () => {
+const _VerifyAccount = () => {
 
     const { verifyToken } = useParams();
     const { verifyAccoountWithToken } = useAuthContext();
@@ -17,3 +17,5 @@ export const VerifyAccount = () => {
 
     return (<></>);
 }
+
+export default _VerifyAccount;

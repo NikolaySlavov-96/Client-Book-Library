@@ -1,9 +1,10 @@
-import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { useLocation } from 'react-router-dom';
-import { useHeadContext } from '../../contexts/HeadContext';
 import { useEffect } from 'react';
 
-export const MetaData = () => {
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
+import { useHeadContext } from '../../../contexts/HeadContext';
+
+const _Helmet = () => {
     const locate = useLocation();
     const { title, setTitle } = useHeadContext();
 
@@ -37,3 +38,5 @@ export const MetaData = () => {
         </HelmetProvider>
     )
 }
+
+export default _Helmet;

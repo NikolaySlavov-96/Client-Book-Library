@@ -1,10 +1,10 @@
 import { NavLink } from "react-router-dom";
-import { useAuthContext } from "../../contexts/AuthContext";
+import { useAuthContext } from "../../../contexts/AuthContext";
 
 import style from './Header.module.css';
 
 
-export const Header = () => {
+const _Header = () => {
 
     const { email, onSubmitLogout } = useAuthContext();
     const name = email?.split('@')[0];
@@ -34,3 +34,5 @@ export const Header = () => {
         </header>
     );
 }
+
+export default _Header;

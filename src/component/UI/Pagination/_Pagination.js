@@ -1,9 +1,9 @@
 import { useBookContext } from "../../../contexts/BookContext";
 
-import style from './Pagenation.module.css';
+import style from './Pagination.module.css';
 
 
-export const Pagenation = ({ count, page }) => {
+const _Pagination = ({ count, page }) => {
     const { setPage } = useBookContext({});
 
     return (
@@ -34,3 +34,5 @@ export const Pagenation = ({ count, page }) => {
         </div>
     );
 }
+
+export default _Pagination;

@@ -13,7 +13,7 @@ const Icon = ({ isOpen }) => {
 };
 
 // CustomSelect component
-export const CustomSelect = ({ placeHolder, options, onChange, align }) => {
+const _CustomSelect = ({ placeHolder, options, onChange, align }) => {
     // State variables using React hooks
     const [showMenu, setShowMenu] = useState(false); // Controls the visibility of the dropdown menu
     const [selectedValue, setSelectedValue] = useState([]); // Stores the selected value(s)
@@ -83,3 +83,5 @@ export const CustomSelect = ({ placeHolder, options, onChange, align }) => {
         </div>
     );
 }
+
+export default _CustomSelect;

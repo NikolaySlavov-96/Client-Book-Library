@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import style from './Register.module.css';
 
-import { useAuthContext } from '../../../contexts/AuthContext';
-import { useForm } from '../../../hooks/useForm';
+import { useAuthContext } from '../../../../contexts/AuthContext';
+import { useForm } from '../../../../hooks/useForm';
 
 
-export const Register = () => {
+const _Register = () => {
     const { onSubmitRegister } = useAuthContext();
 
     const { values, changeHandler, onSubmit, errors } = useForm({
@@ -65,3 +65,5 @@ export const Register = () => {
         </section >
     );
 }
+
+export default _Register;

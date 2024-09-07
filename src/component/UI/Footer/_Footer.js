@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import style from './Footer.module.css';
 
-export const Footer = () => {
+const _Footer = () => {
     return (
         <footer className='global__bg-radius'>
             <div className={`'shadow' ${style['div']}`}>
@@ -10,3 +10,5 @@ export const Footer = () => {
         </footer>
     );
 }
+
+export default _Footer;

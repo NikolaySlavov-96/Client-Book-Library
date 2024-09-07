@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import style from './Login.module.css';
 
-import { useAuthContext } from '../../../contexts/AuthContext';
-import { useForm } from '../../../hooks/useForm';
+import { useAuthContext } from '../../../../contexts/AuthContext';
+import { useForm } from '../../../../hooks/useForm';
 
 
-export const Login = () => {
+const _Login = () => {
 
     const { onSubmitLogin } = useAuthContext();
 
@@ -40,3 +40,5 @@ export const Login = () => {
         </section >
     );
 }
+
+export default _Login;

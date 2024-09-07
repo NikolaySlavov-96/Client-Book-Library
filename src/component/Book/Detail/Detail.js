@@ -8,7 +8,8 @@ import { bookServiceFactory } from "../../../services/book";
 import { useAuthContext } from "../../../contexts/AuthContext";
 import { useHeadContext } from "../../../contexts/HeadContext";
 import { useBookContext } from "../../../contexts/BookContext";
-import { CustomSelect } from "../../CustomSelect/CustomSelect";
+
+import { CustomSelect } from "../../UI";
 
 
 export const Detail = () => {

@@ -1,6 +1,7 @@
 import { useBookContext } from "../../../contexts/BookContext";
 import { BodyCard } from "../BodyCard/BodyCard";
-import { CustomSelect } from "../../CustomSelect/CustomSelect";
+
+import { CustomSelect } from "../../UI";
 
 import style from './UserCollectionBook.module.css';
 
