@@ -1,18 +1,18 @@
+import { memo } from "react";
 import { Link } from "react-router-dom";
 
 import style from './BookCard.module.css';
 
-
-export const BookCard = ({ author, booktitle, genre, owner, id, image }) => {
+const _BookCard = ({ Author, bookTitle, genre, owner, id, image }) => {
     return (
         <article className={style["card__art"]}>
             <div className={style["card__img"]}>
-                <img src={image} alt={booktitle} />
+                <img src={image} alt={bookTitle} />
             </div>
-            <h1>{booktitle}</h1>
+            <h1>{bookTitle}</h1>
             <div className={style['card__info']}>
-                <p>Title: <span >{booktitle}</span></p>
-                <p>Author: <span >{author.name}</span></p>
+                <p>Title: <span >{bookTitle}</span></p>
+                <p>Author: <span >{Author?.name}</span></p>
                 <p>Genre: <span >{genre}</span></p>
             </div>
             <div className={style['card__link']}>
@@ -21,3 +21,5 @@ export const BookCard = ({ author, booktitle, genre, owner, id, image }) => {
         </article >
     );
 }
+
+export default memo(_BookCard);

@@ -1,4 +1,6 @@
+import { memo } from "react";
 import { NavLink } from "react-router-dom";
+
 import { useAuthContext } from "../../../contexts/AuthContext";
 
 import style from './Header.module.css';
@@ -35,4 +37,4 @@ const _Header = () => {
     );
 }
 
-export default _Header;
+export default memo(_Header);

@@ -1,21 +1,24 @@
+import { memo } from 'react';
 import { useBookContext } from '../../../contexts/BookContext';
+
 import { useForm } from '../../../hooks/useForm';
+
 import style from './Create.module.css';
 
-export const Create = () => {
+const _Create = () => {
 
     const { onSubmitCreateProduct, error } = useBookContext();
 
     const { values, changeHandler, onSubmit, errors } = useForm({
         author: '',
-        booktitle: '',
+        bookTitle: '',
         image: '',
-        genge: '',
+        genre: '',
     }, onSubmitCreateProduct, {
         author: ['required', '5'],
-        booktitle: ['required', '5'],
+        bookTitle: ['required', '5'],
         // image: ['required', '5'],
-        // genge: ['required', '5'],
+        // genre: ['required', '5'],
     });
 
     return (
@@ -39,14 +42,14 @@ export const Create = () => {
                         {errors.image && (<p className='error'>{errors.image}</p>)}
                     </div >
                     <div>
-                        <label htmlFor="booktitle">Booktitle:</label>
-                        <input type="text" name="booktitle" id="booktitle" placeholder="Book Name" value={values.booktitle} onChange={changeHandler} onBlur={changeHandler} />
-                        {errors.booktitle && (<p className='error'>{errors.booktitle}</p>)}
+                        <label htmlFor="bookTitle">BookTitle:</label>
+                        <input type="text" name="bookTitle" id="bookTitle" placeholder="Book Name" value={values.bookTitle} onChange={changeHandler} onBlur={changeHandler} />
+                        {errors.bookTitle && (<p className='error'>{errors.bookTitle}</p>)}
                     </div >
                     <div>
-                        <label htmlFor="genge">Genge of Book:</label>
-                        <input type="text" name="genge" id="genge" placeholder="Genge of Book" value={values.genge} onChange={changeHandler} onBlur={changeHandler} />
-                        {errors.genge && (<p className='error'>{errors.genge}</p>)}
+                        <label htmlFor="genre">Genre of Book:</label>
+                        <input type="text" name="genre" id="genre" placeholder="Genre of Book" value={values.genre} onChange={changeHandler} onBlur={changeHandler} />
+                        {errors.genre && (<p className='error'>{errors.genre}</p>)}
                     </div >
 
                     <button>Create new Book</button >
@@ -55,3 +58,5 @@ export const Create = () => {
         </section >
     );
 }
+
+export default memo(_Create);

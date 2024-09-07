@@ -1,3 +1,4 @@
+export { default as BookCard } from './BookCard/_BookCard';
 export { default as CustomSelect } from './CustomSelect/_CustomSelect';
 export { default as Footer } from './Footer/_Footer';
 export { default as Header } from './Header/_Header';

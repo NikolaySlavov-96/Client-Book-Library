@@ -8,35 +8,53 @@ const BookContext = createContext();
 
 export const BookProvider = ({ children }) => {
     const navigate = useNavigate();
+
     const [book, setBook] = useState({});
     const [limit, setLimit] = useState(12);
     const [page, setPage] = useState(1);
     const [type, setType] = useState('');
+
     const bookService = useService(bookServiceFactory);
+
     const [error, setError] = useState([]);
 
     const data = {
-        'book': () => bookService.getProducts({ page, limit }, type),
-        'forpurchase': () => bookService.getUserBooks({ page, limit }, type),
-        'purchase': () => bookService.getUserBooks({ page, limit }, type),
-        'forreading': () => bookService.getUserBooks({ page, limit }, type),
-        'reading': () => bookService.getUserBooks({ page, limit }, type),
-        'listened': () => bookService.getUserBooks({ page, limit }, type),
+        'book': () => bookService.getProducts({ page, limit }),
+        'forpurchase': () => bookService.getAllBooksByState({ page, limit, state: type }),
+        'purchase': () => bookService.getAllBooksByState({ page, limit, state: type }),
+        'forreading': () => bookService.getAllBooksByState({ page, limit, state: type }),
+        'reading': () => bookService.getAllBooksByState({ page, limit, state: type }),
+        'listened': () => bookService.getAllBooksByState({ page, limit, state: type }),
     }
 
     useEffect(() => {
         setBook({})
-        if (type !== '') {
-            data[type]()
-                .then(req => {
-                    setBook(req);
-                });
-        }
+        // if (type !== '') {
+        data['book']()
+            .then(req => {
+                console.log("🚀 ~ useEffect ~ req:", req)
+                setBook(req);
+            });
+        // }
     }, [page, limit, type]);
 
-    const getProduct = (id) => {
-        return book.find(prod => prod._id === id);
+    const getBookById = async (id) => {
+        const isExistingBook = book.rows && book?.rows.filter(b => b.id == id);
+        if (isExistingBook) {
+            return isExistingBook[0];
+        }
+        const result = await bookService.getProduct(id)
+        return result;
     }
+
+    const getStateOnBookById = async (id) => {
+        try {
+            const result = await bookService.getBookState(id);
+            return result;
+        } catch (err) {
+            setError(err.message)
+        }
+    };
 
     const onSubmitCreateProduct = async (data) => {
         try {
@@ -82,7 +100,7 @@ export const BookProvider = ({ children }) => {
 
     const addingBookInList = async (id, type) => {
         try {
-            const result = await bookService.addinBookInLib({ book_id: id }, type);
+            const result = await bookService.addBookToLibrary({ bookId: id, state: type });
             console.log(result);
         } catch (err) {
             setError(err.message);
@@ -96,7 +114,8 @@ export const BookProvider = ({ children }) => {
         page,
         book,
         error,
-        getProduct,
+        getBookById,
+        getStateOnBookById,
         onSubmitCreateProduct,
         onSubmitEditProduct,
         onSubmitDeleteProduct,

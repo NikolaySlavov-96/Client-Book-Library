@@ -2,15 +2,14 @@ import { memo, useCallback, useMemo } from "react";
 
 import { useLocation } from "react-router-dom";
 
-import { useBookContext } from "../../../contexts/BookContext";
+import { useBookContext } from "../../../../contexts/BookContext";
 
-import { BookCard } from "../../Book/Cards/BookCard";
+import { CustomSelect, Pagination, SearchField, BookCard } from "../../../UI";
 
-import { CustomSelect, Pagination, SearchField } from "../../UI";
+import ROUT_NAMES from "../../../../Constants/routNames";
+import { useForm } from "../../../../hooks/useForm";
 
 import style from './Book.module.css';
-import ROUT_NAMES from "../../../Constants/routNames";
-import { useForm } from "../../../hooks/useForm";
 
 const collectionOptions = [
     {
@@ -54,7 +53,7 @@ const pageSizeOptions = [
     },
 ]
 
-const _Book = () => {
+const _Books = () => {
 
     const location = useLocation();
 
@@ -126,4 +125,4 @@ const _Book = () => {
     );
 }
 
-export default memo(_Book);
+export default memo(_Books);
