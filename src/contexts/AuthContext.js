@@ -1,8 +1,9 @@
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { authServiceFactory } from "../services/auth";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+
+import { AuthService } from "../services";
 
 
 const AuthContext = createContext();
@@ -10,7 +11,9 @@ const AuthContext = createContext();
 export const AuthProvide = ({ children }) => {
     const [auth, setAuth] = useLocalStorage('auth', {});
     const navigate = useNavigate();
-    const authService = authServiceFactory(auth.accessToken);
+
+    const authService = AuthService(auth.accessToken);
+    
     const [error, setError] = useState([]);
 
     const onSubmitRegister = async (value) => {

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useService } from "../hooks/useService";
 
-import { bookServiceFactory } from "../services/book";
+import { BookService } from "../services";
 
 import ROUT_NAMES from "../Constants/routNames";
 
@@ -18,7 +18,7 @@ export const BookProvider = ({ children }) => {
     const [type, setType] = useState('');
     const [bookModal, setBookModal] = useState([]);
 
-    const bookService = useService(bookServiceFactory);
+    const bookService = useService(BookService);
 
     const [error, setError] = useState([]);
 

@@ -2,7 +2,7 @@ import { API } from '../Helpers';
 
 const PREFIX = '/api/book'
 
-export const bookServiceFactory = (token) => {
+const _BookServiceFactory = (token) => {
     const request = API(token);
 
     // Book Services
@@ -38,3 +38,5 @@ export const bookServiceFactory = (token) => {
         addBookToLibrary,
     }
 }
+
+export default _BookServiceFactory;

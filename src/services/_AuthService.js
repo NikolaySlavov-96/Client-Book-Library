@@ -2,7 +2,7 @@ import { API } from '../Helpers';
 
 const PREFIX = '/api/auth';
 
-export const authServiceFactory = (token) => {
+const _AuthServiceFactory = (token) => {
     const request = API(token);
 
     const register = async (data) => request.post(`${PREFIX}/register`, data);
@@ -23,3 +23,5 @@ export const authServiceFactory = (token) => {
         verifyToken,
     }
 }
+
+export default _AuthServiceFactory;

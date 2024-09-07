@@ -1,6 +1,8 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
 
+import ROUT_NAMES from "../../../Constants/routNames";
+
 import style from './BookCard.module.css';
 
 const _BookCard = ({ Author, bookTitle, genre, owner, id, image }) => {
@@ -16,7 +18,7 @@ const _BookCard = ({ Author, bookTitle, genre, owner, id, image }) => {
                 <p>Genre: <span >{genre}</span></p>
             </div>
             <div className={style['card__link']}>
-                <Link to={`/book/${id}`}>View</Link>
+                <Link to={`${ROUT_NAMES.BOOK}/${id}`}>View</Link>
             </div>
         </article >
     );
