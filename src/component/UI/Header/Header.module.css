@@ -19,9 +19,13 @@
 }
 
 .navigation__ul li {
+    padding: 6px 0px;
     list-style: none;
-    padding: 6px 12px;
     background-color: var(--btn__li);
+}
+
+.navigation__ul li a {
+    padding: 6px 12px;
 }
 
 .navigation__ul li:hover {
