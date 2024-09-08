@@ -1,29 +1,18 @@
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
-import { useHeadContext } from '../../../contexts/HeadContext';
+import { TitleFromLocation } from '../../../Helpers';
 
 const _Helmet = () => {
     const locate = useLocation();
-    const { title, setTitle } = useHeadContext();
 
-    const path = locate.pathname.split('/');
-    const pathLength = path.length;
-
-    if (pathLength === 3) {
-        setTitle(path[2]);
-        
-    } else if (pathLength === 2) {
-        setTitle(path[1]);
-    }
+    const [title, setTitle] = useState('');
 
     useEffect(() => {
-        const firstLetter = title[0].toUpperCase();
-        const allTitle = title.replace(title[0], firstLetter)
-        setTitle(allTitle)
-    }, [path])
-
+        const editedTitle = TitleFromLocation(locate);
+        setTitle(editedTitle);
+    }, [locate, setTitle])
 
     return (
         <HelmetProvider>

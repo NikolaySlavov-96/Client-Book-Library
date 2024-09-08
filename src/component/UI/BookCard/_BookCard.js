@@ -18,7 +18,7 @@ const _BookCard = ({ Author, bookTitle, genre, owner, id, image }) => {
                 <p>Genre: <span >{genre}</span></p>
             </div>
             <div className={style['card__link']}>
-                <Link to={`${ROUT_NAMES.BOOK}/${id}`}>View</Link>
+                <Link to={`${ROUT_NAMES.BOOK}/${id}`} state={{ bookTitle }}>View</Link>
             </div>
         </article >
     );
