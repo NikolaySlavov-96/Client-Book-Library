@@ -16,7 +16,7 @@ const _BookServiceFactory = (token) => {
 
     const deleteProduct = async (id) => request.remove(`${PREFIX}/` + id);
 
-    const searchBook = async (data, { page, limit }, type) => request.get(`/${type}/search?search=${data}&limit=${limit}&page=${page}`)
+    const searchBook = async ({ content, page, limit }) => request.get(`/api/search/books?search=${content}&limit=${limit}&page=${page}`)
 
 
     // BookState Services

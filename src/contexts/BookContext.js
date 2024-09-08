@@ -93,7 +93,7 @@ export const BookProvider = ({ children }) => {
 
     const onSubmitSearchWithInput = async ({ search }) => {
         try {
-            const result = await bookService.searchBook(search, { page, limit }, 'book'); //type === book
+            const result = await bookService.searchBook({ content: search, page, limit });
             setBook(result);
         } catch (err) {
             setError(err.message);
