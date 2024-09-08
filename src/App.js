@@ -1,7 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 
-import { HeadProvider } from './contexts/HeadContext';
 import { AuthProvide } from './contexts/AuthContext';
 import { BookProvider } from './contexts/BookContext';
 
@@ -15,7 +14,7 @@ import { SocketProvider } from './contexts/SocketContext';
 
 const App = () => {
     return (
-        <HeadProvider>
+        <>
             <Helmet />
             <AuthProvide>
                 <Header />
@@ -37,7 +36,7 @@ const App = () => {
                 </BookProvider>
             </AuthProvide>
             <Footer />
-        </HeadProvider>
+        </>
     );
 }
 

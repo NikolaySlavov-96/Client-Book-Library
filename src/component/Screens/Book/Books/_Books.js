@@ -57,8 +57,7 @@ const _Books = () => {
 
     const location = useLocation();
 
-    const { setType, book, page, limit, type, setLimit, onSubmitSearchWithInput, setPage } = useBookContext({});
-    const currentScreen = location.pathname.split('/');
+    const { setType, book, page, limit, setLimit, onSubmitSearchWithInput, setPage } = useBookContext({});
 
     const count = Math.ceil(book.count / limit) || 0;
 

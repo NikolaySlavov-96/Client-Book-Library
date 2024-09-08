@@ -2,7 +2,6 @@ import { memo, useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"
 
 import { useAuthContext } from "../../../../contexts/AuthContext";
-import { useHeadContext } from "../../../../contexts/HeadContext";
 import { useBookContext } from "../../../../contexts/BookContext";
 
 import { CustomSelect } from "../../../UI";
@@ -45,7 +44,6 @@ const _DetailsForBook = () => {
     const [selectPlaceholder, setSelectPlaceholder] = useState('Please select...');
     const [selectOptions, setSelectOptions] = useState([]);
 
-    const { setTitle } = useHeadContext();
     const { email } = useAuthContext();
     const { getBookById, getStateOnBookById, addingBookInList } = useBookContext();
 
@@ -53,8 +51,7 @@ const _DetailsForBook = () => {
     const loadBook = useCallback(async (bookId) => {
         const loadedBook = await getBookById(bookId);
         setBook(loadedBook);
-        setTitle(loadedBook.bookTitle);
-    }, [setBook, setTitle, getBookById]);
+    }, [setBook, getBookById]);
 
     const getBookStatus = useCallback(async (bookId) => {
         const bookResult = await getStateOnBookById(bookId);
