@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from "react";
+import { memo, useCallback, useEffect, useMemo } from "react";
 
 import { useLocation } from "react-router-dom";
 
@@ -35,6 +35,7 @@ const pageSizeOptions = [
 
 const _Books = () => {
     const location = useLocation();
+    const pathName = location.pathname;
 
     const { setType, book, page, limit, setLimit, onSubmitSearchWithInput, setPage } = useBookContext({});
 
@@ -57,18 +58,21 @@ const _Books = () => {
     }, [setLimit]);
 
     const renderName = useMemo(() => {
-        const pathName = location.pathname;
+        if (pathName === ROUT_NAMES.USER_COLLECTION) {
+            return 'Collection of Books'
+        }
 
+        return 'Catalog with Books'
+    }, [pathName]);
+
+    useEffect(() => {
         if (pathName === ROUT_NAMES.USER_COLLECTION) {
             setType(DEFAULT_LOADED_COLLECTION);
-            return 'Collection of Books'
         }
         if (pathName === ROUT_NAMES.BOOK) {
             setType(0);
         }
-
-        return 'Catalog with Books'
-    }, [location.pathname, setType]);
+    }, [pathName, setType])
 
     return (
         <section className={style["body__card"]}>
