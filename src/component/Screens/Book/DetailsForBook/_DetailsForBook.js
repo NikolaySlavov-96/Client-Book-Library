@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"
 
 import { useAuthContext } from "../../../../contexts/AuthContext";
@@ -6,42 +6,23 @@ import { useBookContext } from "../../../../contexts/BookContext";
 
 import { CustomSelect } from "../../../UI";
 
+import { ARRAY_WITH_BOOK_COLLECTIONS } from "../../../../Constants";
+
 import style from './Detail.module.css';
 
-const createBookOptions = (bookState) => {
-    const valueOfLabels = [
-        {
-            label: "Adding in For Purchase",
-            value: "forpurchase",
-        },
-        {
-            label: "Adding in Purchase",
-            value: "purchase",
-        },
-        {
-            label: "Adding in For Reading",
-            value: "forreading",
-        },
-        {
-            label: "Adding in Reading",
-            value: "reading",
-        },
-        {
-            label: "Adding in Listening",
-            value: "listened",
-        },
-    ]
 
-    return valueOfLabels.filter((b) => b.value !== bookState)
+const createBookOptions = (bookState) => {
+    return ARRAY_WITH_BOOK_COLLECTIONS.filter((b) => b.value !== bookState)
 }
 
+const DEFAULT_MESSAGE = 'Please select...';
 
 const _DetailsForBook = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
     const [book, setBook] = useState({});
-    const [selectPlaceholder, setSelectPlaceholder] = useState('Please select...');
+    const [selectPlaceholder, setSelectPlaceholder] = useState(DEFAULT_MESSAGE);
     const [selectOptions, setSelectOptions] = useState([]);
 
     const { email } = useAuthContext();
@@ -75,6 +56,10 @@ const _DetailsForBook = () => {
         addingBookInList(id, state);
     }, [addingBookInList]);
 
+    const selectedLabel = useMemo(() => (
+        typeof selectPlaceholder === 'number' ? ARRAY_WITH_BOOK_COLLECTIONS[selectPlaceholder].label : DEFAULT_MESSAGE
+    ), [selectPlaceholder]);
+
     return (
         <section className={style['detail__card']}>
             <div className={style['backward']}>
@@ -94,7 +79,7 @@ const _DetailsForBook = () => {
                 <div className={`${style['functionality__reagin']} ${style['functionality']}`}>
                     <CustomSelect
                         options={selectOptions}
-                        placeHolder={selectPlaceholder}
+                        placeHolder={selectedLabel}
                         onChange={(e) => changeState(e, book.id)}
                     />
                 </div>

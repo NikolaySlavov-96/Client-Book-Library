@@ -8,7 +8,7 @@ import { Header, Helmet, Footer } from './component/UI';
 import { VerifyAccount, Register, Login, Books, CreateBook, DetailsForBook } from './component/Screens';
 import ModalContainer from './component/Modals';
 
-import ROUT_NAMES from './Constants/routNames';
+import { ROUT_NAMES } from './Constants';
 import { SocketProvider } from './contexts/SocketContext';
 
 

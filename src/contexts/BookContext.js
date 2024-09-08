@@ -1,11 +1,11 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useService } from "../hooks/useService";
 
 import { BookService } from "../services";
 
-import ROUT_NAMES from "../Constants/routNames";
+import { ROUT_NAMES, BOOK_COLLECTION } from "../Constants";
 
 const BookContext = createContext();
 
@@ -15,31 +15,29 @@ export const BookProvider = ({ children }) => {
     const [book, setBook] = useState({});
     const [limit, setLimit] = useState(12);
     const [page, setPage] = useState(1);
-    const [type, setType] = useState('');
+    const [type, setType] = useState(BOOK_COLLECTION.BOOK); // Default type is "Book";
     const [bookModal, setBookModal] = useState([]);
 
     const bookService = useService(BookService);
 
     const [error, setError] = useState([]);
 
-    const data = {
-        'book': () => bookService.getProducts({ page, limit }),
-        'forpurchase': () => bookService.getAllBooksByState({ page, limit, state: type }),
-        'purchase': () => bookService.getAllBooksByState({ page, limit, state: type }),
-        'forreading': () => bookService.getAllBooksByState({ page, limit, state: type }),
-        'reading': () => bookService.getAllBooksByState({ page, limit, state: type }),
-        'listened': () => bookService.getAllBooksByState({ page, limit, state: type }),
-    }
+    const data = useMemo(() => ({
+        [BOOK_COLLECTION.BOOK]: ({ page, limit }) => bookService.getProducts({ page, limit }),
+        [BOOK_COLLECTION.FOR_PURCHASE]: ({ page, limit, type }) => bookService.getAllBooksByState({ page, limit, state: type }),
+        [BOOK_COLLECTION.PURCHASE]: ({ page, limit, type }) => bookService.getAllBooksByState({ page, limit, state: type }),
+        [BOOK_COLLECTION.FOR_READING]: ({ page, limit, type }) => bookService.getAllBooksByState({ page, limit, state: type }),
+        [BOOK_COLLECTION.READING]: ({ page, limit, type }) => bookService.getAllBooksByState({ page, limit, state: type }),
+        [BOOK_COLLECTION.LISTENING]: ({ page, limit, type }) => bookService.getAllBooksByState({ page, limit, state: type }),
+    }), [])
 
     useEffect(() => {
         setBook({})
-        // if (type !== '') {
-        data['book']()
+        data[type]({ page, limit, type })
             .then(req => {
                 setBook(req);
             });
-        // }
-    }, [page, limit, type]);
+    }, [page, limit, type, data]);
 
     const getBookById = async (id) => {
         const isExistingBook = book.rows && book?.rows.filter(b => b.id == id);
@@ -103,7 +101,7 @@ export const BookProvider = ({ children }) => {
     const addingBookInList = async (bookId, state) => {
         try {
             const result = await bookService.addBookToLibrary({ bookId, state });
-            console.log("🚀 ~ addingBookInList ~ result:", result)
+            // TODO Visualize message
         } catch (err) {
             setError(err.message);
         }

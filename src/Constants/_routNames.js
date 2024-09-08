@@ -1,6 +1,6 @@
 const AUTH_PREFIX = '/auth';
 
-const ROUT_NAMES = {
+const _ROUT_NAMES = {
     HOME: '/',
     BOOK: '/book',
     CREATE_BOOK: '/create',
@@ -11,4 +11,4 @@ const ROUT_NAMES = {
     VERIFY_TOKEN: `${AUTH_PREFIX}/verify/:verifyToken`,
 };
 
-export default ROUT_NAMES;
+export default _ROUT_NAMES;

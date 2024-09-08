@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
 
-import ROUT_NAMES from "../../../Constants/routNames";
+import { ROUT_NAMES } from "../../../Constants";
 
 import style from './BookCard.module.css';
 

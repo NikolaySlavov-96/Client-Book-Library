@@ -6,33 +6,13 @@ import { useBookContext } from "../../../../contexts/BookContext";
 
 import { CustomSelect, Pagination, SearchField, BookCard } from "../../../UI";
 
-import ROUT_NAMES from "../../../../Constants/routNames";
+import { ROUT_NAMES, ARRAY_WITH_BOOK_COLLECTIONS, BOOK_COLLECTION } from '../../../../Constants';
+
 import { useForm } from "../../../../hooks/useForm";
 
 import style from './Book.module.css';
 
-const collectionOptions = [
-    {
-        label: "Adding in For Purchase",
-        value: "forpurchase",
-    },
-    {
-        label: "Adding in Purchase",
-        value: "purchase",
-    },
-    {
-        label: "Adding in For Reading",
-        value: "forreading",
-    },
-    {
-        label: "Adding in Reading",
-        value: "reading",
-    },
-    {
-        label: "Adding in Listening",
-        value: "listened",
-    },
-];
+const DEFAULT_LOADED_COLLECTION = BOOK_COLLECTION.FOR_PURCHASE;
 
 const pageSizeOptions = [
     {
@@ -54,7 +34,6 @@ const pageSizeOptions = [
 ]
 
 const _Books = () => {
-
     const location = useLocation();
 
     const { setType, book, page, limit, setLimit, onSubmitSearchWithInput, setPage } = useBookContext({});
@@ -81,11 +60,15 @@ const _Books = () => {
         const pathName = location.pathname;
 
         if (pathName === ROUT_NAMES.USER_COLLECTION) {
+            setType(DEFAULT_LOADED_COLLECTION);
             return 'Collection of Books'
+        }
+        if (pathName === ROUT_NAMES.BOOK) {
+            setType(0);
         }
 
         return 'Catalog with Books'
-    }, [location.pathname]);
+    }, [location.pathname, setType]);
 
     return (
         <section className={style["body__card"]}>
@@ -93,8 +76,8 @@ const _Books = () => {
 
             <div className={`global__bg-radius ${style['partial__container']}`}>
                 {location.pathname === ROUT_NAMES.USER_COLLECTION ? <CustomSelect
-                    options={collectionOptions}
-                    placeHolder='Please select...'
+                    options={ARRAY_WITH_BOOK_COLLECTIONS}
+                    placeHolder={ARRAY_WITH_BOOK_COLLECTIONS[DEFAULT_LOADED_COLLECTION].label}
                     onChange={changeState}
                     size={'240'}
                 /> : <div></div>}

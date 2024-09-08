@@ -20,7 +20,7 @@ const _BookServiceFactory = (token) => {
 
 
     // BookState Services
-    const getAllBooksByState = async ({ page, limit, state }) => request.get(`${PREFIX}/booksState/state=${state}?limit=${limit}&page=${page}`);
+    const getAllBooksByState = async ({ page, limit, state }) => request.get(`${PREFIX}/booksState/${state}?limit=${limit}&page=${page}`);
 
     const getBookState = async (id) => request.get(`${PREFIX}/bookState/` + id);
 
