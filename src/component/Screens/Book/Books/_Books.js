@@ -65,8 +65,8 @@ const _Books = () => {
     const { values, changeHandler, onSubmit } = useForm({
         search: '',
     }, onSubmitSearchWithInput, {
-        search: ''
-    });
+        search: ['required', '2']
+    }, false);
 
     const changeState = useCallback((e) => {
         const state = e.value
