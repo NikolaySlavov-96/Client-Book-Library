@@ -53,7 +53,7 @@ export const AuthProvide = ({ children }) => {
         navigate('/')
     }
 
-    const verifyAccoountWithToken = async (token) => {
+    const verifyAccountWithToken = async (token) => {
         try {
             const res = await authService.verifyToken(token);
             navigate('/auth/login')
@@ -71,7 +71,7 @@ export const AuthProvide = ({ children }) => {
         accessToken: auth.accessToken,
         userId: auth.id,
         error,
-        verifyAccoountWithToken,
+        verifyAccountWithToken,
     }
 
     return (

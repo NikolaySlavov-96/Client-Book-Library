@@ -9,10 +9,10 @@ import { useAuthContext } from '../../../../contexts/AuthContext';
 const _VerifyAccount = () => {
 
     const { verifyToken } = useParams();
-    const { verifyAccoountWithToken } = useAuthContext();
+    const { verifyAccountWithToken } = useAuthContext();
 
     useEffect(() => {
-        verifyAccoountWithToken(verifyToken);
+        verifyAccountWithToken(verifyToken);
     }, []);
 
 
