@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useService } from "../hooks/useService";
@@ -22,22 +22,27 @@ export const BookProvider = ({ children }) => {
 
     const [error, setError] = useState([]);
 
-    const data = useMemo(() => ({
-        [BOOK_COLLECTION.BOOK]: ({ page, limit }) => bookService.getProducts({ page, limit }),
-        [BOOK_COLLECTION.FOR_PURCHASE]: ({ page, limit, type }) => bookService.getAllBooksByState({ page, limit, state: type }),
-        [BOOK_COLLECTION.PURCHASE]: ({ page, limit, type }) => bookService.getAllBooksByState({ page, limit, state: type }),
-        [BOOK_COLLECTION.FOR_READING]: ({ page, limit, type }) => bookService.getAllBooksByState({ page, limit, state: type }),
-        [BOOK_COLLECTION.READING]: ({ page, limit, type }) => bookService.getAllBooksByState({ page, limit, state: type }),
-        [BOOK_COLLECTION.LISTENING]: ({ page, limit, type }) => bookService.getAllBooksByState({ page, limit, state: type }),
-    }), [])
+    const LoadingBooks = useCallback(async (data) => {
+        try {
+            if (data.type === BOOK_COLLECTION.BOOK) {
+                const result = await bookService.getProducts(data);
+                setBook(result);
+                return
+            }
+
+            if (Number(data.type)) {
+                const result = await bookService.getAllBooksByState(data);
+                setBook(result);
+            }
+        } catch (err) {
+            console.log('LoadingBooks --->: ', err);
+        }
+    }, []);
 
     useEffect(() => {
         setBook({})
-        data[type]({ page, limit, type })
-            .then(req => {
-                setBook(req);
-            });
-    }, [page, limit, type, data]);
+        LoadingBooks({ page, limit, type });
+    }, [LoadingBooks, page, limit, type]);
 
     const getBookById = async (id) => {
         const isExistingBook = book.rows && book?.rows.filter(b => b.id == id);

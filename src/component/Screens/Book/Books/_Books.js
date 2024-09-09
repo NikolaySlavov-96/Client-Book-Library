@@ -74,6 +74,16 @@ const _Books = () => {
         }
     }, [pathName, setType])
 
+    const RenderComponent = useCallback((book) => {
+        if (!book?.rows?.length) {
+            return (
+                <h2>There are no items added yet.</h2>
+            );
+        }
+
+        return book?.rows?.map(e => <BookCard key={e.bookId} {...e} />)
+    }, [])
+
     return (
         <section className={style["body__card"]}>
             <h1>{renderName}</h1>
@@ -101,8 +111,7 @@ const _Books = () => {
             </div>
 
             <div className={style["body__list"]}>
-                {book?.rows && book?.rows?.map(e => <BookCard key={e.id} {...e} />)}
-                {!book?.rows?.length && (<h2>There are no items added yet.</h2>)}
+                <RenderComponent book/>
             </div>
 
             <Pagination count={count} page={page} onSubmit={setPage} />
