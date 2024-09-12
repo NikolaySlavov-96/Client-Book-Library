@@ -6,13 +6,15 @@ import { useBookContext } from "../../../../contexts/BookContext";
 
 import { CustomSelect, Pagination, SearchField, BookCard } from "../../../UI";
 
-import { ROUT_NAMES, ARRAY_WITH_BOOK_COLLECTIONS, BOOK_COLLECTION } from '../../../../Constants';
+import { ROUT_NAMES } from '../../../../Constants';
 
 import { useForm } from "../../../../hooks/useForm";
 
+import { SelectMapper } from "../../../../Helpers";
+
 import style from './Book.module.css';
 
-const DEFAULT_LOADED_COLLECTION = BOOK_COLLECTION.FOR_PURCHASE;
+const DEFAULT_LOADED_COLLECTION = 1;
 
 const pageSizeOptions = [
     {
@@ -37,7 +39,12 @@ const _Books = () => {
     const location = useLocation();
     const pathName = location.pathname;
 
-    const { setType, book, page, limit, setLimit, onSubmitSearchWithInput, setPage } = useBookContext({});
+    const { setType, book, page, limit, setLimit, onSubmitSearchWithInput, setPage, states } = useBookContext({});
+
+    const mappedStates = useMemo(() => {
+        const data = SelectMapper(states, { value: 'id', label: 'stateName' });
+        return data;
+    }, [states]);
 
     const count = Math.ceil(book.count / limit) || 0;
 
@@ -90,8 +97,8 @@ const _Books = () => {
 
             <div className={`global__bg-radius ${style['partial__container']}`}>
                 {location.pathname === ROUT_NAMES.USER_COLLECTION ? <CustomSelect
-                    options={ARRAY_WITH_BOOK_COLLECTIONS}
-                    placeHolder={ARRAY_WITH_BOOK_COLLECTIONS[DEFAULT_LOADED_COLLECTION].label}
+                    options={mappedStates}
+                    placeHolder={mappedStates[DEFAULT_LOADED_COLLECTION].label}
                     onChange={changeState}
                     size={'240'}
                 /> : <div></div>}

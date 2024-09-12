@@ -6,13 +6,13 @@ import { useBookContext } from "../../../../contexts/BookContext";
 
 import { CustomSelect } from "../../../UI";
 
-import { ARRAY_WITH_BOOK_COLLECTIONS } from "../../../../Constants";
+import { SelectMapper } from "../../../../Helpers";
 
 import style from './Detail.module.css';
 
 
-const createBookOptions = (bookState) => {
-    return ARRAY_WITH_BOOK_COLLECTIONS.filter((b) => b.value !== bookState)
+const createBookOptions = (bookState, mappedStates) => {
+    return mappedStates.filter((b) => b.value !== bookState)
 }
 
 const DEFAULT_MESSAGE = 'Please select...';
@@ -26,8 +26,12 @@ const _DetailsForBook = () => {
     const [selectOptions, setSelectOptions] = useState([]);
 
     const { email } = useAuthContext();
-    const { getBookById, getStateOnBookById, addingBookInList } = useBookContext();
+    const { getBookById, getStateOnBookById, addingBookInList, states } = useBookContext();
 
+    const mappedStates = useMemo(() => {
+        const data = SelectMapper(states, { value: 'id', label: 'stateName' });
+        return data;
+    }, [states]);
 
     const loadBook = useCallback(async (bookId) => {
         const loadedBook = await getBookById(bookId);
@@ -36,11 +40,11 @@ const _DetailsForBook = () => {
 
     const getBookStatus = useCallback(async (bookId) => {
         const bookResult = await getStateOnBookById(bookId);
-        const bookState = bookResult?.bookState;
+        const bookState = bookResult?.stateId;
         setSelectPlaceholder(bookState);
-        const bookOptions = createBookOptions(bookState);
+        const bookOptions = createBookOptions(bookState, mappedStates);
         setSelectOptions(bookOptions);
-    }, [getStateOnBookById, setSelectPlaceholder]);
+    }, [getStateOnBookById, setSelectPlaceholder, mappedStates]);
 
     useEffect(() => {
         loadBook(id);
@@ -57,8 +61,8 @@ const _DetailsForBook = () => {
     }, [addingBookInList]);
 
     const selectedLabel = useMemo(() => (
-        typeof selectPlaceholder === 'number' ? ARRAY_WITH_BOOK_COLLECTIONS[selectPlaceholder].label : DEFAULT_MESSAGE
-    ), [selectPlaceholder]);
+        typeof selectPlaceholder === 'number' ? mappedStates[selectPlaceholder].label : DEFAULT_MESSAGE
+    ), [mappedStates, selectPlaceholder]);
 
     return (
         <section className={style['detail__card']}>
