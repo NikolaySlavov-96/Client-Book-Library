@@ -5,26 +5,43 @@ import { useService } from "../hooks/useService";
 
 import { BookService } from "../services";
 
-import { ROUT_NAMES, BOOK_COLLECTION } from "../Constants";
+import { ROUT_NAMES } from "../Constants";
+
+const BOOK_TYPE = 0;
 
 const BookContext = createContext();
 
 export const BookProvider = ({ children }) => {
     const navigate = useNavigate();
 
+    const [states, setState] = useState([]);
+
     const [book, setBook] = useState({});
     const [limit, setLimit] = useState(12);
     const [page, setPage] = useState(1);
-    const [type, setType] = useState(BOOK_COLLECTION.BOOK); // Default type is "Book";
+    const [type, setType] = useState(BOOK_TYPE); // Default type is "Book";
     const [bookModal, setBookModal] = useState([]);
 
     const bookService = useService(BookService);
 
     const [error, setError] = useState([]);
 
+    const loadingAllStatesForBook = useCallback(async () => {
+        try {
+            const result = await bookService.getStates();
+            setState(result);
+        } catch (err) {
+            console.log('loadingAllStatesForBook --->: ', err);
+        }
+    }, []);
+
+    useEffect(() => {
+        loadingAllStatesForBook();
+    }, []);
+
     const LoadingBooks = useCallback(async (data) => {
         try {
-            if (data.type === BOOK_COLLECTION.BOOK) {
+            if (data.type === BOOK_TYPE) {
                 const result = await bookService.getProducts(data);
                 setBook(result);
                 return
@@ -119,6 +136,7 @@ export const BookProvider = ({ children }) => {
         page,
         book,
         error,
+        states,
         bookModal,
         getBookById,
         getStateOnBookById,
