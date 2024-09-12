@@ -17,6 +17,7 @@ export const BookProvider = ({ children }) => {
     const [states, setState] = useState([]);
 
     const [book, setBook] = useState({});
+    const [searchEmail, setSearchEmail] = useState('');
     const [limit, setLimit] = useState(12);
     const [page, setPage] = useState(1);
     const [type, setType] = useState(BOOK_TYPE); // Default type is "Book";
@@ -38,6 +39,22 @@ export const BookProvider = ({ children }) => {
     useEffect(() => {
         loadingAllStatesForBook();
     }, []);
+
+    const LoadingBookFromEmail = useCallback(async (data) => {
+        try {
+            if (data.content !== '') { // Search By email
+                const result = await bookService.searchBookByEmailOnUser(data);
+                setBook(result);
+                return
+            }
+        } catch (err) {
+            console.log('LoadingBookFromEmail --->: ', err);
+        }
+    }, []);
+
+    useEffect(() => {
+        LoadingBookFromEmail({ content: searchEmail });
+    }, [searchEmail])
 
     const LoadingBooks = useCallback(async (data) => {
         try {
@@ -139,6 +156,7 @@ export const BookProvider = ({ children }) => {
         states,
         bookModal,
         getBookById,
+        setSearchEmail,
         getStateOnBookById,
         onSubmitCreateProduct,
         onSubmitEditProduct,

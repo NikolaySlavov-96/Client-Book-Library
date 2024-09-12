@@ -1,6 +1,7 @@
 import { API } from '../Helpers';
 
 const PREFIX = '/book'
+const SEARCH = '/search';
 
 const _BookServiceFactory = (token) => {
     const request = API(token);
@@ -20,7 +21,10 @@ const _BookServiceFactory = (token) => {
     const deleteProduct = async (id) => request.remove(`${PREFIX}/` + id);
 
     // Search book
-    const searchBook = async ({ content, page, limit }) => request.get(`/search/books?search=${content}&limit=${limit}&page=${page}`)
+    const searchBook = async ({ content, page, limit }) => request.get(`${SEARCH}/books?search=${content}&limit=${limit}&page=${page}`);
+
+    const searchBookByEmailOnUser = async ({ content, page, limit }) => request.get(`${SEARCH}/email?email=${content}`);
+    // const searchBookByEmailOnUser = async ({ content, page, limit }) => request.get(`/search/email?email=${content}&limit=${limit}&page=${page}`);
 
 
     // BookState Services
@@ -41,6 +45,7 @@ const _BookServiceFactory = (token) => {
         getAllBooksByState,
         getBookState,
         addBookToLibrary,
+        searchBookByEmailOnUser,
     }
 }
 

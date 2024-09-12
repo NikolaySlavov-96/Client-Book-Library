@@ -1,23 +1,27 @@
-import { memo, useEffect } from "react";
+import { memo, useEffect, } from "react";
+
+import { useParams } from "react-router-dom";
 
 import { useBookContext } from "../../../../contexts/BookContext";
 
 import { Pagination, QueryBar, ListRenderBook } from "../../../UI";
 
-import style from './Book.module.css';
+import style from './_SearchByEmail.module.css';
 
-const _Books = () => {
-    const { setType, book, page, limit, setPage } = useBookContext({});
+const _SearchByEmail = () => {
+    const param = useParams();
+
+    const { book, page, limit, setPage, setType, setSearchEmail } = useBookContext({});
 
     const count = Math.ceil(book.count / limit) || 0;
 
     useEffect(() => {
-        setType(0);
-    }, [setType])
+        setSearchEmail(param.email);
+    }, [setType, setSearchEmail, param.email])
 
     return (
         <section className={style["body__card"]}>
-            <h1>Catalog with Books</h1>
+            <h1>Review user books - ??with email</h1>
 
             <QueryBar
                 hasLeftSelector={false}
@@ -30,4 +34,4 @@ const _Books = () => {
     );
 }
 
-export default memo(_Books);
+export default memo(_SearchByEmail);

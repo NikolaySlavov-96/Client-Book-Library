@@ -1,0 +1,1 @@
+export const DEFAULT_LOADED_COLLECTION = 1;
