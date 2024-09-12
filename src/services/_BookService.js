@@ -1,9 +1,12 @@
 import { API } from '../Helpers';
 
-const PREFIX = '/api/book'
+const PREFIX = '/book'
 
 const _BookServiceFactory = (token) => {
     const request = API(token);
+
+    // Get book States ( id, title, symbol ) / For Reading, Reading and e.t.n.
+    const getStates = async () => request.get(`${PREFIX}/bookStates/all`);
 
     // Book Services
     const getProducts = async ({ page, limit }) => request.get(`${PREFIX}?limit=${limit}&page=${page}`);
@@ -16,17 +19,19 @@ const _BookServiceFactory = (token) => {
 
     const deleteProduct = async (id) => request.remove(`${PREFIX}/` + id);
 
-    const searchBook = async ({ content, page, limit }) => request.get(`/api/search/books?search=${content}&limit=${limit}&page=${page}`)
+    // Search book
+    const searchBook = async ({ content, page, limit }) => request.get(`/search/books?search=${content}&limit=${limit}&page=${page}`)
 
 
     // BookState Services
-    const getAllBooksByState = async ({ page, limit, state }) => request.get(`${PREFIX}/booksState/${state}?limit=${limit}&page=${page}`);
+    const getAllBooksByState = async ({ page, limit, type }) => request.get(`${PREFIX}/booksState/${type}?limit=${limit}&page=${page}`);
 
     const getBookState = async (id) => request.get(`${PREFIX}/bookState/` + id);
 
-    const addBookToLibrary = async (data) => request.post(`/api/book/state`, data);
+    const addBookToLibrary = async (data) => request.post(`${PREFIX}/state`, data);
 
     return {
+        getStates,
         getProducts,
         getProduct,
         createProduct,

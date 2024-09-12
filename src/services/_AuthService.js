@@ -1,6 +1,6 @@
 import { API } from '../Helpers';
 
-const PREFIX = '/api/auth';
+const PREFIX = '/auth';
 
 const _AuthServiceFactory = (token) => {
     const request = API(token);
