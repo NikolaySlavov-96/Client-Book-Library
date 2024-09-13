@@ -23,7 +23,7 @@ export const AuthProvide = ({ children }) => {
     const onSubmitRegister = async (value) => {
         try {
             const data = await authService.register(value);
-            return data;            
+            return data;
         } catch (err) {
             alert(err.message);
         }
@@ -34,7 +34,9 @@ export const AuthProvide = ({ children }) => {
             const data = await authService.login(value);
 
             if (data.messageCode === ServerError.SUCCESSFULLY_LOGIN.messageCode) {
-                setUserData(value);
+                const newValue = value;
+                newValue.currentDate = new Date();
+                setUserData(newValue);
                 setTokenData(data.userInfo);
             }
 
@@ -53,6 +55,19 @@ export const AuthProvide = ({ children }) => {
 
         }
     }
+
+    const autoLogOut = () => {
+        if (userData.email) {
+            const currentTime = new Date().getTime();
+            const userDataDate = new Date(userData.currentDate).getTime();
+
+            const differenceBetweenDate = currentTime - userDataDate;
+            if (currentTime > userDataDate && differenceBetweenDate - 1800000 > 0) {
+                onSubmitLogout()
+            }
+        }
+    };
+    autoLogOut()
 
     const verifyAccountWithToken = async (token) => {
         try {
