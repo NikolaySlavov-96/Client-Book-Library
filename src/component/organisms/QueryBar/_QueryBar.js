@@ -8,7 +8,7 @@ import { DEFAULT_LOADED_COLLECTION } from "../../../Constants/_collection";
 
 import { useForm } from "../../../hooks/useForm";
 
-import style from './QueryBar.module.css';
+import style from './_QueryBar.module.css';
 
 const pageSizeOptions = [
     {
@@ -52,7 +52,7 @@ const _QueryBar = (props) => {
     }, [setLimit]);
 
     return (
-        <div className={`global__bg-radius ${style['partial__container']}`}>
+        <div className={`global__bg-radius ${style['container']}`}>
             {hasLeftSelector ? <Select
                 options={mappedStates}
                 placeHolder={mappedStates[DEFAULT_LOADED_COLLECTION].label}

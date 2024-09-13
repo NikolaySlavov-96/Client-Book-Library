@@ -3,7 +3,7 @@ import { memo, useEffect } from "react";
 import { useBookContext } from "../../../../contexts/BookContext";
 
 import { Pagination } from "../../../molecules";
-import { QueryBar, ListRenderBook } from "../../../UI";
+import { QueryBar, ListRenderBook } from "../../../organisms";
 
 import style from './Book.module.css';
 

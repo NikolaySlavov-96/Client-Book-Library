@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { useBookContext } from "../../../../contexts/BookContext";
 
 import { Pagination } from "../../../molecules";
-import { QueryBar, ListRenderBook } from "../../../UI";
+import { QueryBar, ListRenderBook } from "../../../organisms";
 
 import style from './_SearchByEmail.module.css';
 
