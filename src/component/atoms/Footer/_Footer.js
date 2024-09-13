@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 
-import style from './Footer.module.css';
+import style from './_Footer.module.css';
 
 const _Footer = () => {
     return (

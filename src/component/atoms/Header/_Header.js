@@ -3,8 +3,9 @@ import { NavLink } from "react-router-dom";
 
 import { useAuthContext } from "../../../contexts/AuthContext";
 
-import style from './Header.module.css';
 import { ROUT_NAMES } from "../../../Constants";
+
+import style from './_Header.module.css';
 
 const FIRST_NAME = 'Guest';
 const HEADER_BUTTON_TITLES = {
