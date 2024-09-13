@@ -1,21 +1,36 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useAuthContext } from '../../../../contexts/AuthContext';
+
 import { useForm } from '../../../../hooks/useForm';
+
+import { ROUT_NAMES, ServerError } from '../../../../Constants';
 
 import style from './Register.module.css';
 
 const _Register = () => {
+    const navigate = useNavigate();
+
     const { onSubmitRegister } = useAuthContext();
+
+    const onSubmitFunction = useCallback(async (data) => {
+        const result = await onSubmitRegister(data);
+
+        if (result?.messageCode === ServerError.SUCCESSFULLY_REGISTER.messageCode) {
+            navigate(ROUT_NAMES.LOGIN);
+        }
+
+        // Show Modal
+    }, [onSubmitRegister, navigate]);
 
     const { values, changeHandler, onSubmit, errors } = useForm({
         email: '',
         password: '',
         rePassword: '',
         year: '',
-    }, onSubmitRegister, {
+    }, onSubmitFunction, {
         email: ['required'],
         password: ['required', '5'],
     });
@@ -25,7 +40,7 @@ const _Register = () => {
         year: '',
     }
     if (values.password !== values.rePassword) {
-        err.rePassword = 'Pasword don\'t match';
+        err.rePassword = 'Password don\'t match';
     }
 
     if (values.year < 0 || values.year > 110) {

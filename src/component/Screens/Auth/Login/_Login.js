@@ -1,22 +1,37 @@
-import { memo } from 'react';
-import { Link } from 'react-router-dom';
+import { memo, useCallback } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useAuthContext } from '../../../../contexts/AuthContext';
+
 import { useForm } from '../../../../hooks/useForm';
+
+import { ROUT_NAMES, ServerError } from '../../../../Constants';
 
 import style from './Login.module.css';
 
 const _Login = () => {
+    const navigate = useNavigate();
 
     const { onSubmitLogin } = useAuthContext();
+
+    const onSubmitFunction = useCallback(async (data) => {
+        const result = await onSubmitLogin(data);
+
+        if (result?.messageCode === ServerError.SUCCESSFULLY_LOGIN.messageCode) {
+            navigate(ROUT_NAMES.HOME);
+        }
+        
+        // Show Modal
+    }, [onSubmitLogin, navigate]);
 
     const { values, changeHandler, onSubmit, errors } = useForm({
         email: '',
         password: '',
-    }, onSubmitLogin, {
+    }, onSubmitFunction, {
         email: ['required'],
         password: ['required'],
     });
+
     return (
         <section className={`global__bg-radius ${style["login__section"]}`}>
             <h1 className={style["login__title"]}>Login Page</h1>

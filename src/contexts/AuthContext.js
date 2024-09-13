@@ -1,35 +1,31 @@
-import { createContext, useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { createContext, useContext, } from "react";
 
-import { useLocalStorage } from "../hooks/useLocalStorage";
+import { useLocalStorage } from "../hooks";
 
 import { AuthService } from "../services";
 
+import { ServerError } from '../Constants';
+
+const STORAGE_PREFIX = '@Book_';
+const STORAGE_KEYS = {
+    TOKEN_DATE: `${STORAGE_PREFIX}TokenData`,
+    USER_DATA: `${STORAGE_PREFIX}UserData`
+}
 
 const AuthContext = createContext();
 
 export const AuthProvide = ({ children }) => {
-    const [auth, setAuth] = useLocalStorage('auth', {});
-    const navigate = useNavigate();
+    const [tokenData, setTokenData] = useLocalStorage(STORAGE_KEYS.TOKEN_DATE, {});
+    const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.USER_DATA, {});
 
-    const authService = AuthService(auth.accessToken);
-    
-    const [error, setError] = useState([]);
+    const authService = AuthService(tokenData.accessToken);
 
     const onSubmitRegister = async (value) => {
-        const { rePassword, ...othDate } = value;
-
-        if (rePassword !== othDate.password) {
-            return 'Password don\'t match';
-        }
-
         try {
             const data = await authService.register(value);
-            setAuth(data);
-            navigate('/');
-
+            return data;            
         } catch (err) {
-            setError(err.message);
+            alert(err.message);
         }
     }
 
@@ -37,28 +33,37 @@ export const AuthProvide = ({ children }) => {
         try {
             const data = await authService.login(value);
 
-            // After Login from Response get message and visualize on user for better UI
-            console.log("🚀 ~ onSubmitLogin ~ data:", data.message)
-            setAuth(data.userInfo);
-            navigate('/');
+            if (data.messageCode === ServerError.SUCCESSFULLY_LOGIN.messageCode) {
+                setUserData(value);
+                setTokenData(data.userInfo);
+            }
 
+            return data;
         } catch (err) {
-            setError(err.message);
+            alert(err.message);
         }
     }
 
     const onSubmitLogout = async () => {
-        await authService.logout();
-        setAuth({});
-        navigate('/')
+        try {
+            await authService.logout();
+            setTokenData({});
+            setUserData({});
+        } catch (err) {
+
+        }
     }
 
     const verifyAccountWithToken = async (token) => {
         try {
-            const res = await authService.verifyToken(token);
-            navigate('/auth/login')
+            const response = await authService.verifyToken(token);
+            if (response.messageCode !== ServerError.SUCCESSFULLY_VERIFY_ACCOUNT.messageCode) {
+                alert(response.message);
+                return;
+            }
+            // navigate(ROUT_NAMES.LOGIN)
         } catch (err) {
-            navigate('/auth')
+            alert(err.message);
         }
     }
 
@@ -66,11 +71,10 @@ export const AuthProvide = ({ children }) => {
         onSubmitRegister,
         onSubmitLogin,
         onSubmitLogout,
-        isAuthenticated: !!auth.accessToken,
-        email: auth.email,
-        accessToken: auth.accessToken,
-        userId: auth.id,
-        error,
+        isAuthenticated: !!tokenData.accessToken,
+        email: tokenData.email,
+        accessToken: tokenData.accessToken,
+        userId: tokenData.id,
         verifyAccountWithToken,
     }
 
