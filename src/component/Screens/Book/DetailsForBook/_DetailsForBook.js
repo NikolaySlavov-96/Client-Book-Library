@@ -1,14 +1,14 @@
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"
 
+import { Select } from "../../../molecules";
+
 import { useAuthContext } from "../../../../contexts/AuthContext";
 import { useBookContext } from "../../../../contexts/BookContext";
 
-import { Select } from "../../../molecules";
-
 import { SelectMapper } from "../../../../Helpers";
 
-import style from './Detail.module.css';
+import style from './_Detail.module.css';
 
 
 const createBookOptions = (bookState, mappedStates) => {

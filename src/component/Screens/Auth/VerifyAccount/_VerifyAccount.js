@@ -3,8 +3,6 @@ import { useParams } from 'react-router-dom';
 
 import { useAuthContext } from '../../../../contexts/AuthContext';
 
-// import style from './Login.module.css';
-
 
 const _VerifyAccount = () => {
 

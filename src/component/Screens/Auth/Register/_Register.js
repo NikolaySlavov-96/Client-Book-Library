@@ -4,11 +4,11 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { useAuthContext } from '../../../../contexts/AuthContext';
 
-import { useForm } from '../../../../hooks/useForm';
-
 import { ROUT_NAMES, ServerError } from '../../../../Constants';
 
-import style from './Register.module.css';
+import { useForm } from '../../../../hooks/useForm';
+
+import style from './_Register.module.css';
 
 const _Register = () => {
     const navigate = useNavigate();

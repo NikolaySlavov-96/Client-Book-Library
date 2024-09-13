@@ -5,7 +5,7 @@ import { useBookContext } from "../../../../contexts/BookContext";
 import { Pagination } from "../../../molecules";
 import { QueryBar, ListRenderBook } from "../../../organisms";
 
-import style from './Book.module.css';
+import style from './_Book.module.css';
 
 const _Books = () => {
     const { setType, book, page, limit, setPage } = useBookContext({});
