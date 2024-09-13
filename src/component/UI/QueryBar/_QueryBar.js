@@ -1,8 +1,12 @@
 import { memo, useCallback } from "react";
-import { CustomSelect, SearchField } from "..";
-import { DEFAULT_LOADED_COLLECTION } from "../../../Constants/_collection";
-import { useForm } from "../../../hooks/useForm";
+
+import { Select, SearchField } from "../../molecules";
+
 import { useBookContext } from "../../../contexts/BookContext";
+
+import { DEFAULT_LOADED_COLLECTION } from "../../../Constants/_collection";
+
+import { useForm } from "../../../hooks/useForm";
 
 import style from './QueryBar.module.css';
 
@@ -28,7 +32,7 @@ const pageSizeOptions = [
 const _QueryBar = (props) => {
     const { mappedStates, hasLeftSelector } = props;
 
-    const { setType, book, page, limit, setLimit, onSubmitSearchWithInput, setPage, states } = useBookContext({});
+    const { setType, setLimit, onSubmitSearchWithInput } = useBookContext({});
 
     const changeState = useCallback((e) => {
         const state = e.value
@@ -49,7 +53,7 @@ const _QueryBar = (props) => {
 
     return (
         <div className={`global__bg-radius ${style['partial__container']}`}>
-            {hasLeftSelector ? <CustomSelect
+            {hasLeftSelector ? <Select
                 options={mappedStates}
                 placeHolder={mappedStates[DEFAULT_LOADED_COLLECTION].label}
                 onChange={changeState}
@@ -62,7 +66,7 @@ const _QueryBar = (props) => {
                 onSubmit={onSubmit}
             />
 
-            <CustomSelect
+            <Select
                 options={pageSizeOptions}
                 placeHolder={'12'}
                 onChange={pageLimit}

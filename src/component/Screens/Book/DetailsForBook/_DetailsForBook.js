@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useAuthContext } from "../../../../contexts/AuthContext";
 import { useBookContext } from "../../../../contexts/BookContext";
 
-import { CustomSelect } from "../../../UI";
+import { Select } from "../../../molecules";
 
 import { SelectMapper } from "../../../../Helpers";
 
@@ -81,7 +81,7 @@ const _DetailsForBook = () => {
 
             {email && (
                 <div className={`${style['functionality__reagin']} ${style['functionality']}`}>
-                    <CustomSelect
+                    <Select
                         options={selectOptions}
                         placeHolder={selectedLabel}
                         onChange={(e) => changeState(e, book.id)}

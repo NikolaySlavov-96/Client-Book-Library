@@ -1,0 +1,17 @@
+.container {
+  width: 100%;
+}
+
+.page {
+  padding: 5px 10px;
+  border: 1px solid black;
+  border-radius: 4px;
+  margin: 0.2rem;
+}
+
+.current__page {
+  display: inline-block;
+  background-color: var(--fundColor);
+  margin: 0;
+  padding: 8px 14px;
+}

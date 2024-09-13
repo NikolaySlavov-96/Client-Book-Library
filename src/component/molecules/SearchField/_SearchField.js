@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-import style from './Search.module.css';
+import style from './_Search.module.css';
 
 const _SearchField = ({ onSubmit, changeHandler, values }) => {
     return (

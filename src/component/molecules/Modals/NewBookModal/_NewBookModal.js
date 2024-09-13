@@ -1,9 +1,9 @@
 import { memo, useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 
-import { useBookContext } from '../../../contexts/BookContext';
+import { useBookContext } from '../../../../contexts/BookContext';
 
-import { ROUT_NAMES } from '../../../Constants';
+import { ROUT_NAMES } from '../../../../Constants';
 
 import style from './_NewBookModal.module.css';
 

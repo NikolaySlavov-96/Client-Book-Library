@@ -2,7 +2,8 @@ import { memo, useEffect } from "react";
 
 import { useBookContext } from "../../../../contexts/BookContext";
 
-import { Pagination, QueryBar, ListRenderBook } from "../../../UI";
+import { Pagination } from "../../../molecules";
+import { QueryBar, ListRenderBook } from "../../../UI";
 
 import style from './Book.module.css';
 

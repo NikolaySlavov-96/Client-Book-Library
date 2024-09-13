@@ -2,7 +2,8 @@ import { memo, useEffect, useMemo } from "react";
 
 import { useBookContext } from "../../../../contexts/BookContext";
 
-import { Pagination, QueryBar, ListRenderBook } from "../../../UI";
+import { Pagination } from "../../../molecules";
+import { QueryBar, ListRenderBook } from "../../../UI";
 
 import { SelectMapper } from "../../../../Helpers";
 import { DEFAULT_LOADED_COLLECTION } from "../../../../Constants/_collection";

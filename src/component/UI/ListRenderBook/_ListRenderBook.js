@@ -1,6 +1,6 @@
 import { memo, useCallback } from "react";
 
-import { BookCard } from "..";
+import { BookCard } from "../../molecules";
 
 import styles from './_ListRenderBook.module.css';
 

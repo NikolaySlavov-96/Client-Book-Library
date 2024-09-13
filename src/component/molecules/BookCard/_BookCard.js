@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { ROUT_NAMES } from "../../../Constants";
 
-import style from './BookCard.module.css';
+import style from './_BookCard.module.css';
 
 const _BookCard = (props) => {
     const {

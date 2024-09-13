@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 
-import style from './CustomSelect.module.css';
+import style from './_Select.module.css';
 
 
 const Icon = memo(({ isOpen }) => {
@@ -11,7 +11,7 @@ const Icon = memo(({ isOpen }) => {
     );
 });
 
-const _CustomSelect = ({ placeHolder, options, onChange, align, size }) => {
+const _Select = ({ placeHolder, options, onChange, align, size }) => {
     const inputRef = useRef();
 
     const [showMenu, setShowMenu] = useState(false);
@@ -82,4 +82,4 @@ const _CustomSelect = ({ placeHolder, options, onChange, align, size }) => {
     );
 }
 
-export default memo(_CustomSelect);
+export default memo(_Select);
