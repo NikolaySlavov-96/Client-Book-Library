@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 
-export const useLocalStorage = (key, initialValue) => {
+const _useLocalStorage = (key, initialValue) => {
     const [state, setState] = useState(() => {
         const persist = localStorage.getItem(key);
 
@@ -23,3 +23,5 @@ export const useLocalStorage = (key, initialValue) => {
         setLocalStorage,
     ]
 }
+
+export default _useLocalStorage;
