@@ -1,4 +1,6 @@
-import NewBookModal from './NewBookModal/_NewBookModal';
+import { memo } from "react";
+
+import { NewBookModal } from "../../molecules";
 
 const components = {
     NewBookModal: NewBookModal,
@@ -17,4 +19,4 @@ const _ModalContainer = () => {
     )
 };
 
-export default _ModalContainer;
+export default memo(_ModalContainer);

@@ -8,8 +8,7 @@ import { SocketProvider } from './contexts/SocketContext';
 
 import { Footer, Header } from './component/molecules';
 import { VerifyAccount, Register, Login, Books, CreateBook, DetailsForBook, SearchByEmail, UserCollection, Helmet } from './component/Screens';
-
-import ModalContainer from './component/molecules/Modals';
+import { ModalContainer } from './component/organisms';
 
 import { ROUT_NAMES } from './Constants';
 
