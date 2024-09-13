@@ -3,14 +3,13 @@ import './App.css';
 
 import { AuthProvide } from './contexts/AuthContext';
 import { BookProvider } from './contexts/BookContext';
+import { SocketProvider } from './contexts/SocketContext';
 
 import { Header, Helmet, Footer } from './component/UI';
 import { VerifyAccount, Register, Login, Books, CreateBook, DetailsForBook, SearchByEmail, UserCollection } from './component/Screens';
 import ModalContainer from './component/Modals';
 
 import { ROUT_NAMES } from './Constants';
-import { SocketProvider } from './contexts/SocketContext';
-
 
 const App = () => {
     return (
