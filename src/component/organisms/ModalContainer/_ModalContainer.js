@@ -1,19 +1,20 @@
 import { memo } from "react";
 
 import { NewBookModal } from "../../molecules";
+import { useStoreZ } from "../../../hooks";
 
 const components = {
-    NewBookModal: NewBookModal,
+    NewBook: NewBookModal,
 }
 
 const _ModalContainer = () => {
-    const modal = 'NewBookModal';
+    const { modalName } = useStoreZ();
 
-    if(modal === '') {
+    if (modalName === '') {
         return null
     }
 
-    const RenderModal = components[modal];
+    const RenderModal = components[modalName];
     return (
         <RenderModal />
     )

@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useService } from "../hooks/useService";
@@ -21,7 +21,6 @@ export const BookProvider = ({ children }) => {
     const [limit, setLimit] = useState(12);
     const [page, setPage] = useState(1);
     const [type, setType] = useState(BOOK_TYPE); // Default type is "Book";
-    const [bookModal, setBookModal] = useState([]);
 
     const bookService = useService(BookService);
 
@@ -154,7 +153,6 @@ export const BookProvider = ({ children }) => {
         book,
         error,
         states,
-        bookModal,
         getBookById,
         setSearchEmail,
         getStateOnBookById,
@@ -164,7 +162,6 @@ export const BookProvider = ({ children }) => {
         onSubmitSearchWithInput,
         addingBookInList,
         setType,
-        setBookModal,
         type,
     }
 

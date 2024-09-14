@@ -3,17 +3,20 @@ import { createContext, useCallback, useContext, useEffect } from "react";
 import { SocketService } from '../services';
 
 import { EReceiveEvents } from '../Constants';
-import { useBookContext } from "./BookContext";
+
+import { useStoreZ } from "../hooks";
 
 const SocketContext = createContext();
 
 export const SocketProvider = ({ children }) => {
 
-    const { setBookModal } = useBookContext();;
+    const { openModal, setModalName, setContent, } = useStoreZ();
 
     const result = useCallback((data) => {
-        setBookModal(prevBookModal => [...prevBookModal, data]);
-    }, []);
+        setModalName('NewBook');
+        setContent(data);
+        openModal();
+    }, [setModalName, setContent, openModal]);
 
     useEffect(() => {
         SocketService.connect();
