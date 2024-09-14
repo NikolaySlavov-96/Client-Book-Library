@@ -10,7 +10,7 @@ const _BookServiceFactory = (token) => {
     const getStates = async () => request.get(`${PREFIX}/bookStates/all`);
 
     // Book Services
-    const getProducts = async ({ page, limit }) => request.get(`${PREFIX}?limit=${limit}&page=${page}`);
+    const getProducts = async (data) => request.get(`${PREFIX}?limit=${data?.limit}&page=${data?.page}`);
 
     const getProduct = async (id) => request.get(`${PREFIX}/` + id);
 
@@ -26,9 +26,8 @@ const _BookServiceFactory = (token) => {
     const searchBookByEmailOnUser = async ({ content, page, limit }) => request.get(`${SEARCH}/email?email=${content}`);
     // const searchBookByEmailOnUser = async ({ content, page, limit }) => request.get(`/search/email?email=${content}&limit=${limit}&page=${page}`);
 
-
     // BookState Services
-    const getAllBooksByState = async ({ page, limit, type }) => request.get(`${PREFIX}/booksState/${type}?limit=${limit}&page=${page}`);
+    const getAllBooksByState = async (data) => request.get(`${PREFIX}/booksState/${data?.type}?limit=${data?.limit}&page=${data?.page}`);
 
     const getBookState = async (id) => request.get(`${PREFIX}/bookState/` + id);
 

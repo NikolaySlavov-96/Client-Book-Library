@@ -7,8 +7,6 @@ import { BookService } from "../services";
 
 import { ROUT_NAMES } from "../Constants";
 
-const BOOK_TYPE = 0;
-
 const BookContext = createContext();
 
 export const BookProvider = ({ children }) => {
@@ -17,14 +15,12 @@ export const BookProvider = ({ children }) => {
     const [states, setState] = useState([]);
 
     const [book, setBook] = useState({});
+
     const [searchEmail, setSearchEmail] = useState('');
     const [limit, setLimit] = useState(12);
-    const [page, setPage] = useState(1);
-    const [type, setType] = useState(BOOK_TYPE); // Default type is "Book";
 
     const bookService = useService(BookService);
-
-    const [error, setError] = useState([]);
+    
 
     const loadingAllStatesForBook = useCallback(async () => {
         try {
@@ -37,7 +33,8 @@ export const BookProvider = ({ children }) => {
 
     useEffect(() => {
         loadingAllStatesForBook();
-    }, []);
+    }, [loadingAllStatesForBook]);
+
 
     const LoadingBookFromEmail = useCallback(async (data) => {
         try {
@@ -55,35 +52,36 @@ export const BookProvider = ({ children }) => {
         LoadingBookFromEmail({ content: searchEmail });
     }, [searchEmail])
 
-    const LoadingBooks = useCallback(async (data) => {
+    const loadingBooks = useCallback(async (data) => {
         try {
-            if (data.type === BOOK_TYPE) {
-                const result = await bookService.getProducts(data);
-                setBook(result);
-                return
-            }
-
-            if (Number(data.type)) {
-                const result = await bookService.getAllBooksByState(data);
-                setBook(result);
-            }
+            const result = await bookService.getProducts(data);
+            setBook(result);
         } catch (err) {
-            console.log('LoadingBooks --->: ', err);
+
         }
     }, []);
 
-    useEffect(() => {
-        setBook({})
-        LoadingBooks({ page, limit, type });
-    }, [LoadingBooks, page, limit, type]);
+    const loadingBookCollection = useCallback(async (data) => {
+        try {
+            const result = await bookService.getAllBooksByState(data);
+            setBook(result);
+        } catch (err) {
+
+        }
+    }, []);
 
     const getBookById = async (id) => {
-        const isExistingBook = book.rows && book?.rows.filter(b => b.id == id);
-        if (isExistingBook?.length) {
-            return isExistingBook[0];
+        try {
+            const isExistingBook = book.rows && book?.rows.filter(b => b.id == id); // TODO check and update with '==='
+            if (isExistingBook?.length) {
+                return isExistingBook[0];
+            }
+
+            const result = await bookService.getProduct(id)
+            return result;
+        } catch (err) {
+
         }
-        const result = await bookService.getProduct(id)
-        return result;
     }
 
     const getStateOnBookById = async (id) => {
@@ -91,7 +89,6 @@ export const BookProvider = ({ children }) => {
             const result = await bookService.getBookState(id);
             return result;
         } catch (err) {
-            setError(err.message)
         }
     };
 
@@ -101,7 +98,6 @@ export const BookProvider = ({ children }) => {
             // TODO Adding new added book
             navigate(ROUT_NAMES.HOME);
         } catch (err) {
-            setError(err.message);
         }
     }
 
@@ -112,7 +108,6 @@ export const BookProvider = ({ children }) => {
 
             navigate(ROUT_NAMES.HOME);
         } catch (err) {
-            setError(err.message);
         }
     }
 
@@ -123,16 +118,15 @@ export const BookProvider = ({ children }) => {
 
             navigate(ROUT_NAMES.HOME);
         } catch (err) {
-            setError(err.message);
         }
     }
 
     const onSubmitSearchWithInput = async ({ search }) => {
         try {
-            const result = await bookService.searchBook({ content: search, page, limit });
+            const result = await bookService.searchBook({ content: search, page: 1, limit });
+            // const result = await bookService.searchBook({ content: search, page, limit });
             setBook(result);
         } catch (err) {
-            setError(err.message);
         }
     }
 
@@ -141,18 +135,16 @@ export const BookProvider = ({ children }) => {
             const result = await bookService.addBookToLibrary({ bookId, state });
             // TODO Visualize message
         } catch (err) {
-            setError(err.message);
         }
     }
 
     const contextValue = {
         setLimit,
         limit,
-        setPage,
-        page,
         book,
-        error,
         states,
+        loadingBooks,
+        loadingBookCollection,
         getBookById,
         setSearchEmail,
         getStateOnBookById,
@@ -161,8 +153,6 @@ export const BookProvider = ({ children }) => {
         onSubmitDeleteProduct,
         onSubmitSearchWithInput,
         addingBookInList,
-        setType,
-        type,
     }
 
     return (

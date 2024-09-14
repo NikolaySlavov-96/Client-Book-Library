@@ -8,8 +8,9 @@ import style from './_Create.module.css';
 
 const _Create = () => {
 
-    const { onSubmitCreateProduct, error } = useBookContext();
-
+    const { onSubmitCreateProduct } = useBookContext();
+    const error = [];
+    
     const { values, changeHandler, onSubmit, errors } = useForm({
         author: '',
         bookTitle: '',

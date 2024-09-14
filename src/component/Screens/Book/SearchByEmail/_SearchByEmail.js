@@ -1,4 +1,4 @@
-import { memo, useEffect, } from "react";
+import { memo, useEffect, useState, } from "react";
 
 import { useParams } from "react-router-dom";
 
@@ -12,13 +12,15 @@ import style from './_SearchByEmail.module.css';
 const _SearchByEmail = () => {
     const param = useParams();
 
-    const { book, page, limit, setPage, setType, setSearchEmail } = useBookContext({});
+    const [page, setPage] = useState(1);
+
+    const { book, limit, setSearchEmail } = useBookContext({});
 
     const count = Math.ceil(book.count / limit) || 0;
 
     useEffect(() => {
         setSearchEmail(param.email);
-    }, [setType, setSearchEmail, param.email])
+    }, [setSearchEmail, param.email])
 
     return (
         <section className={style["body__card"]}>

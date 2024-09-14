@@ -1,10 +1,11 @@
 import { memo, useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import { Select, SearchField } from "../../molecules";
 
 import { useBookContext } from "../../../contexts/BookContext";
 
-import { DEFAULT_LOADED_COLLECTION } from "../../../Constants/_collection";
+import { SEARCH_NAME } from "../../../Constants";
 
 import { useForm } from "../../../hooks/useForm";
 
@@ -30,14 +31,16 @@ const pageSizeOptions = [
 ]
 
 const _QueryBar = (props) => {
-    const { mappedStates, hasLeftSelector } = props;
+    const {
+        leftSelectorData,
+        hasLeftSelector,
+        leftSelectData,
+        onPressLeftSelector,
+    } = props;
 
-    const { setType, setLimit, onSubmitSearchWithInput } = useBookContext({});
+    const [searchParams, setSearchParams] = useSearchParams();
 
-    const changeState = useCallback((e) => {
-        const state = e.value
-        setType(state)
-    }, [setType]);
+    const { setLimit, onSubmitSearchWithInput } = useBookContext({});
 
     const { values, changeHandler, onSubmit } = useForm({
         search: '',
@@ -45,17 +48,24 @@ const _QueryBar = (props) => {
         search: ['required', '2']
     }, false);
 
+    const currentLimitParam = searchParams.get(SEARCH_NAME.LIMIT);
 
     const pageLimit = useCallback((e) => {
         const pageSize = e.value;
         setLimit(pageSize);
-    }, [setLimit]);
+        setSearchParams(prev => ({ ...prev, limit: pageSize }));
+    }, [setLimit, setSearchParams]);
+
+    const changeState = useCallback((e) => {
+        const state = e.value
+        onPressLeftSelector(state);
+    }, [onPressLeftSelector]);
 
     return (
         <div className={`global__bg-radius ${style['container']}`}>
             {hasLeftSelector ? <Select
-                options={mappedStates}
-                placeHolder={mappedStates[DEFAULT_LOADED_COLLECTION].label}
+                options={leftSelectorData}
+                placeHolder={leftSelectorData[leftSelectData - 1].label}
                 onChange={changeState}
                 size={'240'}
             /> : <div></div>}
@@ -68,7 +78,7 @@ const _QueryBar = (props) => {
 
             <Select
                 options={pageSizeOptions}
-                placeHolder={'12'}
+                placeHolder={currentLimitParam}
                 onChange={pageLimit}
                 size={'70'}
             />
