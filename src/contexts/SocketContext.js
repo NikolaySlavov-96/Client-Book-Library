@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect } from "react";
 
 import { SocketService } from '../services';
 
-import { EReceiveEvents } from '../Constants';
+import { EReceiveEvents, MODAL_NAMES } from '../Constants';
 
 import { useStoreZ } from "../hooks";
 
@@ -13,7 +13,7 @@ export const SocketProvider = ({ children }) => {
     const { openModal, setModalName, setContent, } = useStoreZ();
 
     const result = useCallback((data) => {
-        setModalName('NewBook');
+        setModalName(MODAL_NAMES.NEW_BOOK);
         setContent(data);
         openModal();
     }, [setModalName, setContent, openModal]);

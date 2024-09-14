@@ -1,10 +1,13 @@
 import { memo } from "react";
 
 import { NewBookModal } from "../../molecules";
+
+import { MODAL_NAMES } from "../../../Constants";
+
 import { useStoreZ } from "../../../hooks";
 
 const components = {
-    NewBook: NewBookModal,
+    [MODAL_NAMES.NEW_BOOK]: NewBookModal,
 }
 
 const _ModalContainer = () => {
