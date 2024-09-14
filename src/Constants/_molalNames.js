@@ -1,4 +1,5 @@
 const _MODAL_NAMES = {
+    GLOBAL_ERROR_MODAL: 'GlobalErrorModal',
     NEW_BOOK: 'NewBook',
 }
 

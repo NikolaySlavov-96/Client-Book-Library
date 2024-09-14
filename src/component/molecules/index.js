@@ -6,4 +6,5 @@ export { default as SearchField } from './SearchField/_SearchField';
 export { default as Select } from './Select/_Select';
 
 // Modals
+export { default as GlobalErrorModal } from './Modals/GlobalErrorMolal/_GlobalErrorMolal';
 export { default as NewBookModal } from './Modals/NewBookModal/_NewBookModal';
