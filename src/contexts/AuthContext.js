@@ -1,10 +1,10 @@
 import { createContext, useContext, } from "react";
 
-import { useLocalStorage } from "../hooks";
+import { useLocalStorage, useStoreZ } from "../hooks";
 
 import { AuthService } from "../services";
 
-import { ServerError } from '../Constants';
+import { MODAL_NAMES, ServerError } from '../Constants';
 
 const STORAGE_PREFIX = '@Book_';
 const STORAGE_KEYS = {
@@ -15,6 +15,8 @@ const STORAGE_KEYS = {
 const AuthContext = createContext();
 
 export const AuthProvide = ({ children }) => {
+    const { openModal, setErrors, setModalName } = useStoreZ();
+
     const [tokenData, setTokenData] = useLocalStorage(STORAGE_KEYS.TOKEN_DATE, {});
     const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.USER_DATA, {});
 
@@ -25,7 +27,9 @@ export const AuthProvide = ({ children }) => {
             const data = await authService.register(value);
             return data;
         } catch (err) {
-            alert(err.message);
+            setModalName(MODAL_NAMES.GLOBAL_ERROR_MODAL);
+            openModal();
+            setErrors({ message: err.message });
         }
     }
 
@@ -42,7 +46,9 @@ export const AuthProvide = ({ children }) => {
 
             return data;
         } catch (err) {
-            alert(err.message);
+            setModalName(MODAL_NAMES.GLOBAL_ERROR_MODAL);
+            openModal();
+            setErrors({ message: err.message });
         }
     }
 
@@ -51,6 +57,7 @@ export const AuthProvide = ({ children }) => {
             await authService.logout();
             setTokenData({});
             setUserData({});
+            // Modal for success logout
         } catch (err) {
 
         }
