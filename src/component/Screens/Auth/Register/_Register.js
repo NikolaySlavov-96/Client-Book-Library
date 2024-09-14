@@ -17,12 +17,10 @@ const _Register = () => {
 
     const onSubmitFunction = useCallback(async (data) => {
         const result = await onSubmitRegister(data);
-
         if (result?.messageCode === ServerError.SUCCESSFULLY_REGISTER.messageCode) {
             navigate(ROUT_NAMES.LOGIN);
+            // Modal for success
         }
-
-        // Show Modal
     }, [onSubmitRegister, navigate]);
 
     const { values, changeHandler, onSubmit, errors } = useForm({

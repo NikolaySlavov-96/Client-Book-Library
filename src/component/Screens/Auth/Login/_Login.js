@@ -19,9 +19,8 @@ const _Login = () => {
 
         if (result?.messageCode === ServerError.SUCCESSFULLY_LOGIN.messageCode) {
             navigate(ROUT_NAMES.HOME);
+            // Modal for success
         }
-        
-        // Show Modal
     }, [onSubmitLogin, navigate]);
 
     const { values, changeHandler, onSubmit, errors } = useForm({
