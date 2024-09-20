@@ -16,11 +16,10 @@ export const BookProvider = ({ children }) => {
 
     const [book, setBook] = useState({});
 
-    const [searchEmail, setSearchEmail] = useState('');
     const [limit, setLimit] = useState(12);
 
     const bookService = useService(BookService);
-    
+
 
     const loadingAllStatesForBook = useCallback(async () => {
         try {
@@ -36,7 +35,7 @@ export const BookProvider = ({ children }) => {
     }, [loadingAllStatesForBook]);
 
 
-    const LoadingBookFromEmail = useCallback(async (data) => {
+    const loadingBookFromEmail = useCallback(async (data) => {
         try {
             if (data.content !== '') { // Search By email
                 const result = await bookService.searchBookByEmailOnUser(data);
@@ -47,10 +46,6 @@ export const BookProvider = ({ children }) => {
             console.log('LoadingBookFromEmail --->: ', err);
         }
     }, []);
-
-    useEffect(() => {
-        LoadingBookFromEmail({ content: searchEmail });
-    }, [searchEmail])
 
     const loadingBooks = useCallback(async (data) => {
         try {
@@ -146,7 +141,7 @@ export const BookProvider = ({ children }) => {
         loadingBooks,
         loadingBookCollection,
         getBookById,
-        setSearchEmail,
+        loadingBookFromEmail,
         getStateOnBookById,
         onSubmitCreateProduct,
         onSubmitEditProduct,

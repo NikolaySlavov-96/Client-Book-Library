@@ -14,13 +14,13 @@ const _SearchByEmail = () => {
 
     const [page, setPage] = useState(1);
 
-    const { book, limit, setSearchEmail } = useBookContext({});
+    const { book, limit, loadingBookFromEmail } = useBookContext({});
 
     const count = Math.ceil(book.count / limit) || 0;
 
     useEffect(() => {
-        setSearchEmail(param.email);
-    }, [setSearchEmail, param.email])
+        loadingBookFromEmail({ content: param.email })
+    }, [loadingBookFromEmail, param.email])
 
     return (
         <section className={style["body__card"]}>
