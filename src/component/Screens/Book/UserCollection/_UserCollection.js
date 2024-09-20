@@ -71,6 +71,7 @@ const _UserCollection = () => {
                 leftSelectorData={mappedStates}
                 leftSelectData={collection || DEFAULT_LOADED_COLLECTION}
                 onPressLeftSelector={setCollection}
+                onPressSearch={(data) => console.log('UserCollection', data)}
             />
 
             <ListRenderBook data={book?.rows || {}} />

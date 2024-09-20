@@ -40,8 +40,8 @@ const _Books = () => {
     }, []);
 
     useEffect(() => {
-        if(page || limit)
-        setSearchParams({ page: page, limit: limit });
+        if (page || limit)
+            setSearchParams({ page: page, limit: limit });
         loadingBooks({ page: page, limit: limit });
     }, [loadingBooks, setSearchParams, limit, page]);
 
@@ -51,6 +51,7 @@ const _Books = () => {
 
             <QueryBar
                 hasLeftSelector={false}
+                onPressSearch={(data) => console.log('Books', data)}
             />
 
             <ListRenderBook data={book?.rows || {}} />

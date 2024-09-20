@@ -28,6 +28,7 @@ const _SearchByEmail = () => {
 
             <QueryBar
                 hasLeftSelector={false}
+                onPressSearch={(data) => console.log('SearchByEmail', data)}
             />
 
             <ListRenderBook data={book?.rows || {}} />

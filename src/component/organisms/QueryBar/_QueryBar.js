@@ -36,15 +36,16 @@ const _QueryBar = (props) => {
         hasLeftSelector,
         leftSelectData,
         onPressLeftSelector,
+        onPressSearch,
     } = props;
 
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const { setLimit, onSubmitSearchWithInput } = useBookContext({});
+    const { setLimit } = useBookContext({});
 
     const { values, changeHandler, onSubmit } = useForm({
         search: '',
-    }, onSubmitSearchWithInput, {
+    }, onPressSearch, {
         search: ['required', '2']
     }, false);
 

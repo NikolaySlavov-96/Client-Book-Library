@@ -121,14 +121,14 @@ export const BookProvider = ({ children }) => {
         }
     }
 
-    const onSubmitSearchWithInput = async ({ search }) => {
-        try {
-            const result = await bookService.searchBook({ content: search, page: 1, limit });
-            // const result = await bookService.searchBook({ content: search, page, limit });
-            setBook(result);
-        } catch (err) {
-        }
-    }
+    // const onSubmitSearchWithInput = async ({ search }) => {
+    //     try {
+    //         const result = await bookService.searchBook({ content: search, page: 1, limit });
+    //         // const result = await bookService.searchBook({ content: search, page, limit });
+    //         setBook(result);
+    //     } catch (err) {
+    //     }
+    // }
 
     const addingBookInList = async (bookId, state) => {
         try {
@@ -151,7 +151,6 @@ export const BookProvider = ({ children }) => {
         onSubmitCreateProduct,
         onSubmitEditProduct,
         onSubmitDeleteProduct,
-        onSubmitSearchWithInput,
         addingBookInList,
     }
 
