@@ -19,6 +19,7 @@ const _UserCollection = () => {
 
     const [page, setPage] = useState(1);
     const [collection, setCollection] = useState(1);
+    const [searchContent, setSearchContent] = useState('');
 
     const { book, limit, setLimit, states, loadingBookCollection } = useBookContext({});
 
@@ -33,6 +34,7 @@ const _UserCollection = () => {
         const searchPage = Number(searchParams.get(SEARCH_NAME.PAGE));
         const searchLimit = Number(searchParams.get(SEARCH_NAME.LIMIT));
         const collectionNumber = Number(searchParams.get(SEARCH_NAME.COLLECTION));
+        const content = searchParams.get(SEARCH_NAME.CONTENT);
 
         if (!searchPage) {
             setPage(QUERY_LIMIT.PAGE);
@@ -50,17 +52,21 @@ const _UserCollection = () => {
             setCollection(collectionNumber)
         }
 
+        if (content) {
+            setSearchContent(content);
+        }
+
         if (!searchPage || !searchLimit || !collectionNumber) {
             setSearchParams({ page: QUERY_LIMIT.PAGE, limit: QUERY_LIMIT.LIMIT, collectionNumber: QUERY_LIMIT.COLLECTION });
         }
     }, []);
 
     useEffect(() => {
-        if (page || limit || collection) {
-            setSearchParams({ page: page, limit: limit, collection: collection });
+        if (page || limit || collection || searchContent) {
+            setSearchParams({ page: page, limit: limit, collection: collection, content: searchContent });
         }
-        loadingBookCollection({ page: page, limit: limit, type: collection });
-    }, [loadingBookCollection, setSearchParams, limit, page, collection]);
+        loadingBookCollection({ page: page, limit: limit, type: collection, searchContent });
+    }, [loadingBookCollection, setSearchParams, limit, page, collection, searchContent]);
 
     return (
         <section className={style["body__card"]}>
@@ -71,7 +77,7 @@ const _UserCollection = () => {
                 leftSelectorData={mappedStates}
                 leftSelectData={collection || DEFAULT_LOADED_COLLECTION}
                 onPressLeftSelector={setCollection}
-                onPressSearch={(data) => console.log('UserCollection', data)}
+                onPressSearch={(data) => setSearchContent(data.search)}
             />
 
             <ListRenderBook data={book?.rows || {}} />

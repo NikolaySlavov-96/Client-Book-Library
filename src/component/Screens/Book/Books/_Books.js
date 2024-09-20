@@ -14,6 +14,7 @@ const _Books = () => {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [page, setPage] = useState(1);
+    const [searchContent, setSearchContent] = useState('');
 
     const { book, limit, setLimit, loadingBooks } = useBookContext({});
 
@@ -22,6 +23,7 @@ const _Books = () => {
     useEffect(() => {
         const searchPage = Number(searchParams.get(SEARCH_NAME.PAGE));
         const searchLimit = Number(searchParams.get(SEARCH_NAME.LIMIT));
+        const content = searchParams.get(SEARCH_NAME.CONTENT);
 
         if (!searchPage) {
             setPage(QUERY_LIMIT.PAGE);
@@ -34,16 +36,20 @@ const _Books = () => {
             setLimit(searchLimit);
         }
 
+        if (content) {
+            setSearchContent(content);
+        }
+
         if (!searchPage || !searchLimit) {
             setSearchParams({ page: QUERY_LIMIT.PAGE, limit: QUERY_LIMIT.LIMIT });
         }
     }, []);
 
     useEffect(() => {
-        if (page || limit)
-            setSearchParams({ page: page, limit: limit });
-        loadingBooks({ page: page, limit: limit });
-    }, [loadingBooks, setSearchParams, limit, page]);
+        if (page || limit || searchContent)
+            setSearchParams({ page: page, limit: limit, content: searchContent });
+        loadingBooks({ page: page, limit: limit, searchContent });
+    }, [loadingBooks, setSearchParams, limit, page, searchContent]);
 
     return (
         <section className={style["body__card"]}>
@@ -51,7 +57,7 @@ const _Books = () => {
 
             <QueryBar
                 hasLeftSelector={false}
-                onPressSearch={(data) => console.log('Books', data)}
+                onPressSearch={(data) => setSearchContent(data.search)}
             />
 
             <ListRenderBook data={book?.rows || {}} />
