@@ -1,5 +1,6 @@
 import { memo } from "react";
-import { Link } from "react-router-dom";
+
+import { Link } from "../../atoms";
 
 import { ROUT_NAMES } from "../../../Constants";
 
@@ -26,7 +27,12 @@ const _BookCard = (props) => {
                 <p>Genre: <span >{bookGenre}</span></p>
             </div>
             <div className={style['card__link']}>
-                <Link to={`${ROUT_NAMES.BOOK}/${bookId}`} state={{ bookTitle }}>View</Link>
+                <Link
+                    to={`${ROUT_NAMES.BOOK}/${bookId}`}
+                    state={{ bookTitle }}
+                >
+                    View
+                </Link>
             </div>
         </article >
     );

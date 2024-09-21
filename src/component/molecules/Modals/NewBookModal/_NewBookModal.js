@@ -1,5 +1,6 @@
 import { memo, useEffect } from 'react';
-import { Link } from "react-router-dom";
+
+import { Link } from '../../../atoms';
 
 import { ROUT_NAMES } from '../../../../Constants';
 
