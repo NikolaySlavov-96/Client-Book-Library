@@ -93,6 +93,7 @@ export const AuthProvide = ({ children }) => {
         onSubmitRegister,
         onSubmitLogin,
         onSubmitLogout,
+        isVerifyUser: tokenData.isVerify,
         isAuthenticated: !!tokenData.accessToken,
         email: tokenData.email,
         accessToken: tokenData.accessToken,
