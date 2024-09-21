@@ -4,10 +4,11 @@ import style from './_BookDetails.module.css';
 
 const _BookDetails = (props) => {
     const {
-        title,
-        image,
         authorName,
-        bookGenre
+        bookGenre,
+        hasTitle,
+        image,
+        title,
     } = props;
 
     return (
@@ -16,7 +17,7 @@ const _BookDetails = (props) => {
                 <img src={image} alt={title} />
             </div>
 
-            {!!title ? <h1 className={style['book_title']}>{title}</h1> : ''}
+            {hasTitle ? <h1 className={style['book_title']}>{title}</h1> : ''}
 
             <div className={style['book__container']}>
                 <p>Title: <span >{title}</span></p>

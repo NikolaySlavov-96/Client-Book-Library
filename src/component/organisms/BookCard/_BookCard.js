@@ -24,6 +24,7 @@ const _BookCard = (props) => {
                 genre={bookGenre}
                 title={bookTitle}
                 authorName={authorName}
+                hasTitle
             />
 
             <div className={style['card__link']}>
