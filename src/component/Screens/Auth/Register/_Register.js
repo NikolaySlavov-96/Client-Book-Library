@@ -1,14 +1,14 @@
 import { memo, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { Link, useNavigate } from 'react-router-dom';
+import { InputField, SectionTitle } from '../../../atoms';
+import { LinkedParagraph } from '../../../molecules';
 
 import { useAuthContext } from '../../../../contexts/AuthContext';
 
 import { ROUT_NAMES, ServerError } from '../../../../Constants';
 
 import { useForm } from '../../../../hooks/useForm';
-
-import style from './_Register.module.css';
 
 const _Register = () => {
     const navigate = useNavigate();
@@ -46,35 +46,55 @@ const _Register = () => {
     }
 
     return (
-        <section className={`global__bg-radius ${style["register__section"]}`}>
-            <div className={`shadow ${style["form__container"]}`}>
+        <section className={`section`}>
+
+            <SectionTitle content='Register Page' />
+            
+            <div className={`global__bg-radius form__container`}>
                 <form onSubmit={onSubmit}>
-                    <div className="email">
-                        <label htmlFor="email">Email</label>
-                        <input type="email" id="email" name='email' value={values.email} onChange={changeHandler} onBlur={changeHandler} />
-                        {errors.email && (<p className='error'>{errors.email}</p>)}
-                    </div>
+                    <InputField
+                        error={errors.email}
+                        label='Email'
+                        name='email'
+                        onBlur={changeHandler}
+                        onChange={changeHandler}
+                        type="email"
+                        value={values.email}
+                    />
 
-                    <div className="password">
-                        <label htmlFor="password">Password</label>
-                        <input type="password" id="password" name='password' value={values.password} onChange={changeHandler} onBlur={changeHandler} />
-                        {errors.password && (<p className='error'>{errors.password}</p>)}
-                    </div >
+                    <InputField
+                        error={errors.password}
+                        label='Password'
+                        name='password'
+                        onBlur={changeHandler}
+                        onChange={changeHandler}
+                        type='password'
+                        value={values.password}
+                    />
 
-                    <div className="repeatPassword">
-                        <label htmlFor="rePassword">Repeat Password</label>
-                        <input type="password" id="rePassword" name='rePassword' value={values.rePassword} onChange={changeHandler} />
-                        {err.rePassword && (<p className='error'>{err.rePassword}</p>)}
-                    </div>
+                    <InputField
+                        error={err.rePassword}
+                        label='Repeat Password'
+                        name='rePassword'
+                        onBlur={changeHandler}
+                        onChange={changeHandler}
+                        type='password'
+                        value={values.rePassword}
+                    />
 
-                    <div className="year">
-                        <label htmlFor="year">Year</label>
-                        <input type="number" id="year" name='year' value={values.year} onChange={changeHandler} />
-                        {err.year && (<p className='error'>{err.year}</p>)}
-                    </div >
+                    <InputField
+                        error={err.year}
+                        label='Year'
+                        name='year'
+                        onBlur={changeHandler}
+                        onChange={changeHandler}
+                        type='number'
+                        value={values.year}
+                    />
 
-                    <button className={`btn ${style["btn-register"]}`}> Register</button >
-                    <p className={style["register__account"]}>Have a account <Link to="/auth/login">Sign Up</Link></p>
+                    <button className={`form__button`}>Register</button >
+
+                    <LinkedParagraph staticContent='Have a account' to={ROUT_NAMES.LOGIN} pressContent='Sign Up' />
                 </form >
             </div >
         </section >

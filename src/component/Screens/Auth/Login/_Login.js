@@ -1,13 +1,14 @@
 import { memo, useCallback } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+import { InputField, SectionTitle } from '../../../atoms';
+import { LinkedParagraph } from '../../../molecules';
 
 import { useAuthContext } from '../../../../contexts/AuthContext';
 
 import { ROUT_NAMES, ServerError } from '../../../../Constants';
 
 import { useForm } from '../../../../hooks/useForm';
-
-import style from './_Login.module.css';
 
 const _Login = () => {
     const navigate = useNavigate();
@@ -32,24 +33,35 @@ const _Login = () => {
     });
 
     return (
-        <section className={`global__bg-radius ${style["login__section"]}`}>
-            <h1 className={style["login__title"]}>Login Page</h1>
-            <div className={`shadow ${style["form__container"]}`}>
+        <section className={`section`}>
+            
+            <SectionTitle content='Login Page' />
+
+            <div className={`global__bg-radius form__container`}>
                 <form onSubmit={onSubmit}>
-                    <div>
-                        <label htmlFor="username">Username</label>
-                        <input type="email" name="email" id="email" value={values.email} onChange={changeHandler} onBlur={changeHandler} />
-                        {errors.username && (<p className='error'>{errors.email}</p>)}
-                    </div>
+                    <InputField
+                        error={errors.email}
+                        label='Email'
+                        name='email'
+                        onBlur={changeHandler}
+                        onChange={changeHandler}
+                        type="email"
+                        value={values.email}
+                    />
 
-                    <div className="password">
-                        <label htmlFor="password">Password</label>
-                        <input type="password" name="password" id="password" value={values.password} onChange={changeHandler} onBlur={changeHandler} />
-                        {errors.password && (<p className='error'>{errors.password}</p>)}
-                    </div>
+                    <InputField
+                        error={errors.password}
+                        label='Password'
+                        name='password'
+                        onBlur={changeHandler}
+                        onChange={changeHandler}
+                        type='password'
+                        value={values.password}
+                    />
 
-                    <button className={`btn ${style["btn-login"]}`}> Login in</button >
-                    <p className={style["login__account"]}>Don't have a account <Link to="/auth/register">Sign In</Link></p>
+                    <button className={`form__button`}> Login in</button >
+
+                    <LinkedParagraph staticContent={'Don\'t have a account '} to={ROUT_NAMES.REGISTER} pressContent='Sign In' />
                 </form >
             </div >
         </section >

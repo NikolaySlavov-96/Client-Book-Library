@@ -1,16 +1,17 @@
 import { memo } from 'react';
 
+import { InputField, SectionTitle } from '../../atoms';
+
 import { useBookContext } from '../../../contexts/BookContext';
 
 import { useForm } from '../../../hooks/useForm';
 
 import style from './_Create.module.css';
 
-const _Create = () => {
+const _CreateBook = () => {
 
     const { onSubmitCreateProduct } = useBookContext();
-    const error = [];
-    
+
     const { values, changeHandler, onSubmit, errors } = useForm({
         author: '',
         bookTitle: '',
@@ -24,35 +25,51 @@ const _Create = () => {
     });
 
     return (
-        <section className={style["create__section"]}>
-            <h1>Create product for salle</h1>
-            {!!error.length && (<div className='error_serv'>
-                {error}
-            </div>
-            )}
-            <div className={`${style["form__container"]} global__bg-radius`}>
-                <form onSubmit={onSubmit}>
-                    <div>
-                        <label htmlFor="author">Author Name:</label>
-                        <input type="text" name="author" id="author" placeholder="Name author" value={values.author} onChange={changeHandler} onBlur={changeHandler} />
-                        {errors.author && (<p className='error'>{errors.author}</p>)}
-                    </div >
+        <section className={`section ${style["create__section"]}`}>
 
-                    <div>
-                        <label htmlFor="image">Img of Book:</label>
-                        <input type="text" name="image" id="image" placeholder="http://imgaddres" value={values.image} onChange={changeHandler} onBlur={changeHandler} />
-                        {errors.image && (<p className='error'>{errors.image}</p>)}
-                    </div >
-                    <div>
-                        <label htmlFor="bookTitle">BookTitle:</label>
-                        <input type="text" name="bookTitle" id="bookTitle" placeholder="Book Name" value={values.bookTitle} onChange={changeHandler} onBlur={changeHandler} />
-                        {errors.bookTitle && (<p className='error'>{errors.bookTitle}</p>)}
-                    </div >
-                    <div>
-                        <label htmlFor="genre">Genre of Book:</label>
-                        <input type="text" name="genre" id="genre" placeholder="Genre of Book" value={values.genre} onChange={changeHandler} onBlur={changeHandler} />
-                        {errors.genre && (<p className='error'>{errors.genre}</p>)}
-                    </div >
+            <SectionTitle content='Added new book' />
+
+            <div className={`form__container global__bg-radius`}>
+                <form onSubmit={onSubmit}>
+                    <InputField
+                        error={errors.author}
+                        label='Author Name:'
+                        name='author'
+                        onBlur={changeHandler}
+                        onChange={changeHandler}
+                        placeholder='Author Name'
+                        value={values.author}
+                    />
+
+                    <InputField
+                        error={errors.image}
+                        label='Book image:'
+                        name='image'
+                        onBlur={changeHandler}
+                        onChange={changeHandler}
+                        placeholder='https://imgaddres'
+                        value={values.image}
+                    />
+
+                    <InputField
+                        error={errors.bookTitle}
+                        label='Book title:'
+                        name='bookTitle'
+                        onBlur={changeHandler}
+                        onChange={changeHandler}
+                        placeholder='Book title'
+                        value={values.bookTitle}
+                    />
+
+                    <InputField
+                        error={errors.genre}
+                        label='Book genre:'
+                        name='genre'
+                        onBlur={changeHandler}
+                        onChange={changeHandler}
+                        placeholder='Book genre'
+                        value={values.genre}
+                    />
 
                     <button>Create new Book</button >
                 </form >
@@ -61,4 +78,4 @@ const _Create = () => {
     );
 }
 
-export default memo(_Create);
+export default memo(_CreateBook);
