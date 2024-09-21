@@ -1,5 +1,7 @@
 import { memo } from "react";
 
+import style from './_InputField.module.css';
+
 const _InputField = (props) => {
     const {
         error,
@@ -13,7 +15,7 @@ const _InputField = (props) => {
     } = props;
 
     return (
-        <div>
+        <div className={style['container']}>
             {!!label
                 ? <label
                     htmlFor={name}>{label}
