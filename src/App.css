@@ -4,9 +4,9 @@
 
 :root {
   --fundColor: #ecbb00;
-  --btn__li: #FFEFCA;
-  --btn__li-hover: #B4AA99;
-  --btn__li-text: #4D4637;
+  --btn__li: #ffefca;
+  --btn__li-hover: #b4aa99;
+  --btn__li-text: #4d4637;
   /* --btn__li-active: rgb(0, 0, 0); */
   --backward: #2f394b;
   --design: rgb(93, 93, 103);
@@ -14,10 +14,27 @@
   --input-bg: rgba(155, 7, 7, 0.475);
 }
 
-
 .global__bg-radius {
   background-color: var(--fundColor);
   border-radius: 1rem;
+}
+
+.section {
+  text-align: center;
+  width: 50%;
+  margin: 2rem auto 3rem;
+}
+
+.form__container {
+  border-radius: 3rem;
+  border: none;
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem 1.5rem 1rem;
+}
+
+.form__button {
+  margin-bottom: 2rem ;
 }
 
 .disabled {
