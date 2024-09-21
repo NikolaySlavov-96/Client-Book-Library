@@ -4,6 +4,7 @@ export { default as Header } from './Header/_Header';
 export { default as Pagination } from './Pagination/_Pagination';
 export { default as SearchField } from './SearchField/_SearchField';
 export { default as Select } from './Select/_Select';
+export { default as LinkedParagraph } from './LinkedParagraph/_LinkedParagraph';
 
 // Modals
 export { default as GlobalErrorModal } from './Modals/GlobalErrorMolal/_GlobalErrorMolal';
