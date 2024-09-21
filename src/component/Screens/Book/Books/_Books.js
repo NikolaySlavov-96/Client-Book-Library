@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { useBookContext } from "../../../../contexts/BookContext";
@@ -19,6 +19,12 @@ const _Books = () => {
     const { book, limit, setLimit, loadingBooks } = useBookContext({});
 
     const count = Math.ceil(book.count / limit) || 0;
+
+    const onSearchFunction = useCallback((data) => {
+        // Always set on initial search
+        setPage(1);
+        setSearchContent(data.search)
+    }, [setSearchContent, setPage]);
 
     useEffect(() => {
         const searchPage = Number(searchParams.get(SEARCH_NAME.PAGE));
@@ -57,7 +63,7 @@ const _Books = () => {
 
             <QueryBar
                 hasLeftSelector={false}
-                onPressSearch={(data) => setSearchContent(data.search)}
+                onPressSearch={onSearchFunction}
             />
 
             <ListRenderBook data={book?.rows || {}} />

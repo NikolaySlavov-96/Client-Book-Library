@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { Pagination } from "../../../molecules";
@@ -29,6 +29,12 @@ const _UserCollection = () => {
     }, [states]);
 
     const count = Math.ceil(book.count / limit) || 0;
+    
+    const onSearchFunction = useCallback((data) => {
+        // Always set on initial search
+        setPage(1);
+        setSearchContent(data.search)
+    }, [setSearchContent, setPage]);
 
     useEffect(() => {
         const searchPage = Number(searchParams.get(SEARCH_NAME.PAGE));
@@ -77,7 +83,7 @@ const _UserCollection = () => {
                 leftSelectorData={mappedStates}
                 leftSelectData={collection || DEFAULT_LOADED_COLLECTION}
                 onPressLeftSelector={setCollection}
-                onPressSearch={(data) => setSearchContent(data.search)}
+                onPressSearch={onSearchFunction}
             />
 
             <ListRenderBook data={book?.rows || {}} />
