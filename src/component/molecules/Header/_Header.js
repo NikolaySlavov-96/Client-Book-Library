@@ -1,4 +1,4 @@
-import { memo, useCallback } from "react";
+import { memo, useCallback, useMemo } from "react";
 
 import { NavigationButton } from "../../atoms";
 
@@ -20,7 +20,8 @@ const HEADER_BUTTON_TITLES = {
 
 const _Header = () => {
     const { email, onSubmitLogout, isVerifyUser } = useAuthContext();
-    const name = email?.split('@')[0];
+    
+    const name = useMemo(() => (email?.split('@')[0]), [email]);
 
     const onPressLogout = useCallback(() => onSubmitLogout(), [onSubmitLogout]);
 
