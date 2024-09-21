@@ -1,5 +1,6 @@
 import { memo, useCallback } from "react";
-import { NavLink } from "react-router-dom";
+
+import { NavigationButton } from "../../atoms";
 
 import { useAuthContext } from "../../../contexts/AuthContext";
 
@@ -18,9 +19,9 @@ const HEADER_BUTTON_TITLES = {
 }
 
 const _Header = () => {
-    const { email, onSubmitLogout } = useAuthContext();
+    const { email, onSubmitLogout, isVerifyUser } = useAuthContext();
     const name = email?.split('@')[0];
-
+    
     const onPressLogout = useCallback(() => onSubmitLogout(), [onSubmitLogout]);
 
     return (
@@ -29,25 +30,25 @@ const _Header = () => {
                 <h1>Hello {name ? name : FIRST_NAME}</h1>
 
                 <ul className={style['navigation__ul']}>
-                    <li><NavLink to={ROUT_NAMES.BOOK}>{HEADER_BUTTON_TITLES.BOOK}</NavLink></li>
+                    <NavigationButton path={ROUT_NAMES.BOOK} title={HEADER_BUTTON_TITLES.BOOK} />
                     {
                         !email && (<>
-                            <li><NavLink to={ROUT_NAMES.LOGIN}>{HEADER_BUTTON_TITLES.LOGIN}</NavLink></li>
-                            <li><NavLink to={ROUT_NAMES.REGISTER}>{HEADER_BUTTON_TITLES.REGISTER}</NavLink></li>
+                            <NavigationButton path={ROUT_NAMES.LOGIN} title={HEADER_BUTTON_TITLES.LOGIN} />
+                            <NavigationButton path={ROUT_NAMES.REGISTER} title={HEADER_BUTTON_TITLES.REGISTER} />
                         </>)
                     }
 
                     {
                         email && (<>
-                            <li><NavLink to={ROUT_NAMES.CREATE_BOOK}>{HEADER_BUTTON_TITLES.CREATE_BOOK}</NavLink></li>
-                            <li><NavLink to={ROUT_NAMES.USER_COLLECTION}>{HEADER_BUTTON_TITLES.COLLECTION_OF_BOOKS}</NavLink></li>
-                            <li><a onClick={onPressLogout}>{HEADER_BUTTON_TITLES.LOGOUT}</a></li>
+                            <NavigationButton path={ROUT_NAMES.CREATE_BOOK} title={HEADER_BUTTON_TITLES.CREATE_BOOK} disabled={!isVerifyUser} />
+                            <NavigationButton path={ROUT_NAMES.USER_COLLECTION} title={HEADER_BUTTON_TITLES.COLLECTION_OF_BOOKS} />
+                            <NavigationButton onCustomClick={onPressLogout} title={HEADER_BUTTON_TITLES.LOGOUT} />
                         </>)
                     }
                 </ul>
 
             </nav>
-        </header>
+        </header >
     );
 }
 
