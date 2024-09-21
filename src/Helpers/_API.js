@@ -1,6 +1,6 @@
 import { HOST } from '../Constants/connectionData';
 
-async function requester(method, token, url, inputDate) {
+const _API = async (method, token, url, inputDate) => {
     const options = {
         method,
         headers: {}
@@ -35,13 +35,4 @@ async function requester(method, token, url, inputDate) {
     }
 }
 
-const requesterFactory = (token) => {
-    return {
-        get: requester.bind(null, 'GET', token),
-        post: requester.bind(null, 'POST', token),
-        put: requester.bind(null, 'PUT', token),
-        remove: requester.bind(null, 'DELETE', token),
-    }
-}
-
-export default requesterFactory;
+export default _API;

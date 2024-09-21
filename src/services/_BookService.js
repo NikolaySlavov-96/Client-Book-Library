@@ -1,10 +1,10 @@
-import { API } from '../Helpers';
+import { api } from '.';
 
 const PREFIX = '/book'
 const SEARCH = '/search';
 
 const _BookServiceFactory = (token) => {
-    const request = API(token);
+    const request = api(token);
 
     // Get book States ( id, title, symbol ) / For Reading, Reading and e.t.n.
     const getStates = async () => request.get(`${PREFIX}/bookStates/all`);

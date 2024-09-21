@@ -1,9 +1,9 @@
-import { API } from '../Helpers';
+import { api } from '.';
 
 const PREFIX = '/auth';
 
 const _AuthServiceFactory = (token) => {
-    const request = API(token);
+    const request = api(token);
 
     const register = async (data) => request.post(`${PREFIX}/register`, data);
 
