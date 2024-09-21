@@ -6,7 +6,7 @@ import { Select } from "../../../molecules";
 import { useAuthContext } from "../../../../contexts/AuthContext";
 import { useBookContext } from "../../../../contexts/BookContext";
 
-import { SelectMapper } from "../../../../Helpers";
+import { FormatSelectOptions } from "../../../../Helpers";
 
 import style from './_Detail.module.css';
 
@@ -29,7 +29,7 @@ const _DetailsForBook = () => {
     const { getBookById, getStateOnBookById, addingBookInList, states } = useBookContext();
 
     const mappedStates = useMemo(() => {
-        const data = SelectMapper(states, { value: 'id', label: 'stateName' });
+        const data = FormatSelectOptions(states, { value: 'id', label: 'stateName' });
         return data;
     }, [states]);
 

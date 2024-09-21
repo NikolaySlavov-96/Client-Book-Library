@@ -9,7 +9,7 @@ import { useBookContext } from "../../../../contexts/BookContext";
 import { QUERY_LIMIT, SEARCH_NAME } from "../../../../Constants";
 import { DEFAULT_LOADED_COLLECTION } from "../../../../Constants/_collection";
 
-import { SelectMapper } from "../../../../Helpers";
+import { FormatSelectOptions } from "../../../../Helpers";
 
 import style from './_UserCollection.module.css';
 
@@ -24,7 +24,7 @@ const _UserCollection = () => {
     const { book, limit, setLimit, states, loadingBookCollection } = useBookContext({});
 
     const mappedStates = useMemo(() => {
-        const data = SelectMapper(states, { value: 'id', label: 'stateName' });
+        const data = FormatSelectOptions(states, { value: 'id', label: 'stateName' });
         return data;
     }, [states]);
 
