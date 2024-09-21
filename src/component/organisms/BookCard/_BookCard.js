@@ -7,6 +7,7 @@ import { ROUT_NAMES } from "../../../Constants";
 
 import style from './_BookCard.module.css';
 
+const BUTTON_LABEL = 'View';
 const _BookCard = (props) => {
     const {
         authorName,
@@ -18,7 +19,7 @@ const _BookCard = (props) => {
 
     return (
         <article className={style["container"]}>
-            
+
             <BookDetails
                 image={bookImage}
                 genre={bookGenre}
@@ -32,7 +33,7 @@ const _BookCard = (props) => {
                     to={`${ROUT_NAMES.BOOK}/${bookId}`}
                     state={{ bookTitle }}
                 >
-                    View
+                    {BUTTON_LABEL}
                 </Link>
             </div>
         </article >
