@@ -16,6 +16,7 @@ const _BookCard = (props) => {
     } = props;
 
     return (
+        // Refactor
         <article className={style["card__art"]}>
             <div className={style["card__img"]}>
                 <img src={bookImage} alt={bookTitle} />
