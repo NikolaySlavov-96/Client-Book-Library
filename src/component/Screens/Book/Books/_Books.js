@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 
 import { useBookContext } from "../../../../contexts/BookContext";
 
+import { SectionTitle } from "../../../atoms";
 import { Pagination } from "../../../molecules";
 import { QueryBar, ListRenderBook } from "../../../organisms";
 
@@ -59,7 +60,8 @@ const _Books = () => {
 
     return (
         <section className={style["body__card"]}>
-            <h1>Catalog with Books</h1>
+
+            <SectionTitle content='Catalog with Books' />
 
             <QueryBar
                 hasLeftSelector={false}
