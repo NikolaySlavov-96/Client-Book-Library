@@ -24,13 +24,15 @@ const _InputField = (props) => {
             }
 
             <input
-                type={type}
-                name={name}
+                checked={value}
                 id={name}
-                placeholder={placeholder}
-                value={value}
+                name={name}
+                onBlur={onBlur}
                 onChange={onChange}
-                onBlur={onBlur} />
+                placeholder={placeholder}
+                type={type}
+                value={value}
+            />
             {!!error ? (<p className='error'>{error}</p>) : ''}
         </div >
     );

@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useCallback, useState } from 'react';
 
 import { InputField, SectionTitle } from '../../atoms';
 
@@ -10,7 +10,13 @@ import style from './_Create.module.css';
 
 const _CreateBook = () => {
 
+    const [checkbox, setCheckbox] = useState(false);
+
     const { onSubmitCreateProduct } = useBookContext();
+
+    const onPressCheckBox = useCallback((e) => {
+        setCheckbox(e.target.checked);
+    }, [setCheckbox]);
 
     const { values, changeHandler, onSubmit, errors } = useForm({
         author: '',
@@ -69,6 +75,14 @@ const _CreateBook = () => {
                         onChange={changeHandler}
                         placeholder='Book genre'
                         value={values.genre}
+                    />
+
+                    <InputField
+                        label='Upload image:'
+                        name='uploadImage'
+                        onChange={onPressCheckBox}
+                        type='checkbox'
+                        value={checkbox}
                     />
 
                     <button>Create new Book</button >
