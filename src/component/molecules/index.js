@@ -1,3 +1,4 @@
+export { default as BookDetails } from './BookDetails/_BookDetails';
 export { default as Footer } from './Footer/_Footer';
 export { default as Header } from './Header/_Header';
 export { default as LinkedParagraph } from './LinkedParagraph/_LinkedParagraph';
