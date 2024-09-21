@@ -1,0 +1,12 @@
+.paragraph {
+  margin: 0;
+  padding-bottom: 7px;
+  text-align: center;
+}
+
+.paragraph a {
+  color: var(--design);
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 22px;
+  padding-left: 20px;
+}

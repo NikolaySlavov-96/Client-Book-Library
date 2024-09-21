@@ -1,0 +1,21 @@
+.li {
+  padding: 6px 0px;
+  list-style: none;
+  background-color: var(--btn__li);
+}
+
+.li a {
+  padding: 6px 12px;
+}
+
+.li:hover {
+  background-color: var(--btn__li-hover);
+}
+
+/* .li a.active {
+  color: 'black';
+} */
+
+.disabled {
+  background-color: var(--btn__li-hover);
+}

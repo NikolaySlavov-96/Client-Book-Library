@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const useForm = (initialValue, onSubmitHandler, errorTarget) => {
+export const useForm = (initialValue, onSubmitHandler, errorTarget, clearState = true) => {
     const [values, setValue] = useState(initialValue);
     const [errors, setErrors] = useState(initialValue);
 
@@ -22,7 +22,9 @@ export const useForm = (initialValue, onSubmitHandler, errorTarget) => {
         e.preventDefault();
 
         onSubmitHandler(values);
-        setValue(initialValue);
+        if (clearState) {
+            setValue(initialValue);
+        }
     }
 
     const changeValue = (newValue) => {

@@ -1,0 +1,24 @@
+.container {
+    height: 300px;
+    width: 300px;
+    margin: 0 2rem 2rem 0;
+    background-color: var(--fundColor);
+    border-radius: 20px;
+    -webkit-box-shadow: 0px 10px 13px -7px #000000, 29px 12px 19px 11px rgba(81, 81, 81, 0);
+    box-shadow: 0px 10px 13px -7px #000000, 29px 12px 19px 11px rgba(81, 81, 81, 0);
+    overflow: hidden;
+    position: relative;
+}
+
+.card__link {
+    position: absolute;
+    left: 45%;
+    cursor: pointer;
+    bottom: 10px;
+    text-decoration: none;
+}
+
+.card__link a {
+    padding: 6px 12px;
+    background-color: var(--btn__li);
+}

@@ -1,58 +1,91 @@
-import { createContext, useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { createContext, useContext, } from "react";
 
-import { authServiceFactory } from "../services/auth";
-import { useLocalStorage } from "../hooks/useLocalStorage";
+import { useLocalStorage, useStoreZ } from "../hooks";
 
+import { AuthService } from "../services";
+
+import { MODAL_NAMES, ServerError } from '../Constants';
+
+const STORAGE_PREFIX = '@Book_';
+const STORAGE_KEYS = {
+    TOKEN_DATE: `${STORAGE_PREFIX}TokenData`,
+    USER_DATA: `${STORAGE_PREFIX}UserData`
+}
 
 const AuthContext = createContext();
 
 export const AuthProvide = ({ children }) => {
-    const [auth, setAuth] = useLocalStorage('auth', {});
-    const navigate = useNavigate();
-    const authService = authServiceFactory(auth.accessToken);
-    const [error, setError] = useState([]);
+    const { openModal, setErrors, setModalName } = useStoreZ();
+
+    const [tokenData, setTokenData] = useLocalStorage(STORAGE_KEYS.TOKEN_DATE, {});
+    const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.USER_DATA, {});
+
+    const authService = AuthService(tokenData.accessToken);
 
     const onSubmitRegister = async (value) => {
-        const { rePassword, ...othDate } = value;
-
-        if (rePassword !== othDate.password) {
-            return 'Password don\'t match';
-        }
-
         try {
             const data = await authService.register(value);
-            setAuth(data);
-            navigate('/');
-
+            return data;
         } catch (err) {
-            setError(err.message);
+            setModalName(MODAL_NAMES.GLOBAL_ERROR_MODAL);
+            openModal();
+            setErrors({ message: err.message });
         }
     }
 
     const onSubmitLogin = async (value) => {
         try {
             const data = await authService.login(value);
-            setAuth(data);
-            navigate('/');
 
+            if (data.messageCode === ServerError.SUCCESSFULLY_LOGIN.messageCode) {
+                const newValue = value;
+                newValue.currentDate = new Date();
+                setUserData(newValue);
+                setTokenData(data.userInfo);
+            }
+
+            return data;
         } catch (err) {
-            setError(err.message);
+            setModalName(MODAL_NAMES.GLOBAL_ERROR_MODAL);
+            openModal();
+            setErrors({ message: err.message });
         }
     }
 
     const onSubmitLogout = async () => {
-        await authService.logout();
-        setAuth({});
-        navigate('/')
+        try {
+            await authService.logout();
+            setTokenData({});
+            setUserData({});
+            // Modal for success logout
+        } catch (err) {
+
+        }
     }
 
-    const verifyAccoountWithToken = async (token) => {
+    const autoLogOut = () => {
+        if (userData.email) {
+            const currentTime = new Date().getTime();
+            const userDataDate = new Date(userData.currentDate).getTime();
+
+            const differenceBetweenDate = currentTime - userDataDate;
+            if (currentTime > userDataDate && differenceBetweenDate - 1800000 > 0) {
+                onSubmitLogout()
+            }
+        }
+    };
+    autoLogOut()
+
+    const verifyAccountWithToken = async (token) => {
         try {
-            const res = await authService.verifyToken(token);
-            navigate('/auth/login')
+            const response = await authService.verifyToken(token);
+            if (response.messageCode !== ServerError.SUCCESSFULLY_VERIFY_ACCOUNT.messageCode) {
+                alert(response.message);
+                return;
+            }
+            // navigate(ROUT_NAMES.LOGIN)
         } catch (err) {
-            navigate('/auth')
+            alert(err.message);
         }
     }
 
@@ -60,12 +93,12 @@ export const AuthProvide = ({ children }) => {
         onSubmitRegister,
         onSubmitLogin,
         onSubmitLogout,
-        isAuthenticated: !!auth.accessToken,
-        email: auth.email,
-        accessToken: auth.accessToken,
-        userId: auth.id,
-        error,
-        verifyAccoountWithToken,
+        isVerifyUser: tokenData.isVerify,
+        isAuthenticated: !!tokenData.accessToken,
+        email: tokenData.email,
+        accessToken: tokenData.accessToken,
+        userId: tokenData.id,
+        verifyAccountWithToken,
     }
 
     return (
