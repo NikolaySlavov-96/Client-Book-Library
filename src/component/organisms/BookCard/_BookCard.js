@@ -1,6 +1,7 @@
 import { memo } from "react";
 
 import { Link } from "../../atoms";
+import { BookDetails } from "../../molecules";
 
 import { ROUT_NAMES } from "../../../Constants";
 
@@ -16,17 +17,15 @@ const _BookCard = (props) => {
     } = props;
 
     return (
-        // Refactor
-        <article className={style["card__art"]}>
-            <div className={style["card__img"]}>
-                <img src={bookImage} alt={bookTitle} />
-            </div>
-            <h1>{bookTitle}</h1>
-            <div className={style['card__info']}>
-                <p>Title: <span >{bookTitle}</span></p>
-                <p>Author: <span >{authorName}</span></p>
-                <p>Genre: <span >{bookGenre}</span></p>
-            </div>
+        <article className={style["container"]}>
+            
+            <BookDetails
+                image={bookImage}
+                genre={bookGenre}
+                title={bookTitle}
+                authorName={authorName}
+            />
+
             <div className={style['card__link']}>
                 <Link
                     to={`${ROUT_NAMES.BOOK}/${bookId}`}
