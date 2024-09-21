@@ -52,7 +52,7 @@ export const BookProvider = ({ children }) => {
             const result = await bookService.getProducts(data);
             setBook(result);
         } catch (err) {
-
+            console.log('loadingBooks --->: ', err);
         }
     }, []);
 
@@ -61,13 +61,13 @@ export const BookProvider = ({ children }) => {
             const result = await bookService.getAllBooksByState(data);
             setBook(result);
         } catch (err) {
-
+            console.log('loadingBookCollection --->: ', err);
         }
     }, []);
 
     const getBookById = async (id) => {
         try {
-            const isExistingBook = book.rows && book?.rows.filter(b => b.id == id); // TODO check and update with '==='
+            const isExistingBook = book.rows && book?.rows.filter(b => b.id === Number(id));
             if (isExistingBook?.length) {
                 return isExistingBook[0];
             }
@@ -75,7 +75,7 @@ export const BookProvider = ({ children }) => {
             const result = await bookService.getProduct(id)
             return result;
         } catch (err) {
-
+            console.log('loadingBookById --->: ', err);
         }
     }
 
@@ -84,6 +84,7 @@ export const BookProvider = ({ children }) => {
             const result = await bookService.getBookState(id);
             return result;
         } catch (err) {
+            console.log('getStateOnBookById --->: ', err);
         }
     };
 
@@ -93,6 +94,7 @@ export const BookProvider = ({ children }) => {
             // TODO Adding new added book
             navigate(ROUT_NAMES.HOME);
         } catch (err) {
+            console.log('onSubmitCreateProduct --->: ', err);
         }
     }
 
@@ -103,6 +105,7 @@ export const BookProvider = ({ children }) => {
 
             navigate(ROUT_NAMES.HOME);
         } catch (err) {
+            console.log('onSubmitEditProduct --->: ', err);
         }
     }
 
@@ -113,6 +116,7 @@ export const BookProvider = ({ children }) => {
 
             navigate(ROUT_NAMES.HOME);
         } catch (err) {
+            console.log('onSubmitDeleteProduct --->: ', err);   
         }
     }
 
@@ -121,6 +125,7 @@ export const BookProvider = ({ children }) => {
             const result = await bookService.addBookToLibrary({ bookId, state });
             // TODO Visualize message
         } catch (err) {
+            console.log('addingBookInList --->: ', err);
         }
     }
 
