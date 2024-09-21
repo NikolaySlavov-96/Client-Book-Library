@@ -1,7 +1,8 @@
 import { memo, useCallback } from 'react';
 
-import style from './_Pagination.module.css';
 import { Button } from '../../atoms';
+
+import style from './_Pagination.module.css';
 
 const PaginationButton = (props) => {
     const { onSubmit, content } = props;
@@ -18,33 +19,38 @@ const _Pagination = ({ count, page, onSubmit }) => {
     }, [onSubmit, page]);
 
     const onPressArrowNext = useCallback(() => {
-        const isLastPage = count >= (page + 1);
+        const hasNextPage = count >= (page + 1);
 
-        return !isLastPage ? () => { } : onSubmit(page + 1);
+        return hasNextPage ? onSubmit(page + 1) : () => { };
     }, [count, page, onSubmit]);
+
+    const twoPagesBefore = page - 2;
+    const onePageBefore = page - 1;
+    const onePageAhead = page + 1;
+    const twoPagesAhead = page + 2;
 
     return (
         <div className={style['container']}>
             <PaginationButton content='&#x3c;' onSubmit={onPressArrowBack} />
             {
-                page - 2 > 0 && (
-                    <PaginationButton content={page - 2} onSubmit={() => onSubmit(page - 2)} />
+                twoPagesBefore > 0 && (
+                    <PaginationButton content={twoPagesBefore} onSubmit={() => onSubmit(twoPagesBefore)} />
                 )
             }
             {
-                page - 1 > 0 && (
-                    <PaginationButton content={page - 1} onSubmit={() => onSubmit(page - 1)} />
+                onePageBefore > 0 && (
+                    <PaginationButton content={onePageBefore} onSubmit={() => onSubmit(onePageBefore)} />
                 )
             }
             <p className={`${style["current__page"]} ${style["page"]}`} >{page}</p>
             {
-                count >= page + 1 && (
-                    <PaginationButton content={page + 1} onSubmit={() => onSubmit(page + 1)} />
+                count >= onePageAhead && (
+                    <PaginationButton content={onePageAhead} onSubmit={() => onSubmit(onePageAhead)} />
                 )
             }
             {
-                count >= page + 2 && (
-                    <PaginationButton content={page + 2} onSubmit={() => onSubmit(page + 2)} />
+                count >= twoPagesAhead && (
+                    <PaginationButton content={twoPagesAhead} onSubmit={() => onSubmit(twoPagesAhead)} />
                 )
             }
             <PaginationButton content='&#x3e;' onSubmit={onPressArrowNext} />
