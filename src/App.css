@@ -34,7 +34,7 @@
 }
 
 .form__button {
-  margin-bottom: 2rem ;
+  margin-bottom: 2rem;
 }
 
 .disabled {
@@ -53,4 +53,14 @@ a,
 button,
 li {
   border-radius: 8px;
+}
+
+.content__page {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 1.2rem;
+  text-align: center;
+  width: 86%;
 }

@@ -9,7 +9,7 @@ const _LinkedParagraph = (props) => {
     
     return (
         <p
-            className={`${style["paragraph"]} ${!!styles ? styles : ''}`}
+            className={`${style['paragraph']} ${!!styles ? styles : ''}`}
         >
             {staticContent}
             <Link to={to}>{pressContent}</Link>

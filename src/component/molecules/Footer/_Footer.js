@@ -13,7 +13,7 @@ const FOOTED_CONTENT = {
 const _Footer = () => {
     return (
         <footer className={`global__bg-radius ${style['footer_container']}`}>
-            <div className={`'shadow' ${style['div']}`}>
+            <div className={`${style['div']}`}>
                 <LinkedParagraph
                     staticContent={FOOTED_CONTENT.CONTENT}
                     to={FOOTED_CONTENT.LINK}

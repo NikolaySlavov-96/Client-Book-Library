@@ -9,7 +9,7 @@ import { useStoreZ } from '../../../../hooks';
 import style from './_NewBookModal.module.css';
 
 const _NewBookModal = () => {
-    const { content, isVisible, closeModal} = useStoreZ();
+    const { content, isVisible, closeModal } = useStoreZ();
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -25,14 +25,16 @@ const _NewBookModal = () => {
 
     const lastBook = content.length - 1;
 
+    const currentBookData = content[lastBook];
+
     return (
         <Link
-            to={`${ROUT_NAMES.BOOK}/${content[lastBook]?.id}`}
+            to={`${ROUT_NAMES.BOOK}/${currentBookData?.id}`}
             className={`${style['container']} ${!isVisible ? '' : style['visible']}`}
         >
             <h3>Lastly added books</h3>
             <div>
-                <h1>{content[lastBook]?.bookTitle}</h1>
+                <h1>{currentBookData?.bookTitle}</h1>
             </div>
             <p>Added before 10 second</p>
         </Link>

@@ -21,7 +21,7 @@ const HEADER_BUTTON_TITLES = {
 const _Header = () => {
     const { email, onSubmitLogout, isVerifyUser } = useAuthContext();
     const name = email?.split('@')[0];
-    
+
     const onPressLogout = useCallback(() => onSubmitLogout(), [onSubmitLogout]);
 
     return (
@@ -32,18 +32,17 @@ const _Header = () => {
                 <ul className={style['navigation__ul']}>
                     <NavigationButton path={ROUT_NAMES.BOOK} title={HEADER_BUTTON_TITLES.BOOK} />
                     {
-                        !email && (<>
-                            <NavigationButton path={ROUT_NAMES.LOGIN} title={HEADER_BUTTON_TITLES.LOGIN} />
-                            <NavigationButton path={ROUT_NAMES.REGISTER} title={HEADER_BUTTON_TITLES.REGISTER} />
-                        </>)
-                    }
-
-                    {
-                        email && (<>
-                            <NavigationButton path={ROUT_NAMES.CREATE_BOOK} title={HEADER_BUTTON_TITLES.CREATE_BOOK} disabled={!isVerifyUser} />
-                            <NavigationButton path={ROUT_NAMES.USER_COLLECTION} title={HEADER_BUTTON_TITLES.COLLECTION_OF_BOOKS} />
-                            <NavigationButton onCustomClick={onPressLogout} title={HEADER_BUTTON_TITLES.LOGOUT} />
-                        </>)
+                        !!email ? (
+                            <>
+                                <NavigationButton path={ROUT_NAMES.CREATE_BOOK} title={HEADER_BUTTON_TITLES.CREATE_BOOK} disabled={!isVerifyUser} />
+                                <NavigationButton path={ROUT_NAMES.USER_COLLECTION} title={HEADER_BUTTON_TITLES.COLLECTION_OF_BOOKS} />
+                                <NavigationButton onCustomClick={onPressLogout} title={HEADER_BUTTON_TITLES.LOGOUT} />
+                            </>)
+                            :
+                            (<>
+                                <NavigationButton path={ROUT_NAMES.LOGIN} title={HEADER_BUTTON_TITLES.LOGIN} />
+                                <NavigationButton path={ROUT_NAMES.REGISTER} title={HEADER_BUTTON_TITLES.REGISTER} />
+                            </>)
                     }
                 </ul>
 

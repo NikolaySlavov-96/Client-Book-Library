@@ -2,6 +2,8 @@ import { memo } from 'react';
 
 import style from './_Search.module.css';
 
+const BUTTON_LABEL = 'Search';
+
 const _SearchField = ({ onSubmit, changeHandler, values }) => {
     return (
         <form className={style["form"]} onSubmit={onSubmit}>
@@ -9,12 +11,12 @@ const _SearchField = ({ onSubmit, changeHandler, values }) => {
                 type="text"
                 name='search'
                 id='search'
-                placeholder='Search'
+                placeholder={BUTTON_LABEL}
                 value={values.search}
                 onChange={changeHandler}
                 onBlur={changeHandler}
             />
-            <button>Search</button>
+            <button>{BUTTON_LABEL}</button>
         </form>
     );
 }

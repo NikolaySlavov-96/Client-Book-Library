@@ -20,9 +20,6 @@ const _BookServiceFactory = (token) => {
 
     const deleteProduct = async (id) => request.remove(`${PREFIX}/` + id);
 
-    // Search book
-    const searchBook = async ({ content, page, limit }) => request.get(`${SEARCH}/books?search=${content}&limit=${limit}&page=${page}`);
-
     const searchBookByEmailOnUser = async ({ content, page, limit }) => request.get(`${SEARCH}/email?email=${content}`);
     // const searchBookByEmailOnUser = async ({ content, page, limit }) => request.get(`/search/email?email=${content}&limit=${limit}&page=${page}`);
 
@@ -40,7 +37,6 @@ const _BookServiceFactory = (token) => {
         createProduct,
         editProduct,
         deleteProduct,
-        searchBook,
         getAllBooksByState,
         getBookState,
         addBookToLibrary,

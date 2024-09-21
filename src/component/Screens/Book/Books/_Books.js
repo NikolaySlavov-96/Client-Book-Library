@@ -9,8 +9,6 @@ import { QueryBar, ListRenderBook } from "../../../organisms";
 
 import { QUERY_LIMIT, SEARCH_NAME } from "../../../../Constants";
 
-import style from './_Book.module.css';
-
 const _Books = () => {
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -30,7 +28,7 @@ const _Books = () => {
     useEffect(() => {
         const searchPage = Number(searchParams.get(SEARCH_NAME.PAGE));
         const searchLimit = Number(searchParams.get(SEARCH_NAME.LIMIT));
-        const content = searchParams.get(SEARCH_NAME.CONTENT);
+        const searchContent = searchParams.get(SEARCH_NAME.CONTENT);
 
         if (!searchPage) {
             setPage(QUERY_LIMIT.PAGE);
@@ -43,8 +41,8 @@ const _Books = () => {
             setLimit(searchLimit);
         }
 
-        if (content) {
-            setSearchContent(content);
+        if (searchContent) {
+            setSearchContent(searchContent);
         }
 
         if (!searchPage || !searchLimit) {
@@ -59,7 +57,7 @@ const _Books = () => {
     }, [loadingBooks, setSearchParams, limit, page, searchContent]);
 
     return (
-        <section className={style["body__card"]}>
+        <section className={'content__page'}>
 
             <SectionTitle content='Catalog with Books' />
 

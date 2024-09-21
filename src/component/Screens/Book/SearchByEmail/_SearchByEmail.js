@@ -2,12 +2,13 @@ import { memo, useEffect, useState, } from "react";
 
 import { useParams } from "react-router-dom";
 
+import { SectionTitle } from "../../../atoms";
 import { Pagination } from "../../../molecules";
 import { QueryBar, ListRenderBook } from "../../../organisms";
 
 import { useBookContext } from "../../../../contexts/BookContext";
 
-import style from './_SearchByEmail.module.css';
+const SECTION_TITLE = 'Review user books - ??with email';
 
 const _SearchByEmail = () => {
     const param = useParams();
@@ -23,8 +24,9 @@ const _SearchByEmail = () => {
     }, [loadingBookFromEmail, param.email])
 
     return (
-        <section className={style["body__card"]}>
-            <h1>Review user books - ??with email</h1>
+        <section className={'content__page'}>
+
+            <SectionTitle content={SECTION_TITLE} />
 
             <QueryBar
                 hasLeftSelector={false}

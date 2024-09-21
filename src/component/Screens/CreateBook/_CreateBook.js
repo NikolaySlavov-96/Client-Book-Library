@@ -6,7 +6,10 @@ import { useBookContext } from '../../../contexts/BookContext';
 
 import { useForm } from '../../../hooks/useForm';
 
-import style from './_Create.module.css';
+import style from './_CreateBook.module.css';
+
+const SECTION_TITLE = 'Added new book';
+const BUTTON_LABEL = 'Create new Book';
 
 const _CreateBook = () => {
 
@@ -33,7 +36,7 @@ const _CreateBook = () => {
     return (
         <section className={`section ${style["create__section"]}`}>
 
-            <SectionTitle content='Added new book' />
+            <SectionTitle content={SECTION_TITLE} />
 
             <div className={`form__container global__bg-radius`}>
                 <form onSubmit={onSubmit}>
@@ -85,7 +88,7 @@ const _CreateBook = () => {
                         value={checkbox}
                     />
 
-                    <button>Create new Book</button >
+                    <button>{BUTTON_LABEL}</button >
                 </form >
             </div >
         </section >

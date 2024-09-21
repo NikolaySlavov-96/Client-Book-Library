@@ -1,18 +1,18 @@
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
+import { SectionTitle } from "../../../atoms";
 import { Pagination } from "../../../molecules";
 import { QueryBar, ListRenderBook } from "../../../organisms";
 
 import { useBookContext } from "../../../../contexts/BookContext";
 
 import { QUERY_LIMIT, SEARCH_NAME } from "../../../../Constants";
-import { DEFAULT_LOADED_COLLECTION } from "../../../../Constants/_collection";
 
 import { FormatSelectOptions } from "../../../../Helpers";
 
-import style from './_UserCollection.module.css';
-
+const DEFAULT_LOADED_COLLECTION = 1;
+const SECTION_TITLE = 'Collection of Books';
 
 const _UserCollection = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -29,7 +29,7 @@ const _UserCollection = () => {
     }, [states]);
 
     const count = Math.ceil(book.count / limit) || 0;
-    
+
     const onSearchFunction = useCallback((data) => {
         // Always set on initial search
         setPage(1);
@@ -40,7 +40,7 @@ const _UserCollection = () => {
         const searchPage = Number(searchParams.get(SEARCH_NAME.PAGE));
         const searchLimit = Number(searchParams.get(SEARCH_NAME.LIMIT));
         const collectionNumber = Number(searchParams.get(SEARCH_NAME.COLLECTION));
-        const content = searchParams.get(SEARCH_NAME.CONTENT);
+        const searchContent = searchParams.get(SEARCH_NAME.CONTENT);
 
         if (!searchPage) {
             setPage(QUERY_LIMIT.PAGE);
@@ -58,8 +58,8 @@ const _UserCollection = () => {
             setCollection(collectionNumber)
         }
 
-        if (content) {
-            setSearchContent(content);
+        if (searchContent) {
+            setSearchContent(searchContent);
         }
 
         if (!searchPage || !searchLimit || !collectionNumber) {
@@ -75,8 +75,9 @@ const _UserCollection = () => {
     }, [loadingBookCollection, setSearchParams, limit, page, collection, searchContent]);
 
     return (
-        <section className={style["body__card"]}>
-            <h1>Collection of Books</h1>
+        <section className={'content__page'}>
+
+            <SectionTitle content={SECTION_TITLE} />
 
             <QueryBar
                 hasLeftSelector={!!mappedStates.length}
