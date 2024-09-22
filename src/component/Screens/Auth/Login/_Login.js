@@ -1,7 +1,7 @@
 import { memo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { InputField, SectionTitle } from '../../../atoms';
+import { InputField, InputForm, SectionTitle } from '../../../atoms';
 import { LinkedParagraph } from '../../../molecules';
 
 import { useAuthContext } from '../../../../contexts/AuthContext';
@@ -9,6 +9,8 @@ import { useAuthContext } from '../../../../contexts/AuthContext';
 import { ROUT_NAMES, ServerError } from '../../../../Constants';
 
 import { useForm } from '../../../../hooks/useForm';
+
+const BUTTON_LABEL = 'Login in';
 
 const _Login = () => {
     const navigate = useNavigate();
@@ -34,11 +36,22 @@ const _Login = () => {
 
     return (
         <section className={`section`}>
-            
+
             <SectionTitle content='Login Page' />
 
             <div className={`global__bg-radius form__container`}>
-                <form onSubmit={onSubmit}>
+                <InputForm
+                    onSubmit={onSubmit}
+                    buttonLabel={BUTTON_LABEL}
+                    addSeparatorAfterButton
+                    afterButton={
+                        <LinkedParagraph
+                            staticContent={'Don\'t have a account '}
+                            to={ROUT_NAMES.REGISTER}
+                            pressContent='Sign In'
+                        />
+                    }
+                >
                     <InputField
                         error={errors.email}
                         label='Email'
@@ -58,11 +71,7 @@ const _Login = () => {
                         type='password'
                         value={values.password}
                     />
-
-                    <button className={`form__button`}> Login in</button >
-
-                    <LinkedParagraph staticContent={'Don\'t have a account '} to={ROUT_NAMES.REGISTER} pressContent='Sign In' />
-                </form >
+                </InputForm>
             </div >
         </section >
     );
