@@ -1,10 +1,11 @@
 import React, { memo, useState } from 'react'
 
-import { InputField, SectionTitle } from '../../atoms';
+import { InputField, InputForm, SectionTitle } from '../../atoms';
 
 import { HOST } from '../../../Constants/connectionData';
 
-const SECTION_TITLE = 'Upload Image'
+const SECTION_TITLE = 'Upload Image';
+const BUTTON_LABEL = 'Upload';
 
 const API_IMAGE = async (method, token, url, sendData) => {
     const options = {
@@ -57,28 +58,28 @@ const UploadImage = () => {
         <section className={`section`}>
 
             <SectionTitle content={SECTION_TITLE} />
-            
+
             <div className={`form__container global__bg-radius`}>
-                <form onSubmit={onPressAddFile}>
+                    <InputForm
+                        onSubmit={onPressAddFile}
+                        buttonLabel={BUTTON_LABEL}
+                    >
+                        <InputField
+                            label='File:'
+                            name='image'
+                            onBlur={changeHandler}
+                            onChange={changeHandler}
+                            type='file'
+                        />
 
-                    <InputField
-                        label='File:'
-                        name='image'
-                        onBlur={changeHandler}
-                        onChange={changeHandler}
-                        type='file'
-                    />
-
-                    <InputField
-                        label='src:'
-                        name='src'
-                        onBlur={changeHandler}
-                        onChange={changeHandler}
-                        value={name}
-                    />
-
-                    <button>Upload</button>
-                </form>
+                        <InputField
+                            label='src:'
+                            name='src'
+                            onBlur={changeHandler}
+                            onChange={changeHandler}
+                            value={name}
+                        />
+                    </InputForm>
             </div>
         </section>
     )
