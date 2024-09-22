@@ -1,6 +1,6 @@
 import { memo, useCallback, useState } from 'react';
 
-import { InputField, SectionTitle } from '../../atoms';
+import { InputField, InputForm, SectionTitle } from '../../atoms';
 
 import { useBookContext } from '../../../contexts/BookContext';
 
@@ -39,7 +39,10 @@ const _CreateBook = () => {
             <SectionTitle content={SECTION_TITLE} />
 
             <div className={`form__container global__bg-radius`}>
-                <form onSubmit={onSubmit}>
+                <InputForm
+                    onSubmit={onSubmit}
+                    buttonLabel={BUTTON_LABEL}
+                >
                     <InputField
                         error={errors.author}
                         label='Author Name:'
@@ -87,9 +90,7 @@ const _CreateBook = () => {
                         type='checkbox'
                         value={checkbox}
                     />
-
-                    <button>{BUTTON_LABEL}</button >
-                </form >
+                </InputForm>
             </div >
         </section >
     );
