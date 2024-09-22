@@ -1,7 +1,7 @@
 import { memo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { InputField, SectionTitle } from '../../../atoms';
+import { InputField, InputForm, SectionTitle } from '../../../atoms';
 import { LinkedParagraph } from '../../../molecules';
 
 import { useAuthContext } from '../../../../contexts/AuthContext';
@@ -9,6 +9,8 @@ import { useAuthContext } from '../../../../contexts/AuthContext';
 import { ROUT_NAMES, ServerError } from '../../../../Constants';
 
 import { useForm } from '../../../../hooks/useForm';
+
+const BUTTON_LABEL = 'Register';
 
 const _Register = () => {
     const navigate = useNavigate();
@@ -49,9 +51,20 @@ const _Register = () => {
         <section className={`section`}>
 
             <SectionTitle content='Register Page' />
-            
+
             <div className={`global__bg-radius form__container`}>
-                <form onSubmit={onSubmit}>
+                <InputForm
+                    onSubmit={onSubmit}
+                    buttonLabel={BUTTON_LABEL}
+                    addSeparatorAfterButton
+                    afterButton={
+                        <LinkedParagraph
+                            staticContent='Have a account'
+                            to={ROUT_NAMES.LOGIN}
+                            pressContent='Sign Up'
+                        />
+                    }
+                >
                     <InputField
                         error={errors.email}
                         label='Email'
@@ -91,11 +104,7 @@ const _Register = () => {
                         type='number'
                         value={values.year}
                     />
-
-                    <button className={`form__button`}>Register</button >
-
-                    <LinkedParagraph staticContent='Have a account' to={ROUT_NAMES.LOGIN} pressContent='Sign Up' />
-                </form >
+                </InputForm>
             </div >
         </section >
     );
