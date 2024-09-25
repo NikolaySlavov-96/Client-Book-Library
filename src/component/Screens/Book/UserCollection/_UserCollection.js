@@ -1,11 +1,13 @@
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
+import { useBookContext } from "../../../../contexts/BookContext";
+
 import { SectionTitle } from "../../../atoms";
 import { Pagination } from "../../../molecules";
 import { QueryBar, ListRenderBook } from "../../../organisms";
 
-import { useBookContext } from "../../../../contexts/BookContext";
+import { ListRenderBookSkeleton } from "../../../../Skeleton/organisms";
 
 import { QUERY_LIMIT, SEARCH_NAME } from "../../../../Constants";
 
@@ -21,7 +23,7 @@ const _UserCollection = () => {
     const [collection, setCollection] = useState(1);
     const [searchContent, setSearchContent] = useState('');
 
-    const { book, limit, setLimit, states, loadingBookCollection } = useBookContext({});
+    const { book, limit, setLimit, states, loadingBookCollection, isLoading } = useBookContext({});
 
     const mappedStates = useMemo(() => {
         const data = FormatSelectOptions(states, { value: 'id', label: 'stateName' });
@@ -87,7 +89,7 @@ const _UserCollection = () => {
                 onPressSearch={onSearchFunction}
             />
 
-            <ListRenderBook data={book?.rows || {}} />
+            {isLoading ? <ListRenderBookSkeleton limit={limit} /> : <ListRenderBook data={book?.rows || {}} />}
 
             <Pagination count={count} page={page} onSubmit={setPage} />
         </section >
