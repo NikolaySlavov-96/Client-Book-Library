@@ -12,6 +12,7 @@ const BookContext = createContext();
 export const BookProvider = ({ children }) => {
     const navigate = useNavigate();
 
+    const [isLoading, setIsLoading] = useState(false);
     const [states, setState] = useState([]);
 
     const [book, setBook] = useState({});
@@ -36,6 +37,7 @@ export const BookProvider = ({ children }) => {
 
 
     const loadingBookFromEmail = useCallback(async (data) => {
+        setIsLoading(true);
         try {
             if (data.content !== '') { // Search By email
                 const result = await bookService.searchBookByEmailOnUser(data);
@@ -44,28 +46,37 @@ export const BookProvider = ({ children }) => {
             }
         } catch (err) {
             console.log('LoadingBookFromEmail --->: ', err);
+        } finally {
+            setIsLoading(false);
         }
     }, []);
 
     const loadingBooks = useCallback(async (data) => {
+        setIsLoading(true);
         try {
             const result = await bookService.getProducts(data);
             setBook(result);
         } catch (err) {
             console.log('loadingBooks --->: ', err);
+        } finally {
+            setIsLoading(false);
         }
     }, []);
 
     const loadingBookCollection = useCallback(async (data) => {
+        setIsLoading(true);
         try {
             const result = await bookService.getAllBooksByState(data);
             setBook(result);
         } catch (err) {
             console.log('loadingBookCollection --->: ', err);
+        } finally {
+            setIsLoading(false);
         }
     }, []);
 
     const getBookById = async (id) => {
+        setIsLoading(true);
         try {
             const isExistingBook = book.rows && book?.rows.filter(b => b.id === Number(id));
             if (isExistingBook?.length) {
@@ -76,15 +87,20 @@ export const BookProvider = ({ children }) => {
             return result;
         } catch (err) {
             console.log('loadingBookById --->: ', err);
+        } finally {
+            setIsLoading(false);
         }
     }
 
     const getStateOnBookById = async (id) => {
+        setIsLoading(true);
         try {
             const result = await bookService.getBookState(id);
             return result;
         } catch (err) {
             console.log('getStateOnBookById --->: ', err);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -116,7 +132,7 @@ export const BookProvider = ({ children }) => {
 
             navigate(ROUT_NAMES.HOME);
         } catch (err) {
-            console.log('onSubmitDeleteProduct --->: ', err);   
+            console.log('onSubmitDeleteProduct --->: ', err);
         }
     }
 
@@ -134,6 +150,7 @@ export const BookProvider = ({ children }) => {
         limit,
         book,
         states,
+        isLoading,
         loadingBooks,
         loadingBookCollection,
         getBookById,
