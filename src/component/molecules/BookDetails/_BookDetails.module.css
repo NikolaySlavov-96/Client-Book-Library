@@ -1,6 +1,8 @@
 .image__container {
   margin-top: 14px;
   height: 100px;
+  position: relative;
+  justify-content: center;
 }
 
 .image__container img {

@@ -1,28 +1,30 @@
 .detail__card {
-    background-color: var(--fundColor);
-    border-radius: 2rem;
-    display: flex;
-    flex-wrap: wrap;
-    margin: 2rem auto;
-    padding: 2rem 2rem 2rem 2rem;
-    width: 35%;
+  background-color: var(--fundColor);
+  border-radius: 2rem;
+  margin: 2rem auto;
+  padding: 2rem 2rem 2rem 2rem;
+  width: 35%;
+}
+
+.book-card__detail {
+  text-align: center;
 }
 
 /* Optional functionality only for logged users */
 .functionality {
-    text-align: center;
-    width: 100%;
+  text-align: center;
+  width: 100%;
 }
 
 .functionality button {
-    margin: 1rem;
-    width: 180px;
-    padding: 10px 6px;
-    background-color: var(--btn__li);
-    border: none;
+  margin: 1rem;
+  width: 180px;
+  padding: 10px 6px;
+  background-color: var(--btn__li);
+  border: none;
 }
 
 .functionality button:hover {
-    cursor: pointer;
-    background-color: var(--btn__li-hover);
+  cursor: pointer;
+  background-color: var(--btn__li-hover);
 }

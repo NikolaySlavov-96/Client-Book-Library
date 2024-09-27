@@ -74,12 +74,14 @@ const _DetailsForBook = () => {
 
             <IconActionButton onClick={onPressBackButton} />
 
-            <BookDetails
-                image={book?.image}
-                genre={book?.genre}
-                title={book?.bookTitle}
-                authorName={book?.Author?.name}
-            />
+            <div className={style['book-card__detail']}>
+                <BookDetails
+                    image={book?.image}
+                    genre={book?.genre}
+                    title={book?.bookTitle}
+                    authorName={book?.Author?.name}
+                />
+            </div>
 
             {email ? (
                 <div className={`${style['functionality']}`}>
