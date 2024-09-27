@@ -4,6 +4,8 @@ import { useNavigate, useParams } from "react-router-dom"
 import { IconActionButton } from "../../../atoms";
 import { BookDetails, Select } from "../../../molecules";
 
+import { BookDetailSkeleton, SelectSkeleton } from "../../../../Skeleton/molecules";
+
 import { useAuthContext } from "../../../../contexts/AuthContext";
 import { useBookContext } from "../../../../contexts/BookContext";
 
@@ -26,7 +28,8 @@ const _DetailsForBook = () => {
     const [selectOptions, setSelectOptions] = useState([]);
 
     const { email } = useAuthContext();
-    const { getBookById, getStateOnBookById, addingBookInList, states } = useBookContext();
+    const { getBookById, getStateOnBookById, addingBookInList, states, isLoading } = useBookContext();
+    console.log("🚀 ~ isLoading:", isLoading)
 
     const mappedStates = useMemo(() => {
         const data = FormatSelectOptions(states, { value: 'id', label: 'stateName' });
@@ -64,7 +67,7 @@ const _DetailsForBook = () => {
     }, [id, loadBook]);
 
     useEffect(() => {
-        if (email) {
+        if (!!email) {
             getBookStatus(id);
         }
     }, [id, getBookStatus, email])
@@ -75,22 +78,27 @@ const _DetailsForBook = () => {
             <IconActionButton onClick={onPressBackButton} />
 
             <div className={style['book-card__detail']}>
-                <BookDetails
-                    image={book?.image}
-                    genre={book?.genre}
-                    title={book?.bookTitle}
-                    authorName={book?.Author?.name}
-                />
+                {isLoading ?
+                    <BookDetailSkeleton /> :
+                    <BookDetails
+                        image={book?.image}
+                        genre={book?.genre}
+                        title={book?.bookTitle}
+                        authorName={book?.Author?.name}
+                    />}
             </div>
 
-            {email ? (
-                <div className={`${style['functionality']}`}>
-                    <Select
-                        options={selectOptions}
-                        placeHolder={selectedLabel}
-                        onChange={(e) => changeState(e, book.id)}
-                    />
-                </div>)
+            {!!email ?
+                isLoading ?
+                    <SelectSkeleton />
+                    : (
+                        <div className={`${style['functionality']}`}>
+                            <Select
+                                options={selectOptions}
+                                placeHolder={selectedLabel}
+                                onChange={(e) => changeState(e, book.id)}
+                            />
+                        </div>)
                 : null
             }
         </section>
