@@ -1,34 +1,31 @@
 .image__container {
-    margin-right: 2rem;
+  margin-top: 14px;
+  height: 100px;
 }
 
 .image__container img {
-    /* position: absolute; */
-    /* top: 25px; */
-    /* left: 55px; */
-    width: 200px;
-    opacity: 90%;
-    margin-top: 14px;
+  width: 200px;
+  height: 100px;
+  opacity: 90%;
 }
 
 .card__img img:hover {
-    opacity: 10%;
+  opacity: 10%;
 }
 
 .book_title {
-    margin: 3px 0 40px 0;
-    /* margin-bottom: 20px; */
+  margin: 3px 0 20px 0;
 }
 
 .book__container {
-    margin-bottom: 2rem;
+  margin-bottom: 2rem;
 }
 
 .book__container p {
-    margin: 2px;
-    margin-bottom: 8px;
+  margin: 2px;
+  margin-bottom: 8px;
 }
 
 .book__container span {
-    margin-left: 6px;
+  margin-left: 6px;
 }

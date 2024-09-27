@@ -75,7 +75,7 @@ export const BookProvider = ({ children }) => {
         }
     }, []);
 
-    const getBookById = async (id) => {
+    const getBookById = useCallback(async (id) => {
         setIsLoading(true);
         try {
             const isExistingBook = book.rows && book?.rows.filter(b => b.id === Number(id));
@@ -90,9 +90,9 @@ export const BookProvider = ({ children }) => {
         } finally {
             setIsLoading(false);
         }
-    }
+    }, [])
 
-    const getStateOnBookById = async (id) => {
+    const getStateOnBookById = useCallback(async (id) => {
         setIsLoading(true);
         try {
             const result = await bookService.getBookState(id);
@@ -102,9 +102,9 @@ export const BookProvider = ({ children }) => {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, []);
 
-    const onSubmitCreateProduct = async (data) => {
+    const onSubmitCreateProduct = useCallback(async (data) => {
         try {
             await bookService.createProduct(data);
             // TODO Adding new added book
@@ -112,9 +112,9 @@ export const BookProvider = ({ children }) => {
         } catch (err) {
             console.log('onSubmitCreateProduct --->: ', err);
         }
-    }
+    }, []);
 
-    const onSubmitEditProduct = async (data) => {
+    const onSubmitEditProduct = useCallback(async (data) => {
         try {
             const prod = await bookService.editProduct(data._id, data);
             setBook(p => p.map(x => x._id === data._id ? prod : x));
@@ -123,9 +123,9 @@ export const BookProvider = ({ children }) => {
         } catch (err) {
             console.log('onSubmitEditProduct --->: ', err);
         }
-    }
+    }, []);
 
-    const onSubmitDeleteProduct = async (id) => {
+    const onSubmitDeleteProduct = useCallback(async (id) => {
         try {
             await bookService.deleteProduct(id);
             setBook(p => p.filter(prod => prod._id !== id));
@@ -134,16 +134,16 @@ export const BookProvider = ({ children }) => {
         } catch (err) {
             console.log('onSubmitDeleteProduct --->: ', err);
         }
-    }
+    }, []);
 
-    const addingBookInList = async (bookId, state) => {
+    const addingBookInList = useCallback(async (bookId, state) => {
         try {
             const result = await bookService.addBookToLibrary({ bookId, state });
             // TODO Visualize message
         } catch (err) {
             console.log('addingBookInList --->: ', err);
         }
-    }
+    }, []);
 
     const contextValue = {
         setLimit,
