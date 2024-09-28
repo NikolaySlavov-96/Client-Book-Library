@@ -20,7 +20,7 @@ const _BookDetails = (props) => {
             {hasTitle ? <h1 className={style['book_title']}>{title}</h1> : ''}
 
             <div className={style['book__container']}>
-                <p>Title: <span >{title}</span></p>
+                {!hasTitle ? <p>Title: <span >{title}</span></p> : null}
                 <p>Author: <span >{authorName}</span></p>
                 <p>Genre: <span >{bookGenre}</span></p>
             </div>

@@ -12,6 +12,7 @@ const BookContext = createContext();
 export const BookProvider = ({ children }) => {
     const navigate = useNavigate();
 
+    const [isLoading, setIsLoading] = useState(false);
     const [states, setState] = useState([]);
 
     const [book, setBook] = useState({});
@@ -36,6 +37,7 @@ export const BookProvider = ({ children }) => {
 
 
     const loadingBookFromEmail = useCallback(async (data) => {
+        setIsLoading(true);
         try {
             if (data.content !== '') { // Search By email
                 const result = await bookService.searchBookByEmailOnUser(data);
@@ -44,28 +46,37 @@ export const BookProvider = ({ children }) => {
             }
         } catch (err) {
             console.log('LoadingBookFromEmail --->: ', err);
+        } finally {
+            setIsLoading(false);
         }
     }, []);
 
     const loadingBooks = useCallback(async (data) => {
+        setIsLoading(true);
         try {
             const result = await bookService.getProducts(data);
             setBook(result);
         } catch (err) {
             console.log('loadingBooks --->: ', err);
+        } finally {
+            setIsLoading(false);
         }
     }, []);
 
     const loadingBookCollection = useCallback(async (data) => {
+        setIsLoading(true);
         try {
             const result = await bookService.getAllBooksByState(data);
             setBook(result);
         } catch (err) {
             console.log('loadingBookCollection --->: ', err);
+        } finally {
+            setIsLoading(false);
         }
     }, []);
 
-    const getBookById = async (id) => {
+    const getBookById = useCallback(async (id) => {
+        setIsLoading(true);
         try {
             const isExistingBook = book.rows && book?.rows.filter(b => b.id === Number(id));
             if (isExistingBook?.length) {
@@ -76,19 +87,24 @@ export const BookProvider = ({ children }) => {
             return result;
         } catch (err) {
             console.log('loadingBookById --->: ', err);
+        } finally {
+            setIsLoading(false);
         }
-    }
+    }, [])
 
-    const getStateOnBookById = async (id) => {
+    const getStateOnBookById = useCallback(async (id) => {
+        setIsLoading(true);
         try {
             const result = await bookService.getBookState(id);
             return result;
         } catch (err) {
             console.log('getStateOnBookById --->: ', err);
+        } finally {
+            setIsLoading(false);
         }
-    };
+    }, []);
 
-    const onSubmitCreateProduct = async (data) => {
+    const onSubmitCreateProduct = useCallback(async (data) => {
         try {
             await bookService.createProduct(data);
             // TODO Adding new added book
@@ -96,9 +112,9 @@ export const BookProvider = ({ children }) => {
         } catch (err) {
             console.log('onSubmitCreateProduct --->: ', err);
         }
-    }
+    }, []);
 
-    const onSubmitEditProduct = async (data) => {
+    const onSubmitEditProduct = useCallback(async (data) => {
         try {
             const prod = await bookService.editProduct(data._id, data);
             setBook(p => p.map(x => x._id === data._id ? prod : x));
@@ -107,33 +123,34 @@ export const BookProvider = ({ children }) => {
         } catch (err) {
             console.log('onSubmitEditProduct --->: ', err);
         }
-    }
+    }, []);
 
-    const onSubmitDeleteProduct = async (id) => {
+    const onSubmitDeleteProduct = useCallback(async (id) => {
         try {
             await bookService.deleteProduct(id);
             setBook(p => p.filter(prod => prod._id !== id));
 
             navigate(ROUT_NAMES.HOME);
         } catch (err) {
-            console.log('onSubmitDeleteProduct --->: ', err);   
+            console.log('onSubmitDeleteProduct --->: ', err);
         }
-    }
+    }, []);
 
-    const addingBookInList = async (bookId, state) => {
+    const addingBookInList = useCallback(async (bookId, state) => {
         try {
             const result = await bookService.addBookToLibrary({ bookId, state });
             // TODO Visualize message
         } catch (err) {
             console.log('addingBookInList --->: ', err);
         }
-    }
+    }, []);
 
     const contextValue = {
         setLimit,
         limit,
         book,
         states,
+        isLoading,
         loadingBooks,
         loadingBookCollection,
         getBookById,
