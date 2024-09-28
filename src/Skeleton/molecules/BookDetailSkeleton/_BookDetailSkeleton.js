@@ -1,4 +1,5 @@
 import { memo } from "react";
+
 import { ViewElement } from '../../atoms';
 
 import style from './_BookDetailSkeleton.module.css';

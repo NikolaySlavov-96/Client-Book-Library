@@ -29,7 +29,6 @@ const _DetailsForBook = () => {
 
     const { email } = useAuthContext();
     const { getBookById, getStateOnBookById, addingBookInList, states, isLoading } = useBookContext();
-    console.log("🚀 ~ isLoading:", isLoading)
 
     const mappedStates = useMemo(() => {
         const data = FormatSelectOptions(states, { value: 'id', label: 'stateName' });
