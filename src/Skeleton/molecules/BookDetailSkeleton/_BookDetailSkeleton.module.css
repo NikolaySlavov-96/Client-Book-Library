@@ -1,13 +1,4 @@
 .container {
+  padding-top: 4px;
   overflow: hidden;
-  position: relative;
-  justify-content: space-between;
-}
-
-.image__container {
-  margin-top: 14px;
-}
-
-.inner__container {
-    margin-top: 10px;
 }

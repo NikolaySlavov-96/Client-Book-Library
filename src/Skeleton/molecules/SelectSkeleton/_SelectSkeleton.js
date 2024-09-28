@@ -4,9 +4,7 @@ import { ViewElement } from '../../atoms';
 
 const _SelectSkeleton = () => {
     return (
-        <div>
-            <ViewElement width={300} height={40} />
-        </div >
+        <ViewElement width={300} height={40} />
     );
 };
 

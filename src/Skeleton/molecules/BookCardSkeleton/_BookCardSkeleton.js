@@ -13,32 +13,17 @@ const _BookCardSkeleton = (props) => {
 
     return (
         <div className={style['container']}>
+            <ViewElement width={200} height={100} />
 
-            <div className={style['image__container']}>
-                <ViewElement width={200} height={100} />
-            </div>
+            {hasTitle ? <ViewElement width={180} height={DEFAULT_HEIGHT} /> : null}
 
-            <div className={style['inner__container']}>
-                {hasTitle ? <ViewElement width={180} height={DEFAULT_HEIGHT} /> : null}
-            </div>
+            <ViewElement width={220} height={DEFAULT_HEIGHT} />
 
+            <ViewElement width={180} height={DEFAULT_HEIGHT} />
 
-            <div className={style['inner__container']}>
-                <ViewElement width={220} height={DEFAULT_HEIGHT} />
-            </div>
+            <ViewElement width={160} height={DEFAULT_HEIGHT} />
 
-            <div className={style['inner__container']}>
-                <ViewElement width={180} height={DEFAULT_HEIGHT} />
-            </div>
-
-            <div className={style['inner__container']}>
-                <ViewElement width={160} height={DEFAULT_HEIGHT} />
-            </div>
-
-
-            <div className={style['inner__container']}>
-                <ViewElement width={80} height={30} />
-            </div>
+            <ViewElement width={80} height={30} />
         </div >
     );
 };

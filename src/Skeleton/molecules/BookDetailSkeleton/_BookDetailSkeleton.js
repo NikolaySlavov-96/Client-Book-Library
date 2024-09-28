@@ -13,23 +13,13 @@ const _BookDetailSkeleton = (props) => {
 
     return (
         <div className={style['container']}>
+            <ViewElement width={300} height={150} />
 
-            <div className={style['image__container']}>
-                <ViewElement width={300} height={150} />
-            </div>
+            {hasTitle ? <ViewElement width={180} height={DEFAULT_HEIGHT} /> : null}
 
-            <div className={style['inner__container']}>
-                {hasTitle ? <ViewElement width={180} height={DEFAULT_HEIGHT} /> : null}
-            </div>
+            <ViewElement width={220} height={DEFAULT_HEIGHT} />
 
-            <div className={style['inner__container']}>
-                <ViewElement width={220} height={DEFAULT_HEIGHT} />
-            </div>
-
-            <div className={style['inner__container']}>
-                <ViewElement width={180} height={DEFAULT_HEIGHT} />
-            </div>
-
+            <ViewElement width={180} height={DEFAULT_HEIGHT} />
         </div >
     );
 };
