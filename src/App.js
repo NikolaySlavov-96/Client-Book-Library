@@ -7,8 +7,20 @@ import { BookProvider } from './contexts/BookContext';
 import { SocketProvider } from './contexts/SocketContext';
 
 import { Footer, Header } from './component/molecules';
-import { VerifyAccount, Register, Login, Books, CreateBook, DetailsForBook, SearchByEmail, UserCollection, Helmet, NotFound } from './component/Screens';
 import { ModalContainer } from './component/organisms';
+import {
+    Books,
+    CreateBook,
+    DetailsForBook,
+    Helmet,
+    Login,
+    NotFound,
+    Register,
+    SearchByEmail,
+    UploadFile,
+    UserCollection,
+    VerifyAccount,
+} from './component/Screens';
 
 import { ROUT_NAMES } from './Constants';
 
@@ -32,6 +44,7 @@ const App = () => {
                             <Route path={ROUT_NAMES.LOGIN} element={<Login />} />
                             <Route path={ROUT_NAMES.REGISTER} element={<Register />} />
                             <Route path={ROUT_NAMES.VERIFY_TOKEN} element={<VerifyAccount />} />
+                            <Route path={ROUT_NAMES.ADD_FILE} element={<UploadFile />} />
                             <Route path='*' element={<NotFound />} />
                         </Routes>
                         <ModalContainer />

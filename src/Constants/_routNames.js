@@ -10,6 +10,7 @@ const _ROUT_NAMES = {
     REGISTER: `${AUTH_PREFIX}/register`,
     USER_COLLECTION: '/collections',
     VERIFY_TOKEN: `${AUTH_PREFIX}/verify/:verifyToken`,
+    ADD_FILE: '/uploadFile',
 };
 
 export default _ROUT_NAMES;
