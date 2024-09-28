@@ -1,8 +1,13 @@
-import { memo } from "react";
+import { FC, memo } from "react";
 
 import style from './_IconActionButton.module.css';
 
-const _IconActionButtonModule = (props) => {
+interface IIconActionButtonModuleProps {
+    onClick: () => void;
+    iconName?: string;
+}
+
+const _IconActionButtonModule: FC<IIconActionButtonModuleProps> = (props) => {
     const {
         onClick,
         iconName = 'fas fa-chevron-circle-left'

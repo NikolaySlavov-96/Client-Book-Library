@@ -1,8 +1,19 @@
-import { memo } from "react";
+import { FC, HTMLInputTypeAttribute, memo } from "react";
 
 import style from './_InputField.module.css';
 
-const _InputField = (props) => {
+interface IInputFieldProps {
+    error: string;
+    label: string;
+    name: string;
+    onBlur: () => void;
+    onChange: () => void;
+    type: HTMLInputTypeAttribute,
+    value: string | boolean;
+    placeholder?: string;
+}
+
+const _InputField: FC<IInputFieldProps> = (props) => {
     const {
         error,
         label,
@@ -24,14 +35,14 @@ const _InputField = (props) => {
             }
 
             <input
-                checked={value}
+                checked={!!value}
                 id={name}
                 name={name}
                 onBlur={onBlur}
                 onChange={onChange}
                 placeholder={placeholder}
                 type={type}
-                value={value}
+                value={value as string}
             />
             {!!error ? (<p className='error'>{error}</p>) : ''}
         </div >

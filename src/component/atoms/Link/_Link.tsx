@@ -1,7 +1,12 @@
-import { memo } from "react";
+import { FC, memo, ReactNode } from "react";
 import { Link } from "react-router-dom";
 
-const _Link = (props) => {
+interface ILinkProps {
+    children: ReactNode;
+    to: string;
+}
+
+const _Link: FC<ILinkProps> = (props) => {
     const { children, } = props;
 
     return (

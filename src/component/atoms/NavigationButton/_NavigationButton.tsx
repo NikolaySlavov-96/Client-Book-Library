@@ -1,9 +1,16 @@
-import { memo, useCallback, useMemo } from "react";
+import { FC, memo, MouseEvent, useCallback, useMemo } from "react";
 import { NavLink } from "react-router-dom";
 
 import style from './_NavigationButton.module.css';
 
-const _NavigationButton = (props) => {
+interface INavigationButtonProps {
+    onCustomClick?: () => void;
+    path: string;
+    title: string;
+    isDisabled?: boolean;
+}
+
+const _NavigationButton: FC<INavigationButtonProps> = (props) => {
     const {
         path,
         title,
@@ -13,17 +20,17 @@ const _NavigationButton = (props) => {
 
     const hasCustomClick = useMemo(() => (typeof onCustomClick === 'function'), [onCustomClick]);
 
-    const handlerClick = useCallback((e) => {
+    const handlerClick = useCallback((e: MouseEvent<HTMLAnchorElement>) => {
         if (isDisabled) e.preventDefault();
 
-        if (hasCustomClick) {
-            return onCustomClick(e);
+        if (hasCustomClick && onCustomClick) {
+            onCustomClick();
         }
 
         return (e);
     }, [isDisabled, hasCustomClick, onCustomClick]);
 
-    const activePageOnHeader = useCallback(({ isActive }) => {
+    const activePageOnHeader = useCallback(({ isActive }: { isActive: boolean }) => {
         return isActive ? {
             color: 'lightYellow', background: '#023E8A'
         } : {};
