@@ -1,1 +1,1 @@
-export { default as ListRenderBookSkeleton } from './ListRenderBookSkeleton/_ListRenderBookSkeleton';
+export { default as ListRenderBookSkeletons } from './ListRenderBookSkeleton/_ListRenderBookSkeleton';

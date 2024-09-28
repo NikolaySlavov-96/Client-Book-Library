@@ -7,7 +7,7 @@ import { SectionTitle } from "../../../atoms";
 import { Pagination } from "../../../molecules";
 import { QueryBar, ListRenderBook } from "../../../organisms";
 
-import { ListRenderBookSkeleton } from "../../../../Skeleton/organisms";
+import { ListRenderBookSkeletons } from "../../../../Skeleton/organisms";
 
 import { QUERY_LIMIT, SEARCH_NAME } from "../../../../Constants";
 
@@ -89,7 +89,7 @@ const _UserCollection = () => {
                 onPressSearch={onSearchFunction}
             />
 
-            {isLoading ? <ListRenderBookSkeleton limit={limit} /> : <ListRenderBook data={book?.rows || {}} />}
+            {isLoading ? <ListRenderBookSkeletons limit={limit} /> : <ListRenderBook data={book?.rows || {}} />}
 
             <Pagination count={count} page={page} onSubmit={setPage} />
         </section >
