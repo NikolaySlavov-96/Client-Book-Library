@@ -1,7 +1,7 @@
 import { FC, memo } from 'react'
 
 interface IButtonProps {
-    content: string;
+    content: number | string;
     onClick: () => void;
     styles: string;
 }

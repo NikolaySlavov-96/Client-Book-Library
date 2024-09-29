@@ -1,26 +1,22 @@
-import { memo, useCallback, useMemo } from "react";
+import { FC, memo, ReactNode, useCallback, useMemo } from "react";
 
 import { NavigationButton } from "../../atoms";
 
 import { useAuthContext } from "../../../contexts/AuthContext";
 
-import { ROUT_NAMES } from "../../../Constants";
+import { HEADER_BUTTON_TITLES, ROUT_NAMES } from "../../../Constants";
 
 import style from './_Header.module.css';
 
 const FIRST_NAME = 'Guest';
-const HEADER_BUTTON_TITLES = {
-    BOOK: 'Book',
-    CREATE_BOOK: 'Create',
-    LOGIN: 'Login',
-    REGISTER: 'Register',
-    COLLECTION_OF_BOOKS: 'Collections of Books',
-    LOGOUT: 'Logout',
+
+interface IHeaderProps {
+    children: ReactNode;
 }
 
-const _Header = () => {
+const _Header: FC<IHeaderProps> = () => {
     const { email, onSubmitLogout, isVerifyUser } = useAuthContext();
-    
+
     const name = useMemo(() => (email?.split('@')[0]), [email]);
 
     const onPressLogout = useCallback(() => onSubmitLogout(), [onSubmitLogout]);
@@ -35,9 +31,9 @@ const _Header = () => {
                     {
                         !!email ? (
                             <>
-                                <NavigationButton path={ROUT_NAMES.CREATE_BOOK} title={HEADER_BUTTON_TITLES.CREATE_BOOK} disabled={!isVerifyUser} />
+                                <NavigationButton path={ROUT_NAMES.CREATE_BOOK} title={HEADER_BUTTON_TITLES.CREATE_BOOK} isDisabled={!isVerifyUser} />
                                 <NavigationButton path={ROUT_NAMES.USER_COLLECTION} title={HEADER_BUTTON_TITLES.COLLECTION_OF_BOOKS} />
-                                <NavigationButton onCustomClick={onPressLogout} title={HEADER_BUTTON_TITLES.LOGOUT} />
+                                <NavigationButton path="/" onCustomClick={onPressLogout} title={HEADER_BUTTON_TITLES.LOGOUT} />
                             </>)
                             :
                             (<>

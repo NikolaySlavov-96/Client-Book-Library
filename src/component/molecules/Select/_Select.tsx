@@ -1,9 +1,13 @@
-import { memo, useCallback, useEffect, useRef, useState } from "react";
+import { FC, memo, useCallback, useEffect, useRef, useState } from "react";
 
 import style from './_Select.module.css';
+import { TOptionType } from "~/Types/Select";
 
+interface IIconPops {
+    isOpen: boolean;
+}
 
-const Icon = memo(({ isOpen }) => {
+const Icon: FC<IIconPops> = memo(({ isOpen }) => {
     return (
         <svg viewBox="0 0 24 24" width="18" height="18" stroke="#222" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" className={isOpen ? style['translate'] : ''}>
             <polyline points="6 9 12 15 18 9"></polyline>
@@ -11,30 +15,40 @@ const Icon = memo(({ isOpen }) => {
     );
 });
 
-const _Select = ({ placeHolder, options, onChange, align, size }) => {
-    const inputRef = useRef();
+interface ISelectProps {
+    onChange: (option: TOptionType) => void;
+    options: TOptionType[];
+    placeHolder: string;
+    align?: string; // TODO update with correct value
+    size: '70' | '240';
+}
+
+const _Select: FC<ISelectProps> = (props) => {
+    const { placeHolder, options, onChange, align, size } = props;
+
+    const inputRef = useRef<HTMLDivElement>(null);
 
     const [showMenu, setShowMenu] = useState(false);
-    const [selectedValue, setSelectedValue] = useState([]);
+    const [selectedValue, setSelectedValue] = useState<TOptionType>();
 
-    const handler = useCallback((e) => {
-        if (inputRef.current && !inputRef.current.contains(e.target)) {
+    const handler = useCallback((e: MouseEvent) => {
+        if (inputRef.current && !inputRef.current.contains(e.target as HTMLElement)) {
             setShowMenu(false);
         }
     }, [inputRef, setShowMenu]);
 
-    const handleInputClick = useCallback((e) => {
+    const handleInputClick = useCallback(() => {
         setShowMenu(!showMenu);
     }, [setShowMenu, showMenu]);
 
     const getDisplay = useCallback(() => {
-        if (!selectedValue || selectedValue.length === 0) {
+        if (!selectedValue) {
             return placeHolder;
         }
         return selectedValue.label;
     }, [selectedValue, placeHolder]);
 
-    const onItemClick = useCallback((option) => {
+    const onItemClick = useCallback((option: TOptionType) => {
         setSelectedValue(option);
         onChange(option);
     }, [setSelectedValue, onChange]);
@@ -57,7 +71,7 @@ const _Select = ({ placeHolder, options, onChange, align, size }) => {
         <div className={`${style["dropdown-container"]} ${size && style['custom__size_' + size]}`}>
 
             <div ref={inputRef} onClick={handleInputClick} className={style["dropdown__input"]}>
-                <div className={`${!selectedValue || selectedValue.length === 0 ? style['placeholder'] : ''}`}>{getDisplay()}</div>
+                <div className={`${!selectedValue ? style['placeholder'] : ''}`}>{getDisplay()}</div>
                 <div className={style['dropdown__tools']}>
                     <div className={style['dropdown__tool']}>
                         <Icon isOpen={showMenu} />

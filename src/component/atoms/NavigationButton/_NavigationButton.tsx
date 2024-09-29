@@ -4,10 +4,10 @@ import { NavLink } from "react-router-dom";
 import style from './_NavigationButton.module.css';
 
 interface INavigationButtonProps {
-    onCustomClick?: () => void;
     path: string;
     title: string;
     isDisabled?: boolean;
+    onCustomClick?: () => void;
 }
 
 const _NavigationButton: FC<INavigationButtonProps> = (props) => {

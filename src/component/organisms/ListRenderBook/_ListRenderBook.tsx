@@ -1,10 +1,20 @@
-import { memo, useCallback } from "react";
+import { FC, memo, useCallback } from "react";
 
 import { BookCard } from "../../organisms";
 
+import { IBookProps } from "~/Types/Book";
+
 import styles from './_ListRenderBook.module.css';
 
-const _ListRenderBook = (props) => {
+interface IBookData extends IBookProps {
+    bookId: number,
+}
+
+interface IListRenderBookProps {
+    data: IBookData[];
+}
+
+const _ListRenderBook: FC<IListRenderBookProps> = (props) => {
     const { data } = props;
 
     const RenderComponent = useCallback(() => {

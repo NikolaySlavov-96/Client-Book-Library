@@ -1,12 +1,19 @@
-import { memo } from 'react';
+import { FC, memo } from 'react';
 
 import { Link } from '../../atoms';
 
 import style from './_LinkedParagraph.module.css';
 
-const _LinkedParagraph = (props) => {
+interface ILinkedParagraphProps {
+    pressContent: string;
+    staticContent: string;
+    to: string;
+    styles?: string;
+}
+
+const _LinkedParagraph: FC<ILinkedParagraphProps> = (props) => {
     const { styles, staticContent, to, pressContent } = props;
-    
+
     return (
         <p
             className={`${style['paragraph']} ${!!styles ? styles : ''}`}

@@ -7,14 +7,14 @@ const Separator = memo(() => {
 });
 
 interface IInputFormProps {
-    addSeparatorAfterButton: boolean;
-    afterButton: ReactNode;
-    afterChildren: ReactNode;
-    beforeChildren: ReactNode;
     buttonLabel: string;
     children: ReactNode;
     formStyles: string;
     onSubmit: () => void;
+    addSeparatorAfterButton?: boolean;
+    afterButton?: ReactNode;
+    afterChildren?: ReactNode;
+    beforeChildren?: ReactNode;
     buttonStyles?: string;
 }
 

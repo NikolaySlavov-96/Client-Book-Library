@@ -1,14 +1,17 @@
-import { memo } from "react";
+import { FC, memo } from "react";
 
 import { Link } from "../../atoms";
 import { BookDetails } from "../../molecules";
 
 import { ROUT_NAMES } from "../../../Constants";
 
+import { IBookProps } from "~/Types/Book";
+
 import style from './_BookCard.module.css';
 
+
 const BUTTON_LABEL = 'View';
-const _BookCard = (props) => {
+const _BookCard: FC<IBookProps> = (props) => {
     const {
         authorName,
         bookTitle,
@@ -22,7 +25,7 @@ const _BookCard = (props) => {
 
             <BookDetails
                 image={bookImage}
-                genre={bookGenre}
+                bookGenre={bookGenre}
                 title={bookTitle}
                 authorName={authorName}
                 hasTitle

@@ -34,7 +34,7 @@ const _SearchByEmail = () => {
                 onPressSearch={(data) => console.log('SearchByEmail', data)}
             />
 
-            <ListRenderBook data={book?.rows || {}} />
+            <ListRenderBook data={book?.rows || []} />
 
             <Pagination count={count} page={page} onSubmit={setPage} />
         </section >

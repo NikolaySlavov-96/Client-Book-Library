@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 interface ILinkProps {
     children: ReactNode;
     to: string;
+    className?: string;
+    state?: {};
 }
 
 const _Link: FC<ILinkProps> = (props) => {

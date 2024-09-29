@@ -1,10 +1,15 @@
-import { memo, useCallback } from 'react';
+import { Dispatch, FC, memo, SetStateAction, useCallback } from 'react';
 
 import { Button } from '../../atoms';
 
 import style from './_Pagination.module.css';
 
-const PaginationButton = (props) => {
+interface IPaginationButtonProps {
+    onSubmit: () => void;
+    content: number | string;
+}
+
+const PaginationButton: FC<IPaginationButtonProps> = (props) => {
     const { onSubmit, content } = props;
 
     return (
@@ -12,7 +17,15 @@ const PaginationButton = (props) => {
     )
 };
 
-const _Pagination = ({ count, page, onSubmit }) => {
+
+interface IPaginationProps {
+    count: number;
+    onSubmit: Dispatch<SetStateAction<number>>;
+    page: number;
+}
+
+const _Pagination: FC<IPaginationProps> = (props) => {
+    const { count, page, onSubmit } = props;
 
     const onPressArrowBack = useCallback(() => {
         (page - 1) > 0 && onSubmit(page - 1)

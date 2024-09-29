@@ -1,15 +1,24 @@
-import { memo } from 'react';
+import { FC, memo } from 'react';
 
 import style from './_Search.module.css';
 import { InputForm } from '../../atoms';
 
 const BUTTON_LABEL = 'Search';
 
-const _SearchField = ({ onSubmit, changeHandler, values }) => {
+interface ISearchFieldProps {
+    onSubmit: () => void;
+    changeHandler: () => void;
+    values: { search: string };
+}
+
+const _SearchField: FC<ISearchFieldProps> = (props) => {
+    const { onSubmit, changeHandler, values } = props;
+
     return (
         <InputForm
             buttonLabel={BUTTON_LABEL}
             formStyles={style["form"]}
+            onSubmit={onSubmit}
         >
             <input
                 type="text"

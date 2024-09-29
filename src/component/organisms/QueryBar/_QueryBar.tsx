@@ -1,4 +1,4 @@
-import { memo, useCallback } from "react";
+import { Dispatch, FC, memo, SetStateAction, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { Select, SearchField } from "../../molecules";
@@ -9,8 +9,11 @@ import { SEARCH_NAME } from "../../../Constants";
 
 import { useForm } from "../../../hooks/useForm";
 
+import { TOptionType } from "~/Types/Select";
+
 import style from './_QueryBar.module.css';
 
+// TODO Moving
 const pageSizeOptions = [
     {
         label: '12',
@@ -30,7 +33,15 @@ const pageSizeOptions = [
     },
 ]
 
-const _QueryBar = (props) => {
+interface IQueryBarProps {
+    leftSelectorData: TOptionType[];
+    hasLeftSelector: boolean;
+    leftSelectData: number;
+    onPressLeftSelector: Dispatch<SetStateAction<number>>,
+    onPressSearch: () => void;
+}
+
+const _QueryBar: FC<IQueryBarProps> = (props) => {
     const {
         leftSelectorData,
         hasLeftSelector,
@@ -41,7 +52,7 @@ const _QueryBar = (props) => {
 
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const { setLimit } = useBookContext({});
+    const { setLimit } = useBookContext();
 
     const { values, changeHandler, onSubmit } = useForm({
         search: '',
@@ -51,14 +62,14 @@ const _QueryBar = (props) => {
 
     const currentLimitParam = searchParams.get(SEARCH_NAME.LIMIT);
 
-    const pageLimit = useCallback((e) => {
+    const pageLimit = useCallback((e: TOptionType) => {
         const pageSize = e.value;
         setLimit(pageSize);
         setSearchParams(prev => ({ ...prev, limit: pageSize }));
     }, [setLimit, setSearchParams]);
 
-    const changeState = useCallback((e) => {
-        const state = e.value
+    const changeState = useCallback((e: TOptionType) => {
+        const state = Number(e.value);
         onPressLeftSelector(state);
     }, [onPressLeftSelector]);
 
@@ -79,7 +90,7 @@ const _QueryBar = (props) => {
 
             <Select
                 options={pageSizeOptions}
-                placeHolder={currentLimitParam}
+                placeHolder={currentLimitParam || ''}
                 onChange={pageLimit}
                 size={'70'}
             />

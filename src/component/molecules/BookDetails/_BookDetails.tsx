@@ -1,8 +1,16 @@
-import { memo } from "react";
+import { FC, memo } from "react";
 
 import style from './_BookDetails.module.css';
 
-const _BookDetails = (props) => {
+interface IBookDetailsProps {
+    authorName: string;
+    bookGenre: string;
+    hasTitle: boolean;
+    image: string;
+    title: string;
+}
+
+const _BookDetails: FC<IBookDetailsProps> = (props) => {
     const {
         authorName,
         bookGenre,
