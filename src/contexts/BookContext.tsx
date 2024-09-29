@@ -21,10 +21,10 @@ interface IBookContext {
     isLoading: boolean;
     loadingBooks: (data: any) => void;
     loadingBookCollection: (data: any) => void;
-    getBookById: (id: string) => void;
+    getBookById: (id: string) => any;
     loadingBookFromEmail: (data: any) => void;
     setLimit: Dispatch<SetStateAction<number>>;
-    getStateOnBookById: (id: string) => void;
+    getStateOnBookById: (id: string) => any;
     onSubmitCreateProduct: (data: any) => void;
     addingBookInList: (bookId: string, state: string) => void;
 }

@@ -15,7 +15,7 @@ const _SearchByEmail = () => {
 
     const [page, setPage] = useState(1);
 
-    const { book, limit, loadingBookFromEmail } = useBookContext({});
+    const { book, limit, loadingBookFromEmail } = useBookContext();
 
     const count = Math.ceil(book.count / limit) || 0;
 

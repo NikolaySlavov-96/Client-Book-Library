@@ -64,7 +64,7 @@ const _QueryBar: FC<IQueryBarProps> = (props) => {
 
     const pageLimit = useCallback((e: TOptionType) => {
         const pageSize = e.value;
-        setLimit(pageSize);
+        setLimit(Number(pageSize));
         setSearchParams(prev => ({ ...prev, limit: pageSize }));
     }, [setLimit, setSearchParams]);
 

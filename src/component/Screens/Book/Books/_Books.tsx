@@ -17,7 +17,7 @@ const _Books = () => {
     const [page, setPage] = useState(1);
     const [searchContent, setSearchContent] = useState('');
 
-    const { book, limit, setLimit, loadingBooks, isLoading } = useBookContext({});
+    const { book, limit, setLimit, loadingBooks, isLoading } = useBookContext();
 
     const count = Math.ceil(book.count / limit) || 0;
 

@@ -1,3 +1,7 @@
+export interface IBookData extends IBookProps {
+    bookId: number,
+}
+
 export interface IBookProps {
     authorName: string;
     bookGenre: string;

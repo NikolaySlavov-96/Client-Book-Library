@@ -19,7 +19,7 @@ const _Header: FC<IHeaderProps> = () => {
 
     const name = useMemo(() => (email?.split('@')[0]), [email]);
 
-    const onPressLogout = useCallback(() => onSubmitLogout(), [onSubmitLogout]);
+    const onPressLogout = useCallback(() => onSubmitLogout({ token: '1' }), [onSubmitLogout]);
 
     return (
         <header className={`global__bg-radius ${style['navigation__container']}`}>

@@ -2,13 +2,9 @@ import { FC, memo, useCallback } from "react";
 
 import { BookCard } from "../../organisms";
 
-import { IBookProps } from "~/Types/Book";
+import { IBookData } from "~/Types/Book";
 
 import styles from './_ListRenderBook.module.css';
-
-interface IBookData extends IBookProps {
-    bookId: number,
-}
 
 interface IListRenderBookProps {
     data: IBookData[];

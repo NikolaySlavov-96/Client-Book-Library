@@ -23,7 +23,7 @@ const _UserCollection = () => {
     const [collection, setCollection] = useState(1);
     const [searchContent, setSearchContent] = useState('');
 
-    const { book, limit, setLimit, states, loadingBookCollection, isLoading } = useBookContext({});
+    const { book, limit, setLimit, states, loadingBookCollection, isLoading } = useBookContext();
 
     const mappedStates = useMemo(() => {
         const data = FormatSelectOptions(states, { value: 'id', label: 'stateName' });
