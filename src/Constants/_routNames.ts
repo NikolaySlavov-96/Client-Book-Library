@@ -14,3 +14,12 @@ const _ROUT_NAMES = {
 };
 
 export default _ROUT_NAMES;
+
+export const _HEADER_BUTTON_TITLES = {
+    BOOK: 'Book',
+    CREATE_BOOK: 'Create',
+    LOGIN: 'Login',
+    REGISTER: 'Register',
+    COLLECTION_OF_BOOKS: 'Collections of Books',
+    LOGOUT: 'Logout',
+}
