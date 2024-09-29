@@ -1,4 +1,4 @@
-import { FC, memo, ReactNode } from 'react'
+import { FC, FormEvent, memo, ReactNode } from 'react'
 
 const Separator = memo(() => {
     return (
@@ -9,13 +9,13 @@ const Separator = memo(() => {
 interface IInputFormProps {
     buttonLabel: string;
     children: ReactNode;
-    formStyles: string;
-    onSubmit: () => void;
+    onSubmit: (e: FormEvent<HTMLFormElement>) => void;
     addSeparatorAfterButton?: boolean;
     afterButton?: ReactNode;
     afterChildren?: ReactNode;
     beforeChildren?: ReactNode;
     buttonStyles?: string;
+    formStyles?: string;
 }
 
 const _InputForm: FC<IInputFormProps> = (props) => {

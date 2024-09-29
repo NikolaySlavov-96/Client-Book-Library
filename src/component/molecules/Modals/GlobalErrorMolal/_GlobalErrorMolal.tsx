@@ -25,7 +25,7 @@ const _GlobalErrorModal = () => {
         <div
             className={`${style['container']} ${!isVisible ? '' : style['visible']}`}
         >
-            {modifyMessage.map((e: string, i: string) => <p key={i}>{e}</p>)}
+            {modifyMessage.map((e: string, i: number) => <p key={i}>{e}</p>)}
         </div>
     )
 }

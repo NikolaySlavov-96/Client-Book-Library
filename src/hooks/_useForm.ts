@@ -1,8 +1,9 @@
 import { useState } from "react";
 
 type TData = { [key: string]: string };
+type TError = { [key: string]: [string, number?] };
 
-const _useForm = (initialValue: TData, onSubmitHandler: (data: any) => void, errorTarget: [], clearState: boolean = true) => {
+const _useForm = (initialValue: TData, onSubmitHandler: (data: any) => void, errorTarget: TError, clearState: boolean = true) => {
     const [values, setValue] = useState(initialValue);
     const [errors, setErrors] = useState(initialValue);
 
@@ -12,7 +13,7 @@ const _useForm = (initialValue: TData, onSubmitHandler: (data: any) => void, err
         if (errorTarget[e.target.name] && errorTarget[e.target.name][0] === 'required') {
             if (values[e.target.name].length <= 1) {
                 setErrors(state => ({ ...state, [e.target.name]: `${e.target.name} is required` }))
-            } else if (errorTarget[e.target.name]?.[1] > values[e.target.name].length) {
+            } else if (errorTarget[e.target.name]?.[1]! > values[e.target.name].length) {
                 setErrors(state => ({ ...state, [e.target.name]: `Minimal length is ${errorTarget[e.target.name][1]}` }))
             } else {
                 setErrors(state => ({ ...state, [e.target.name]: '' }))

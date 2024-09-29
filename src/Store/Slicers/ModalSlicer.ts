@@ -5,7 +5,7 @@ export interface ModalSlicer {
     setModalName: (data: string) => void;
     content: any[]; // TODO
     setContent: (newData: any) => void;
-    error: {};
+    error: { message: string };
     setErrors: (newData: any) => void;
     isVisible: boolean;
     openModal: () => void;
@@ -19,7 +19,7 @@ const createModalSlicer: StateCreator<ModalSlicer> = (set) => ({
     setContent: (newDate) => set(state => ({
         content: [...state.content, newDate],
     })),
-    error: {},
+    error: { message: '' },
     setErrors: (error) => set({ error, }),
     isVisible: false,
     openModal: () => set({ isVisible: true }),

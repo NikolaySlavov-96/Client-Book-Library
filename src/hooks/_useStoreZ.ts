@@ -1,4 +1,4 @@
-import create from "zustand";
+import { create } from "zustand";
 
 import createModalSlicer, { ModalSlicer } from "../Store/Slicers/ModalSlicer";
 

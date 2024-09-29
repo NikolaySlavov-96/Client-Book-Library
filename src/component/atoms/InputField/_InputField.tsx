@@ -1,4 +1,4 @@
-import { FC, HTMLInputTypeAttribute, memo } from "react";
+import { ChangeEvent, FC, FocusEvent, HTMLInputTypeAttribute, memo } from "react";
 
 import style from './_InputField.module.css';
 
@@ -6,8 +6,8 @@ interface IInputFieldProps {
     error: string;
     label: string;
     name: string;
-    onBlur: () => void;
-    onChange: () => void;
+    onBlur: (e: FocusEvent<HTMLInputElement>) => void;
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
     type: HTMLInputTypeAttribute,
     value: string | boolean;
     placeholder?: string;
