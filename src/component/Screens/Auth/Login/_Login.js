@@ -8,7 +8,7 @@ import { useAuthContext } from '../../../../contexts/AuthContext';
 
 import { ROUT_NAMES, ServerError } from '../../../../Constants';
 
-import { useForm } from '../../../../hooks/useForm';
+import { useForm } from '../../../../hooks';
 
 const BUTTON_LABEL = 'Login in';
 

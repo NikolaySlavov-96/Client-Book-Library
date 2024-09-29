@@ -1,10 +1,12 @@
 import { useState } from "react";
 
-export const useForm = (initialValue, onSubmitHandler, errorTarget, clearState = true) => {
+type TData = { [key: string]: string };
+
+const _useForm = (initialValue: TData, onSubmitHandler: (data: any) => void, errorTarget: [], clearState: boolean = true) => {
     const [values, setValue] = useState(initialValue);
     const [errors, setErrors] = useState(initialValue);
 
-    const changeHandler = (e) => {
+    const changeHandler = (e: any) => {
         setValue(state => ({ ...state, [e.target.name]: e.target.value }));
 
         if (errorTarget[e.target.name] && errorTarget[e.target.name][0] === 'required') {
@@ -18,7 +20,7 @@ export const useForm = (initialValue, onSubmitHandler, errorTarget, clearState =
         }
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: any) => {
         e.preventDefault();
 
         onSubmitHandler(values);
@@ -27,7 +29,7 @@ export const useForm = (initialValue, onSubmitHandler, errorTarget, clearState =
         }
     }
 
-    const changeValue = (newValue) => {
+    const changeValue = (newValue: any) => {
         setValue(newValue);
     }
 
@@ -39,3 +41,5 @@ export const useForm = (initialValue, onSubmitHandler, errorTarget, clearState =
         errors
     }
 }
+
+export default _useForm;

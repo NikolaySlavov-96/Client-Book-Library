@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 
-const _useLocalStorage = (key, initialValue) => {
+const _useLocalStorage = (key: string, initialValue: {}) => {
     const [state, setState] = useState(() => {
         const persist = localStorage.getItem(key);
 
@@ -12,7 +12,7 @@ const _useLocalStorage = (key, initialValue) => {
         return initialValue;
     });
 
-    const setLocalStorage = (value) => {
+    const setLocalStorage = (value: any) => {
         setState(value);
 
         localStorage.setItem(key, JSON.stringify(value));

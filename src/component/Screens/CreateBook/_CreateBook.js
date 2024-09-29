@@ -4,7 +4,7 @@ import { InputField, InputForm, SectionTitle } from '../../atoms';
 
 import { useBookContext } from '../../../contexts/BookContext';
 
-import { useForm } from '../../../hooks/useForm';
+import { useForm } from '../../../hooks';
 
 import style from './_CreateBook.module.css';
 

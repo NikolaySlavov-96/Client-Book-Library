@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useService } from "../hooks/useService";
+import { useService } from "../hooks";
 
 import { BookService } from "../services";
 

@@ -1,11 +1,10 @@
-//auth context
-
 import { useAuthContext } from "../contexts/AuthContext";
 
-
-export const useService = (serviceFactory) => {
+const _useService = (serviceFactory: Function) => {
     const { accessToken } = useAuthContext();
 
     const service = serviceFactory(accessToken);
     return service;
 }
+
+export default _useService;
