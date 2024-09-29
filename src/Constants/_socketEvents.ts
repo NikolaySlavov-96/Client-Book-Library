@@ -1,5 +1,7 @@
-export const _EReceiveEvents = {
-    NEW_BOOK_ADDED: 'new-book-added',
+export enum _EReceiveEvents {
+    NEW_BOOK_ADDED = 'new-book-added',
 };
 
-export const _ESendEvents = {};
+export enum _ESendEvents {
+    send = 'send', // Temporary
+};

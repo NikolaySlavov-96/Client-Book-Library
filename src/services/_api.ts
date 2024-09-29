@@ -1,6 +1,6 @@
 import { API } from "../Helpers";
 
-const _api = (token) => {
+const _api = (token: string) => {
     return {
         get: API.bind(null, 'GET', token),
         post: API.bind(null, 'POST', token),
