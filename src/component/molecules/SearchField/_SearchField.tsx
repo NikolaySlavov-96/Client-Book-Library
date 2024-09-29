@@ -6,8 +6,8 @@ import { InputForm } from '../../atoms';
 const BUTTON_LABEL = 'Search';
 
 interface ISearchFieldProps {
-    onSubmit: () => void;
-    changeHandler: () => void;
+    onSubmit: (e: any) => void;
+    changeHandler: (e: any) => void;
     values: { search: string };
 }
 

@@ -3,14 +3,14 @@ import { ChangeEvent, FC, FocusEvent, HTMLInputTypeAttribute, memo } from "react
 import style from './_InputField.module.css';
 
 interface IInputFieldProps {
-    error: string;
     label: string;
     name: string;
-    onBlur: (e: FocusEvent<HTMLInputElement>) => void;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-    type: HTMLInputTypeAttribute,
+    onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
     value: string | boolean;
+    error?: string;
     placeholder?: string;
+    type?: HTMLInputTypeAttribute;
 }
 
 const _InputField: FC<IInputFieldProps> = (props) => {

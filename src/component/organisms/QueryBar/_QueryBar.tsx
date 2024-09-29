@@ -34,11 +34,11 @@ const pageSizeOptions = [
 ]
 
 interface IQueryBarProps {
-    leftSelectorData: TOptionType[];
     hasLeftSelector: boolean;
-    leftSelectData: number;
-    onPressLeftSelector: Dispatch<SetStateAction<number>>,
-    onPressSearch: () => void;
+    onPressSearch: (e: any) => void;
+    leftSelectData?: number;
+    leftSelectorData?: TOptionType[];
+    onPressLeftSelector?: Dispatch<SetStateAction<number>>,
 }
 
 const _QueryBar: FC<IQueryBarProps> = (props) => {
@@ -57,7 +57,7 @@ const _QueryBar: FC<IQueryBarProps> = (props) => {
     const { values, changeHandler, onSubmit } = useForm({
         search: '',
     }, onPressSearch, {
-        search: ['required', '2']
+        search: ['required', 2]
     }, false);
 
     const currentLimitParam = searchParams.get(SEARCH_NAME.LIMIT);
@@ -70,20 +70,20 @@ const _QueryBar: FC<IQueryBarProps> = (props) => {
 
     const changeState = useCallback((e: TOptionType) => {
         const state = Number(e.value);
-        onPressLeftSelector(state);
+        onPressLeftSelector && onPressLeftSelector(state);
     }, [onPressLeftSelector]);
 
     return (
         <div className={`global__bg-radius ${style['container']}`}>
             {hasLeftSelector ? <Select
-                options={leftSelectorData}
-                placeHolder={leftSelectorData[leftSelectData - 1].label}
+                options={leftSelectorData || []}
+                placeHolder={(leftSelectorData && leftSelectData) ? leftSelectorData[leftSelectData - 1].label : ''}
                 onChange={changeState}
                 size={'240'}
             /> : <div></div>}
 
             <SearchField
-                values={values}
+                values={values as { search: string }}
                 changeHandler={changeHandler}
                 onSubmit={onSubmit}
             />

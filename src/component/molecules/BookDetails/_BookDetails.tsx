@@ -5,9 +5,9 @@ import style from './_BookDetails.module.css';
 interface IBookDetailsProps {
     authorName: string;
     bookGenre: string;
-    hasTitle: boolean;
     image: string;
     title: string;
+    hasTitle?: boolean;
 }
 
 const _BookDetails: FC<IBookDetailsProps> = (props) => {
