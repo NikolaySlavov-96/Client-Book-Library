@@ -1,7 +1,15 @@
 import { HOST } from '../Constants/connectionData';
 
-const _API = async (method, token, url, inputDate) => {
-    const options = {
+type TMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+
+interface IOptions {
+    method: TMethod;
+    headers: any;
+    body?: any;
+}
+
+const _API = async (method: TMethod, token: string, url: string, inputDate?: object) => {
+    const options: IOptions = {
         method,
         headers: {}
     }

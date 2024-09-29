@@ -1,7 +1,15 @@
 const PRIMARY_PATH = ['create', 'collections', 'search'];
 const SECONDARY_PATHS = ['auth'];
 
-const _titleFromLocation = (location) => {
+interface ITitleFromLocation {
+    pathname: string;
+    search: string;
+    hash: string;
+    state: null | { bookTitle: string };
+    key: string;
+}
+
+const _TitleFromLocation = (location: ITitleFromLocation) => {
     const hasState = location.state;
     const pathName = location.pathname;
 
@@ -25,4 +33,4 @@ const _titleFromLocation = (location) => {
     return allTitle;
 };
 
-export default _titleFromLocation;
+export default _TitleFromLocation;
