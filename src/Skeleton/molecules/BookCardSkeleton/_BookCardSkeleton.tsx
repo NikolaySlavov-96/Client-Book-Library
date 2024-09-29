@@ -1,27 +1,33 @@
-import { memo } from "react";
+import { FC, memo } from "react";
 
 import { ViewElement } from '../../atoms';
 
-import style from './_BookDetailSkeleton.module.css';
+import { IBookSkeleton } from "../Types/Book";
+
+import style from './_BookCardSkeleton.module.css';
 
 const DEFAULT_HEIGHT = 20;
 
-const _BookDetailSkeleton = (props) => {
+const _BookCardSkeleton: FC<IBookSkeleton> = (props) => {
     const {
         hasTitle = true,
     } = props;
 
     return (
         <div className={style['container']}>
-            <ViewElement width={300} height={150} />
+            <ViewElement width={200} height={100} />
 
             {hasTitle ? <ViewElement width={180} height={DEFAULT_HEIGHT} /> : null}
 
             <ViewElement width={220} height={DEFAULT_HEIGHT} />
 
             <ViewElement width={180} height={DEFAULT_HEIGHT} />
+
+            <ViewElement width={160} height={DEFAULT_HEIGHT} />
+
+            <ViewElement width={80} height={30} />
         </div >
     );
 };
 
-export default memo(_BookDetailSkeleton);
+export default memo(_BookCardSkeleton);

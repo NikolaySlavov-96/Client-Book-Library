@@ -1,10 +1,14 @@
-import { memo, useCallback, useMemo } from "react";
+import { FC, memo, useCallback, useMemo } from "react";
 
 import { BookCardSkeleton } from "../../molecules";
 
 import styles from './_ListRenderBookSkeleton.module.css';
 
-const _ListRenderBookSkeleton = (props) => {
+interface IListRenderBookSkeletonProps {
+    limit: number;
+}
+
+const _ListRenderBookSkeleton: FC<IListRenderBookSkeletonProps> = (props) => {
     const { limit } = props;
 
     const renderedElements = useMemo(() => (
@@ -12,7 +16,7 @@ const _ListRenderBookSkeleton = (props) => {
     ), [limit]);
 
     const RenderComponent = useCallback(() => {
-        return renderedElements?.map(e => <BookCardSkeleton key={e} {...e} />)
+        return renderedElements?.map(e => <BookCardSkeleton key={e} />)
     }, [renderedElements]);
 
     return (
