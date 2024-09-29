@@ -1,3 +1,4 @@
+
 import { memo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,34 +11,48 @@ import { ROUT_NAMES, ServerError } from '../../../../Constants';
 
 import { useForm } from '../../../../hooks';
 
-const BUTTON_LABEL = 'Login in';
+const BUTTON_LABEL = 'Register';
 
-const _Login = () => {
+const _Register = () => {
     const navigate = useNavigate();
 
-    const { onSubmitLogin } = useAuthContext();
+    const { onSubmitRegister } = useAuthContext();
 
-    const onSubmitFunction = useCallback(async (data) => {
-        const result = await onSubmitLogin(data);
-
-        if (result?.messageCode === ServerError.SUCCESSFULLY_LOGIN.messageCode) {
-            navigate(ROUT_NAMES.HOME);
+    const onSubmitFunction = useCallback(async (data: { email: string; password: string; year: string }) => {
+        const result = await onSubmitRegister(data);
+        if (result?.messageCode === ServerError.SUCCESSFULLY_REGISTER.messageCode) {
+            navigate(ROUT_NAMES.LOGIN);
             // Modal for success
         }
-    }, [onSubmitLogin, navigate]);
+    }, [onSubmitRegister, navigate]);
 
     const { values, changeHandler, onSubmit, errors } = useForm({
         email: '',
         password: '',
+        rePassword: '',
+        year: '',
     }, onSubmitFunction, {
         email: ['required'],
-        password: ['required'],
+        password: ['required', 5],
     });
+
+    const err = {
+        rePassword: '',
+        year: '',
+    }
+    if (values.password !== values.rePassword) {
+        err.rePassword = 'Password don\'t match';
+    }
+
+    const yearToNumber = Number(values.year);
+    if (yearToNumber < 0 || yearToNumber > 110) {
+        err.year = 'Year not valid'
+    }
 
     return (
         <section className={`section`}>
 
-            <SectionTitle content='Login Page' />
+            <SectionTitle content='Register Page' />
 
             <div className={`global__bg-radius form__container`}>
                 <InputForm
@@ -46,9 +61,9 @@ const _Login = () => {
                     addSeparatorAfterButton
                     afterButton={
                         <LinkedParagraph
-                            staticContent={'Don\'t have a account '}
-                            to={ROUT_NAMES.REGISTER}
-                            pressContent='Sign In'
+                            staticContent='Have a account'
+                            to={ROUT_NAMES.LOGIN}
+                            pressContent='Sign Up'
                         />
                     }
                 >
@@ -71,10 +86,30 @@ const _Login = () => {
                         type='password'
                         value={values.password}
                     />
+
+                    <InputField
+                        error={err.rePassword}
+                        label='Repeat Password'
+                        name='rePassword'
+                        onBlur={changeHandler}
+                        onChange={changeHandler}
+                        type='password'
+                        value={values.rePassword}
+                    />
+
+                    <InputField
+                        error={err.year}
+                        label='Year'
+                        name='year'
+                        onBlur={changeHandler}
+                        onChange={changeHandler}
+                        type='number'
+                        value={values.year}
+                    />
                 </InputForm>
             </div >
         </section >
     );
 }
 
-export default memo(_Login);
+export default memo(_Register);

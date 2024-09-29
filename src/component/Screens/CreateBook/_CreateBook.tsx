@@ -17,7 +17,7 @@ const _CreateBook = () => {
 
     const { onSubmitCreateProduct } = useBookContext();
 
-    const onPressCheckBox = useCallback((e) => {
+    const onPressCheckBox = useCallback((e: any) => {
         setCheckbox(e.target.checked);
     }, [setCheckbox]);
 
@@ -27,8 +27,8 @@ const _CreateBook = () => {
         image: '',
         genre: '',
     }, onSubmitCreateProduct, {
-        author: ['required', '5'],
-        bookTitle: ['required', '5'],
+        author: ['required', 5],
+        bookTitle: ['required', 5],
         // image: ['required', '5'],
         // genre: ['required', '5'],
     });

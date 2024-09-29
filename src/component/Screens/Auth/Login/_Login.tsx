@@ -10,47 +10,34 @@ import { ROUT_NAMES, ServerError } from '../../../../Constants';
 
 import { useForm } from '../../../../hooks';
 
-const BUTTON_LABEL = 'Register';
+const BUTTON_LABEL = 'Login in';
 
-const _Register = () => {
+const _Login = () => {
     const navigate = useNavigate();
 
-    const { onSubmitRegister } = useAuthContext();
+    const { onSubmitLogin } = useAuthContext();
 
-    const onSubmitFunction = useCallback(async (data) => {
-        const result = await onSubmitRegister(data);
-        if (result?.messageCode === ServerError.SUCCESSFULLY_REGISTER.messageCode) {
-            navigate(ROUT_NAMES.LOGIN);
+    const onSubmitFunction = useCallback(async (data: { email: string, password: string }) => {
+        const result = await onSubmitLogin(data);
+
+        if (result?.messageCode === ServerError.SUCCESSFULLY_LOGIN.messageCode) {
+            navigate(ROUT_NAMES.HOME);
             // Modal for success
         }
-    }, [onSubmitRegister, navigate]);
+    }, [onSubmitLogin, navigate]);
 
     const { values, changeHandler, onSubmit, errors } = useForm({
         email: '',
         password: '',
-        rePassword: '',
-        year: '',
     }, onSubmitFunction, {
         email: ['required'],
-        password: ['required', '5'],
+        password: ['required'],
     });
-
-    const err = {
-        rePassword: '',
-        year: '',
-    }
-    if (values.password !== values.rePassword) {
-        err.rePassword = 'Password don\'t match';
-    }
-
-    if (values.year < 0 || values.year > 110) {
-        err.year = 'Year not valid'
-    }
 
     return (
         <section className={`section`}>
 
-            <SectionTitle content='Register Page' />
+            <SectionTitle content='Login Page' />
 
             <div className={`global__bg-radius form__container`}>
                 <InputForm
@@ -59,9 +46,9 @@ const _Register = () => {
                     addSeparatorAfterButton
                     afterButton={
                         <LinkedParagraph
-                            staticContent='Have a account'
-                            to={ROUT_NAMES.LOGIN}
-                            pressContent='Sign Up'
+                            staticContent={'Don\'t have a account '}
+                            to={ROUT_NAMES.REGISTER}
+                            pressContent='Sign In'
                         />
                     }
                 >
@@ -84,30 +71,10 @@ const _Register = () => {
                         type='password'
                         value={values.password}
                     />
-
-                    <InputField
-                        error={err.rePassword}
-                        label='Repeat Password'
-                        name='rePassword'
-                        onBlur={changeHandler}
-                        onChange={changeHandler}
-                        type='password'
-                        value={values.rePassword}
-                    />
-
-                    <InputField
-                        error={err.year}
-                        label='Year'
-                        name='year'
-                        onBlur={changeHandler}
-                        onChange={changeHandler}
-                        type='number'
-                        value={values.year}
-                    />
                 </InputForm>
             </div >
         </section >
     );
 }
 
-export default memo(_Register);
+export default memo(_Login);

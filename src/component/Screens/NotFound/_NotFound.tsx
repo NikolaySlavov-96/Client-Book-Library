@@ -1,6 +1,6 @@
 import { memo } from 'react';
-import { SectionTitle } from '../../atoms';
 
+import { SectionTitle } from '../../atoms';
 
 const _NotFound = () => {
 

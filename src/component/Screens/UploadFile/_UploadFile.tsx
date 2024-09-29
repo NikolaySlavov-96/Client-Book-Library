@@ -7,10 +7,19 @@ import { HOST } from '../../../Constants/connectionData';
 const SECTION_TITLE = 'Upload Image';
 const BUTTON_LABEL = 'Upload';
 
-const API_IMAGE = async (method, token, url, sendData) => {
-    const options = {
+
+
+type TMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+interface IOptions {
+    method: TMethod;
+    headers: any;
+    body?: any;
+}
+
+const API_IMAGE = async (method: TMethod, token: string, url: string, sendData: any) => {
+    const options: IOptions = {
         method,
-        header: {}
+        headers: {}
     }
 
     if (sendData !== undefined) {
@@ -26,11 +35,13 @@ const API_IMAGE = async (method, token, url, sendData) => {
     }
 }
 
+
+
 const UploadImage = () => {
     const [file, setFile] = useState();
     const [name, setName] = useState('');
 
-    const changeHandler = (e) => {
+    const changeHandler = (e: any) => {
         const target = e.target;
         if (target.type === 'file') {
             setFile(target.files[0]);
@@ -39,7 +50,7 @@ const UploadImage = () => {
         }
     };
 
-    const onPressAddFile = async (e) => {
+    const onPressAddFile = async (e: any) => {
         e.preventDefault();
         if (!file) {
             return;
@@ -60,26 +71,27 @@ const UploadImage = () => {
             <SectionTitle content={SECTION_TITLE} />
 
             <div className={`form__container global__bg-radius`}>
-                    <InputForm
-                        onSubmit={onPressAddFile}
-                        buttonLabel={BUTTON_LABEL}
-                    >
-                        <InputField
-                            label='File:'
-                            name='image'
-                            onBlur={changeHandler}
-                            onChange={changeHandler}
-                            type='file'
-                        />
+                <InputForm
+                    onSubmit={onPressAddFile}
+                    buttonLabel={BUTTON_LABEL}
+                >
+                    <InputField
+                        label='File:'
+                        name='image'
+                        onBlur={changeHandler}
+                        onChange={changeHandler}
+                        type='file'
+                        value=''
+                    />
 
-                        <InputField
-                            label='src:'
-                            name='src'
-                            onBlur={changeHandler}
-                            onChange={changeHandler}
-                            value={name}
-                        />
-                    </InputForm>
+                    <InputField
+                        label='src:'
+                        name='src'
+                        onBlur={changeHandler}
+                        onChange={changeHandler}
+                        value={name}
+                    />
+                </InputForm>
             </div>
         </section>
     )

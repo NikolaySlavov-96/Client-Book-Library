@@ -13,8 +13,8 @@ import { FormatSelectOptions } from "../../../../Helpers";
 
 import style from './_DetailsForBook.module.css';
 
-const createBookOptions = (bookState, mappedStates) => {
-    return mappedStates.filter((b) => b.value !== bookState)
+const createBookOptions = (bookState: any, mappedStates: any) => {
+    return mappedStates.filter((b: any) => b.value !== bookState)
 }
 
 const DEFAULT_MESSAGE = 'Please select...';
@@ -23,7 +23,7 @@ const _DetailsForBook = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [book, setBook] = useState({});
+    const [book, setBook] = useState<{ id: string; image: string; genre: string; bookTitle: string; Author: { name: string } }>();
     const [selectPlaceholder, setSelectPlaceholder] = useState(DEFAULT_MESSAGE);
     const [selectOptions, setSelectOptions] = useState([]);
 
@@ -35,12 +35,12 @@ const _DetailsForBook = () => {
         return data;
     }, [states]);
 
-    const loadBook = useCallback(async (bookId) => {
+    const loadBook = useCallback(async (bookId: string) => {
         const loadedBook = await getBookById(bookId);
         setBook(loadedBook);
     }, [setBook, getBookById]);
 
-    const getBookStatus = useCallback(async (bookId) => {
+    const getBookStatus = useCallback(async (bookId: string) => {
         const bookResult = await getStateOnBookById(bookId);
         const bookState = bookResult?.stateId;
         setSelectPlaceholder(bookState);
@@ -48,7 +48,7 @@ const _DetailsForBook = () => {
         setSelectOptions(bookOptions);
     }, [getStateOnBookById, setSelectPlaceholder, mappedStates]);
 
-    const changeState = useCallback((e, id) => {
+    const changeState = useCallback((e: any, id: string) => {
         const state = e.value;
         addingBookInList(id, state);
     }, [addingBookInList]);
@@ -62,12 +62,12 @@ const _DetailsForBook = () => {
     ), [mappedStates, selectPlaceholder]);
 
     useEffect(() => {
-        loadBook(id);
+        loadBook(id ? id.toString() : '0');
     }, [id, loadBook]);
 
     useEffect(() => {
         if (!!email) {
-            getBookStatus(id);
+            getBookStatus(id ? id.toString() : '0');
         }
     }, [id, getBookStatus, email])
 
@@ -80,10 +80,10 @@ const _DetailsForBook = () => {
                 {isLoading ?
                     <BookDetailSkeleton /> :
                     <BookDetails
-                        image={book?.image}
-                        genre={book?.genre}
-                        title={book?.bookTitle}
-                        authorName={book?.Author?.name}
+                        image={book?.image as string}
+                        bookGenre={book?.genre as string}
+                        title={book?.bookTitle as string}
+                        authorName={book?.Author?.name as string}
                     />}
             </div>
 
@@ -95,7 +95,8 @@ const _DetailsForBook = () => {
                             <Select
                                 options={selectOptions}
                                 placeHolder={selectedLabel}
-                                onChange={(e) => changeState(e, book.id)}
+                                onChange={(e) => changeState(e, book ? book.id : '0')}
+                                size='70'
                             />
                         </div>)
                 : null

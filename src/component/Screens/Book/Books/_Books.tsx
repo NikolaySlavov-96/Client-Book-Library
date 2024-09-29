@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { useBookContext } from "../../../../contexts/BookContext";
@@ -11,28 +11,17 @@ import { ListRenderBookSkeletons } from "../../../../Skeleton/organisms";
 
 import { QUERY_LIMIT, SEARCH_NAME } from "../../../../Constants";
 
-import { FormatSelectOptions } from "../../../../Helpers";
-
-const DEFAULT_LOADED_COLLECTION = 1;
-const SECTION_TITLE = 'Collection of Books';
-
-const _UserCollection = () => {
+const _Books = () => {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [page, setPage] = useState(1);
-    const [collection, setCollection] = useState(1);
     const [searchContent, setSearchContent] = useState('');
 
-    const { book, limit, setLimit, states, loadingBookCollection, isLoading } = useBookContext({});
-
-    const mappedStates = useMemo(() => {
-        const data = FormatSelectOptions(states, { value: 'id', label: 'stateName' });
-        return data;
-    }, [states]);
+    const { book, limit, setLimit, loadingBooks, isLoading } = useBookContext({});
 
     const count = Math.ceil(book.count / limit) || 0;
 
-    const onSearchFunction = useCallback((data) => {
+    const onSearchFunction = useCallback((data: any) => {
         // Always set on initial search
         setPage(1);
         setSearchContent(data.search)
@@ -41,7 +30,6 @@ const _UserCollection = () => {
     useEffect(() => {
         const searchPage = Number(searchParams.get(SEARCH_NAME.PAGE));
         const searchLimit = Number(searchParams.get(SEARCH_NAME.LIMIT));
-        const collectionNumber = Number(searchParams.get(SEARCH_NAME.COLLECTION));
         const searchContent = searchParams.get(SEARCH_NAME.CONTENT);
 
         if (!searchPage) {
@@ -54,38 +42,29 @@ const _UserCollection = () => {
         } else {
             setLimit(searchLimit);
         }
-        if (!collectionNumber) {
-            setCollection(QUERY_LIMIT.COLLECTION)
-        } else {
-            setCollection(collectionNumber)
-        }
 
         if (searchContent) {
             setSearchContent(searchContent);
         }
 
-        if (!searchPage || !searchLimit || !collectionNumber) {
-            setSearchParams({ page: QUERY_LIMIT.PAGE, limit: QUERY_LIMIT.LIMIT, collectionNumber: QUERY_LIMIT.COLLECTION });
+        if (!searchPage || !searchLimit) {
+            setSearchParams({ page: QUERY_LIMIT.PAGE.toString(), limit: QUERY_LIMIT.LIMIT.toString() });
         }
     }, []);
 
     useEffect(() => {
-        if (page || limit || collection || searchContent) {
-            setSearchParams({ page: page, limit: limit, collection: collection, content: searchContent });
-        }
-        loadingBookCollection({ page: page, limit: limit, type: collection, searchContent });
-    }, [loadingBookCollection, setSearchParams, limit, page, collection, searchContent]);
+        if (page || limit || searchContent)
+            setSearchParams({ page: page.toString(), limit: limit.toString(), content: searchContent });
+        loadingBooks({ page: page, limit: limit, searchContent });
+    }, [loadingBooks, setSearchParams, limit, page, searchContent]);
 
     return (
         <section className={'content__page'}>
 
-            <SectionTitle content={SECTION_TITLE} />
+            <SectionTitle content='Catalog with Books' />
 
             <QueryBar
-                hasLeftSelector={!!mappedStates.length}
-                leftSelectorData={mappedStates}
-                leftSelectData={collection || DEFAULT_LOADED_COLLECTION}
-                onPressLeftSelector={setCollection}
+                hasLeftSelector={false}
                 onPressSearch={onSearchFunction}
             />
 
@@ -96,4 +75,4 @@ const _UserCollection = () => {
     );
 }
 
-export default memo(_UserCollection);
+export default memo(_Books);
