@@ -1,4 +1,4 @@
-import { createContext, useContext, } from "react";
+import { createContext, ReactNode, useContext, } from "react";
 
 import { useLocalStorage, useStoreZ } from "../hooks";
 
@@ -12,9 +12,21 @@ const STORAGE_KEYS = {
     USER_DATA: `${STORAGE_PREFIX}UserData`
 }
 
-const AuthContext = createContext();
+interface IAuthContext {
+    onSubmitLogin: (data: any) => any;
+    onSubmitLogout: (data: any) => void;
+    onSubmitRegister: (data: any) => any;
+    verifyAccountWithToken: (data: any) => void;
+    accessToken: string;
+    email: string;
+    isAuthenticated: boolean;
+    isVerifyUser: boolean;
+    userId: string;
+}
 
-export const AuthProvide = ({ children }) => {
+const AuthContext = createContext<IAuthContext | undefined>(undefined);
+
+export const AuthProvide = ({ children }: { children: ReactNode }) => {
     const { openModal, setErrors, setModalName } = useStoreZ();
 
     const [tokenData, setTokenData] = useLocalStorage(STORAGE_KEYS.TOKEN_DATE, {});
@@ -22,18 +34,18 @@ export const AuthProvide = ({ children }) => {
 
     const authService = AuthService(tokenData.accessToken);
 
-    const onSubmitRegister = async (value) => {
+    const onSubmitRegister = async (value: any) => {
         try {
             const data = await authService.register(value);
             return data;
         } catch (err) {
             setModalName(MODAL_NAMES.GLOBAL_ERROR_MODAL);
             openModal();
-            setErrors({ message: err.message });
+            // setErrors({ message: err.message });
         }
     }
 
-    const onSubmitLogin = async (value) => {
+    const onSubmitLogin = async (value: any) => {
         try {
             const data = await authService.login(value);
 
@@ -48,13 +60,13 @@ export const AuthProvide = ({ children }) => {
         } catch (err) {
             setModalName(MODAL_NAMES.GLOBAL_ERROR_MODAL);
             openModal();
-            setErrors({ message: err.message });
+            // setErrors({ message: err.message });
         }
     }
 
     const onSubmitLogout = async () => {
         try {
-            await authService.logout();
+            await authService.logout({ token: '1' });
             setTokenData({});
             setUserData({});
             // Modal for success logout
@@ -76,20 +88,20 @@ export const AuthProvide = ({ children }) => {
     };
     autoLogOut()
 
-    const verifyAccountWithToken = async (token) => {
+    const verifyAccountWithToken = async (token: string) => {
         try {
-            const response = await authService.verifyToken(token);
+            const response = await authService.verifyToken({ token });
             if (response.messageCode !== ServerError.SUCCESSFULLY_VERIFY_ACCOUNT.messageCode) {
                 alert(response.message);
                 return;
             }
             // navigate(ROUT_NAMES.LOGIN)
         } catch (err) {
-            alert(err.message);
+            // alert(err.message);
         }
     }
 
-    const contextValue = {
+    const contextValue: IAuthContext = {
         onSubmitRegister,
         onSubmitLogin,
         onSubmitLogout,
@@ -102,7 +114,7 @@ export const AuthProvide = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={contextValue}>
+        <AuthContext.Provider value={contextValue} >
             {children}
         </AuthContext.Provider>
     );
@@ -110,6 +122,9 @@ export const AuthProvide = ({ children }) => {
 
 export const useAuthContext = () => {
     const context = useContext(AuthContext);
+    if (!context) {
+        throw new Error('useAuthContext must be used within a AuthContextProvider');
+    }
     return context;
 }
 

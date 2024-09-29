@@ -41,4 +41,8 @@ export interface IVerifyTokeRequest {
     token: string;
 }
 
-export interface IVerifyTokenResponse { }
+export interface IVerifyTokenResponse {
+    userInfo: {};
+    message: string;
+    messageCode: string;
+}

@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect } from "react";
+import { createContext, ReactNode, useCallback, useContext, useEffect } from "react";
 
 import { SocketService } from '../services';
 
@@ -6,13 +6,15 @@ import { EReceiveEvents, MODAL_NAMES } from '../Constants';
 
 import { useStoreZ } from "../hooks";
 
-const SocketContext = createContext();
+interface ISocketContext { }
 
-export const SocketProvider = ({ children }) => {
+const SocketContext = createContext<ISocketContext | undefined>(undefined);
+
+export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
     const { openModal, setModalName, setContent, } = useStoreZ();
 
-    const result = useCallback((data) => {
+    const result = useCallback((data: any) => {
         setModalName(MODAL_NAMES.NEW_BOOK);
         setContent(data);
         openModal();

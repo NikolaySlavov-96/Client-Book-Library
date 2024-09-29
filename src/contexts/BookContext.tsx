@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, Dispatch, ReactNode, SetStateAction, useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useService } from "../hooks";
@@ -7,15 +7,37 @@ import { BookService } from "../services";
 
 import { ROUT_NAMES } from "../Constants";
 
-const BookContext = createContext();
+import { IBookData } from "~/Types/Book";
 
-export const BookProvider = ({ children }) => {
+interface IBookArray {
+    count: number;
+    rows: IBookData[];
+}
+
+interface IBookContext {
+    limit: number;
+    book: IBookArray;
+    states: never[];
+    isLoading: boolean;
+    loadingBooks: (data: any) => void;
+    loadingBookCollection: (data: any) => void;
+    getBookById: (id: string) => void;
+    loadingBookFromEmail: (data: any) => void;
+    setLimit: Dispatch<SetStateAction<number>>;
+    getStateOnBookById: (id: string) => void;
+    onSubmitCreateProduct: (data: any) => void;
+    addingBookInList: (bookId: string, state: string) => void;
+}
+
+const BookContext = createContext<IBookContext | undefined>(undefined);
+
+export const BookProvider = ({ children }: { children: ReactNode }) => {
     const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState(false);
     const [states, setState] = useState([]);
 
-    const [book, setBook] = useState({});
+    const [book, setBook] = useState<IBookArray>({ count: 0, rows: [] });
 
     const [limit, setLimit] = useState(12);
 
@@ -36,7 +58,7 @@ export const BookProvider = ({ children }) => {
     }, [loadingAllStatesForBook]);
 
 
-    const loadingBookFromEmail = useCallback(async (data) => {
+    const loadingBookFromEmail = useCallback(async (data: any) => {
         setIsLoading(true);
         try {
             if (data.content !== '') { // Search By email
@@ -51,7 +73,7 @@ export const BookProvider = ({ children }) => {
         }
     }, []);
 
-    const loadingBooks = useCallback(async (data) => {
+    const loadingBooks = useCallback(async (data: any) => {
         setIsLoading(true);
         try {
             const result = await bookService.getProducts(data);
@@ -63,7 +85,7 @@ export const BookProvider = ({ children }) => {
         }
     }, []);
 
-    const loadingBookCollection = useCallback(async (data) => {
+    const loadingBookCollection = useCallback(async (data: any) => {
         setIsLoading(true);
         try {
             const result = await bookService.getAllBooksByState(data);
@@ -75,10 +97,10 @@ export const BookProvider = ({ children }) => {
         }
     }, []);
 
-    const getBookById = useCallback(async (id) => {
+    const getBookById = useCallback(async (id: string) => {
         setIsLoading(true);
         try {
-            const isExistingBook = book.rows && book?.rows.filter(b => b.id === Number(id));
+            const isExistingBook = book.rows && book?.rows.filter(b => b.bookId === Number(id));
             if (isExistingBook?.length) {
                 return isExistingBook[0];
             }
@@ -92,7 +114,7 @@ export const BookProvider = ({ children }) => {
         }
     }, [])
 
-    const getStateOnBookById = useCallback(async (id) => {
+    const getStateOnBookById = useCallback(async (id: string) => {
         setIsLoading(true);
         try {
             const result = await bookService.getBookState(id);
@@ -104,7 +126,7 @@ export const BookProvider = ({ children }) => {
         }
     }, []);
 
-    const onSubmitCreateProduct = useCallback(async (data) => {
+    const onSubmitCreateProduct = useCallback(async (data: any) => {
         try {
             await bookService.createProduct(data);
             // TODO Adding new added book
@@ -114,10 +136,10 @@ export const BookProvider = ({ children }) => {
         }
     }, []);
 
-    const onSubmitEditProduct = useCallback(async (data) => {
+    const onSubmitEditProduct = useCallback(async (data: any) => {
         try {
             const prod = await bookService.editProduct(data._id, data);
-            setBook(p => p.map(x => x._id === data._id ? prod : x));
+            // setBook(p => p?.rows.map(x => x.id === data.id ? prod : x));
 
             navigate(ROUT_NAMES.HOME);
         } catch (err) {
@@ -125,10 +147,10 @@ export const BookProvider = ({ children }) => {
         }
     }, []);
 
-    const onSubmitDeleteProduct = useCallback(async (id) => {
+    const onSubmitDeleteProduct = useCallback(async (id: string) => {
         try {
             await bookService.deleteProduct(id);
-            setBook(p => p.filter(prod => prod._id !== id));
+            // setBook(p => p.filter(prod => prod._id !== id));
 
             navigate(ROUT_NAMES.HOME);
         } catch (err) {
@@ -136,7 +158,7 @@ export const BookProvider = ({ children }) => {
         }
     }, []);
 
-    const addingBookInList = useCallback(async (bookId, state) => {
+    const addingBookInList = useCallback(async (bookId: string, state: string) => {
         try {
             const result = await bookService.addBookToLibrary({ bookId, state });
             // TODO Visualize message
@@ -157,8 +179,8 @@ export const BookProvider = ({ children }) => {
         loadingBookFromEmail,
         getStateOnBookById,
         onSubmitCreateProduct,
-        onSubmitEditProduct,
-        onSubmitDeleteProduct,
+        // onSubmitEditProduct,
+        // onSubmitDeleteProduct,
         addingBookInList,
     }
 
@@ -172,5 +194,8 @@ export const BookProvider = ({ children }) => {
 
 export const useBookContext = () => {
     const context = useContext(BookContext);
+    if (!context) {
+        throw new Error('useBookContext must be used within a BookContextProvider');
+    }
     return context;
 }
