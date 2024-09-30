@@ -10,11 +10,7 @@ import style from './_Header.module.css';
 
 const FIRST_NAME = 'Guest';
 
-interface IHeaderProps {
-    children: ReactNode;
-}
-
-const _Header: FC<IHeaderProps> = () => {
+const _Header = () => {
     const { email, onSubmitLogout, isVerifyUser } = useAuthContext();
 
     const name = useMemo(() => (email?.split('@')[0]), [email]);
