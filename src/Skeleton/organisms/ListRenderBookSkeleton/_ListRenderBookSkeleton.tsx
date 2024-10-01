@@ -16,7 +16,11 @@ const _ListRenderBookSkeleton: FC<IListRenderBookSkeletonProps> = (props) => {
     ), [limit]);
 
     const RenderComponent = useCallback(() => {
-        return renderedElements?.map(e => <BookCardSkeleton key={e} />)
+        return (
+            <>
+                {renderedElements?.map(e => <BookCardSkeleton key={e} />)}
+            </>
+        )
     }, [renderedElements]);
 
     return (
