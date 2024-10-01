@@ -1,5 +1,7 @@
 import api from './_api';
 
+import { useLocalStorage } from '../hooks';
+
 import {
     IAddingBookInLibraryRequest,
     IAddingBookInLibraryResponse,
@@ -16,16 +18,19 @@ import {
     IGetStatesResponse,
     ISearchProductByEmailRequest,
     ISearchProductByEmailResponse,
+    ISendFileRequest,
+    ISendFileResponse,
 } from '~/Types/services/BookService';
 
 const PREFIX = '/book'
 const SEARCH = '/search';
 
-const _BookServiceFactory = (token: string) => {
-    const request = api(token);
+const _BookServiceFactory = () => {
+    const [token] = useLocalStorage('@Book_TokenData', {});
+    const request = api(token.accessToken);
 
     // Get book States ( id, title, symbol ) / For Reading, Reading and e.t.n.
-    const getStates = async (): Promise<IGetStatesResponse> => request.get(`${PREFIX}/bookStates/all`);
+    const getStates = async (): Promise<IGetStatesResponse[]> => request.get(`${PREFIX}/bookStates/all`);
 
     // Book Services
     const getProducts = async (data: IGetProductsRequest): Promise<IGetProductsResponse> => request.get(`${PREFIX}?limit=${data?.limit}&page=${data?.page}&search=${data?.searchContent}`);
@@ -33,6 +38,8 @@ const _BookServiceFactory = (token: string) => {
     const getProduct = async (id: string): Promise<IGetProductResponse> => request.get(`${PREFIX}/` + id);
 
     const createProduct = async (data: ICreateProductRequest): Promise<ICreateProductResponse> => request.post(`${PREFIX}`, data);
+
+    const sendFile = async (data: ISendFileRequest): Promise<ISendFileResponse> => request.post(`${PREFIX}/addImage`, data, true);
 
     const editProduct = async (id: string, data: IEditProductRequest): Promise<IEditProductResponse> => request.put(`${PREFIX}/` + id, data);
 
@@ -49,16 +56,17 @@ const _BookServiceFactory = (token: string) => {
     const addBookToLibrary = async (data: IAddingBookInLibraryRequest): Promise<IAddingBookInLibraryResponse> => request.post(`${PREFIX}/state`, data);
 
     return {
-        getStates,
-        getProducts,
-        getProduct,
+        addBookToLibrary,
         createProduct,
-        editProduct,
         deleteProduct,
+        editProduct,
         getAllBooksByState,
         getBookState,
-        addBookToLibrary,
+        getProduct,
+        getProducts,
+        getStates,
         searchBookByEmailOnUser,
+        sendFile,
     }
 }
 

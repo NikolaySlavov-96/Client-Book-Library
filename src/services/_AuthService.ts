@@ -1,5 +1,7 @@
 import api from './_api';
 
+import { useLocalStorage } from '../hooks';
+
 import {
     ILoginRequest,
     ILoginResponse,
@@ -13,8 +15,9 @@ import {
 
 const PREFIX = '/auth';
 
-const _AuthServiceFactory = (token: string) => {
-    const request = api(token);
+const _AuthServiceFactory = () => {
+    const [token] = useLocalStorage('@Book_TokenData', {});
+    const request = api(token.accessToken);
 
     const register = async (data: IRegisterRequest): Promise<IRegisterResponse> => request.post(`${PREFIX}/register`, data);
 

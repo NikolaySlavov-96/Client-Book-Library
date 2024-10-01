@@ -17,7 +17,6 @@ interface IAuthContext {
     onSubmitLogout: (data: any) => void;
     onSubmitRegister: (data: any) => any;
     verifyAccountWithToken: (data: any) => void;
-    accessToken: string;
     email: string;
     isAuthenticated: boolean;
     isVerifyUser: boolean;
@@ -32,7 +31,7 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
     const [tokenData, setTokenData] = useLocalStorage(STORAGE_KEYS.TOKEN_DATE, {});
     const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.USER_DATA, {});
 
-    const authService = AuthService(tokenData.accessToken);
+    const authService = AuthService();
 
     const onSubmitRegister = async (value: any) => {
         try {
@@ -108,7 +107,6 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
         isVerifyUser: tokenData.isVerify,
         isAuthenticated: !!tokenData.accessToken,
         email: tokenData.email,
-        accessToken: tokenData.accessToken,
         userId: tokenData.id,
         verifyAccountWithToken,
     }

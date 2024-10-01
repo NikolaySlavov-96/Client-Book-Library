@@ -1,5 +1,5 @@
 interface IDataItem {
-    [key: string]: string;
+    [key: (string | number)]: string;
 }
 
 interface IFormatSelectOptions {
@@ -7,7 +7,7 @@ interface IFormatSelectOptions {
     label: string
 }
 
-const _FormatSelectOptions = (data: IDataItem[], { value, label }: IFormatSelectOptions) => {
+const _FormatSelectOptions = (data: any[], { value, label }: IFormatSelectOptions) => {
     const newStates = data.map(s => {
         return { value: s[value], label: s[label] }
     });

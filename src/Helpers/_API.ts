@@ -1,23 +1,30 @@
-import { HOST } from '../Constants/connectionData';
+import { HOST } from "../Constants/connectionData";
 
-type TMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+export type TMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
-interface IOptions {
+export interface IOptions {
     method: TMethod;
     headers: any;
     body?: any;
 }
 
-const _API = async (method: TMethod, token: string, url: string, inputDate?: object) => {
+const _API = async (method: TMethod, token: string, url: string, inputDate?: object, isImage?: boolean) => {
     const options: IOptions = {
         method,
-        headers: {}
+        headers: {
+            'X-user-idp': '22',
+        }
     }
-
-    if (inputDate !== undefined) {
+    
+    if (inputDate !== undefined && !isImage) {
         options.headers['Content-Type'] = 'application/json';
         options.body = JSON.stringify(inputDate);
     }
+    
+    if(isImage) {
+        options.body = inputDate;
+    }
+
     if (token) {
         options.headers = {
             ...options.headers,
@@ -36,6 +43,7 @@ const _API = async (method: TMethod, token: string, url: string, inputDate?: obj
         if (!response.ok) {
             throw new Error(data.message);
         }
+
         return data;
 
     } catch (err) {

@@ -1,45 +1,17 @@
-import React, { memo, useState } from 'react'
+import { memo, useState } from 'react'
 
 import { InputField, InputForm, SectionTitle } from '../../atoms';
 
-import { HOST } from '../../../Constants/connectionData';
+import { useBookContext } from '../../../contexts/BookContext';
 
 const SECTION_TITLE = 'Upload Image';
 const BUTTON_LABEL = 'Upload';
 
-
-
-type TMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
-interface IOptions {
-    method: TMethod;
-    headers: any;
-    body?: any;
-}
-
-const API_IMAGE = async (method: TMethod, token: string, url: string, sendData: any) => {
-    const options: IOptions = {
-        method,
-        headers: {}
-    }
-
-    if (sendData !== undefined) {
-        options.body = sendData;
-    }
-
-    try {
-        const response = await fetch(HOST + url, options);
-
-        return response;
-    } catch (err) {
-        throw err;
-    }
-}
-
-
-
 const UploadImage = () => {
     const [file, setFile] = useState();
     const [name, setName] = useState('');
+
+    const { onSendFile } = useBookContext();
 
     const changeHandler = (e: any) => {
         const target = e.target;
@@ -60,7 +32,7 @@ const UploadImage = () => {
         formData.append('deliverFile', file);
         formData.append('src', name);
 
-        const result = await API_IMAGE('POST', '', '/book/addImage', formData);
+        const result = await onSendFile(formData);
         // Show modal with message
         console.log("🚀 ~ onPressAddFile ~ result:", result)
     };
@@ -81,7 +53,6 @@ const UploadImage = () => {
                         onBlur={changeHandler}
                         onChange={changeHandler}
                         type='file'
-                        value=''
                     />
 
                     <InputField

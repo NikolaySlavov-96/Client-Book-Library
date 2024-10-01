@@ -31,24 +31,32 @@ export interface IGetProductsRequest {
     searchContent: string;
 }
 
+interface IBooks {
+    bookId: number;
+    bookImage: string;
+    bookGenre: string;
+    bookIsVerify: boolean;
+    bookTitle: string;
+    authorName: string;
+    authorImage: string;
+    authorGenre: string;
+    authorIsVerify: boolean
+}
 export interface IGetProductsResponse {
     count: number;
-    rows: {
-        bookId: number;
-        bookImage: string;
-        bookGenre: string;
-        bookIsVerify: boolean;
-        bookTitle: string;
-        authorName: string;
-        authorImage: string;
-        authorGenre: string;
-        authorIsVerify: boolean
-    }[];
+    rows: IBooks[];
 }
 
 export interface ICreateProductRequest { }
 
 export interface ICreateProductResponse { }
+
+export interface ISendFileRequest {
+    deliverFile: File;
+    src: string;
+}
+
+export interface ISendFileResponse { }
 
 export interface IEditProductRequest { }
 
@@ -60,20 +68,58 @@ export interface ISearchProductByEmailRequest {
     limit: number;
 }
 
-export interface ISearchProductByEmailResponse { }
+interface IBookEmailType {
+    email: string;
+    userId: number;
+    userYear: number;
+    userIdVerify: boolean;
+    bookId: number;
+    bookImage: string;
+    bookGenre: string;
+    bookIsVerify: boolean;
+    bookTitle: string;
+    authorName: string;
+    authorImage: string;
+    authorGenre: string;
+    authorIsVerify: boolean;
+    stateId: number;
+}
+
+export interface ISearchProductByEmailResponse {
+    count: number;
+    rows: IBookEmailType[];
+}
 
 export interface IGetAllProductByStateRequest extends IGetProductsRequest {
     type: string;
-
 }
 
-export interface IGetAllProductByStateResponse { }
+
+interface IBookWithState {
+    bookStateId: number;
+    bookStateIsDelete: boolean;
+    bookId: number;
+    bookImage: string;
+    bookGenre: string;
+    bookIsVerify: boolean;
+    bookTitle: string;
+    authorName: string;
+    authorImage: string;
+    authorGenre: string;
+    authorIsVerify: boolean;
+    email: string;
+    userId: number;
+}
+export interface IGetAllProductByStateResponse {
+    count: number;
+    rows: IBookWithState[];
+}
 
 export interface IGetBookStateResponse extends IGetStatesResponse { }
 
 export interface IAddingBookInLibraryRequest {
-    state: number;
-    bookId: number;
+    state: string;
+    bookId: string;
 }
 
 export interface IAddingBookInLibraryResponse {
