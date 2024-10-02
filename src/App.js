@@ -17,7 +17,6 @@ import {
     NotFound,
     Register,
     SearchByEmail,
-    UploadFile,
     UserCollection,
     VerifyAccount,
 } from './component/Screens';
@@ -44,7 +43,6 @@ const App = () => {
                             <Route path={ROUT_NAMES.LOGIN} element={<Login />} />
                             <Route path={ROUT_NAMES.REGISTER} element={<Register />} />
                             <Route path={ROUT_NAMES.VERIFY_TOKEN} element={<VerifyAccount />} />
-                            <Route path={ROUT_NAMES.ADD_FILE} element={<UploadFile />} />
                             <Route path='*' element={<NotFound />} />
                         </Routes>
                         <ModalContainer />

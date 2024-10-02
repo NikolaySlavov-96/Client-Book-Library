@@ -5,7 +5,6 @@ export { default as Helmet } from './Helmet/_Helmet';
 export { default as Login } from './Auth/Login/_Login';
 export { default as Register } from './Auth/Register/_Register';
 export { default as SearchByEmail } from './Book/SearchByEmail/_SearchByEmail';
-export { default as UploadFile } from './UploadFile/_UploadFile';
 export { default as UserCollection } from './Book/UserCollection/_UserCollection';
 export { default as VerifyAccount } from './Auth/VerifyAccount/_VerifyAccount';
 
