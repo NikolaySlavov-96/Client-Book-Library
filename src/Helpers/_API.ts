@@ -9,22 +9,26 @@ export interface IOptions {
     headers: any;
     body?: any;
 }
+interface IMoreData {
+    inputData: object;
+    isImage?: boolean;
+}
 
-const _API = async (method: TMethod, token2: string, url: string, inputDate?: object, isImage?: boolean) => {
+const _API = async (method: TMethod, url: string, moreData?: IMoreData) => {
     const options: IOptions = {
         method,
         headers: {
-            'X-user-ipDs': '22',
+            // 'X-user-ipDs': '',
         }
     }
 
-    if (inputDate !== undefined && !isImage) {
+    if (moreData?.inputData !== undefined && !moreData?.isImage) {
         options.headers['Content-Type'] = 'application/json';
-        options.body = JSON.stringify(inputDate);
+        options.body = JSON.stringify(moreData?.inputData);
     }
 
-    if (isImage) {
-        options.body = inputDate;
+    if (moreData?.isImage) {
+        options.body = moreData?.inputData;
     }
 
     const token = getDataFromStorage('@Book_TokenData');

@@ -1,7 +1,5 @@
 import api from './_api';
 
-import { useLocalStorage } from '../hooks';
-
 import {
     ILoginRequest,
     ILoginResponse,
@@ -16,18 +14,15 @@ import {
 const PREFIX = '/auth';
 
 const _AuthServiceFactory = () => {
-    const [token] = useLocalStorage('@Book_TokenData', {});
-    const request = api(token.accessToken);
+    const register = async (data: IRegisterRequest): Promise<IRegisterResponse> => api.post(`${PREFIX}/register`, { inputData: data });
 
-    const register = async (data: IRegisterRequest): Promise<IRegisterResponse> => request.post(`${PREFIX}/register`, data);
+    const login = async (data: ILoginRequest): Promise<ILoginResponse> => api.post(`${PREFIX}/login`, { inputData: data });
 
-    const login = async (data: ILoginRequest): Promise<ILoginResponse> => request.post(`${PREFIX}/login`, data);
+    const logout = async (data: ILogOutRequest): Promise<ILogOutResponse> => api.post(`${PREFIX}/logout`, { inputData: data });
 
-    const logout = async (data: ILogOutRequest): Promise<ILogOutResponse> => request.post(`${PREFIX}/logout`, data);
+    const checkField = async () => api.get(`${PREFIX}/check`);
 
-    const checkField = async () => request.get(`${PREFIX}/check`);
-
-    const verifyToken = async (token: IVerifyTokeRequest): Promise<IVerifyTokenResponse> => request.post(`${PREFIX}/verify`, { verifyToken: token });
+    const verifyToken = async (verifyToken: IVerifyTokeRequest): Promise<IVerifyTokenResponse> => api.post(`${PREFIX}/verify`, { inputData: { verifyToken } });
 
     return {
         register,
