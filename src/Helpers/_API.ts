@@ -1,5 +1,7 @@
 import { HOST } from "../Constants/connectionData";
 
+import { getDataFromStorage } from "./_Storage";
+
 export type TMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 export interface IOptions {
@@ -8,27 +10,28 @@ export interface IOptions {
     body?: any;
 }
 
-const _API = async (method: TMethod, token: string, url: string, inputDate?: object, isImage?: boolean) => {
+const _API = async (method: TMethod, token2: string, url: string, inputDate?: object, isImage?: boolean) => {
     const options: IOptions = {
         method,
         headers: {
-            'X-user-idp': '22',
+            'X-user-ipDs': '22',
         }
     }
-    
+
     if (inputDate !== undefined && !isImage) {
         options.headers['Content-Type'] = 'application/json';
         options.body = JSON.stringify(inputDate);
     }
-    
-    if(isImage) {
+
+    if (isImage) {
         options.body = inputDate;
     }
 
-    if (token) {
+    const token = getDataFromStorage('@Book_TokenData');
+    if (token?.accessToken) {
         options.headers = {
             ...options.headers,
-            'book-id': token,
+            'book-id': token.accessToken,
         }
     }
 
