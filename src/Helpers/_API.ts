@@ -17,9 +17,7 @@ interface IMoreData {
 const _API = async (method: TMethod, url: string, moreData?: IMoreData) => {
     const options: IOptions = {
         method,
-        headers: {
-            // 'X-user-ipDs': '',
-        }
+        headers: {}
     }
 
     if (moreData?.inputData !== undefined && !moreData?.isImage) {
