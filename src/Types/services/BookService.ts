@@ -1,3 +1,17 @@
+interface IBooks {
+    bookId: number;
+    bookGenre: string;
+    bookIsVerify: boolean;
+    bookTitle: string;
+    authorName: string;
+    authorImage: string;
+    authorGenre: string;
+    authorIsVerify: boolean
+    bookSrc: string;
+    imageId: number;
+    imageUrl: string;
+}
+
 export interface IGetStatesRequest { };
 
 export interface IGetStatesResponse {
@@ -8,22 +22,7 @@ export interface IGetStatesResponse {
 
 export interface IGetProductRequest { }
 
-export interface IGetProductResponse {
-    id: number;
-    authorId: number;
-    bookTitle: string;
-    image: string;
-    genre: string;
-    isVerify: boolean;
-    createdAt: string;
-    updatedAt: string;
-    Author: {
-        name: string;
-        image: string;
-        genre: string;
-        isVerify: boolean;
-    }
-}
+export interface IGetProductResponse extends IBooks { }
 
 export interface IGetProductsRequest {
     limit: number;
@@ -31,32 +30,31 @@ export interface IGetProductsRequest {
     searchContent: string;
 }
 
-interface IBooks {
-    bookId: number;
-    bookImage: string;
-    bookGenre: string;
-    bookIsVerify: boolean;
-    bookTitle: string;
-    authorName: string;
-    authorImage: string;
-    authorGenre: string;
-    authorIsVerify: boolean
-}
 export interface IGetProductsResponse {
     count: number;
     rows: IBooks[];
 }
 
-export interface ICreateProductRequest { }
+export interface ICreateProductRequest { 
+    author: string;
+    bookTitle: string;
+    genre: string;
+}
 
-export interface ICreateProductResponse { }
+export interface ICreateProductResponse {
+    bookId: number;
+}
 
 export interface ISendFileRequest {
     deliverFile: File;
     src: string;
+    fileId: number;
 }
 
-export interface ISendFileResponse { }
+export interface ISendFileResponse {
+    resourcePath: string;
+    fileId: number;
+ }
 
 export interface IEditProductRequest { }
 

@@ -13,23 +13,14 @@ import style from './_BookCard.module.css';
 const BUTTON_LABEL = 'View';
 const _BookCard: FC<IBookProps> = (props) => {
     const {
-        authorName,
         bookTitle,
-        bookGenre,
         bookId,
-        bookImage
     } = props;
 
     return (
         <article className={style["container"]}>
 
-            <BookDetails
-                image={bookImage}
-                bookGenre={bookGenre}
-                title={bookTitle}
-                authorName={authorName}
-                hasTitle
-            />
+            <BookDetails {...props} hasTitle />
 
             <div className={style['card__link']}>
                 <Link

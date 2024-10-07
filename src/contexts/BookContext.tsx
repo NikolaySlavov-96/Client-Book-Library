@@ -23,8 +23,8 @@ interface IBookContext {
     loadingBookFromEmail: (data: any) => void;
     setLimit: Dispatch<SetStateAction<number>>;
     getStateOnBookById: (id: string) => any;
-    onSubmitCreateProduct: (data: any) => void;
-    onSendFile: (data: any) => void;
+    onSubmitCreateProduct: (data: any) => any;
+    onSendFile: (data: any) => any;
     addingBookInList: (bookId: string, state: string) => void;
 }
 
@@ -127,9 +127,10 @@ export const BookProvider = ({ children }: { children: ReactNode }) => {
 
     const onSubmitCreateProduct = useCallback(async (data: any) => {
         try {
-            await bookService.createProduct(data);
+            const result = await bookService.createProduct(data);
             // TODO Adding new added book
             navigate(ROUT_NAMES.HOME);
+            return result;
         } catch (err) {
             console.log('onSubmitCreateProduct --->: ', err);
         }
@@ -138,7 +139,7 @@ export const BookProvider = ({ children }: { children: ReactNode }) => {
     const onSendFile = useCallback(async (data: any) => {
         try {
             const result = await bookService.sendFile(data);
-            console.log("🚀 ~ onSendFile ~ result:", result)
+            return result;
         } catch (err) {
             console.log('onSendFile --->: ', err);
         }

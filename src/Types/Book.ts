@@ -3,11 +3,16 @@ export interface IBookData extends IBookProps {
 }
 
 export interface IBookProps {
-    authorName: string;
-    bookGenre: string;
     bookId: number;
-    bookImage: string;
+    bookGenre: string;
+    bookIsVerify: boolean;
     bookTitle: string;
-    hasTitle: boolean;
-    image: string;
+    authorName: string;
+    authorImage: string;
+    authorGenre: string;
+    authorIsVerify: boolean
+    bookSrc: string;
+    imageId: number;
+    imageUrl: string;
+    hasTitle?: boolean;
 }
