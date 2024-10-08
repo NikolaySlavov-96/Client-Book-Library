@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { InputField, InputForm, SectionTitle } from '../../../atoms';
 import { LinkedParagraph } from '../../../molecules';
 
+import { Toast } from '../../../../Toasts';
+import { ESwalIcon } from '../../../../Types/Swal';
+
 import { useAuthContext } from '../../../../contexts/AuthContext';
 
 import { ROUT_NAMES, ServerError } from '../../../../Constants';
@@ -21,8 +24,10 @@ const _Login = () => {
         const result = await onSubmitLogin(data);
 
         if (result?.messageCode === ServerError.SUCCESSFULLY_LOGIN.messageCode) {
+            Toast({ title: 'Success', typeIcon: ESwalIcon.SUCCESS })
             navigate(ROUT_NAMES.HOME);
-            // Modal for success
+        } else {
+            Toast({ title: result?.message, typeIcon: ESwalIcon.ERROR })
         }
     }, [onSubmitLogin, navigate]);
 
