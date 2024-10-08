@@ -44,12 +44,18 @@ const sendData = (event: ESendEvents, data: string | object) => {
         socket.emit(event, data);
     }
 }
+const sendOnlySignal = (event: ESendEvents) => {
+    if (socket) {
+        socket.emit(event);
+    }
+}
 
 
 export {
     connect,
     disconnect,
+    sendData,
+    sendOnlySignal,
     subscribeToEvent,
     unsubscribeFromEvent,
-    sendData,
 };

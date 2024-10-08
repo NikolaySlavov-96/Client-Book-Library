@@ -1,27 +1,39 @@
-import { HOST } from '../Constants/connectionData';
+import { HOST } from "../Constants/connectionData";
 
-type TMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+import { getDataFromStorage } from "./_Storage";
 
-interface IOptions {
+export type TMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+
+export interface IOptions {
     method: TMethod;
     headers: any;
     body?: any;
 }
+interface IMoreData {
+    inputData: object;
+    isImage?: boolean;
+}
 
-const _API = async (method: TMethod, token: string, url: string, inputDate?: object) => {
+const _API = async (method: TMethod, url: string, moreData?: IMoreData) => {
     const options: IOptions = {
         method,
         headers: {}
     }
 
-    if (inputDate !== undefined) {
+    if (moreData?.inputData !== undefined && !moreData?.isImage) {
         options.headers['Content-Type'] = 'application/json';
-        options.body = JSON.stringify(inputDate);
+        options.body = JSON.stringify(moreData?.inputData);
     }
-    if (token) {
+
+    if (moreData?.isImage) {
+        options.body = moreData?.inputData;
+    }
+
+    const token = getDataFromStorage('@Book_TokenData');
+    if (token?.accessToken) {
         options.headers = {
             ...options.headers,
-            'book-id': token,
+            'book-id': token.accessToken,
         }
     }
 
@@ -34,12 +46,13 @@ const _API = async (method: TMethod, token: string, url: string, inputDate?: obj
 
         const data = await response.json();
         if (!response.ok) {
-            throw new Error(data.message);
+            throw data;
         }
+
         return data;
 
     } catch (err) {
-        throw err;
+        throw err as Error;
     }
 }
 

@@ -7,7 +7,7 @@ interface IInputFieldProps {
     name: string;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
     onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
-    value: string | boolean;
+    value?: string | boolean;
     error?: string;
     placeholder?: string;
     type?: HTMLInputTypeAttribute;

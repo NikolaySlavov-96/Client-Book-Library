@@ -1,10 +1,10 @@
 import { createContext, ReactNode, useContext, } from "react";
 
-import { useLocalStorage, useStoreZ } from "../hooks";
+import { useLocalStorage } from "../hooks";
 
 import { AuthService } from "../services";
 
-import { MODAL_NAMES, ServerError } from '../Constants';
+import { ServerError } from '../Constants';
 
 const STORAGE_PREFIX = '@Book_';
 const STORAGE_KEYS = {
@@ -17,7 +17,6 @@ interface IAuthContext {
     onSubmitLogout: (data: any) => void;
     onSubmitRegister: (data: any) => any;
     verifyAccountWithToken: (data: any) => void;
-    accessToken: string;
     email: string;
     isAuthenticated: boolean;
     isVerifyUser: boolean;
@@ -27,21 +26,18 @@ interface IAuthContext {
 const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
 export const AuthProvide = ({ children }: { children: ReactNode }) => {
-    const { openModal, setErrors, setModalName } = useStoreZ();
 
     const [tokenData, setTokenData] = useLocalStorage(STORAGE_KEYS.TOKEN_DATE, {});
     const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.USER_DATA, {});
 
-    const authService = AuthService(tokenData.accessToken);
+    const authService = AuthService();
 
     const onSubmitRegister = async (value: any) => {
         try {
             const data = await authService.register(value);
             return data;
         } catch (err) {
-            setModalName(MODAL_NAMES.GLOBAL_ERROR_MODAL);
-            openModal();
-            // setErrors({ message: err.message });
+            return err;
         }
     }
 
@@ -58,9 +54,7 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
 
             return data;
         } catch (err) {
-            setModalName(MODAL_NAMES.GLOBAL_ERROR_MODAL);
-            openModal();
-            // setErrors({ message: err.message });
+            return err;
         }
     }
 
@@ -71,7 +65,7 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
             setUserData({});
             // Modal for success logout
         } catch (err) {
-
+            return err;
         }
     }
 
@@ -97,7 +91,7 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
             }
             // navigate(ROUT_NAMES.LOGIN)
         } catch (err) {
-            // alert(err.message);
+            return err;
         }
     }
 
@@ -108,7 +102,6 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
         isVerifyUser: tokenData.isVerify,
         isAuthenticated: !!tokenData.accessToken,
         email: tokenData.email,
-        accessToken: tokenData.accessToken,
         userId: tokenData.id,
         verifyAccountWithToken,
     }

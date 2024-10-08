@@ -1,23 +1,18 @@
 import { createContext, Dispatch, ReactNode, SetStateAction, useCallback, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-import { useService } from "../hooks";
 
 import { BookService } from "../services";
 
-import { ROUT_NAMES } from "../Constants";
-
-import { IBookData } from "~/Types/Book";
+import { IGetStatesResponse } from "~/Types/services/BookService";
 
 interface IBookArray {
     count: number;
-    rows: IBookData[];
+    rows: any[];
 }
 
 interface IBookContext {
     limit: number;
     book: IBookArray;
-    states: never[];
+    states: IGetStatesResponse[];
     isLoading: boolean;
     loadingBooks: (data: any) => void;
     loadingBookCollection: (data: any) => void;
@@ -25,23 +20,22 @@ interface IBookContext {
     loadingBookFromEmail: (data: any) => void;
     setLimit: Dispatch<SetStateAction<number>>;
     getStateOnBookById: (id: string) => any;
-    onSubmitCreateProduct: (data: any) => void;
+    onSubmitCreateProduct: (data: any) => any;
+    onSendFile: (data: any) => any;
     addingBookInList: (bookId: string, state: string) => void;
 }
 
 const BookContext = createContext<IBookContext | undefined>(undefined);
 
 export const BookProvider = ({ children }: { children: ReactNode }) => {
-    const navigate = useNavigate();
-
     const [isLoading, setIsLoading] = useState(false);
-    const [states, setState] = useState([]);
+    const [states, setState] = useState<IGetStatesResponse[]>([]);
 
     const [book, setBook] = useState<IBookArray>({ count: 0, rows: [] });
 
     const [limit, setLimit] = useState(12);
 
-    const bookService = useService(BookService);
+    const bookService = BookService();
 
 
     const loadingAllStatesForBook = useCallback(async () => {
@@ -128,11 +122,22 @@ export const BookProvider = ({ children }: { children: ReactNode }) => {
 
     const onSubmitCreateProduct = useCallback(async (data: any) => {
         try {
-            await bookService.createProduct(data);
+            const result = await bookService.createProduct(data);
             // TODO Adding new added book
-            navigate(ROUT_NAMES.HOME);
+            return result;
         } catch (err) {
             console.log('onSubmitCreateProduct --->: ', err);
+            throw err;
+        }
+    }, []);
+
+    const onSendFile = useCallback(async (data: any) => {
+        try {
+            const result = await bookService.sendFile(data);
+            return result;
+        } catch (err) {
+            console.log('onSendFile --->: ', err);
+            throw err;
         }
     }, []);
 
@@ -141,7 +146,7 @@ export const BookProvider = ({ children }: { children: ReactNode }) => {
             const prod = await bookService.editProduct(data._id, data);
             // setBook(p => p?.rows.map(x => x.id === data.id ? prod : x));
 
-            navigate(ROUT_NAMES.HOME);
+            // navigate(ROUT_NAMES.HOME);
         } catch (err) {
             console.log('onSubmitEditProduct --->: ', err);
         }
@@ -152,7 +157,7 @@ export const BookProvider = ({ children }: { children: ReactNode }) => {
             await bookService.deleteProduct(id);
             // setBook(p => p.filter(prod => prod._id !== id));
 
-            navigate(ROUT_NAMES.HOME);
+            // navigate(ROUT_NAMES.HOME);
         } catch (err) {
             console.log('onSubmitDeleteProduct --->: ', err);
         }
@@ -168,20 +173,21 @@ export const BookProvider = ({ children }: { children: ReactNode }) => {
     }, []);
 
     const contextValue = {
-        setLimit,
-        limit,
-        book,
-        states,
-        isLoading,
-        loadingBooks,
-        loadingBookCollection,
-        getBookById,
-        loadingBookFromEmail,
-        getStateOnBookById,
-        onSubmitCreateProduct,
-        // onSubmitEditProduct,
         // onSubmitDeleteProduct,
+        // onSubmitEditProduct,
         addingBookInList,
+        book,
+        getBookById,
+        getStateOnBookById,
+        isLoading,
+        limit,
+        loadingBookCollection,
+        loadingBookFromEmail,
+        loadingBooks,
+        onSendFile,
+        onSubmitCreateProduct,
+        setLimit,
+        states,
     }
 
     return (

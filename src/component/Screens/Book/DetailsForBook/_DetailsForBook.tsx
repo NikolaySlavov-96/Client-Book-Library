@@ -23,7 +23,7 @@ const _DetailsForBook = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [book, setBook] = useState<{ id: string; image: string; genre: string; bookTitle: string; Author: { name: string } }>();
+    const [book, setBook] = useState<any>();
     const [selectPlaceholder, setSelectPlaceholder] = useState(DEFAULT_MESSAGE);
     const [selectOptions, setSelectOptions] = useState([]);
 
@@ -79,12 +79,7 @@ const _DetailsForBook = () => {
             <div className={style['book-card__detail']}>
                 {isLoading ?
                     <BookDetailSkeleton /> :
-                    <BookDetails
-                        image={book?.image as string}
-                        bookGenre={book?.genre as string}
-                        title={book?.bookTitle as string}
-                        authorName={book?.Author?.name as string}
-                    />}
+                    <BookDetails {...book} />}
             </div>
 
             {!!email ?
@@ -95,7 +90,7 @@ const _DetailsForBook = () => {
                             <Select
                                 options={selectOptions}
                                 placeHolder={selectedLabel}
-                                onChange={(e) => changeState(e, book ? book.id : '0')}
+                                onChange={(e) => changeState(e, book ? book.bookId : '0')}
                                 size='70'
                             />
                         </div>)

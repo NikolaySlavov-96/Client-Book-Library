@@ -1,12 +1,11 @@
 import { API } from "../Helpers";
 
-const _api = (token: string) => {
-    return {
-        get: API.bind(null, 'GET', token),
-        post: API.bind(null, 'POST', token),
-        put: API.bind(null, 'PUT', token),
-        remove: API.bind(null, 'DELETE', token),
-    }
+const _api = {
+    get: API.bind(null, 'GET'),
+    post: API.bind(null, 'POST'),
+    put: API.bind(null, 'PUT'),
+    remove: API.bind(null, 'DELETE'),
 }
+
 
 export default _api;
