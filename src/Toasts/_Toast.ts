@@ -1,13 +1,12 @@
 import Swal from 'sweetalert2';
 
 import { ESwalIcon } from '../Types/Swal';
+import { IToastGlobal } from './ToastInterface';
 
 type TToast = 'top-end';
 
-interface IToast {
+interface IToast extends IToastGlobal {
     position?: TToast;
-    title: string;
-    typeIcon: ESwalIcon;
 }
 
 const _Toast = (props: IToast) => {
@@ -15,6 +14,7 @@ const _Toast = (props: IToast) => {
         typeIcon = ESwalIcon.ERROR,
         position = 'top-end',
         title = '',
+        subContent = '',
     } = props;
 
     const Toast = Swal.mixin({
@@ -29,10 +29,13 @@ const _Toast = (props: IToast) => {
         }
     });
 
-    Toast.fire({
+    const renderContent = {
         icon: typeIcon,
         title: title,
-    });
+        text: subContent,
+    };
+    
+    Toast.fire(renderContent);
 };
 
 export default _Toast;
