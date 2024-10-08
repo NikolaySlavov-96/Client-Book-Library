@@ -46,13 +46,13 @@ const _API = async (method: TMethod, url: string, moreData?: IMoreData) => {
 
         const data = await response.json();
         if (!response.ok) {
-            throw new Error(data.message);
+            throw data;
         }
 
         return data;
 
     } catch (err) {
-        throw err;
+        throw err as Error;
     }
 }
 
