@@ -1,4 +1,4 @@
-interface IBooks {
+interface IBook {
     bookId: number;
     bookGenre: string;
     bookIsVerify: boolean;
@@ -7,9 +7,12 @@ interface IBooks {
     authorImage: string;
     authorGenre: string;
     authorIsVerify: boolean
-    bookSrc: string;
-    imageId: number;
+}
+
+interface IBooks extends IBook {
     imageUrl: string;
+    imageId: number;
+    bookSrc: string;
 }
 
 export interface IGetStatesRequest { };
@@ -35,7 +38,7 @@ export interface IGetProductsResponse {
     rows: IBooks[];
 }
 
-export interface ICreateProductRequest { 
+export interface ICreateProductRequest {
     author: string;
     bookTitle: string;
     genre: string;
@@ -54,7 +57,7 @@ export interface ISendFileRequest {
 export interface ISendFileResponse {
     resourcePath: string;
     fileId: number;
- }
+}
 
 export interface IEditProductRequest { }
 
@@ -66,20 +69,12 @@ export interface ISearchProductByEmailRequest {
     limit: number;
 }
 
-interface IBookEmailType {
+interface IBookEmailType extends IBook {
     email: string;
     userId: number;
     userYear: number;
     userIdVerify: boolean;
-    bookId: number;
     bookImage: string;
-    bookGenre: string;
-    bookIsVerify: boolean;
-    bookTitle: string;
-    authorName: string;
-    authorImage: string;
-    authorGenre: string;
-    authorIsVerify: boolean;
     stateId: number;
 }
 
@@ -93,18 +88,10 @@ export interface IGetAllProductByStateRequest extends IGetProductsRequest {
 }
 
 
-interface IBookWithState {
+interface IBookWithState extends IBook {
     bookStateId: number;
     bookStateIsDelete: boolean;
-    bookId: number;
     bookImage: string;
-    bookGenre: string;
-    bookIsVerify: boolean;
-    bookTitle: string;
-    authorName: string;
-    authorImage: string;
-    authorGenre: string;
-    authorIsVerify: boolean;
     email: string;
     userId: number;
 }
