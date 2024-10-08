@@ -45,7 +45,6 @@ const _DetailsForBook = () => {
         const bookState = bookResult?.stateId;
         setSelectPlaceholder(bookState);
         const bookOptions = createBookOptions(bookState, mappedStates);
-        console.log("🚀 ~ getBookStatus ~ bookOptions:", bookOptions)
         setSelectOptions(bookOptions);
     }, [getStateOnBookById, setSelectPlaceholder, mappedStates]);
 
