@@ -1,9 +1,6 @@
 import { createContext, Dispatch, ReactNode, SetStateAction, useCallback, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { BookService } from "../services";
-
-import { ROUT_NAMES } from "../Constants";
 
 import { IGetStatesResponse } from "~/Types/services/BookService";
 
@@ -31,8 +28,6 @@ interface IBookContext {
 const BookContext = createContext<IBookContext | undefined>(undefined);
 
 export const BookProvider = ({ children }: { children: ReactNode }) => {
-    const navigate = useNavigate();
-
     const [isLoading, setIsLoading] = useState(false);
     const [states, setState] = useState<IGetStatesResponse[]>([]);
 
@@ -129,10 +124,10 @@ export const BookProvider = ({ children }: { children: ReactNode }) => {
         try {
             const result = await bookService.createProduct(data);
             // TODO Adding new added book
-            navigate(ROUT_NAMES.HOME);
             return result;
         } catch (err) {
             console.log('onSubmitCreateProduct --->: ', err);
+            throw err;
         }
     }, []);
 
@@ -142,6 +137,7 @@ export const BookProvider = ({ children }: { children: ReactNode }) => {
             return result;
         } catch (err) {
             console.log('onSendFile --->: ', err);
+            throw err;
         }
     }, []);
 
@@ -150,7 +146,7 @@ export const BookProvider = ({ children }: { children: ReactNode }) => {
             const prod = await bookService.editProduct(data._id, data);
             // setBook(p => p?.rows.map(x => x.id === data.id ? prod : x));
 
-            navigate(ROUT_NAMES.HOME);
+            // navigate(ROUT_NAMES.HOME);
         } catch (err) {
             console.log('onSubmitEditProduct --->: ', err);
         }
@@ -161,7 +157,7 @@ export const BookProvider = ({ children }: { children: ReactNode }) => {
             await bookService.deleteProduct(id);
             // setBook(p => p.filter(prod => prod._id !== id));
 
-            navigate(ROUT_NAMES.HOME);
+            // navigate(ROUT_NAMES.HOME);
         } catch (err) {
             console.log('onSubmitDeleteProduct --->: ', err);
         }
