@@ -1,6 +1,6 @@
 import { FC, memo } from "react";
 
-import { IBookProps } from "~/Types/Book";
+import { IBookProps } from "../../../Types/Book";
 
 import style from './_BookDetails.module.css';
 
