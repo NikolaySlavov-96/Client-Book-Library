@@ -2,9 +2,9 @@ import { createContext, ReactNode, useCallback, useContext, useEffect } from "re
 
 import { SocketService } from '../services';
 
-import { EReceiveEvents, ESendEvents, MODAL_NAMES } from '../Constants';
+import { EReceiveEvents, ESendEvents, MODAL_NAMES, STORAGE_KEYS } from '../Constants';
 
-import { useGetUserAddress, useStoreZ } from "../hooks";
+import { useGetUserAddress, useLocalStorage, useStoreZ } from "../hooks";
 import { useAuthContext } from "./AuthContext";
 
 interface ISocketContext { }
@@ -12,8 +12,10 @@ interface ISocketContext { }
 const SocketContext = createContext<ISocketContext | undefined>(undefined);
 
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
+    const { connectId } = useAuthContext();
 
-    const { email } = useAuthContext();
+    const [_, setConnectId] = useLocalStorage(STORAGE_KEYS.CONNECT_ID, {});
+    
     const { openModal, setModalName, setContent, } = useStoreZ();
 
     const userAddressData = useGetUserAddress();
@@ -30,6 +32,9 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
     const saveConnectId = (data: { connectId: string }) => {
         // Save connectId in localStorage
+        if (!connectId) {
+            setConnectId(data.connectId)
+        }
         console.log("🚀 ~ saveConnectId ~ data:", data)
     }
 
@@ -45,6 +50,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
         SocketService.subscribeToEvent(EReceiveEvents.NOTIFY_ADMINS_OF_NEW_USER, notifyAdmin);
 
+        SocketService.subscribeToEvent(EReceiveEvents.RECEIVE_SUPPORT_MESSAGE, (data) => console.log(data));
         return () => {
             SocketService.unsubscribeFromEvent(EReceiveEvents.NEW_BOOK_ADDED, () => console.log('Unsubscribe NEW_BOOK_ADDED'))
             SocketService.disconnect();
@@ -56,16 +62,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
             SocketService.sendData(ESendEvents.USER_JOINED, userAddressData);
         }
     }, [userAddressData]);
-
-    // Moved in Chat window
-    // Run this at press open chatWindow
-    useEffect(() => {
-        if (email) {
-            // SocketService.sendData(ESendEvents.SUPPORT_CHAT_USER_JOIN, { connectId: 'da51f92c-35b9-4c7a-9705-da4aa5f58102', });
-        } else {
-            // SocketService.sendOnlySignal(ESendEvents.SUPPORT_CHAT_USER_JOIN);
-        }
-    }, [email]);
 
     return (
         <SocketContext.Provider value={SocketService}>
