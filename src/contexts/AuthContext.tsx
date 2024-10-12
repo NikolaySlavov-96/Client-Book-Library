@@ -4,13 +4,7 @@ import { useLocalStorage } from "../hooks";
 
 import { AuthService } from "../services";
 
-import { ServerError } from '../Constants';
-
-const STORAGE_PREFIX = '@Book_';
-const STORAGE_KEYS = {
-    TOKEN_DATE: `${STORAGE_PREFIX}TokenData`,
-    USER_DATA: `${STORAGE_PREFIX}UserData`
-}
+import { ServerError, STORAGE_KEYS } from '../Constants';
 
 interface IAuthContext {
     onSubmitLogin: (data: any) => any;
@@ -21,6 +15,7 @@ interface IAuthContext {
     isAuthenticated: boolean;
     isVerifyUser: boolean;
     userId: string;
+    connectId: string;
 }
 
 const AuthContext = createContext<IAuthContext | undefined>(undefined);
@@ -29,6 +24,7 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
 
     const [tokenData, setTokenData] = useLocalStorage(STORAGE_KEYS.TOKEN_DATE, {});
     const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.USER_DATA, {});
+    const [connectId, setConnectId] = useLocalStorage(STORAGE_KEYS.CONNECT_ID, {});
 
     const authService = AuthService();
 
@@ -50,6 +46,7 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
                 newValue.currentDate = new Date();
                 setUserData(newValue);
                 setTokenData(data.userInfo);
+                setConnectId(data.userInfo?.connectId);
             }
 
             return data;
@@ -104,6 +101,7 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
         email: tokenData.email,
         userId: tokenData.id,
         verifyAccountWithToken,
+        connectId: connectId,
     }
 
     return (

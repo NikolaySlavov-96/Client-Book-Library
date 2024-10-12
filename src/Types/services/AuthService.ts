@@ -16,12 +16,13 @@ export interface ILoginRequest {
 }
 
 export interface ILoginResponse {
-    userInfo: {} | {
+    userInfo: {
         _id: number;
         email: string;
         year: number;
         isVerify: boolean;
         accessToken: string
+        connectId: string;
     };
     message: string;
     messageCode: string;
