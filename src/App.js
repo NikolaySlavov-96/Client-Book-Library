@@ -7,7 +7,7 @@ import { BookProvider } from './contexts/BookContext';
 import { SocketProvider } from './contexts/SocketContext';
 
 import { Footer, Header } from './component/molecules';
-import { ModalContainer } from './component/organisms';
+import { CustomerSupportChat, ModalContainer } from './component/organisms';
 import {
     Books,
     CreateBook,
@@ -46,6 +46,7 @@ const App = () => {
                             <Route path='*' element={<NotFound />} />
                         </Routes>
                         <ModalContainer />
+                        <CustomerSupportChat />
                     </SocketProvider>
                 </BookProvider>
             </AuthProvide>
