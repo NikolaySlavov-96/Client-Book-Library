@@ -1,4 +1,5 @@
 export { default as Button } from './Button/_Button';
+export { default as ChatHeader } from './ChatHeader/_ChatHeader';
 export { default as IconActionButton } from './IconActionButton/_IconActionButton';
 export { default as InputField } from './InputField/_InputField';
 export { default as InputForm } from './InputForm/_InputForm';
