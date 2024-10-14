@@ -7,6 +7,7 @@ export { default as LinkedParagraph } from './LinkedParagraph/_LinkedParagraph';
 export { default as Pagination } from './Pagination/_Pagination';
 export { default as SearchField } from './SearchField/_SearchField';
 export { default as Select } from './Select/_Select';
+export { default as UserQueue } from './UserQueue/_UserQueue';
 
 // Modals
 export { default as NewBookModal } from './Modals/NewBookModal/_NewBookModal';
