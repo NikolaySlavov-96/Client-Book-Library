@@ -3,3 +3,4 @@ export { default as CustomerSupportChat } from './CustomerSupportChat/_CustomerS
 export { default as ListRenderBook } from './ListRenderBook/_ListRenderBook';
 export { default as ModalContainer } from './ModalContainer/_ModalContainer';
 export { default as QueryBar } from './QueryBar/_QueryBar';
+export { default as UserQueueForSupportModule } from './UserQueueForSupport/_UserQueueForSupport';

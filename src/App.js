@@ -7,7 +7,7 @@ import { BookProvider } from './contexts/BookContext';
 import { SocketProvider } from './contexts/SocketContext';
 
 import { Footer, Header } from './component/molecules';
-import { CustomerSupportChat, ModalContainer } from './component/organisms';
+import { CustomerSupportChat, ModalContainer, UserQueueForSupportModule } from './component/organisms';
 import {
     Books,
     CreateBook,
@@ -47,6 +47,7 @@ const App = () => {
                         </Routes>
                         <ModalContainer />
                         <CustomerSupportChat />
+                        <UserQueueForSupportModule />
                     </SocketProvider>
                 </BookProvider>
             </AuthProvide>
