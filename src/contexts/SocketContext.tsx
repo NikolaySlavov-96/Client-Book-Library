@@ -14,10 +14,11 @@ const SocketContext = createContext<ISocketContext | undefined>(undefined);
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
     const { connectId } = useAuthContext();
 
+    
     const [_, setConnectId] = useLocalStorage(STORAGE_KEYS.CONNECT_ID, {});
     
-    const { openModal, setModalName, setContent, } = useStoreZ();
-
+    const { openModal, setModalName, setContent, setUsers } = useStoreZ();
+    
     const userAddressData = useGetUserAddress();
 
     const result = useCallback((data: any) => {
@@ -31,14 +32,15 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const saveConnectId = (data: { connectId: string }) => {
-        // Save connectId in localStorage
         if (!connectId) {
             setConnectId(data.connectId)
         }
-        console.log("🚀 ~ saveConnectId ~ data:", data)
+        // Attach support message.
     }
 
-    const notifyAdmin = (data: any) => console.log('NOTIFY_ADMINS_OF_NEW_USER', data);
+    const notifyAdmin = (data: any) => {
+        setUsers(data)
+    };
 
 
     useEffect(() => {

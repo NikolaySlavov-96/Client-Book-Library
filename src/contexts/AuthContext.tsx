@@ -16,6 +16,7 @@ interface IAuthContext {
     isVerifyUser: boolean;
     userId: string;
     connectId: string;
+    userRole: 'user' | 'support'; 
 }
 
 const AuthContext = createContext<IAuthContext | undefined>(undefined);
@@ -24,7 +25,7 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
 
     const [tokenData, setTokenData] = useLocalStorage(STORAGE_KEYS.TOKEN_DATE, {});
     const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.USER_DATA, {});
-    const [connectId, setConnectId] = useLocalStorage(STORAGE_KEYS.CONNECT_ID, {});
+    const [connectId, setConnectId] = useLocalStorage(STORAGE_KEYS.CONNECT_ID, '');
 
     const authService = AuthService();
 
@@ -100,6 +101,7 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
         isAuthenticated: !!tokenData.accessToken,
         email: tokenData.email,
         userId: tokenData.id,
+        userRole: tokenData.role,
         verifyAccountWithToken,
         connectId: connectId,
     }
