@@ -61,6 +61,7 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
             await authService.logout({ token: '1' });
             setTokenData({});
             setUserData({});
+            setConnectId('');
             // Modal for success logout
         } catch (err) {
             return err;
