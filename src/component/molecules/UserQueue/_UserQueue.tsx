@@ -4,27 +4,31 @@ import { ChatHeader } from "../../../component/atoms";
 
 import { useStoreZ } from "../../../hooks";
 
+import { ESendEvents } from "../../../Constants";
+
+import { useAuthContext } from "../../../contexts/AuthContext";
+
 import { SocketService } from "../../../services";
 
 import style from './_UserQueue.module.css';
-import { ESendEvents } from "~/Constants";
 
 interface IUserQueueProps {
     onPress: Dispatch<SetStateAction<boolean>>
 }
+
 const _UserQueue: FC<IUserQueueProps> = (props) => {
     const { onPress } = props;
 
     const { users } = useStoreZ();
+    const { connectId } = useAuthContext();
 
-    const onAcceptUser = useCallback((data: any) => {
-        console.log(data)
-        // SocketService.sendData(ESendEvents.SUPPORT_ACCEPT_USER, {supportId: data. ,acceptUserId: data.});
-    }, [])
+    const onAcceptUser = useCallback((userConnectId: string) => {
+        SocketService.sendData(ESendEvents.SUPPORT_ACCEPT_USER, {supportId: connectId ,acceptUserId: userConnectId});
+    }, [connectId])
 
     const onClose = useCallback(() => {
         onPress(s => !s);
-    }, []);
+    }, [onPress]);
 
     return (
         <>
@@ -35,10 +39,9 @@ const _UserQueue: FC<IUserQueueProps> = (props) => {
             <div className={style['chat__container']}>
                 <>
                     {users.map(u => {
-                        // console.log("🚀 ~ u:", u.userQueue.map(f => console.log(f.connectId, f.status, f.role)))
                         return (
-                            <button onClick={() => onAcceptUser(u)}>
-                                {u.newUserSocketId}
+                            <button onClick={() => onAcceptUser(u.connectId)}>
+                                {u.connectId}
                             </button>
                         )
                     })}

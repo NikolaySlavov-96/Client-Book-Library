@@ -5,7 +5,15 @@ import { SocketService } from '../services';
 import { EReceiveEvents, ESendEvents, MODAL_NAMES, STORAGE_KEYS } from '../Constants';
 
 import { useGetUserAddress, useLocalStorage, useStoreZ } from "../hooks";
+
 import { useAuthContext } from "./AuthContext";
+
+import { IUserQueue } from "../Store/Slicers/SupportSlicer";
+
+export interface INotifyAdminOfNewUser {
+    newUserSocketId: string;
+    userQueue: IUserQueue[];
+}
 
 interface ISocketContext { }
 
@@ -14,11 +22,11 @@ const SocketContext = createContext<ISocketContext | undefined>(undefined);
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
     const { connectId } = useAuthContext();
 
-    
+
     const [_, setConnectId] = useLocalStorage(STORAGE_KEYS.CONNECT_ID, {});
-    
+
     const { openModal, setModalName, setContent, setUsers } = useStoreZ();
-    
+
     const userAddressData = useGetUserAddress();
 
     const result = useCallback((data: any) => {
@@ -38,10 +46,16 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         // Attach support message.
     }
 
-    const notifyAdmin = (data: any) => {
-        setUsers(data)
+    const notifyAdmin = (data: INotifyAdminOfNewUser) => {
+        const newUser = data.userQueue.filter(u => u.currentSocketId === data.newUserSocketId)[0];
+        if (newUser?.connectId) {
+            setUsers(newUser)
+        }
     };
 
+    const supportMessage = (data: any) => {
+        console.log('supportMessage', data)
+    }
 
     useEffect(() => {
         SocketService.connect();
@@ -52,7 +66,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
         SocketService.subscribeToEvent(EReceiveEvents.NOTIFY_ADMINS_OF_NEW_USER, notifyAdmin);
 
-        SocketService.subscribeToEvent(EReceiveEvents.RECEIVE_SUPPORT_MESSAGE, (data) => console.log(data));
+        SocketService.subscribeToEvent(EReceiveEvents.SUPPORT_MESSAGE, supportMessage);
         return () => {
             SocketService.unsubscribeFromEvent(EReceiveEvents.NEW_BOOK_ADDED, () => console.log('Unsubscribe NEW_BOOK_ADDED'))
             SocketService.disconnect();

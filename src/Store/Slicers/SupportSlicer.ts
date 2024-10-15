@@ -1,7 +1,7 @@
 import { StateCreator } from "zustand";
 
 
-interface IUserQueue {
+export interface IUserQueue {
     connectId: string;
 
     currentSocketId: string;
@@ -10,14 +10,10 @@ interface IUserQueue {
 
     status: "waiting"
 }
-interface INotifyAdminOfNewUser {
-    newUserSocketId: string;
-    userQueue: IUserQueue[];
-}
 
 export interface SupportSlicer {
-    users: INotifyAdminOfNewUser[];
-    setUsers: (newData: any) => void;
+    users: IUserQueue[];
+    setUsers: (newData: IUserQueue) => void;
 }
 
 const createSupportSlicer: StateCreator<SupportSlicer> = (set) => ({
