@@ -23,7 +23,7 @@ const _UserQueue: FC<IUserQueueProps> = (props) => {
     const { connectId } = useAuthContext();
 
     const onAcceptUser = useCallback((userConnectId: string) => {
-        SocketService.sendData(ESendEvents.SUPPORT_ACCEPT_USER, {supportId: connectId ,acceptUserId: userConnectId});
+        SocketService.sendData(ESendEvents.SUPPORT_ACCEPT_USER, { supportId: connectId, acceptUserId: userConnectId });
     }, [connectId])
 
     const onClose = useCallback(() => {
