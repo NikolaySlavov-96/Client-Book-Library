@@ -16,7 +16,8 @@ interface IAuthContext {
     isVerifyUser: boolean;
     userId: string;
     connectId: string;
-    userRole: 'user' | 'support'; 
+    userRole: 'user' | 'support';
+    addedConnectId: (connectId: string) => void;
 }
 
 const AuthContext = createContext<IAuthContext | undefined>(undefined);
@@ -38,6 +39,10 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
         }
     }
 
+    const addedConnectId = async (connectId: string) => {
+        setConnectId(connectId);
+    };
+
     const onSubmitLogin = async (value: any) => {
         try {
             const data = await authService.login(value);
@@ -47,7 +52,7 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
                 newValue.currentDate = new Date();
                 setUserData(newValue);
                 setTokenData(data.userInfo);
-                setConnectId(data.userInfo?.connectId);
+                addedConnectId(data.userInfo?.connectId);
             }
 
             return data;
@@ -105,6 +110,7 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
         userRole: tokenData.role,
         verifyAccountWithToken,
         connectId: connectId,
+        addedConnectId,
     }
 
     return (

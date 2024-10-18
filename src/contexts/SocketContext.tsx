@@ -2,13 +2,13 @@ import { createContext, ReactNode, useCallback, useContext, useEffect } from "re
 
 import { SocketService } from '../services';
 
-import { EReceiveEvents, ESendEvents, MODAL_NAMES, STORAGE_KEYS } from '../Constants';
+import { EReceiveEvents, ESendEvents, MODAL_NAMES } from '../Constants';
 
-import { useGetUserAddress, useLocalStorage, useStoreZ } from "../hooks";
+import { useGetUserAddress, useStoreZ } from "../hooks";
 
 import { useAuthContext } from "./AuthContext";
 
-import { IUserQueue } from "../Store/Slicers/SupportSlicer";
+import { IRoom, IUserQueue } from "../Store/Slicers/SupportSlicer";
 
 export interface INotifyAdminOfNewUser {
     newUserSocketId: string;
@@ -20,12 +20,9 @@ interface ISocketContext { }
 const SocketContext = createContext<ISocketContext | undefined>(undefined);
 
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
-    const { connectId } = useAuthContext();
+    const { connectId, userRole, addedConnectId } = useAuthContext();
 
-
-    const [_, setConnectId] = useLocalStorage(STORAGE_KEYS.CONNECT_ID, {});
-
-    const { openModal, setModalName, setContent, setUsers } = useStoreZ();
+    const { openModal, setModalName, setContent, setUsers, setRooms } = useStoreZ();
 
     const userAddressData = useGetUserAddress();
 
@@ -41,16 +38,20 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
     const saveConnectId = (data: { connectId: string }) => {
         if (!connectId) {
-            setConnectId(data.connectId)
+            addedConnectId(data.connectId)
         }
         // Attach support message.
     }
 
-    const notifyAdmin = (data: INotifyAdminOfNewUser) => {
-        const newUser = data.userQueue.filter(u => u.currentSocketId === data.newUserSocketId)[0];
-        if (newUser?.connectId) {
-            setUsers(newUser)
+    const notifyForCreatedRoom = (data: IRoom) => {
+        setRooms(data);
+        if (userRole !== 'support') {
+            SocketService.sendData(ESendEvents.USER_ACCEPT_JOIN_TO_ROOM, { roomName: data.roomName })
         }
+    }
+
+    const notifyAdmin = (data: INotifyAdminOfNewUser) => {
+        setUsers(data.userQueue);
     };
 
     const supportMessage = (data: any) => {
@@ -64,9 +65,11 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         SocketService.subscribeToEvent(EReceiveEvents.USER_JOINED, updateCountOfVisitors);
         SocketService.subscribeToEvent(EReceiveEvents.SUPPORT_CHAT_USER_JOIN_ACKNOWLEDGMENT, saveConnectId);
 
+        SocketService.subscribeToEvent(EReceiveEvents.NOTIFY_FOR_CREATE_ROOM, notifyForCreatedRoom);
         SocketService.subscribeToEvent(EReceiveEvents.NOTIFY_ADMINS_OF_NEW_USER, notifyAdmin);
 
         SocketService.subscribeToEvent(EReceiveEvents.SUPPORT_MESSAGE, supportMessage);
+
         return () => {
             SocketService.unsubscribeFromEvent(EReceiveEvents.NEW_BOOK_ADDED, () => console.log('Unsubscribe NEW_BOOK_ADDED'))
             SocketService.disconnect();

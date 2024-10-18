@@ -1,6 +1,5 @@
 import { StateCreator } from "zustand";
 
-
 export interface IUserQueue {
     connectId: string;
 
@@ -11,15 +10,26 @@ export interface IUserQueue {
     status: "waiting"
 }
 
+export interface IRoom {
+    roomName: string;
+    message: string;
+}
+
 export interface SupportSlicer {
     users: IUserQueue[];
-    setUsers: (newData: IUserQueue) => void;
+    setUsers: (newData: IUserQueue[]) => void;
+    rooms: IRoom[];
+    setRooms: (newRoom: IRoom)  => void;
 }
 
 const createSupportSlicer: StateCreator<SupportSlicer> = (set) => ({
     users: [],
     setUsers: (newUser) => set(state => ({
-        users: [...state.users, newUser],
+        users: newUser,
+    })),
+    rooms: [],
+    setRooms: (newRoom) => set(state => ({
+        rooms: [...state.rooms, newRoom],
     })),
 });
 
