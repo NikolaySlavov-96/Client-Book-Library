@@ -13,7 +13,7 @@ import style from './_UserQueueForSupport.module.css';
 const _UserQueueForSupport = () => {
     const [isOpenMenu, setIsOpenMenu] = useState(false);
 
-    const { userRole, connectId } = useAuthContext();
+    const { connectId } = useAuthContext();
 
     useEffect(() => {
         if (isOpenMenu) {
@@ -24,10 +24,6 @@ const _UserQueueForSupport = () => {
     const containerStyle = useMemo(() => (
         `shadow__window ${style['container']} ${isOpenMenu ? style['border__open'] : ''}`
     ), [isOpenMenu]);
-
-    if (userRole !== 'support') {
-        return <></>
-    }
 
     return (
         <div className={containerStyle}>

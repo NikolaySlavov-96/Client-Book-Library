@@ -40,7 +40,9 @@ const _UserQueue: FC<IUserQueueProps> = (props) => {
                 <>
                     {users.map(u => {
                         return (
-                            <button onClick={() => onAcceptUser(u.connectId)}>
+                            <button
+                                key={u.connectId}
+                                onClick={() => onAcceptUser(u.connectId)}>
                                 {u.connectId}
                             </button>
                         )
