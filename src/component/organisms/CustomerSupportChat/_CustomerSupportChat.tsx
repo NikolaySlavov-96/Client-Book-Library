@@ -8,12 +8,17 @@ import { SocketService } from '../../../services';
 
 import { ESendEvents } from '../../../Constants';
 
+import { useStoreZ } from '../../../hooks';
+
 import style from './_CustomerSupportChat.module.css';
 
 const _CustomerSupportChat = () => {
     const [isOpenChat, setIsOpenChat] = useState(false);
 
     const { connectId } = useAuthContext();
+    const { rooms } = useStoreZ();
+    
+    const roomName = rooms[0]?.roomName;
 
     const containerStyle = useMemo(() => (
         `shadow__window ${style['container']} ${isOpenChat ? style['border__open'] : ''}`
@@ -28,13 +33,18 @@ const _CustomerSupportChat = () => {
             }
         }
     }, [connectId, isOpenChat]);
-    
+
     return (
         <div className={containerStyle}>
             {isOpenChat ?
-                <ChatWithSupport onPress={setIsOpenChat} />
+                <ChatWithSupport
+                    onPress={setIsOpenChat}
+                    roomName={roomName}
+                />
                 :
-                <ChatWindowCloser onPress={setIsOpenChat} />}
+                <ChatWindowCloser
+                    onPress={setIsOpenChat}
+                />}
         </div>
     )
 }

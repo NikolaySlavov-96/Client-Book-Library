@@ -30,7 +30,10 @@ const _UserQueueForSupport = () => {
             {isOpenMenu ?
                 <UserQueue onPress={setIsOpenMenu} />
                 :
-                <ChatWindowCloser onPress={setIsOpenMenu} />}
+                <ChatWindowCloser
+                    onPress={setIsOpenMenu}
+                    title='Support User Queue'
+                />}
         </div>
     )
 }

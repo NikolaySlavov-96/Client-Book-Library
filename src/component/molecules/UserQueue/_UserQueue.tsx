@@ -12,6 +12,8 @@ import { SocketService } from "../../../services";
 
 import style from './_UserQueue.module.css';
 
+const DEFAULT_TITLE = 'Support Chat - ';
+
 interface IUserQueueProps {
     onPress: Dispatch<SetStateAction<boolean>>
 }
@@ -20,7 +22,7 @@ const _UserQueue: FC<IUserQueueProps> = (props) => {
     const { onPress } = props;
 
     const { users } = useStoreZ();
-    const { connectId } = useAuthContext();
+    const { connectId, email } = useAuthContext();
 
     const onAcceptUser = useCallback((userConnectId: string) => {
         SocketService.sendData(ESendEvents.SUPPORT_ACCEPT_USER, { supportId: connectId, acceptUserId: userConnectId });
@@ -33,7 +35,7 @@ const _UserQueue: FC<IUserQueueProps> = (props) => {
     return (
         <>
             <ChatHeader>
-                <p className={style['p-style']}>{'Support Chat'}</p>
+                <p className={style['p-style']}>{`${DEFAULT_TITLE}${email.split('@')[0]}`}</p>
                 <button onClick={onClose}>{'X'}</button>
             </ChatHeader>
             <div className={style['chat__container']}>
