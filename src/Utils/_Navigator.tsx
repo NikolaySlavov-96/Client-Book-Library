@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import { useAuthContext } from '../contexts/AuthContext';
 
-import { CustomerSupportChat, ModalContainer, UserQueueForSupportModule } from '../component/organisms';
+import { CustomerSupportChat, ModalContainer } from '../component/organisms';
 import {
     Books,
     CreateBook,
@@ -11,6 +11,7 @@ import {
     NotFound,
     Register,
     SearchByEmail,
+    Support,
     UserCollection,
     VerifyAccount,
 } from '../component/Screens';
@@ -35,7 +36,7 @@ const _Navigator = () => {
                 <Route path='*' element={<NotFound />} />
             </Routes>
             <ModalContainer />
-            {userRole === 'support' ? <UserQueueForSupportModule /> :
+            {userRole === 'support' ? <Support /> :
                 <CustomerSupportChat />
             }
         </>
