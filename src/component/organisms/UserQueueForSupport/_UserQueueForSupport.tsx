@@ -15,15 +15,15 @@ const _UserQueueForSupport = () => {
 
     const { connectId } = useAuthContext();
 
+    const containerStyle = useMemo(() => (
+        `shadow__window ${style['container']} ${isOpenMenu ? style['border__open'] : ''}`
+    ), [isOpenMenu]);
+
     useEffect(() => {
         if (isOpenMenu) {
             SocketService.sendData(ESendEvents.SUPPORT_CHAT_USER_JOIN, { connectId, });
         }
     }, [isOpenMenu, connectId]);
-
-    const containerStyle = useMemo(() => (
-        `shadow__window ${style['container']} ${isOpenMenu ? style['border__open'] : ''}`
-    ), [isOpenMenu]);
 
     return (
         <div className={containerStyle}>

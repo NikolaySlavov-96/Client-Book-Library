@@ -1,6 +1,6 @@
 import { memo, useEffect, useMemo, useState } from 'react'
 
-import { ChatWindowCloser, ChatWithSupport } from '../../../component/molecules';
+import { ChatWindowCloser, ChatWithSupport } from '../../molecules';
 
 import { useAuthContext } from '../../../contexts/AuthContext';
 
