@@ -18,8 +18,12 @@ import {
 
 import { ROUT_NAMES } from '../Constants';
 
+import { SocketHelper } from '../Helpers';
+
 const _Navigator = () => {
     const { userRole } = useAuthContext();
+    SocketHelper();
+    
     return (
         <>
             <Routes>

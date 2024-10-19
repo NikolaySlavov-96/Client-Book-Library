@@ -2,7 +2,6 @@ import './App.css';
 
 import { AuthProvide } from './contexts/AuthContext';
 import { BookProvider } from './contexts/BookContext';
-import { SocketProvider } from './contexts/SocketContext';
 
 import { Footer, Header } from './component/molecules';
 import { Helmet } from './component/Screens';
@@ -17,9 +16,7 @@ const App = () => {
             <AuthProvide>
                 <Header />
                 <BookProvider>
-                    <SocketProvider>
-                        <Navigator />
-                    </SocketProvider>
+                    <Navigator />
                 </BookProvider>
             </AuthProvide>
             <Footer />
