@@ -1,6 +1,6 @@
 import { Dispatch, FC, memo, SetStateAction, useCallback } from "react";
 
-import { ChatHeader } from "../../../component/atoms";
+import { ChatHeader, InputForm } from "../../../component/atoms";
 
 import { SocketService } from "../../../services";
 
@@ -8,9 +8,12 @@ import { ESendEvents } from "../../../Constants";
 
 import { useAuthContext } from "../../../contexts/AuthContext";
 
+import { useForm } from "../../../hooks";
+
 import style from './_ChatWithSupport.module.css';
 
 const DEFAULT_TITLE = 'Support Chat';
+const BUTTON_LABEL = 'Send';
 
 interface IChatWihSupportProps {
     onPress: Dispatch<SetStateAction<boolean>>
@@ -26,12 +29,18 @@ const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
         SocketService.sendData(ESendEvents.SUPPORT_CHAT_USER_LEAVE, { roomName, connectId, });
     }, [onPress, roomName, connectId]);
 
-    const sendMessage = useCallback(() => {
+    const sendMessage = useCallback((data: { message: string }) => {
         SocketService.sendData(ESendEvents.SUPPORT_MESSAGE, {
             roomName,
-            message: 'Test'
+            message: data.message,
         })
-    }, [roomName])
+    }, [roomName]);
+
+    const { values, changeHandler, onSubmit } = useForm({
+        message: '',
+    }, sendMessage, {
+        message: ['required', 1]
+    });
 
     return (
         <>
@@ -42,9 +51,23 @@ const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
             <div className={style['chat__container']}>
                 {'Messages'}
             </div>
-            <button onClick={sendMessage}>
-                {'Input for send a new message'}
-            </button>
+            <div className={style['send__input-button']}>
+                {!!roomName ? <InputForm
+                    buttonLabel={BUTTON_LABEL}
+                    formStyles={style["form"]}
+                    onSubmit={onSubmit}
+                >
+                    <input
+                        type="text"
+                        name='message'
+                        id='message'
+                        placeholder={BUTTON_LABEL}
+                        value={values.message}
+                        onChange={changeHandler}
+                        onBlur={changeHandler}
+                    />
+                </InputForm> : null}
+            </div>
         </>
     );
 }

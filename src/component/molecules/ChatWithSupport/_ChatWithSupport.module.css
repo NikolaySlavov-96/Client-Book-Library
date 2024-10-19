@@ -4,5 +4,12 @@
 }
 
 .chat__container {
-  height: 400px;
+  height: 300px;
+}
+
+/* Input With button */
+.send__input-button {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
 }
