@@ -51,23 +51,21 @@ const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
             <div className={style['chat__container']}>
                 {'Messages'}
             </div>
-            <div className={style['send__input-button']}>
-                {!!roomName ? <InputForm
-                    buttonLabel={BUTTON_LABEL}
-                    formStyles={style["form"]}
-                    onSubmit={onSubmit}
-                >
-                    <input
-                        type="text"
-                        name='message'
-                        id='message'
-                        placeholder={BUTTON_LABEL}
-                        value={values.message}
-                        onChange={changeHandler}
-                        onBlur={changeHandler}
-                    />
-                </InputForm> : null}
-            </div>
+            {!!roomName ? <InputForm
+                buttonLabel={BUTTON_LABEL}
+                formStyles={style['send__input-button']}
+                onSubmit={onSubmit}
+            >
+                <input
+                    type="text"
+                    name='message'
+                    id='message'
+                    placeholder={BUTTON_LABEL}
+                    value={values.message}
+                    onChange={changeHandler}
+                    onBlur={changeHandler}
+                />
+            </InputForm> : null}
         </>
     );
 }
