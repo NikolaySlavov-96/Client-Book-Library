@@ -1,6 +1,5 @@
 .container {
   padding: 10px;
-  width: 300px;
   display: flex;
   justify-content: space-between;
   background-color: var(--fundColor);

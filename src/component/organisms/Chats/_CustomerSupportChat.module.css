@@ -1,6 +1,7 @@
 .container {
   max-width: 350px;
   max-height: 400px;
+  min-width: 300px;
   background-color: var(--design);
   position: fixed;
   right: 10px;

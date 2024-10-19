@@ -1,6 +1,7 @@
 import { FC, memo, ReactNode } from "react";
 
 import style from './_ChatHeader.module.css';
+
 interface IChatHeaderProps {
     children: ReactNode;
 };
