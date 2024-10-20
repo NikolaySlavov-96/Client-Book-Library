@@ -15,6 +15,10 @@ export interface INotifyAdminOfNewUser {
     userQueue: IUserQueue[];
 }
 
+const onUnsubscribe = () => {
+    console.log('Unsubscribe')
+}
+
 const _Socket = () => {
     const { connectId, userRole, addedConnectId } = useAuthContext();
 
@@ -32,7 +36,8 @@ const _Socket = () => {
         console.log(data)
     }
 
-    const saveConnectId = (data: { connectId: string }) => {
+    const saveConnectId = (data: { connectId: string; message: string }) => {
+        console.log("🚀 ~ saveConnectId ~ data:", data)
         if (!connectId) {
             addedConnectId(data.connectId)
         }
@@ -67,7 +72,12 @@ const _Socket = () => {
         SocketService.subscribeToEvent(EReceiveEvents.SUPPORT_MESSAGE, supportMessage);
 
         return () => {
-            SocketService.unsubscribeFromEvent(EReceiveEvents.NEW_BOOK_ADDED, () => console.log('Unsubscribe NEW_BOOK_ADDED'))
+            SocketService.unsubscribeFromEvent(EReceiveEvents.NEW_BOOK_ADDED, onUnsubscribe);
+            SocketService.unsubscribeFromEvent(EReceiveEvents.USER_JOINED, onUnsubscribe);
+            SocketService.unsubscribeFromEvent(EReceiveEvents.SUPPORT_CHAT_USER_JOIN_ACKNOWLEDGMENT, onUnsubscribe);
+            SocketService.unsubscribeFromEvent(EReceiveEvents.NOTIFY_FOR_CREATE_ROOM, onUnsubscribe);
+            SocketService.unsubscribeFromEvent(EReceiveEvents.NOTIFY_ADMINS_OF_NEW_USER, onUnsubscribe);
+            SocketService.unsubscribeFromEvent(EReceiveEvents.SUPPORT_MESSAGE, onUnsubscribe);
             SocketService.disconnect();
         }
     }, []);
