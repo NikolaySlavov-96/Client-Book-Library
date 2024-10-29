@@ -8,7 +8,7 @@ import { ESendEvents } from "../../../Constants";
 
 import { useAuthContext } from "../../../contexts/AuthContext";
 
-import { useForm } from "../../../hooks";
+import { useForm, useStoreZ } from "../../../hooks";
 
 import style from './_ChatWithSupport.module.css';
 
@@ -23,6 +23,9 @@ const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
     const { onPress, roomName } = props;
 
     const { connectId } = useAuthContext();
+    const { welcomeMessage, messages } = useStoreZ();
+
+    const roomMessages = messages[roomName] || [];
 
     const onClose = useCallback(() => {
         onPress(s => !s);
@@ -49,7 +52,10 @@ const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
                 <button onClick={onClose}>{'X'}</button>
             </ChatHeader>
             <div className={style['chat__container']}>
-                {'Messages'}
+                {welcomeMessage}
+                <>
+                    {roomMessages.map(m => <p>{m.message}</p>)}
+                </>
             </div>
             {!!roomName ? <InputForm
                 buttonLabel={BUTTON_LABEL}

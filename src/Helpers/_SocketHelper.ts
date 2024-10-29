@@ -8,7 +8,7 @@ import { useGetUserAddress, useStoreZ } from "../hooks";
 
 import { useAuthContext } from "../contexts/AuthContext";
 
-import { IRoom, IUserQueue } from "../Store/Slicers/SupportSlicer";
+import { IUserQueue } from "../Store/Slicers/SupportSlicer";
 
 export interface INotifyAdminOfNewUser {
     newUserSocketId: string;
@@ -22,7 +22,7 @@ const onUnsubscribe = () => {
 const _Socket = () => {
     const { connectId, userRole, addedConnectId } = useAuthContext();
 
-    const { openModal, setModalName, setContent, setUsers, setRooms } = useStoreZ();
+    const { openModal, setModalName, setContent, setUsers, setRooms, setWelcomeMessage, addMessage } = useStoreZ();
 
     const userAddressData = useGetUserAddress();
 
@@ -37,15 +37,15 @@ const _Socket = () => {
     }
 
     const saveConnectId = (data: { connectId: string; message: string }) => {
-        console.log("🚀 ~ saveConnectId ~ data:", data)
         if (!connectId) {
             addedConnectId(data.connectId)
         }
-        // Attach support message.
+        setWelcomeMessage(data.message);
     }
 
-    const notifyForCreatedRoom = (data: IRoom) => {
-        setRooms(data);
+    const notifyForCreatedRoom = (data: { roomName: string, message: string }) => {
+        setRooms({ roomName: data.roomName });
+        addMessage(data.roomName, { message: data.message });
         if (userRole !== 'support') {
             SocketService.sendData(ESendEvents.USER_ACCEPT_JOIN_TO_ROOM, { roomName: data.roomName })
         }
@@ -55,8 +55,8 @@ const _Socket = () => {
         setUsers(data.userQueue);
     };
 
-    const supportMessage = (data: any) => {
-        console.log('supportMessage', data)
+    const supportMessage = (data: { roomName: string, message: string, from: string }) => {
+        addMessage(data.roomName, { message: data.message });
     }
 
     useEffect(() => {
