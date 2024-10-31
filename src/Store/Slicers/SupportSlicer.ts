@@ -1,4 +1,5 @@
 import { StateCreator } from "zustand";
+import messages from '../../Constants/_serverError';
 
 interface IUserQueue {
     connectId: string;
@@ -37,9 +38,11 @@ export interface SupportSlicer {
     rooms: IRoom[];
     setRooms: (newRoom: IRoom) => void;
     updateRoom: (roomName: string, newData: IRoom) => void;
+    resetRooms: () => void;
     messages: IMessages;
     addMessage: (data: IMessage) => void;
     updateMessageState: (roomName: string, data: IMessage) => void;
+    resetMessages: () => void;
 }
 
 const createSupportSlicer: StateCreator<SupportSlicer> = (set) => ({
@@ -62,6 +65,9 @@ const createSupportSlicer: StateCreator<SupportSlicer> = (set) => ({
             rooms: state.rooms.map(r => r.roomName === roomName ? newData : r)
         }
     }),
+    resetRooms: () => set(state => ({
+        rooms: [],
+    })),
 
     messages: {},
     addMessage: (data) => set((state) => {
@@ -86,6 +92,9 @@ const createSupportSlicer: StateCreator<SupportSlicer> = (set) => ({
             },
         };
     }),
+    resetMessages: () => set(state => ({
+        messages: {},
+    })),
 });
 
 export default createSupportSlicer;

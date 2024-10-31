@@ -22,7 +22,7 @@ const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
 export const AuthProvide = ({ children }: { children: ReactNode }) => {
 
-    const { setUnId } = useStoreZ();
+    const { setUnId, resetRooms, resetMessages, setWelcomeMessage, } = useStoreZ();
 
     const [tokenData, setTokenData] = useLocalStorage(STORAGE_KEYS.TOKEN_DATE, {});
     const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.USER_DATA, {});
@@ -64,6 +64,9 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
             setTokenData({});
             setUserData({});
             setUnId({ unId: result.unId });
+            resetRooms();
+            resetMessages();
+            setWelcomeMessage({ message: '' });
             // Modal for success logout
         } catch (err) {
             return err;
