@@ -32,7 +32,9 @@ export interface ILogOutRequest {
     token: string;
 }
 
-export interface ILogOutResponse { }
+export interface ILogOutResponse {
+    unId: string
+}
 
 interface ICheckFieldRequest { }
 

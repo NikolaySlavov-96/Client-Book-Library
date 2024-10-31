@@ -2,7 +2,7 @@ import { createContext, ReactNode, useContext, } from "react";
 
 import { useLocalStorage, useStoreZ } from "../hooks";
 
-import { AuthService } from "../services";
+import { AuthService, SocketService } from "../services";
 
 import { ServerError, STORAGE_KEYS } from '../Constants';
 
@@ -58,10 +58,12 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
 
     const onSubmitLogout = async () => {
         try {
-            await authService.logout({ token: '1' });
+            const result = await authService.logout({ token: '1' });
+            SocketService.disconnect();
+            SocketService.connect();
             setTokenData({});
             setUserData({});
-            setUnId({ unId: '' });
+            setUnId({ unId: result.unId });
             // Modal for success logout
         } catch (err) {
             return err;
