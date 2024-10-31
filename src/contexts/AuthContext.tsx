@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, } from "react";
 
-import { useLocalStorage } from "../hooks";
+import { useLocalStorage, useStoreZ } from "../hooks";
 
 import { AuthService } from "../services";
 
@@ -15,18 +15,16 @@ interface IAuthContext {
     isAuthenticated: boolean;
     isVerifyUser: boolean;
     userId: string;
-    connectId: string;
     userRole: 'user' | 'support';
-    addedConnectId: (connectId: string) => void;
 }
 
 const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
 export const AuthProvide = ({ children }: { children: ReactNode }) => {
 
+    const { connectId } = useStoreZ();
     const [tokenData, setTokenData] = useLocalStorage(STORAGE_KEYS.TOKEN_DATE, {});
     const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.USER_DATA, {});
-    const [connectId, setConnectId] = useLocalStorage(STORAGE_KEYS.CONNECT_ID, '');
 
     const authService = AuthService();
 
@@ -39,20 +37,16 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
         }
     }
 
-    const addedConnectId = async (connectId: string) => {
-        setConnectId(connectId);
-    };
-
     const onSubmitLogin = async (value: any) => {
         try {
-            const data = await authService.login(value);
+            const modifyData = { ...value, connectId: connectId }
+            const data = await authService.login(modifyData);
 
             if (data.messageCode === ServerError.SUCCESSFULLY_LOGIN.messageCode) {
                 const newValue = value;
                 newValue.currentDate = new Date();
                 setUserData(newValue);
                 setTokenData(data.userInfo);
-                addedConnectId(data.userInfo?.connectId);
             }
 
             return data;
@@ -66,7 +60,6 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
             await authService.logout({ token: '1' });
             setTokenData({});
             setUserData({});
-            setConnectId('');
             // Modal for success logout
         } catch (err) {
             return err;
@@ -109,8 +102,6 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
         userId: tokenData.id,
         userRole: tokenData.role,
         verifyAccountWithToken,
-        connectId: connectId,
-        addedConnectId,
     }
 
     return (

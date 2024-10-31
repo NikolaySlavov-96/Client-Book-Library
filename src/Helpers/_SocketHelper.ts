@@ -20,7 +20,7 @@ const onUnsubscribe = () => {
 }
 
 const _Socket = () => {
-    const { connectId, userRole, addedConnectId } = useAuthContext();
+    const { userRole } = useAuthContext();
 
     const { openModal, setModalName, setContent, setUsers, setRooms, setWelcomeMessage, addMessage } = useStoreZ();
 
@@ -36,10 +36,7 @@ const _Socket = () => {
         console.log(data)
     }
 
-    const saveConnectId = (data: { connectId: string; message: string }) => {
-        if (!connectId) {
-            addedConnectId(data.connectId)
-        }
+    const joinAcknowledgement = (data: { message: string }) => {
         setWelcomeMessage(data.message);
     }
 
@@ -64,7 +61,7 @@ const _Socket = () => {
 
         SocketService.subscribeToEvent(EReceiveEvents.NEW_BOOK_ADDED, result);
         SocketService.subscribeToEvent(EReceiveEvents.USER_JOINED, updateCountOfVisitors);
-        SocketService.subscribeToEvent(EReceiveEvents.SUPPORT_CHAT_USER_JOIN_ACKNOWLEDGMENT, saveConnectId);
+        SocketService.subscribeToEvent(EReceiveEvents.SUPPORT_CHAT_USER_JOIN_ACKNOWLEDGMENT, joinAcknowledgement);
 
         SocketService.subscribeToEvent(EReceiveEvents.NOTIFY_FOR_CREATE_ROOM, notifyForCreatedRoom);
         SocketService.subscribeToEvent(EReceiveEvents.NOTIFY_ADMINS_OF_NEW_USER, notifyAdmin);

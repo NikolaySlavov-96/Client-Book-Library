@@ -2,8 +2,6 @@ import { memo, useEffect, useMemo, useState } from 'react'
 
 import { ChatWindowCloser, ChatWithSupport } from '../../molecules';
 
-import { useAuthContext } from '../../../contexts/AuthContext';
-
 import { SocketService } from '../../../services';
 
 import { ESendEvents } from '../../../Constants';
@@ -15,8 +13,7 @@ import style from './_CustomerSupportChat.module.css';
 const _CustomerSupportChat = () => {
     const [isOpenChat, setIsOpenChat] = useState(false);
 
-    const { connectId } = useAuthContext();
-    const { rooms } = useStoreZ();
+    const { rooms, connectId } = useStoreZ();
     
     const roomName = rooms[0]?.roomName;
 

@@ -2,6 +2,7 @@ import { io, ManagerOptions, Socket, SocketOptions } from "socket.io-client";
 
 import { HOST } from "../Constants/connectionData";
 import { EReceiveEvents, ESendEvents } from '../Constants';
+import { useStoreZ } from "../hooks";
 
 let socket: Socket;
 
@@ -14,16 +15,19 @@ const connect = () => {
 
     socket.on('connect', () => {
         console.log('Socket Connected');
+        useStoreZ.getState().setConnectId(socket.id ?? '');
     });
 
     socket.on('disconnected', () => {
         console.log('Socket Disconnected');
+        useStoreZ.getState().setConnectId('');
     });
 };
 
 const disconnect = () => {
     if (socket) {
         socket.disconnect();
+        useStoreZ.getState().setConnectId('');
     };
 };
 

@@ -21,8 +21,8 @@ interface IUserQueueProps {
 const _UserQueue: FC<IUserQueueProps> = (props) => {
     const { onPress } = props;
 
-    const { users } = useStoreZ();
-    const { connectId, email } = useAuthContext();
+    const { connectId, users } = useStoreZ();
+    const { email } = useAuthContext();
 
     const onAcceptUser = useCallback((userConnectId: string) => {
         SocketService.sendData(ESendEvents.SUPPORT_ACCEPT_USER, { supportId: connectId, acceptUserId: userConnectId });

@@ -2,18 +2,18 @@ import { memo, useEffect, useMemo, useState } from 'react'
 
 import { ChatWindowCloser, UserQueue } from '../../molecules';
 
-import { useAuthContext } from '../../../contexts/AuthContext';
-
 import { SocketService } from '../../../services';
 
 import { ESendEvents } from '../../../Constants';
+
+import { useStoreZ } from '../../../hooks';
 
 import style from './_UserQueueForSupport.module.css';
 
 const _UserQueueForSupport = () => {
     const [isOpenMenu, setIsOpenMenu] = useState(false);
 
-    const { connectId } = useAuthContext();
+    const { connectId } = useStoreZ();
 
     const containerStyle = useMemo(() => (
         `shadow__window ${style['container']} ${isOpenMenu ? style['border__open'] : ''}`

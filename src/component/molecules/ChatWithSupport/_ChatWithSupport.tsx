@@ -6,9 +6,8 @@ import { SocketService } from "../../../services";
 
 import { ESendEvents } from "../../../Constants";
 
-import { useAuthContext } from "../../../contexts/AuthContext";
-
 import { useForm, useStoreZ } from "../../../hooks";
+import { useAuthContext } from "../../../contexts/AuthContext";
 
 import style from './_ChatWithSupport.module.css';
 
@@ -22,14 +21,16 @@ interface IChatWihSupportProps {
 const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
     const { onPress, roomName } = props;
 
-    const { connectId } = useAuthContext();
-    const { welcomeMessage, messages } = useStoreZ();
+    const { userRole } = useAuthContext();
+    const { connectId, welcomeMessage, messages } = useStoreZ();
 
     const roomMessages = messages[roomName] || [];
 
     const onClose = useCallback(() => {
         onPress(s => !s);
-        SocketService.sendData(ESendEvents.SUPPORT_CHAT_USER_LEAVE, { roomName, connectId, });
+        if (userRole !== 'support') {
+            SocketService.sendData(ESendEvents.SUPPORT_CHAT_USER_LEAVE, { roomName, connectId, });
+        }
     }, [onPress, roomName, connectId]);
 
     const sendMessage = useCallback((data: { message: string }) => {
