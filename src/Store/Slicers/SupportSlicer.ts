@@ -1,6 +1,6 @@
 import { StateCreator } from "zustand";
 
-export interface IUserQueue {
+interface IUserQueue {
     connectId: string;
 
     currentSocketId: string;
@@ -10,7 +10,14 @@ export interface IUserQueue {
     status: "waiting"
 }
 
+interface INotifyAdminOfNewUser {
+    newUserSocketId: string;
+    userQueue: IUserQueue[];
+}
+
 interface IMessage {
+    roomName: string;
+    from?: string;
     message: string;
 }
 
@@ -24,26 +31,26 @@ export interface IRoom {
 
 export interface SupportSlicer {
     welcomeMessage: string;
-    setWelcomeMessage: (message: string) => void;
+    setWelcomeMessage: ({ message }: { message: string }) => void;
     users: IUserQueue[];
-    setUsers: (newData: IUserQueue[]) => void;
+    setUsers: (newData: INotifyAdminOfNewUser) => void;
     rooms: IRoom[];
     setRooms: (newRoom: IRoom) => void;
     updateRoom: (roomName: string, newData: IRoom) => void;
     messages: IMessages;
-    addMessage: (roomName: string, data: IMessage) => void;
+    addMessage: (data: IMessage) => void;
     updateMessageState: (roomName: string, data: IMessage) => void;
 }
 
 const createSupportSlicer: StateCreator<SupportSlicer> = (set) => ({
     welcomeMessage: '',
-    setWelcomeMessage: (message: string) => set(state => ({
+    setWelcomeMessage: ({ message }) => set(state => ({
         welcomeMessage: message,
     })),
 
     users: [],
     setUsers: (newUser) => set(state => ({
-        users: newUser,
+        users: newUser.userQueue,
     })),
 
     rooms: [],
@@ -57,7 +64,8 @@ const createSupportSlicer: StateCreator<SupportSlicer> = (set) => ({
     }),
 
     messages: {},
-    addMessage: (roomName, data) => set((state) => {
+    addMessage: (data) => set((state) => {
+        const roomName = data.roomName;
         const currentMessages = state.messages[roomName] || [];
         return {
             messages: {

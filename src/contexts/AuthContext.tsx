@@ -22,7 +22,8 @@ const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
 export const AuthProvide = ({ children }: { children: ReactNode }) => {
 
-    const { connectId } = useStoreZ();
+    const { setUnId } = useStoreZ();
+
     const [tokenData, setTokenData] = useLocalStorage(STORAGE_KEYS.TOKEN_DATE, {});
     const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.USER_DATA, {});
 
@@ -39,14 +40,14 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
 
     const onSubmitLogin = async (value: any) => {
         try {
-            const modifyData = { ...value, connectId: connectId }
-            const data = await authService.login(modifyData);
+            const data = await authService.login(value);
 
             if (data.messageCode === ServerError.SUCCESSFULLY_LOGIN.messageCode) {
                 const newValue = value;
                 newValue.currentDate = new Date();
                 setUserData(newValue);
                 setTokenData(data.userInfo);
+                setUnId({ unId: data.userInfo.unId ?? '' });
             }
 
             return data;
@@ -60,6 +61,7 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
             await authService.logout({ token: '1' });
             setTokenData({});
             setUserData({});
+            setUnId({ unId: '' });
             // Modal for success logout
         } catch (err) {
             return err;

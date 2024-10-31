@@ -22,7 +22,7 @@ export interface ILoginResponse {
         year: number;
         isVerify: boolean;
         accessToken: string
-        connectId: string;
+        unId: string;
     };
     message: string;
     messageCode: string;

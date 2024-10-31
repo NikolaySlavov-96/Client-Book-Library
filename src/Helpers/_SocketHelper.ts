@@ -2,18 +2,11 @@ import { useCallback, useEffect } from "react";
 
 import { SocketService } from '../services';
 
-import { EReceiveEvents, ESendEvents, MODAL_NAMES } from '../Constants';
+import { EReceiveEvents, ESendEvents, MODAL_NAMES, STORAGE_KEYS } from '../Constants';
 
 import { useGetUserAddress, useStoreZ } from "../hooks";
 
 import { useAuthContext } from "../contexts/AuthContext";
-
-import { IUserQueue } from "../Store/Slicers/SupportSlicer";
-
-export interface INotifyAdminOfNewUser {
-    newUserSocketId: string;
-    userQueue: IUserQueue[];
-}
 
 const onUnsubscribe = () => {
     console.log('Unsubscribe')
@@ -22,7 +15,7 @@ const onUnsubscribe = () => {
 const _Socket = () => {
     const { userRole } = useAuthContext();
 
-    const { connectId, openModal, setModalName, setContent, setUsers, setRooms, setWelcomeMessage, addMessage } = useStoreZ();
+    const { setUnId, openModal, setModalName, setContent, setUsers, setRooms, setWelcomeMessage, addMessage } = useStoreZ();
 
     const userAddressData = useGetUserAddress();
 
@@ -36,40 +29,32 @@ const _Socket = () => {
         console.log(data)
     }
 
-    const joinAcknowledgement = (data: { message: string }) => {
-        setWelcomeMessage(data.message);
-    }
-
     const notifyForCreatedRoom = (data: { roomName: string, message: string }) => {
         setRooms({ roomName: data.roomName });
-        addMessage(data.roomName, { message: data.message });
+        addMessage(data);
         if (userRole !== 'support') {
             SocketService.sendData(ESendEvents.USER_ACCEPT_JOIN_TO_ROOM, { roomName: data.roomName })
         }
-    }
-
-    const notifyAdmin = (data: INotifyAdminOfNewUser) => {
-        setUsers(data.userQueue);
-    };
-
-    const supportMessage = (data: { roomName: string, message: string, from: string }) => {
-        addMessage(data.roomName, { message: data.message });
     }
 
     useEffect(() => {
         SocketService.connect();
 
         SocketService.subscribeToEvent(EReceiveEvents.NEW_BOOK_ADDED, result);
+
         SocketService.subscribeToEvent(EReceiveEvents.USER_JOINED, updateCountOfVisitors);
-        SocketService.subscribeToEvent(EReceiveEvents.SUPPORT_CHAT_USER_JOIN_ACKNOWLEDGMENT, joinAcknowledgement);
+        SocketService.subscribeToEvent(EReceiveEvents.USER_CONNECT_ACKNOWLEDGMENT, setUnId);
+
+        SocketService.subscribeToEvent(EReceiveEvents.SUPPORT_CHAT_USER_JOIN_ACKNOWLEDGMENT, setWelcomeMessage);
 
         SocketService.subscribeToEvent(EReceiveEvents.NOTIFY_FOR_CREATE_ROOM, notifyForCreatedRoom);
-        SocketService.subscribeToEvent(EReceiveEvents.NOTIFY_ADMINS_OF_NEW_USER, notifyAdmin);
+        SocketService.subscribeToEvent(EReceiveEvents.NOTIFY_ADMINS_OF_NEW_USER, setUsers);
 
-        SocketService.subscribeToEvent(EReceiveEvents.SUPPORT_MESSAGE, supportMessage);
+        SocketService.subscribeToEvent(EReceiveEvents.SUPPORT_MESSAGE, addMessage);
 
         return () => {
             SocketService.unsubscribeFromEvent(EReceiveEvents.NEW_BOOK_ADDED, onUnsubscribe);
+            SocketService.unsubscribeFromEvent(EReceiveEvents.USER_CONNECT_ACKNOWLEDGMENT, onUnsubscribe);
             SocketService.unsubscribeFromEvent(EReceiveEvents.USER_JOINED, onUnsubscribe);
             SocketService.unsubscribeFromEvent(EReceiveEvents.SUPPORT_CHAT_USER_JOIN_ACKNOWLEDGMENT, onUnsubscribe);
             SocketService.unsubscribeFromEvent(EReceiveEvents.NOTIFY_FOR_CREATE_ROOM, onUnsubscribe);
@@ -80,10 +65,16 @@ const _Socket = () => {
     }, []);
 
     useEffect(() => {
-        if (connectId !== '') {
-            SocketService.sendData(ESendEvents.RELOAD, { connectId })
+        const persist = localStorage.getItem(STORAGE_KEYS.UN_ID);
+        if (persist) {
+            const unId = JSON.parse(persist);
+            setUnId({ unId })
+            SocketService.sendData(ESendEvents.USER_CONNECT, { unId })
         }
-    }, [connectId]);
+        else {
+            SocketService.sendOnlySignal(ESendEvents.USER_CONNECT);
+        }
+    }, []);
 
     useEffect(() => {
         if (userAddressData.hasOwnProperty('IPv4')) {
