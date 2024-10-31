@@ -22,7 +22,7 @@ const onUnsubscribe = () => {
 const _Socket = () => {
     const { userRole } = useAuthContext();
 
-    const { openModal, setModalName, setContent, setUsers, setRooms, setWelcomeMessage, addMessage } = useStoreZ();
+    const { connectId, openModal, setModalName, setContent, setUsers, setRooms, setWelcomeMessage, addMessage } = useStoreZ();
 
     const userAddressData = useGetUserAddress();
 
@@ -78,6 +78,12 @@ const _Socket = () => {
             SocketService.disconnect();
         }
     }, []);
+
+    useEffect(() => {
+        if (connectId !== '') {
+            SocketService.sendData(ESendEvents.RELOAD, { connectId })
+        }
+    }, [connectId]);
 
     useEffect(() => {
         if (userAddressData.hasOwnProperty('IPv4')) {

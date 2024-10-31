@@ -9,6 +9,7 @@ export enum _EReceiveEvents {
 };
 
 export enum _ESendEvents {
+    RELOAD = 'reload',
     USER_JOINED = 'user_joined',
     USER_ACCEPT_JOIN_TO_ROOM = 'user_accept_join_to_room',
     SUPPORT_CHAT_USER_JOIN = 'support_chat_join',
