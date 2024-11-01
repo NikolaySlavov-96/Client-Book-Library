@@ -33,6 +33,7 @@ const _Socket = () => {
         setRooms({ roomName: data.roomName });
         addMessage(data);
         if (userRole !== 'support') {
+            localStorage.setItem(STORAGE_KEYS.ISSUE_ROOMS, JSON.stringify(data.roomName));
             SocketService.sendData(ESendEvents.USER_ACCEPT_JOIN_TO_ROOM, { roomName: data.roomName })
         }
     }
@@ -75,6 +76,15 @@ const _Socket = () => {
             SocketService.sendOnlySignal(ESendEvents.USER_CONNECT);
         }
     }, []);
+
+    useEffect(() => {
+        const persist = localStorage.getItem(STORAGE_KEYS.ISSUE_ROOMS);
+        if (persist) {
+            const roomName = JSON.parse(persist);
+            setRooms({ roomName, });
+            SocketService.sendData(ESendEvents.USER_ACCEPT_JOIN_TO_ROOM, { roomName, })
+        }
+    }, [setRooms]);
 
     useEffect(() => {
         if (userAddressData.hasOwnProperty('IPv4')) {

@@ -14,7 +14,7 @@ const _CustomerSupportChat = () => {
     const [isOpenChat, setIsOpenChat] = useState(false);
 
     const { rooms, connectId } = useStoreZ();
-    
+
     const roomName = rooms[0]?.roomName;
 
     const containerStyle = useMemo(() => (
@@ -22,14 +22,14 @@ const _CustomerSupportChat = () => {
     ), [isOpenChat]);
 
     useEffect(() => {
-        if (isOpenChat) {
+        if (!rooms?.length && isOpenChat) {
             if (connectId) {
                 SocketService.sendData(ESendEvents.SUPPORT_CHAT_USER_JOIN, { connectId, });
             } else {
                 SocketService.sendOnlySignal(ESendEvents.SUPPORT_CHAT_USER_JOIN);
             }
         }
-    }, [connectId, isOpenChat]);
+    }, [connectId, isOpenChat, rooms.length]);
 
     return (
         <div className={containerStyle}>
