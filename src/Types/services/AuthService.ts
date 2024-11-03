@@ -22,19 +22,17 @@ export interface ILoginResponse {
         year: number;
         isVerify: boolean;
         accessToken: string
-        unId: string;
     };
     message: string;
     messageCode: string;
 }
 
 export interface ILogOutRequest {
+    connectId: string;
     token: string;
 }
 
-export interface ILogOutResponse {
-    unId: string
-}
+export interface ILogOutResponse { }
 
 interface ICheckFieldRequest { }
 

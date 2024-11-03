@@ -13,9 +13,9 @@ const onUnsubscribe = () => {
 }
 
 const _Socket = () => {
-    const { userRole } = useAuthContext();
+    const { userRole, token } = useAuthContext();
 
-    const { setUnId, openModal, setModalName, setContent, setUsers, setRooms, setWelcomeMessage, addMessage } = useStoreZ();
+    const { openModal, setModalName, setContent, setUsers, setRooms, setWelcomeMessage, addMessage } = useStoreZ();
 
     const userAddressData = useGetUserAddress();
 
@@ -39,12 +39,11 @@ const _Socket = () => {
     }
 
     useEffect(() => {
-        SocketService.connect();
+        SocketService.connect(token);
 
         SocketService.subscribeToEvent(EReceiveEvents.NEW_BOOK_ADDED, result);
 
         SocketService.subscribeToEvent(EReceiveEvents.USER_JOINED, updateCountOfVisitors);
-        SocketService.subscribeToEvent(EReceiveEvents.USER_CONNECT_ACKNOWLEDGMENT, setUnId);
 
         SocketService.subscribeToEvent(EReceiveEvents.SUPPORT_CHAT_USER_JOIN_ACKNOWLEDGMENT, setWelcomeMessage);
 
@@ -55,7 +54,6 @@ const _Socket = () => {
 
         return () => {
             SocketService.unsubscribeFromEvent(EReceiveEvents.NEW_BOOK_ADDED, onUnsubscribe);
-            SocketService.unsubscribeFromEvent(EReceiveEvents.USER_CONNECT_ACKNOWLEDGMENT, onUnsubscribe);
             SocketService.unsubscribeFromEvent(EReceiveEvents.USER_JOINED, onUnsubscribe);
             SocketService.unsubscribeFromEvent(EReceiveEvents.SUPPORT_CHAT_USER_JOIN_ACKNOWLEDGMENT, onUnsubscribe);
             SocketService.unsubscribeFromEvent(EReceiveEvents.NOTIFY_FOR_CREATE_ROOM, onUnsubscribe);
@@ -63,19 +61,7 @@ const _Socket = () => {
             SocketService.unsubscribeFromEvent(EReceiveEvents.SUPPORT_MESSAGE, onUnsubscribe);
             SocketService.disconnect();
         }
-    }, []);
-
-    useEffect(() => {
-        const persist = localStorage.getItem(STORAGE_KEYS.UN_ID);
-        if (persist) {
-            const unId = JSON.parse(persist);
-            setUnId({ unId })
-            SocketService.sendData(ESendEvents.USER_CONNECT, { unId })
-        }
-        else {
-            SocketService.sendOnlySignal(ESendEvents.USER_CONNECT);
-        }
-    }, []);
+    }, [token]);
 
     useEffect(() => {
         const persist = localStorage.getItem(STORAGE_KEYS.ISSUE_ROOMS);

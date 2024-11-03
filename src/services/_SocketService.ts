@@ -10,8 +10,8 @@ const options: Partial<ManagerOptions & SocketOptions> = {
     path: '/bookHub',
 }
 
-const connect = () => {
-    socket = io(HOST, options);
+const connect = (token?: string) => {
+    socket = io(HOST, { ...options, auth: { token: token ?? '' } });
 
     socket.on('connect', () => {
         console.log('Socket Connected');
