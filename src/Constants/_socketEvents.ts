@@ -1,5 +1,7 @@
 export enum _EReceiveEvents {
+    ERROR = 'error',
     NEW_BOOK_ADDED = 'new-book-added',
+    COMPLETE_ISSUE = 'complete-issue',
     USER_JOINED = 'user_joined',
     SUPPORT_CHAT_USER_JOIN_ACKNOWLEDGMENT = 'support_chat_user_join_acknowledgment',
     SUPPORT_MESSAGE = 'support_message',

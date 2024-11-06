@@ -41,6 +41,8 @@ const _Socket = () => {
     useEffect(() => {
         SocketService.connect(token);
 
+        SocketService.subscribeToEvent(EReceiveEvents.ERROR, (data) => console.log(data));
+
         SocketService.subscribeToEvent(EReceiveEvents.NEW_BOOK_ADDED, result);
 
         SocketService.subscribeToEvent(EReceiveEvents.USER_JOINED, updateCountOfVisitors);
@@ -50,10 +52,14 @@ const _Socket = () => {
         SocketService.subscribeToEvent(EReceiveEvents.NOTIFY_FOR_CREATE_ROOM, notifyForCreatedRoom);
         SocketService.subscribeToEvent(EReceiveEvents.NOTIFY_ADMINS_OF_NEW_USER, setUsers);
 
+        SocketService.subscribeToEvent(EReceiveEvents.COMPLETE_ISSUE, (data) => localStorage.removeItem(STORAGE_KEYS.ISSUE_ROOMS));
+
         SocketService.subscribeToEvent(EReceiveEvents.SUPPORT_MESSAGE, addMessage);
 
         return () => {
             SocketService.unsubscribeFromEvent(EReceiveEvents.NEW_BOOK_ADDED, onUnsubscribe);
+            SocketService.unsubscribeFromEvent(EReceiveEvents.ERROR, onUnsubscribe);
+            SocketService.unsubscribeFromEvent(EReceiveEvents.COMPLETE_ISSUE, onUnsubscribe);
             SocketService.unsubscribeFromEvent(EReceiveEvents.USER_JOINED, onUnsubscribe);
             SocketService.unsubscribeFromEvent(EReceiveEvents.SUPPORT_CHAT_USER_JOIN_ACKNOWLEDGMENT, onUnsubscribe);
             SocketService.unsubscribeFromEvent(EReceiveEvents.NOTIFY_FOR_CREATE_ROOM, onUnsubscribe);
