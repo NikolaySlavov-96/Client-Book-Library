@@ -3,13 +3,18 @@
   max-height: 400px;
   min-width: 300px;
   background-color: var(--design);
-  position: fixed;
-  left: 10px;
-  bottom: 10px;
   overflow: hidden;
   border-radius: 10px;
+  margin: 20px;
 }
 
-.border__open {
-  border-radius: 10px 10px 0 0;
+
+/* User List */
+.p-style {
+  padding: 0;
+  margin: 0;
+}
+
+.chat__container {
+  height: 400px;
 }

@@ -23,7 +23,7 @@ import { SocketHelper } from '../Helpers';
 const _Navigator = () => {
     const { userRole } = useAuthContext();
     SocketHelper();
-    
+
     return (
         <>
             <Routes>
@@ -37,12 +37,13 @@ const _Navigator = () => {
                 <Route path={ROUT_NAMES.LOGIN} element={<Login />} />
                 <Route path={ROUT_NAMES.REGISTER} element={<Register />} />
                 <Route path={ROUT_NAMES.VERIFY_TOKEN} element={<VerifyAccount />} />
+                {userRole === 'support' ?
+                    <Route path={ROUT_NAMES.SUPPORT_CHAT} element={<Support />} /> : null
+                }
                 <Route path='*' element={<NotFound />} />
             </Routes>
             <ModalContainer />
-            {userRole === 'support' ? <Support /> :
-                <CustomerSupportChat />
-            }
+            {userRole !== 'support' ? <CustomerSupportChat /> : null}
         </>
     )
 };
