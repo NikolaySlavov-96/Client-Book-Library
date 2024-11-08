@@ -15,7 +15,7 @@ const onUnsubscribe = () => {
 const _Socket = () => {
     const { userRole, token } = useAuthContext();
 
-    const { openModal, setModalName, setContent, setUsers, setRooms, setWelcomeMessage, addMessage } = useStoreZ();
+    const { openModal, setModalName, setContent, setUsers, setRooms, setWelcomeMessage, addMessage, resetRooms } = useStoreZ();
 
     const userAddressData = useGetUserAddress();
 
@@ -52,7 +52,11 @@ const _Socket = () => {
         SocketService.subscribeToEvent(EReceiveEvents.NOTIFY_FOR_CREATE_ROOM, notifyForCreatedRoom);
         SocketService.subscribeToEvent(EReceiveEvents.NOTIFY_ADMINS_OF_NEW_USER, setUsers);
 
-        SocketService.subscribeToEvent(EReceiveEvents.COMPLETE_ISSUE, (data) => localStorage.removeItem(STORAGE_KEYS.ISSUE_ROOMS));
+        SocketService.subscribeToEvent(EReceiveEvents.COMPLETE_ISSUE, (data) => {
+            console.log("🚀 ~ SocketService.subscribeToEvent ~ COMPLETE_ISSUE ~ data:", data)
+            resetRooms();
+            localStorage.removeItem(STORAGE_KEYS.ISSUE_ROOMS)
+        });
 
         SocketService.subscribeToEvent(EReceiveEvents.SUPPORT_MESSAGE, addMessage);
 

@@ -2,12 +2,13 @@ import { Dispatch, FC, memo, SetStateAction, useCallback } from "react";
 
 import { ChatHeader, InputForm } from "../../../component/atoms";
 
+import { ToastWithButton } from "../../../Toasts";
+
 import { SocketService } from "../../../services";
 
 import { ESendEvents } from "../../../Constants";
 
 import { useForm, useStoreZ } from "../../../hooks";
-import { useAuthContext } from "../../../contexts/AuthContext";
 
 import style from './_ChatWithSupport.module.css';
 
@@ -21,17 +22,30 @@ interface IChatWihSupportProps {
 const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
     const { onPress, roomName } = props;
 
-    const { userRole } = useAuthContext();
     const { connectId, welcomeMessage, messages } = useStoreZ();
 
     const roomMessages = messages[roomName] || [];
 
     const onClose = useCallback(() => {
         onPress(s => !s);
-        if (userRole !== 'support') {
-            SocketService.sendData(ESendEvents.SUPPORT_CHAT_USER_LEAVE, { roomName, connectId, });
-        }
+        SocketService.sendData(ESendEvents.SUPPORT_CHAT_USER_LEAVE, { roomName, connectId, });
     }, [onPress, roomName, connectId]);
+
+    const onVerifyChoice = async () => {
+        const result = await ToastWithButton({
+            title: 'Support Chat',
+            subContent: 'Are you sure you want to close the chat?',
+            isCancelButton: true,
+            isConfirmButton: true,
+            confirmButtonTitle: 'Ok',
+            cancelButtonTitle: 'Cancel'
+        });
+        
+        console.log("🚀 ~ onVerifyChoice ~ result:", result.isConfirmed)
+        if (result.isConfirmed) {
+            onClose()
+        }
+    };
 
     const sendMessage = useCallback((data: { message: string }) => {
         SocketService.sendData(ESendEvents.SUPPORT_MESSAGE, {
@@ -50,7 +64,7 @@ const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
         <>
             <ChatHeader>
                 <p className={style['p-style']}>{!!roomName ? roomName : DEFAULT_TITLE}</p>
-                <button onClick={onClose}>{'X'}</button>
+                <button onClick={onVerifyChoice}>{'X'}</button>
             </ChatHeader>
             <div className={style['chat__container']}>
                 {welcomeMessage}
