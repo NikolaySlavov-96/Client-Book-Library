@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from 'react'
+import { memo, useCallback, useEffect } from 'react'
 
 import { ChatHeader } from '../../../component/atoms';
 
@@ -14,10 +14,8 @@ import style from './_Support.module.css';
 const DEFAULT_TITLE = 'Support Chat - ';
 
 const _Support = () => {
-    const { rooms, connectId, users, messages } = useStoreZ();
+    const { rooms, connectId, users, messages, selectedRoom, setSelectedRoom } = useStoreZ();
     const { email } = useAuthContext();
-
-    const [currentSelectRoom, setCurrentSelectRoom] = useState('');
 
     const onAcceptUser = useCallback((userConnectId: string) => {
         SocketService.sendData(ESendEvents.SUPPORT_ACCEPT_USER, { supportId: connectId, acceptUserId: userConnectId });
@@ -52,7 +50,7 @@ const _Support = () => {
                     {
                         rooms.map(r =>
                             <button
-                                onClick={() => setCurrentSelectRoom(r.roomName)}
+                                onClick={() => setSelectedRoom(r.roomName)}
                                 style={{ display: 'inline-block', marginRight: 10, }}
                                 key={r.roomName}>
                                 {r.roomName.slice(0, 5)}</button>
@@ -61,7 +59,7 @@ const _Support = () => {
                 </div>
                 <div className={style['chat__window']}>
                     <>
-                        {currentSelectRoom !== '' ? messages[currentSelectRoom].map(m => <p key={m.message}>{m.message}</p>) : null}
+                        {selectedRoom !== '' ? messages[selectedRoom].map(m => <p key={m.message}>{m.message}</p>) : null}
                     </>
                 </div>
             </div>
