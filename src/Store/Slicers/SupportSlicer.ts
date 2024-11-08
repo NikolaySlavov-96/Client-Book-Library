@@ -34,9 +34,12 @@ export interface SupportSlicer {
     setWelcomeMessage: ({ message }: { message: string }) => void;
     users: IUserQueue[];
     setUsers: (newData: INotifyAdminOfNewUser) => void;
+    selectedRoom: string;
+    setSelectedRoom: (room: string) => void;
     rooms: IRoom[];
     setRooms: (newRoom: IRoom) => void;
     updateRoom: (roomName: string, newData: IRoom) => void;
+    removeRoom: (roomName: string) => void;
     resetRooms: () => void;
     messages: IMessages;
     addMessage: (data: IMessage) => void;
@@ -55,6 +58,9 @@ const createSupportSlicer: StateCreator<SupportSlicer> = (set) => ({
         users: newUser.userQueue,
     })),
 
+    selectedRoom: '',
+    setSelectedRoom: (room: string) => set({ selectedRoom: room }),
+
     rooms: [],
     setRooms: (newRoom) => set(state => ({
         rooms: [...state.rooms, newRoom],
@@ -62,6 +68,11 @@ const createSupportSlicer: StateCreator<SupportSlicer> = (set) => ({
     updateRoom: (roomName, newData) => set(state => {
         return {
             rooms: state.rooms.map(r => r.roomName === roomName ? newData : r)
+        }
+    }),
+    removeRoom: (roomName: string) => set(state => {
+        return {
+            rooms: state.rooms.filter(r => r.roomName !== roomName)
         }
     }),
     resetRooms: () => set(state => ({
