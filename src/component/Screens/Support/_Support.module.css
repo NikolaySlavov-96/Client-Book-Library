@@ -1,13 +1,22 @@
 .container {
-  max-width: 350px;
-  max-height: 400px;
-  min-width: 300px;
-  background-color: var(--design);
-  overflow: hidden;
-  border-radius: 10px;
+  display: flex;
+  flex-wrap: wrap;
   margin: 20px;
 }
 
+.chat__container {
+  max-height: 400px;
+  width: 40%;
+  max-width: 400px;
+  margin-right: 20px;
+  background-color: var(--design);
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.list-chat__container {
+  height: 400px;
+}
 
 /* User List */
 .p-style {
@@ -15,6 +24,27 @@
   margin: 0;
 }
 
-.chat__container {
-  height: 400px;
+/* Room Line (Header) */
+.room__container {
+  width: 52%;
+}
+
+.room__header {
+  background-color: var(--fundColor);
+  height: 40px;
+  align-content: center;
+  margin-bottom: 20px;
+}
+
+.room__header button:hover {
+  background-color: wheat;
+}
+
+.room__header button:active {
+  background-color: red;
+}
+
+.chat__window {
+  background-color: antiquewhite;
+  height: 80%;
 }

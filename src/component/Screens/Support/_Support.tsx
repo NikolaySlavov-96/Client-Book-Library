@@ -1,7 +1,6 @@
-import { memo, useCallback, useEffect, useMemo } from 'react'
+import { memo, useCallback, useEffect, useState } from 'react'
 
 import { ChatHeader } from '../../../component/atoms';
-import { SupportChat } from '../../../component/organisms';
 
 import { useStoreZ } from '../../../hooks';
 
@@ -15,12 +14,10 @@ import style from './_Support.module.css';
 const DEFAULT_TITLE = 'Support Chat - ';
 
 const _Support = () => {
-    const { rooms, connectId, users } = useStoreZ();
+    const { rooms, connectId, users, messages } = useStoreZ();
     const { email } = useAuthContext();
 
-    const containerStyle = useMemo(() => (
-        `shadow__window ${style['container']}`
-    ), []);
+    const [currentSelectRoom, setCurrentSelectRoom] = useState('');
 
     const onAcceptUser = useCallback((userConnectId: string) => {
         SocketService.sendData(ESendEvents.SUPPORT_ACCEPT_USER, { supportId: connectId, acceptUserId: userConnectId });
@@ -31,12 +28,12 @@ const _Support = () => {
     }, [connectId]);
 
     return (
-        <>
-            <div className={containerStyle}>
+        <section className={style.container}>
+            <div className={`shadow__window ${style['chat__container']}`}>
                 <ChatHeader>
                     <p className={style['p-style']}>{`${DEFAULT_TITLE}${email.split('@')[0]}`}</p>
                 </ChatHeader>
-                <div className={style['chat__container']}>
+                <div className={style['list-chat__container']}>
                     <>
                         {users.map(u => {
                             return (
@@ -50,10 +47,25 @@ const _Support = () => {
                     </>
                 </div>
             </div>
-            {
-                rooms.map(r => <SupportChat key={r.roomName} roomName={r.roomName} />)
-            }
-        </>
+            <div className={style['room__container']}>
+                <div className={style['room__header']}>
+                    {
+                        rooms.map(r =>
+                            <button
+                                onClick={() => setCurrentSelectRoom(r.roomName)}
+                                style={{ display: 'inline-block', marginRight: 10, }}
+                                key={r.roomName}>
+                                {r.roomName.slice(0, 5)}</button>
+                        )
+                    }
+                </div>
+                <div className={style['chat__window']}>
+                    <>
+                        {currentSelectRoom !== '' ? messages[currentSelectRoom].map(m => <p key={m.message}>{m.message}</p>) : null}
+                    </>
+                </div>
+            </div>
+        </section>
     )
 }
 
