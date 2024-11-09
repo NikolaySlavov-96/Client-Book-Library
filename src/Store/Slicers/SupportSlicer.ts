@@ -3,11 +3,7 @@ import { StateCreator } from "zustand";
 interface IUserQueue {
     connectId: string;
 
-    currentSocketId: string;
-
-    role: 'user' | 'support'
-
-    status: "waiting"
+    name: string;
 }
 
 interface INotifyAdminOfNewUser {
