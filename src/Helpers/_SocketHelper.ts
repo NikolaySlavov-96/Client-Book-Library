@@ -49,7 +49,7 @@ const _Socket = () => {
 
         SocketService.subscribeToEvent(EReceiveEvents.NEW_BOOK_ADDED, result);
 
-        SocketService.subscribeToEvent(EReceiveEvents.USER_JOINED, updateCountOfVisitors);
+        SocketService.subscribeToEvent(EReceiveEvents.USER_CONNECT, updateCountOfVisitors);
 
         SocketService.subscribeToEvent(EReceiveEvents.SUPPORT_CHAT_USER_JOIN_ACKNOWLEDGMENT, setWelcomeMessage);
 
@@ -72,7 +72,7 @@ const _Socket = () => {
             SocketService.unsubscribeFromEvent(EReceiveEvents.NEW_BOOK_ADDED, onUnsubscribe);
             SocketService.unsubscribeFromEvent(EReceiveEvents.ERROR, onUnsubscribe);
             SocketService.unsubscribeFromEvent(EReceiveEvents.COMPLETE_ISSUE, onUnsubscribe);
-            SocketService.unsubscribeFromEvent(EReceiveEvents.USER_JOINED, onUnsubscribe);
+            SocketService.unsubscribeFromEvent(EReceiveEvents.USER_CONNECT, onUnsubscribe);
             SocketService.unsubscribeFromEvent(EReceiveEvents.SUPPORT_CHAT_USER_JOIN_ACKNOWLEDGMENT, onUnsubscribe);
             SocketService.unsubscribeFromEvent(EReceiveEvents.NOTIFY_FOR_CREATE_ROOM, onUnsubscribe);
             SocketService.unsubscribeFromEvent(EReceiveEvents.NOTIFY_ADMINS_OF_NEW_USER, onUnsubscribe);
@@ -92,7 +92,7 @@ const _Socket = () => {
 
     useEffect(() => {
         if (userAddressData.hasOwnProperty('IPv4')) {
-            SocketService.sendData(ESendEvents.USER_JOINED, userAddressData);
+            SocketService.sendData(ESendEvents.USER_CONNECT, userAddressData);
         }
     }, [userAddressData]);
 };

@@ -2,7 +2,7 @@ export enum _EReceiveEvents {
     ERROR = 'error',
     NEW_BOOK_ADDED = 'new-book-added',
     COMPLETE_ISSUE = 'complete-issue',
-    USER_JOINED = 'user_joined',
+    USER_CONNECT = 'user_connect',
     SUPPORT_CHAT_USER_JOIN_ACKNOWLEDGMENT = 'support_chat_user_join_acknowledgment',
     SUPPORT_MESSAGE = 'support_message',
     NOTIFY_FOR_CREATE_ROOM = 'notify_for_created_room',
@@ -11,7 +11,7 @@ export enum _EReceiveEvents {
 };
 
 export enum _ESendEvents {
-    USER_JOINED = 'user_joined',
+    USER_CONNECT = 'user_connect',
     USER_ACCEPT_JOIN_TO_ROOM = 'user_accept_join_to_room',
     SUPPORT_CHAT_USER_JOIN = 'support_chat_join',
     SUPPORT_CHAT_USER_LEAVE = 'support_chat_leave',
