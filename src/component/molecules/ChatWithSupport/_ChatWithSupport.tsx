@@ -7,6 +7,7 @@ import { ToastWithButton } from "../../../Toasts";
 import { SocketService } from "../../../services";
 
 import { ESendEvents } from "../../../Constants";
+import { SUPPORT_TOAST } from "../../../Configuration";
 
 import { useForm, useStoreZ } from "../../../hooks";
 
@@ -31,21 +32,12 @@ const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
         SocketService.sendData(ESendEvents.SUPPORT_CHAT_USER_LEAVE, { roomName, connectId, });
     }, [onPress, roomName, connectId]);
 
-    const onVerifyChoice = async () => {
-        const result = await ToastWithButton({
-            title: 'Support Chat',
-            subContent: 'Are you sure you want to close the chat?',
-            isCancelButton: true,
-            isConfirmButton: true,
-            confirmButtonTitle: 'Ok',
-            cancelButtonTitle: 'Cancel'
-        });
-        
-        console.log("🚀 ~ onVerifyChoice ~ result:", result.isConfirmed)
-        if (result.isConfirmed) {
+    const onVerifyChoice = useCallback(async () => {
+        const result = await ToastWithButton(SUPPORT_TOAST);
+        if (result?.isConfirmed) {
             onClose()
         }
-    };
+    }, [ToastWithButton, onClose]);
 
     const sendMessage = useCallback((data: { message: string }) => {
         SocketService.sendData(ESendEvents.SUPPORT_MESSAGE, {
