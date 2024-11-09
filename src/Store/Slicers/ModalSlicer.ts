@@ -1,6 +1,6 @@
 import { StateCreator } from "zustand";
 
-export interface ModalSlicer {
+export interface IModalSlicer {
     modalName: string;
     setModalName: (data: string) => void;
     content: any[]; // TODO
@@ -12,7 +12,7 @@ export interface ModalSlicer {
     closeModal: () => void;
 }
 
-const createModalSlicer: StateCreator<ModalSlicer> = (set) => ({
+const createModalSlicer: StateCreator<IModalSlicer> = (set) => ({
     modalName: '',
     setModalName: (data) => set({ modalName: data }),
     content: [],

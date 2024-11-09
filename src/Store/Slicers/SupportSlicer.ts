@@ -25,7 +25,7 @@ export interface IRoom {
     roomName: string;
 }
 
-export interface SupportSlicer {
+export interface ISupportSlicer {
     welcomeMessage: string;
     setWelcomeMessage: ({ message }: { message: string }) => void;
     users: IUserQueue[];
@@ -43,7 +43,7 @@ export interface SupportSlicer {
     resetMessages: () => void;
 }
 
-const createSupportSlicer: StateCreator<SupportSlicer> = (set) => ({
+const createSupportSlicer: StateCreator<ISupportSlicer> = (set) => ({
     welcomeMessage: '',
     setWelcomeMessage: ({ message }) => set(state => ({
         welcomeMessage: message,
