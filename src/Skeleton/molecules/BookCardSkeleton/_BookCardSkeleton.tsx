@@ -14,7 +14,7 @@ const _BookCardSkeleton: FC<IBookSkeleton> = (props) => {
     } = props;
 
     return (
-        <div className={style['container']}>
+        <div className={`shadow ${style['container']}`}>
             <ViewElement width={200} height={100} />
 
             {hasTitle ? <ViewElement width={180} height={DEFAULT_HEIGHT} /> : null}

@@ -1,4 +1,4 @@
-import { FC, memo, ReactNode, useCallback, useMemo } from "react";
+import { memo, useCallback, useMemo } from "react";
 
 import { NavigationButton } from "../../atoms";
 
@@ -11,7 +11,7 @@ import style from './_Header.module.css';
 const FIRST_NAME = 'Guest';
 
 const _Header = () => {
-    const { email, onSubmitLogout, isVerifyUser } = useAuthContext();
+    const { email, onSubmitLogout, isVerifyUser, userRole, } = useAuthContext();
 
     const name = useMemo(() => (email?.split('@')[0]), [email]);
 
@@ -36,6 +36,14 @@ const _Header = () => {
                                 <NavigationButton path={ROUT_NAMES.LOGIN} title={HEADER_BUTTON_TITLES.LOGIN} />
                                 <NavigationButton path={ROUT_NAMES.REGISTER} title={HEADER_BUTTON_TITLES.REGISTER} />
                             </>)
+                    }
+                    {
+                        userRole === 'support' ?
+                            <>
+                                <NavigationButton path={ROUT_NAMES.SUPPORT_CHAT} title={HEADER_BUTTON_TITLES.CHAT} />
+                            </>
+                            :
+                            null
                     }
                 </ul>
 

@@ -2,6 +2,7 @@ import { useState } from "react"
 
 
 const _useLocalStorage = (key: string, initialValue: {}) => {
+
     const [state, setState] = useState(() => {
         const persist = localStorage.getItem(key);
 
@@ -11,6 +12,22 @@ const _useLocalStorage = (key: string, initialValue: {}) => {
         }
         return initialValue;
     });
+
+    // useEffect(() => {
+    //     if (key === STORAGE_KEYS.UN_ID) {
+    //         const persist = localStorage.getItem(key);
+    //         console.log("🚀 ~ useEffect ~ persist:", persist)
+    //         if (persist) {
+    //             const connectId = JSON.parse(persist);
+    //             setUnId(connectId)
+    //         }
+    //     }
+    // }, []);
+
+    // const saveToLocalStorage = (value) => {
+    //     setData(value);
+    //     localStorage.setItem(key, JSON.stringify(value));
+    //   };
 
     const setLocalStorage = (value: any) => {
         setState(value);

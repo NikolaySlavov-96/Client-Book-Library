@@ -1,0 +1,15 @@
+.container {
+  max-width: 350px;
+  max-height: 400px;
+  min-width: 300px;
+  background-color: var(--design);
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.border__open {
+  border-radius: 10px 10px 0 0;
+}

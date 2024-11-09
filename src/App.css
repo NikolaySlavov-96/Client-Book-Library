@@ -60,3 +60,14 @@ li {
   text-align: center;
   width: 86%;
 }
+
+.shadow {
+  -webkit-box-shadow: 0px 10px 13px -7px #000000,
+    29px 12px 19px 11px rgba(81, 81, 81, 0);
+  box-shadow: 0px 10px 13px -7px #000000,
+    29px 12px 19px 11px rgba(81, 81, 81, 0);
+}
+
+.shadow__window {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}

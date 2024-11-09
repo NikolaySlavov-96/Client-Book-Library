@@ -16,7 +16,7 @@ export interface ILoginRequest {
 }
 
 export interface ILoginResponse {
-    userInfo: {} | {
+    userInfo: {
         _id: number;
         email: string;
         year: number;
@@ -28,6 +28,7 @@ export interface ILoginResponse {
 }
 
 export interface ILogOutRequest {
+    connectId: string;
     token: string;
 }
 

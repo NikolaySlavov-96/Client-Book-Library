@@ -18,7 +18,7 @@ const _BookCard: FC<IBookProps> = (props) => {
     } = props;
 
     return (
-        <article className={style["container"]}>
+        <article className={`shadow ${style["container"]}`}>
 
             <BookDetails {...props} hasTitle />
 

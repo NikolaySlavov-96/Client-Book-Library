@@ -1,16 +1,10 @@
 import { createContext, ReactNode, useContext, } from "react";
 
-import { useLocalStorage } from "../hooks";
+import { useLocalStorage, useStoreZ } from "../hooks";
 
-import { AuthService } from "../services";
+import { AuthService, SocketService } from "../services";
 
-import { ServerError } from '../Constants';
-
-const STORAGE_PREFIX = '@Book_';
-const STORAGE_KEYS = {
-    TOKEN_DATE: `${STORAGE_PREFIX}TokenData`,
-    USER_DATA: `${STORAGE_PREFIX}UserData`
-}
+import { ServerError, STORAGE_KEYS } from '../Constants';
 
 interface IAuthContext {
     onSubmitLogin: (data: any) => any;
@@ -21,11 +15,15 @@ interface IAuthContext {
     isAuthenticated: boolean;
     isVerifyUser: boolean;
     userId: string;
+    userRole: 'user' | 'support';
+    token: string;
 }
 
 const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
 export const AuthProvide = ({ children }: { children: ReactNode }) => {
+
+    const { connectId, resetRooms, resetMessages, setWelcomeMessage, } = useStoreZ();
 
     const [tokenData, setTokenData] = useLocalStorage(STORAGE_KEYS.TOKEN_DATE, {});
     const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.USER_DATA, {});
@@ -43,7 +41,8 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
 
     const onSubmitLogin = async (value: any) => {
         try {
-            const data = await authService.login(value);
+            const newValue = { ...value, connectId };
+            const data = await authService.login(newValue);
 
             if (data.messageCode === ServerError.SUCCESSFULLY_LOGIN.messageCode) {
                 const newValue = value;
@@ -60,9 +59,14 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
 
     const onSubmitLogout = async () => {
         try {
-            await authService.logout({ token: '1' });
+            await authService.logout({ connectId, token: '1' });
             setTokenData({});
             setUserData({});
+            resetRooms();
+            resetMessages();
+            setWelcomeMessage({ message: '' });
+            SocketService.disconnect();
+            SocketService.connect();
             // Modal for success logout
         } catch (err) {
             return err;
@@ -103,7 +107,9 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
         isAuthenticated: !!tokenData.accessToken,
         email: tokenData.email,
         userId: tokenData.id,
+        userRole: tokenData.role,
         verifyAccountWithToken,
+        token: tokenData.accessToken,
     }
 
     return (

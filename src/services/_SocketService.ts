@@ -1,7 +1,8 @@
 import { io, ManagerOptions, Socket, SocketOptions } from "socket.io-client";
 
 import { HOST } from "../Constants/connectionData";
-import { EReceiveEvents, ESendEvents } from '../Constants';
+import { EReceiveEvents, ESendEvents, } from '../Constants';
+import { useStoreZ } from "../hooks";
 
 let socket: Socket;
 
@@ -9,21 +10,24 @@ const options: Partial<ManagerOptions & SocketOptions> = {
     path: '/bookHub',
 }
 
-const connect = () => {
-    socket = io(HOST, options);
+const connect = (token?: string) => {
+    socket = io(HOST, { ...options, auth: { token: token ?? '' } });
 
     socket.on('connect', () => {
         console.log('Socket Connected');
+        useStoreZ.getState().setConnectId(socket.id ?? '');
     });
 
-    socket.on('disconnected', () => {
-        console.log('Socket Disconnected');
+    socket.on('disconnect', () => {
+        console.log('Socket Disconnect');
+        useStoreZ.getState().setConnectId('');
     });
 };
 
 const disconnect = () => {
     if (socket) {
         socket.disconnect();
+        useStoreZ.getState().setConnectId('');
     };
 };
 
