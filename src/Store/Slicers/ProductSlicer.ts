@@ -16,8 +16,8 @@ export interface IProductSlicer {
     isLoadingProductCollection: boolean;
     isAddingProductState: boolean;
 
-    states: IState[];
-    fetchAllStates: () => void;
+    productStates: IState[];
+    fetchAllProductStates: () => void;
 
     productByEmail: { count: number, rows: IBookEmailType[] };
     fetchProductsForEmail: (data: IFetchSearchParams) => void;
@@ -44,13 +44,13 @@ const createProductSlicer: StateCreator<IProductSlicer> = (set, get) => ({
     isLoadingProductCollection: false,
     isAddingProductState: false,
 
-    states: [],
-    fetchAllStates: async () => {
+    productStates: [],
+    fetchAllProductStates: async () => {
         try {
             const result = await productService.getStates();
-            set({ states: result })
+            set({ productStates: result })
         } catch (err) {
-            console.log('fetchAllStates error --->: ', err);
+            console.log('fetchAllProductStates error --->: ', err);
         }
     },
 
