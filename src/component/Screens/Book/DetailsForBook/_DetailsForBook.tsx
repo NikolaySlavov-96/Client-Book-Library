@@ -40,9 +40,9 @@ const _DetailsForBook = () => {
     const onPressBackButton = useCallback(() => {
         navigate(-1);
     }, [navigate]);
-
+    
     const selectedLabel = useMemo(() => (
-        typeof productState?.stateId === 'number' && mappedStates.length ? mappedStates[productState.stateId - 1].label : DEFAULT_MESSAGE
+        typeof productState.stateId === 'number' && productState.stateId !== 0 && !!mappedStates.length ? mappedStates[productState.stateId - 1].label : DEFAULT_MESSAGE
     ), [mappedStates, productState?.stateId]);
 
     const selectOptions = useMemo(() => (
@@ -73,7 +73,7 @@ const _DetailsForBook = () => {
 
             <IconActionButton onClick={onPressBackButton} />
 
-            <div className={style['productById-card__detail']}>
+            <div className={style['book-card__detail']}>
                 {isLoadingProduct ?
                     <BookDetailSkeleton /> :
                     <BookDetails {...productById} />}
