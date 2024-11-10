@@ -42,7 +42,7 @@ const _DetailsForBook = () => {
     }, [navigate]);
 
     const selectedLabel = useMemo(() => (
-        typeof productState?.stateId === 'number' && mappedStates.length ? mappedStates[productState.stateId].label : DEFAULT_MESSAGE
+        typeof productState?.stateId === 'number' && mappedStates.length ? mappedStates[productState.stateId - 1].label : DEFAULT_MESSAGE
     ), [mappedStates, productState?.stateId]);
 
     const selectOptions = useMemo(() => (
