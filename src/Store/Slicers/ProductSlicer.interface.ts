@@ -4,7 +4,7 @@ export interface IState {
     symbol: string;
 }
 
-interface IBook {
+export interface IBook {
     bookId: number;
     bookGenre: string;
     bookIsVerify: boolean;
@@ -12,10 +12,7 @@ interface IBook {
     authorName: string;
     authorImage: string;
     authorGenre: string;
-    authorIsVerify: boolean
-}
-
-export interface IBooks extends IBook {
+    authorIsVerify: boolean;
     imageUrl: string;
     imageId: number;
     bookSrc: string;
@@ -24,7 +21,6 @@ export interface IBooks extends IBook {
 export interface IBookWithState extends IBook {
     bookStateId: number;
     bookStateIsDelete: boolean;
-    bookImage: string;
     email: string;
     userId: number;
 }
@@ -34,7 +30,6 @@ export interface IBookEmailType extends IBook {
     userId: number;
     userYear: number;
     userIdVerify: boolean;
-    bookImage: string;
     stateId: number;
 }
 

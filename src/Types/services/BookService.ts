@@ -7,9 +7,6 @@ interface IBook {
     authorImage: string;
     authorGenre: string;
     authorIsVerify: boolean
-}
-
-interface IBooks extends IBook {
     imageUrl: string;
     imageId: number;
     bookSrc: string;
@@ -25,7 +22,7 @@ export interface IGetStatesResponse {
 
 export interface IGetProductRequest { }
 
-export interface IGetProductResponse extends IBooks { }
+export interface IGetProductResponse extends IBook { }
 
 export interface IGetProductsRequest {
     limit: number;
@@ -35,7 +32,7 @@ export interface IGetProductsRequest {
 
 export interface IGetProductsResponse {
     count: number;
-    rows: IBooks[];
+    rows: IBook[];
 }
 
 export interface ICreateProductRequest {

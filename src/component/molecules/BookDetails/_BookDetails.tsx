@@ -6,9 +6,6 @@ import style from './_BookDetails.module.css';
 
 type TBookDetails = TBookCard & {
     hasTitle?: boolean;
-    // TODO Check props
-    imageUrl?: string;
-    bookSrc?: string;
 }
 
 const _BookDetails: FC<TBookDetails> = (props) => {
