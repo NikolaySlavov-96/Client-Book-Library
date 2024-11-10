@@ -1,10 +1,17 @@
 import { FC, memo } from "react";
 
-import { IBookProps } from "../../../Types/Book";
+import { TBookCard } from "../../../Types/Book";
 
 import style from './_BookDetails.module.css';
 
-const _BookDetails: FC<IBookProps> = (props) => {
+type TBookDetails = TBookCard & {
+    hasTitle?: boolean;
+    // TODO Check props
+    imageUrl?: string;
+    bookSrc?: string;
+}
+
+const _BookDetails: FC<TBookDetails> = (props) => {
     const {
         authorName,
         bookGenre,

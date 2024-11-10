@@ -2,13 +2,12 @@ import { FC, memo, useCallback } from "react";
 
 import { BookCard } from "../../organisms";
 
-import { IBookData } from "~/Types/Book";
+import { TBookCard } from "../../../Types/Book";
 
 import styles from './_ListRenderBook.module.css';
 
 interface IListRenderBookProps {
-    // TO DO 
-    data: any[];
+    data: TBookCard[];
 }
 
 const _ListRenderBook: FC<IListRenderBookProps> = (props) => {
