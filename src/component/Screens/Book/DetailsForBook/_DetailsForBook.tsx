@@ -42,7 +42,7 @@ const _DetailsForBook = () => {
     }, [navigate]);
 
     const selectedLabel = useMemo(() => (
-        typeof productState?.stateId === 'number' ? mappedStates[productState.stateId].label : DEFAULT_MESSAGE
+        typeof productState?.stateId === 'number' && mappedStates.length ? mappedStates[productState.stateId].label : DEFAULT_MESSAGE
     ), [mappedStates, productState?.stateId]);
 
     const selectOptions = useMemo(() => (
@@ -50,16 +50,23 @@ const _DetailsForBook = () => {
     ), [productState?.stateId, mappedStates]);
 
     useEffect(() => {
-        // TODO Update with If statement before request
-        // if(id?.toString())
-        fetchProductById(id ? id.toString() : '0')
+        const productId = id?.toString();
+        if (productId && productId !== '0') {
+            fetchProductById(productId);
+        }
     }, [id, fetchProductById]);
 
     useEffect(() => {
-        if (!!email) {
-            fetchProductState(id ? id.toString() : '0');
+        const productId = id?.toString();
+        if (!!email && productId && productId !== '0') {
+            fetchProductState(productId);
         }
     }, [id, fetchProductState, email])
+
+    const productId = productById?.bookId?.toString();
+    if (!isLoadingProduct && productId === '0') {
+        return null;
+    }
 
     return (
         <section className={style['detail__card']}>
@@ -80,7 +87,7 @@ const _DetailsForBook = () => {
                             <Select
                                 options={selectOptions}
                                 placeHolder={selectedLabel}
-                                onChange={(e) => changeState(e, productById ? productById.bookId.toString() : '0')}
+                                onChange={(e) => changeState(e, productId)}
                                 size='70'
                             />
                         </div>)
