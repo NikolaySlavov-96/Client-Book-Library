@@ -17,7 +17,7 @@ export interface IProductSlicer {
     isAddingProductState: boolean;
 
     states: IState[];
-    fetchAllStates: (states: IState[]) => void;
+    fetchAllStates: () => void;
 
     productByEmail: { count: number, rows: IBookEmailType[] };
     fetchProductsForEmail: (data: IFetchSearchParams) => void;
