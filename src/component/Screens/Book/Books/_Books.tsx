@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { useBookContext } from "../../../../contexts/BookContext";
+import { useStoreZ } from "../../../../hooks";
 
 import { SectionTitle } from "../../../atoms";
 import { Pagination } from "../../../molecules";
@@ -17,9 +17,9 @@ const _Books = () => {
     const [page, setPage] = useState(1);
     const [searchContent, setSearchContent] = useState('');
 
-    const { book, limit, setLimit, loadingBooks, isLoading } = useBookContext();
+    const { products, fetchProducts, pageLimit, setPageLimit, isLoadingProducts } = useStoreZ();
 
-    const count = Math.ceil(book.count / limit) || 0;
+    const count = Math.ceil(products.count / pageLimit) || 0;
 
     const onSearchFunction = useCallback((data: any) => {
         // Always set on initial search
@@ -38,9 +38,9 @@ const _Books = () => {
             setPage(searchPage);
         }
         if (!searchLimit) {
-            setLimit(QUERY_LIMIT.LIMIT);
+            setPageLimit(QUERY_LIMIT.LIMIT);
         } else {
-            setLimit(searchLimit);
+            setPageLimit(searchLimit);
         }
 
         if (searchContent) {
@@ -53,10 +53,11 @@ const _Books = () => {
     }, []);
 
     useEffect(() => {
-        if (page || limit || searchContent)
-            setSearchParams({ page: page.toString(), limit: limit.toString(), content: searchContent });
-        loadingBooks({ page: page, limit: limit, searchContent });
-    }, [loadingBooks, setSearchParams, limit, page, searchContent]);
+        if (page || pageLimit || searchContent)
+            setSearchParams({ page: page.toString(), limit: pageLimit.toString(), content: searchContent });
+
+        fetchProducts({ page: page, limit: pageLimit, searchContent });
+    }, [fetchProducts, setSearchParams, pageLimit, page, searchContent]);
 
     return (
         <section className={'content__page'}>
@@ -68,7 +69,7 @@ const _Books = () => {
                 onPressSearch={onSearchFunction}
             />
 
-            {isLoading ? <ListRenderBookSkeletons limit={limit} /> : <ListRenderBook data={book?.rows || {}} />}
+            {isLoadingProducts ? <ListRenderBookSkeletons limit={pageLimit} /> : <ListRenderBook data={products?.rows || {}} />}
 
             <Pagination count={count} page={page} onSubmit={setPage} />
         </section >

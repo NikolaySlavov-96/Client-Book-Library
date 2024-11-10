@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { useBookContext } from "../../../../contexts/BookContext";
+import { useStoreZ } from "../../../../hooks";
 
 import { SectionTitle } from "../../../atoms";
 import { Pagination } from "../../../molecules";
@@ -23,14 +23,14 @@ const _UserCollection = () => {
     const [collection, setCollection] = useState(1);
     const [searchContent, setSearchContent] = useState('');
 
-    const { book, limit, setLimit, states, loadingBookCollection, isLoading } = useBookContext();
+    const { productStates, isLoadingProductCollection, productCollection, fetchProductCollection, pageLimit, setPageLimit } = useStoreZ();
 
     const mappedStates = useMemo(() => {
-        const data = FormatSelectOptions(states, { value: 'id', label: 'stateName' });
+        const data = FormatSelectOptions(productStates, { value: 'id', label: 'stateName' });
         return data;
-    }, [states]);
+    }, [productStates]);
 
-    const count = Math.ceil(book.count / limit) || 0;
+    const count = Math.ceil(productCollection.count / pageLimit) || 0;
 
     const onSearchFunction = useCallback((data: any) => {
         // Always set on initial search
@@ -50,9 +50,9 @@ const _UserCollection = () => {
             setPage(searchPage);
         }
         if (!searchLimit) {
-            setLimit(QUERY_LIMIT.LIMIT);
+            setPageLimit(QUERY_LIMIT.LIMIT);
         } else {
-            setLimit(searchLimit);
+            setPageLimit(searchLimit);
         }
         if (!collectionNumber) {
             setCollection(QUERY_LIMIT.COLLECTION)
@@ -70,11 +70,11 @@ const _UserCollection = () => {
     }, []);
 
     useEffect(() => {
-        if (page || limit || collection || searchContent) {
-            setSearchParams({ page: page.toString(), limit: limit.toString(), collection: collection.toString(), content: searchContent });
+        if (page || pageLimit || collection || searchContent) {
+            setSearchParams({ page: page.toString(), limit: pageLimit.toString(), collection: collection.toString(), content: searchContent });
         }
-        loadingBookCollection({ page: page, limit: limit, type: collection, searchContent });
-    }, [loadingBookCollection, setSearchParams, limit, page, collection, searchContent]);
+        fetchProductCollection({ page: page, limit: pageLimit, type: collection, searchContent });
+    }, [fetchProductCollection, setSearchParams, pageLimit, page, collection, searchContent]);
 
     return (
         <section className={'content__page'}>
@@ -89,7 +89,7 @@ const _UserCollection = () => {
                 onPressSearch={onSearchFunction}
             />
 
-            {isLoading ? <ListRenderBookSkeletons limit={limit} /> : <ListRenderBook data={book?.rows || {}} />}
+            {isLoadingProductCollection ? <ListRenderBookSkeletons limit={pageLimit} /> : <ListRenderBook data={productCollection?.rows || {}} />}
 
             <Pagination count={count} page={page} onSubmit={setPage} />
         </section >

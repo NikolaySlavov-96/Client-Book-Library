@@ -7,7 +7,8 @@ import { IBookData } from "~/Types/Book";
 import styles from './_ListRenderBook.module.css';
 
 interface IListRenderBookProps {
-    data: IBookData[];
+    // TO DO 
+    data: any[];
 }
 
 const _ListRenderBook: FC<IListRenderBookProps> = (props) => {

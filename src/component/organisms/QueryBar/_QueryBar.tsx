@@ -3,11 +3,9 @@ import { useSearchParams } from "react-router-dom";
 
 import { Select, SearchField } from "../../molecules";
 
-import { useBookContext } from "../../../contexts/BookContext";
-
 import { SEARCH_NAME } from "../../../Constants";
 
-import { useForm } from "../../../hooks";
+import { useForm, useStoreZ } from "../../../hooks";
 
 import { TOptionType } from "~/Types/Select";
 
@@ -52,7 +50,7 @@ const _QueryBar: FC<IQueryBarProps> = (props) => {
 
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const { setLimit } = useBookContext();
+    const { setPageLimit } = useStoreZ();
 
     const { values, changeHandler, onSubmit } = useForm({
         search: '',
@@ -64,9 +62,9 @@ const _QueryBar: FC<IQueryBarProps> = (props) => {
 
     const pageLimit = useCallback((e: TOptionType) => {
         const pageSize = e.value;
-        setLimit(Number(pageSize));
+        setPageLimit(Number(pageSize));
         setSearchParams(prev => ({ ...prev, limit: pageSize }));
-    }, [setLimit, setSearchParams]);
+    }, [setPageLimit, setSearchParams]);
 
     const changeState = useCallback((e: TOptionType) => {
         const state = Number(e.value);
