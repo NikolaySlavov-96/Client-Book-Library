@@ -1,11 +1,9 @@
 import { StateCreator } from "zustand";
 
-import { BookService } from "../../services";
+import { BookService as productService } from "../../services";
 
 import { IBookEmailType, IBooks, IBookWithState, IFetchQueryParams, IFetchSearchParams, IState } from "./ProductSlicer.interface";
 
-
-const productService = BookService();
 
 export interface IProductSlicer {
     // error: 

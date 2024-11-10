@@ -1,6 +1,6 @@
 import { createContext, Dispatch, ReactNode, SetStateAction, useCallback, useContext, useEffect, useState } from "react";
 
-import { BookService } from "../services";
+import { BookService as bookService } from "../services";
 
 import { IGetStatesResponse } from "~/Types/services/BookService";
 
@@ -34,9 +34,6 @@ export const BookProvider = ({ children }: { children: ReactNode }) => {
     const [book, setBook] = useState<IBookArray>({ count: 0, rows: [] });
 
     const [limit, setLimit] = useState(12);
-
-    const bookService = BookService();
-
 
     const loadingAllStatesForBook = useCallback(async () => {
         try {
