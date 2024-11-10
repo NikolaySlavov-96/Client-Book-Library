@@ -2,7 +2,7 @@ import { StateCreator } from "zustand";
 
 import { BookService as productService } from "../../services";
 
-import { IBookEmailType, IBook, IBookWithState, IFetchQueryParams, IFetchSearchParams, IState } from "./ProductSlicer.interface";
+import { IProductEmailType, IProduct, IProductWithState, IFetchQueryParams, IFetchSearchParams, IState } from "./ProductSlicer.interface";
 
 
 export interface IProductSlicer {
@@ -20,20 +20,20 @@ export interface IProductSlicer {
     productStates: IState[];
     fetchAllProductStates: () => void;
 
-    productByEmail: { count: number, rows: IBookEmailType[] };
+    productByEmail: { count: number, rows: IProductEmailType[] };
     fetchProductsForEmail: (data: IFetchSearchParams) => void;
 
-    products: { count: number, rows: IBook[] };
+    products: { count: number, rows: IProduct[] };
     fetchProducts: (data: IFetchSearchParams) => void;
 
-    productById: IBook;
+    productById: IProduct;
     fetchProductById: (id: string) => void;
 
     productState: { stateId: number };
     fetchProductState: (id: string) => void;
     addingProductState: (id: string, state: string) => void;
 
-    productCollection: { count: number, rows: IBookWithState[] };
+    productCollection: { count: number, rows: IProductWithState[] };
     fetchProductCollection: (data: IFetchQueryParams) => void;
 };
 

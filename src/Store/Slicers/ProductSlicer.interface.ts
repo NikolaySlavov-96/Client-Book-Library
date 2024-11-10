@@ -4,7 +4,7 @@ export interface IState {
     symbol: string;
 }
 
-export interface IBook {
+export interface IProduct {
     bookId: number;
     bookGenre: string;
     bookIsVerify: boolean;
@@ -18,14 +18,14 @@ export interface IBook {
     bookSrc: string;
 }
 
-export interface IBookWithState extends IBook {
+export interface IProductWithState extends IProduct {
     bookStateId: number;
     bookStateIsDelete: boolean;
     email: string;
     userId: number;
 }
 
-export interface IBookEmailType extends IBook {
+export interface IProductEmailType extends IProduct {
     email: string;
     userId: number;
     userYear: number;

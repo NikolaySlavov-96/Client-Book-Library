@@ -1,3 +1,3 @@
-import { IBookEmailType, IBook, IBookWithState } from "~/Store/Slicers/ProductSlicer.interface";
+import { IProductEmailType, IProduct, IProductWithState } from "~/Store/Slicers/ProductSlicer.interface";
 
-export type TBookCard = IBookEmailType | IBookWithState | IBook;
+export type TBookCard = IProductEmailType | IProductWithState | IProduct;
