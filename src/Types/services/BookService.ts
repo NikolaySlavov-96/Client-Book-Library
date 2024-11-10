@@ -64,7 +64,7 @@ export interface IEditProductRequest { }
 export interface IEditProductResponse { }
 
 export interface ISearchProductByEmailRequest {
-    content: string;
+    searchContent: string;
     page: number;
     limit: number;
 }
@@ -100,7 +100,9 @@ export interface IGetAllProductByStateResponse {
     rows: IBookWithState[];
 }
 
-export interface IGetBookStateResponse extends IGetStatesResponse { }
+export interface IGetBookStateResponse {
+    stateId: number;
+}
 
 export interface IAddingBookInLibraryRequest {
     state: string;

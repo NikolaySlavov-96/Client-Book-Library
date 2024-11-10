@@ -40,13 +40,13 @@ const _BookServiceFactory = () => {
 
     const deleteProduct = async (id: string) => api.remove(`${PREFIX}/` + id);
 
-    const searchBookByEmailOnUser = async ({ content, page, limit }: ISearchProductByEmailRequest): Promise<ISearchProductByEmailResponse> => api.get(`${SEARCH}/email?email=${content}`);
+    const searchBookByEmailOnUser = async ({ searchContent, page, limit }: ISearchProductByEmailRequest): Promise<ISearchProductByEmailResponse> => api.get(`${SEARCH}/email?email=${searchContent}`);
     // const searchBookByEmailOnUser = async ({ content, page, limit }) => api.get(`/search/email?email=${content}&limit=${limit}&page=${page}`);
 
     // BookState Services
     const getAllBooksByState = async (data: IGetAllProductByStateRequest): Promise<IGetAllProductByStateResponse> => api.get(`${PREFIX}/booksState/${data?.type}?limit=${data?.limit}&page=${data?.page}&search=${data?.searchContent}`);
 
-    const getBookState = async (id: string): Promise<IGetBookStateResponse[]> => api.get(`${PREFIX}/bookState/` + id);
+    const getBookState = async (id: string): Promise<IGetBookStateResponse> => api.get(`${PREFIX}/bookState/` + id);
 
     const addBookToLibrary = async (data: IAddingBookInLibraryRequest): Promise<IAddingBookInLibraryResponse> => api.post(`${PREFIX}/state`, { inputData: data });
 
