@@ -84,7 +84,7 @@ export interface ISearchProductByEmailResponse {
 }
 
 export interface IGetAllProductByStateRequest extends IGetProductsRequest {
-    type: string;
+    type: number;
 }
 
 

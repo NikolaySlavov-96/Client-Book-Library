@@ -45,5 +45,5 @@ export interface IFetchSearchParams {
 }
 
 export interface IFetchQueryParams extends IFetchSearchParams {
-    type: string;
+    type: number;
 }
