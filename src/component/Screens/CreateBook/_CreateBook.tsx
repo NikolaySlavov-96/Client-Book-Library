@@ -1,13 +1,11 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 
 import { InputField, InputForm, SectionTitle } from '../../atoms';
 
 import { InformationToast } from '../../../Toasts';
 import { ESwalIcon } from '../../../Types/Swal';
 
-import { useBookContext } from '../../../contexts/BookContext';
-
-import { useForm } from '../../../hooks';
+import { useForm, useStoreZ } from '../../../hooks';
 
 import style from './_CreateBook.module.css';
 
@@ -17,9 +15,9 @@ const SUCCESS_MESSAGE = "Successfully added picture";
 
 const _CreateBook = () => {
 
-    const { onSubmitCreateProduct, onSendFile } = useBookContext();
+    const { addProductWithImage, isProductAdded, isLoadingProductAddition } = useStoreZ();
 
-    const [file, setFile] = useState();
+    const [file, setFile] = useState<File>();
     const [name, setName] = useState('');
 
 
@@ -32,35 +30,36 @@ const _CreateBook = () => {
         }
     };
 
-    const onCreateNewBook = useCallback(async (data: any) => {
+    const onCreateNewBook = useCallback((data: any) => {
         if (!file) { return }
 
-        try {
-            const resultFromCreate = await onSubmitCreateProduct(data);
-
-            const formData = new FormData();
-            formData.append('deliverFile', file);
-            formData.append('src', name);
-            formData.append('fileId', resultFromCreate.bookId);
-
-            await onSendFile(formData);
-        } catch (err: any) {
-            InformationToast({ title: err.message, typeIcon: ESwalIcon.ERROR });
-            return;
-        }
-        InformationToast({ title: SUCCESS_MESSAGE, typeIcon: ESwalIcon.SUCCESS });
-        // navigate(ROUT_NAMES.HOME);
-    }, [name, file, onSendFile, onSubmitCreateProduct]);
+        addProductWithImage(data, { file, name });
+    }, [name, file, addProductWithImage]);
 
     const { values, changeHandler, onSubmit, errors } = useForm({
         author: '',
-        bookTitle: '',
+        productTitle: '',
         genre: '',
     }, onCreateNewBook, {
         author: ['required', 5],
-        bookTitle: ['required', 5],
+        productTitle: ['required', 5],
         genre: ['required', 5],
     });
+
+
+    useEffect(() => {
+        if (!isLoadingProductAddition) {
+            if (!isProductAdded) {
+                InformationToast({ title: 'err.message', typeIcon: ESwalIcon.ERROR });
+                return;
+            }
+            InformationToast({ title: SUCCESS_MESSAGE, typeIcon: ESwalIcon.SUCCESS });
+        }
+    }, [isLoadingProductAddition, isProductAdded])
+
+    if(isLoadingProductAddition) {
+        // Added Loader screen
+    }
 
     return (
         <section className={`section ${style["create__section"]}`}>
@@ -83,13 +82,13 @@ const _CreateBook = () => {
                     />
 
                     <InputField
-                        error={errors.bookTitle}
+                        error={errors.productTitle}
                         label='Book title:'
-                        name='bookTitle'
+                        name='productTitle'
                         onBlur={changeHandler}
                         onChange={changeHandler}
                         placeholder='Book title'
-                        value={values.bookTitle}
+                        value={values.productTitle}
                     />
 
                     <InputField

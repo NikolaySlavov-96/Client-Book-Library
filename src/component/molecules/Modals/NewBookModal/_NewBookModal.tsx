@@ -34,7 +34,7 @@ const _NewBookModal = () => {
         >
             <h3>Lastly added books</h3>
             <div>
-                <h1>{currentBookData?.bookTitle}</h1>
+                <h1>{currentBookData?.productTitle}</h1>
             </div>
             <p>Added before 10 second</p>
         </Link>

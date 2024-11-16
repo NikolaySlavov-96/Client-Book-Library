@@ -6,7 +6,7 @@ import { SectionTitle } from "../../../atoms";
 import { Pagination } from "../../../molecules";
 import { QueryBar, ListRenderBook } from "../../../organisms";
 
-import { useBookContext } from "../../../../contexts/BookContext";
+import { useStoreZ } from "../../../../hooks";
 
 const SECTION_TITLE = 'Review user books - ??with email';
 
@@ -15,13 +15,15 @@ const _SearchByEmail = () => {
 
     const [page, setPage] = useState(1);
 
-    const { book, limit, loadingBookFromEmail } = useBookContext();
+    const { isLoadingProductByEmails, pageLimit, productByEmail, fetchProductsForEmail } = useStoreZ();
 
-    const count = Math.ceil(book.count / limit) || 0;
+    const count = Math.ceil(productByEmail.count / pageLimit) || 0;
 
     useEffect(() => {
-        loadingBookFromEmail({ content: param.email })
-    }, [loadingBookFromEmail, param.email])
+        if (param.email !== '') {
+            fetchProductsForEmail({ searchContent: param.email || '', limit: pageLimit, page, })
+        }
+    }, [fetchProductsForEmail, param.email, pageLimit, page])
 
     return (
         <section className={'content__page'}>
@@ -34,7 +36,7 @@ const _SearchByEmail = () => {
                 onPressSearch={(data) => console.log('SearchByEmail', data)}
             />
 
-            <ListRenderBook data={book?.rows || []} />
+            <ListRenderBook data={productByEmail?.rows || []} />
 
             <Pagination count={count} page={page} onSubmit={setPage} />
         </section >

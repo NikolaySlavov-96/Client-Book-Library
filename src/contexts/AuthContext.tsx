@@ -73,18 +73,18 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
         }
     }
 
-    const autoLogOut = () => {
-        if (userData.email) {
-            const currentTime = new Date().getTime();
-            const userDataDate = new Date(userData.currentDate).getTime();
+    // const autoLogOut = () => {
+    //     if (userData.email) {
+    //         const currentTime = new Date().getTime();
+    //         const userDataDate = new Date(userData.currentDate).getTime();
 
-            const differenceBetweenDate = currentTime - userDataDate;
-            if (currentTime > userDataDate && differenceBetweenDate - 1800000 > 0) {
-                onSubmitLogout()
-            }
-        }
-    };
-    autoLogOut()
+    //         const differenceBetweenDate = currentTime - userDataDate;
+    //         if (currentTime > userDataDate && differenceBetweenDate - 1800000 > 0) {
+    //             onSubmitLogout()
+    //         }
+    //     }
+    // };
+    // autoLogOut()
 
     const verifyAccountWithToken = async (token: string) => {
         try {

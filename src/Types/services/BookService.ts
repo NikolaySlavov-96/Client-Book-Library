@@ -1,18 +1,15 @@
 interface IBook {
-    bookId: number;
-    bookGenre: string;
-    bookIsVerify: boolean;
-    bookTitle: string;
+    productId: number;
+    productType: string;
+    productStatus: boolean;
+    productTitle: string;
     authorName: string;
     authorImage: string;
     authorGenre: string;
-    authorIsVerify: boolean
-}
-
-interface IBooks extends IBook {
-    imageUrl: string;
-    imageId: number;
-    bookSrc: string;
+    authorStatus: boolean
+    fileUrl: string;
+    fileId: number;
+    fileSrc: string;
 }
 
 export interface IGetStatesRequest { };
@@ -25,7 +22,7 @@ export interface IGetStatesResponse {
 
 export interface IGetProductRequest { }
 
-export interface IGetProductResponse extends IBooks { }
+export interface IGetProductResponse extends IBook { }
 
 export interface IGetProductsRequest {
     limit: number;
@@ -35,17 +32,17 @@ export interface IGetProductsRequest {
 
 export interface IGetProductsResponse {
     count: number;
-    rows: IBooks[];
+    rows: IBook[];
 }
 
 export interface ICreateProductRequest {
     author: string;
-    bookTitle: string;
+    productTitle: string;
     genre: string;
 }
 
 export interface ICreateProductResponse {
-    bookId: number;
+    productId: number;
 }
 
 export interface ISendFileRequest {
@@ -64,7 +61,7 @@ export interface IEditProductRequest { }
 export interface IEditProductResponse { }
 
 export interface ISearchProductByEmailRequest {
-    content: string;
+    searchContent: string;
     page: number;
     limit: number;
 }
@@ -73,7 +70,7 @@ interface IBookEmailType extends IBook {
     email: string;
     userId: number;
     userYear: number;
-    userIdVerify: boolean;
+    userStatus: boolean;
     bookImage: string;
     stateId: number;
 }
@@ -84,13 +81,13 @@ export interface ISearchProductByEmailResponse {
 }
 
 export interface IGetAllProductByStateRequest extends IGetProductsRequest {
-    type: string;
+    type: number;
 }
 
 
 interface IBookWithState extends IBook {
-    bookStateId: number;
-    bookStateIsDelete: boolean;
+    productStateId: number;
+    productStateStatus: boolean; // IsDelete
     bookImage: string;
     email: string;
     userId: number;
@@ -100,7 +97,9 @@ export interface IGetAllProductByStateResponse {
     rows: IBookWithState[];
 }
 
-export interface IGetBookStateResponse extends IGetStatesResponse { }
+export interface IGetBookStateResponse {
+    stateId: number;
+}
 
 export interface IAddingBookInLibraryRequest {
     state: string;

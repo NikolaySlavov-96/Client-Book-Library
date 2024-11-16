@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { useAuthContext } from '../contexts/AuthContext';
@@ -18,10 +19,18 @@ import {
 
 import { ROUT_NAMES } from '../Constants';
 
+import { useStoreZ } from '../hooks';
+
 import { SocketHelper } from '../Helpers';
 
 const _Navigator = () => {
+    const { fetchAllProductStates } = useStoreZ();
     const { userRole } = useAuthContext();
+
+    useEffect(() => {
+        fetchAllProductStates();
+    }, [fetchAllProductStates]);
+
     SocketHelper();
 
     return (
