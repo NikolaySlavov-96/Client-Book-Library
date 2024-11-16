@@ -55,7 +55,7 @@ const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
     return (
         <>
             <ChatHeader>
-                <p className={style['p-style']}>{!!roomName ? roomName : DEFAULT_TITLE}</p>
+                <p>{!!roomName ? roomName : DEFAULT_TITLE}</p>
                 <button onClick={onVerifyChoice}>{'X'}</button>
             </ChatHeader>
             <div className={style['chat__container']}>

@@ -2,5 +2,5 @@
   padding: 10px;
   display: flex;
   justify-content: space-between;
-  background-color: var(--fundColor);
+  background-color: var(--primary-accent);
 }

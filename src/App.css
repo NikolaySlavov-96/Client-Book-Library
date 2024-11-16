@@ -3,19 +3,23 @@
 }
 
 :root {
-  --fundColor: #ecbb00;
-  --btn__li: #ffefca;
-  --btn__li-hover: #b4aa99;
-  --btn__li-text: #4d4637;
-  /* --btn__li-active: rgb(0, 0, 0); */
-  --backward: #2f394b;
-  --design: rgb(93, 93, 103);
+  --primary-accent: #ecbb00;
+  --button-background: #ffefca;
+  --button-hover: #b4aa99;
+  --button-text: #4d4637;
+  /* --button-active: rgb(0, 0, 0); */
+  --header-background: #2f394b;
+  --secondary-text: rgb(93, 93, 103);
   --input-placeholder: rgba(114, 98, 98, 0.599);
-  --input-bg: rgba(155, 7, 7, 0.475);
+}
+
+p {
+  padding: 0;
+  margin: 0;
 }
 
 .global__bg-radius {
-  background-color: var(--fundColor);
+  background-color: var(--primary-accent);
   border-radius: 1rem;
 }
 
@@ -41,13 +45,8 @@ a,
 button,
 li {
   text-decoration: none;
-  color: var(--btn__li-text);
+  color: var(--button-text);
   border: none;
-}
-
-a,
-button,
-li {
   border-radius: 8px;
 }
 

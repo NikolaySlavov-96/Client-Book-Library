@@ -29,7 +29,7 @@ const _Support = () => {
         <section className={style.container}>
             <div className={`shadow__window ${style['chat__container']}`}>
                 <ChatHeader>
-                    <p className={style['p-style']}>{`${DEFAULT_TITLE}${email.split('@')[0]}`}</p>
+                    <p>{`${DEFAULT_TITLE}${email.split('@')[0]}`}</p>
                 </ChatHeader>
                 <div className={style['list-chat__container']}>
                     <>

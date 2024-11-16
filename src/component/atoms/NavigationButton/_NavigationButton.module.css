@@ -1,7 +1,7 @@
 .li {
   padding: 6px 0px;
   list-style: none;
-  background-color: var(--btn__li);
+  background-color: var(--button-background);
 }
 
 .li a {
@@ -9,7 +9,7 @@
 }
 
 .li:hover {
-  background-color: var(--btn__li-hover);
+  background-color: var(--button-hover);
 }
 
 /* .li a.active {
@@ -17,5 +17,5 @@
 } */
 
 .disabled {
-  background-color: var(--btn__li-hover);
+  background-color: var(--button-hover);
 }

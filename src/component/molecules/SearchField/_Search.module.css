@@ -11,5 +11,5 @@
 .form button {
     height: 26px;
     width: 80px;
-    background-color: var(--btn__li);
+    background-color: var(--button-background);
 }

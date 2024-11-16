@@ -44,7 +44,7 @@ const _InputField: FC<IInputFieldProps> = (props) => {
                 type={type}
                 value={value as string}
             />
-            {!!error ? (<p className='error'>{error}</p>) : ''}
+            {!!error ? (<p>{error}</p>) : ''}
         </div >
     );
 };
