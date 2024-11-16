@@ -11,7 +11,7 @@ const BookContext = createContext<IBookContext | undefined>(undefined);
 
 export const BookProvider = ({ children }: { children: ReactNode }) => {
     const onSubmitCreateProduct = useCallback(async (data: any) => {
-        try {
+        try {// extract in Product Slicer
             const result = await bookService.createProduct(data);
             // TODO Adding new added book
             return result;
