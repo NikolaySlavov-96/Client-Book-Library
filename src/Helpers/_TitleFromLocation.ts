@@ -5,7 +5,7 @@ interface ITitleFromLocation {
     pathname: string;
     search: string;
     hash: string;
-    state: null | { bookTitle: string };
+    state: null | { productTitle: string };
     key: string;
 }
 
@@ -17,8 +17,8 @@ const _TitleFromLocation = (location: ITitleFromLocation) => {
 
     let newTitle = 'book';
 
-    if (hasState && hasState.bookTitle) {
-        newTitle = hasState.bookTitle;
+    if (hasState && hasState.productTitle) {
+        newTitle = hasState.productTitle;
     }
     if (SECONDARY_PATHS.includes(splittedPatchName)) {
         newTitle = pathName.split('/')[2];

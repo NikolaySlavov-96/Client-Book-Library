@@ -87,23 +87,23 @@ const createProductSlicer: StateCreator<IProductSlicer> = (set, get) => ({
     },
 
     productById: {
-        bookId: 0,
-        bookGenre: '',
-        bookIsVerify: false,
-        bookTitle: '',
+        productId: 0,
+        productType: '',
+        productStatus: false,
+        productTitle: '',
         authorName: '',
         authorImage: '',
         authorGenre: '',
-        authorIsVerify: false,
-        imageUrl: '',
-        imageId: 0,
-        bookSrc: '',
+        authorStatus: false,
+        fileUrl: '',
+        fileId: 0,
+        fileSrc: '',
     },
     fetchProductById: async (id) => {
         set({ isLoadingProduct: true });
         try {
             const { products } = get();
-            const isProductExist = products.rows.filter(p => p.bookId === Number(id));
+            const isProductExist = products.rows.filter(p => p.productId === Number(id));
             if (isProductExist?.length) {
                 set({ productById: isProductExist[0] });
             }

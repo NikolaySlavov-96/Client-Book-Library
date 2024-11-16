@@ -13,8 +13,8 @@ const BUTTON_LABEL = 'View';
 
 const _BookCard: FC<TBookCard> = (props) => {
     const {
-        bookTitle,
-        bookId,
+        productTitle,
+        productId,
     } = props;
 
     return (
@@ -24,8 +24,8 @@ const _BookCard: FC<TBookCard> = (props) => {
 
             <div className={style['card__link']}>
                 <Link
-                    to={`${ROUT_NAMES.BOOK}/${bookId}`}
-                    state={{ bookTitle }}
+                    to={`${ROUT_NAMES.BOOK}/${productId}`}
+                    state={{ productTitle }}
                 >
                     {BUTTON_LABEL}
                 </Link>

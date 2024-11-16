@@ -22,7 +22,7 @@ const _ListRenderBook: FC<IListRenderBookProps> = (props) => {
 
         return (
             <>
-                {data?.map(e => <BookCard key={e.bookId} {...e} />)}
+                {data?.map(e => <BookCard key={e.productId} {...e} />)}
             </>
         )
     }, [data]);

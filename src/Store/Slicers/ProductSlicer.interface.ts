@@ -5,22 +5,22 @@ export interface IState {
 }
 
 export interface IProduct {
-    bookId: number;
-    bookGenre: string;
-    bookIsVerify: boolean;
-    bookTitle: string;
+    productId: number;
+    productType: string;
+    productStatus: boolean;
+    productTitle: string;
     authorName: string;
     authorImage: string;
     authorGenre: string;
-    authorIsVerify: boolean;
-    imageUrl: string;
-    imageId: number;
-    bookSrc: string;
+    authorStatus: boolean;
+    fileUrl: string;
+    fileId: number;
+    fileSrc: string;
 }
 
 export interface IProductWithState extends IProduct {
-    bookStateId: number;
-    bookStateIsDelete: boolean;
+    productStateId: number;
+    productStateStatus: boolean; // IsDelete
     email: string;
     userId: number;
 }
@@ -29,7 +29,7 @@ export interface IProductEmailType extends IProduct {
     email: string;
     userId: number;
     userYear: number;
-    userIdVerify: boolean;
+    userStatus: boolean;
     stateId: number;
 }
 

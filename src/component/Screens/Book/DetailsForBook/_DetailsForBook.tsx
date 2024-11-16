@@ -40,8 +40,9 @@ const _DetailsForBook = () => {
     const onPressBackButton = useCallback(() => {
         navigate(-1);
     }, [navigate]);
-    
+
     const selectedLabel = useMemo(() => (
+        // extract check in variables
         typeof productState.stateId === 'number' && productState.stateId !== 0 && !!mappedStates.length ? mappedStates[productState.stateId - 1].label : DEFAULT_MESSAGE
     ), [mappedStates, productState?.stateId]);
 
@@ -63,7 +64,7 @@ const _DetailsForBook = () => {
         }
     }, [id, fetchProductState, email])
 
-    const productId = productById?.bookId?.toString();
+    const productId = productById?.productId?.toString();
     if (!isLoadingProduct && productId === '0') {
         return null;
     }

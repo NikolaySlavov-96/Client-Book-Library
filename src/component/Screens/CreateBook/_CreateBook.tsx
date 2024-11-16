@@ -41,7 +41,7 @@ const _CreateBook = () => {
             const formData = new FormData();
             formData.append('deliverFile', file);
             formData.append('src', name);
-            formData.append('fileId', resultFromCreate.bookId);
+            formData.append('fileId', resultFromCreate.productId);
 
             await onSendFile(formData);
         } catch (err: any) {
@@ -54,11 +54,11 @@ const _CreateBook = () => {
 
     const { values, changeHandler, onSubmit, errors } = useForm({
         author: '',
-        bookTitle: '',
+        productTitle: '',
         genre: '',
     }, onCreateNewBook, {
         author: ['required', 5],
-        bookTitle: ['required', 5],
+        productTitle: ['required', 5],
         genre: ['required', 5],
     });
 
@@ -83,13 +83,13 @@ const _CreateBook = () => {
                     />
 
                     <InputField
-                        error={errors.bookTitle}
+                        error={errors.productTitle}
                         label='Book title:'
-                        name='bookTitle'
+                        name='productTitle'
                         onBlur={changeHandler}
                         onChange={changeHandler}
                         placeholder='Book title'
-                        value={values.bookTitle}
+                        value={values.productTitle}
                     />
 
                     <InputField
