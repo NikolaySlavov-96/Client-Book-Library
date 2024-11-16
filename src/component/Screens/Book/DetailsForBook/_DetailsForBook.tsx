@@ -41,10 +41,14 @@ const _DetailsForBook = () => {
         navigate(-1);
     }, [navigate]);
 
-    const selectedLabel = useMemo(() => (
-        // extract check in variables
-        typeof productState.stateId === 'number' && productState.stateId !== 0 && !!mappedStates.length ? mappedStates[productState.stateId - 1].label : DEFAULT_MESSAGE
-    ), [mappedStates, productState?.stateId]);
+    const selectedLabel = useMemo(() => {
+        const hasProductState = productState && typeof productState.stateId === 'number' && productState.stateId !== 0
+        const hasMappedStates = !!mappedStates.length
+        if (hasProductState && hasMappedStates) {
+            return mappedStates[productState.stateId - 1].label
+        }
+        return DEFAULT_MESSAGE
+    }, [mappedStates, productState]);
 
     const selectOptions = useMemo(() => (
         createBookOptions(productState?.stateId, mappedStates)
