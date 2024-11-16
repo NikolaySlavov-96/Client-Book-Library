@@ -12,6 +12,7 @@ export interface IProductSlicer {
     isLoadingProduct: boolean;
     isLoadingProductState: boolean;
     isLoadingProductCollection: boolean;
+    isLoadingProductAddition: boolean;
     isAddingProductState: boolean;
 
     pageLimit: number;
@@ -35,6 +36,9 @@ export interface IProductSlicer {
 
     productCollection: { count: number, rows: IProductWithState[] };
     fetchProductCollection: (data: IFetchQueryParams) => void;
+
+    isProductAdded: boolean;
+    addProductWithImage: (data: any, fileData: any) => void;
 };
 
 const createProductSlicer: StateCreator<IProductSlicer> = (set, get) => ({
@@ -43,6 +47,7 @@ const createProductSlicer: StateCreator<IProductSlicer> = (set, get) => ({
     isLoadingProduct: false,
     isLoadingProductState: false,
     isLoadingProductCollection: false,
+    isLoadingProductAddition: false,
     isAddingProductState: false,
 
     pageLimit: 12,
@@ -155,6 +160,53 @@ const createProductSlicer: StateCreator<IProductSlicer> = (set, get) => ({
             set({ isLoadingProductCollection: false });
         }
     },
+
+    isProductAdded: false,
+    addProductWithImage: async (data, fileData) => {
+        set({ isLoadingProductAddition: true });
+        try {
+            const result = await productService.createProduct(data);
+
+            const formData = new FormData();
+            formData.append('deliverFile', fileData.file);
+            formData.append('src', fileData.name);
+            formData.append('fileId', result?.productId.toString());
+
+            await productService.sendFile(formData as unknown as { deliverFile: File, src: string, fileId: number });
+
+            set({ isProductAdded: true });
+        } catch (err) {
+            console.log('addProductWithImage --->: ', err);
+            // set(erroMessage)
+        } finally {
+            set({ isLoadingProductAddition: false });
+        }
+    },
 });
 
 export default createProductSlicer;
+
+
+
+
+// const onSubmitEditProduct = useCallback(async (data: any) => {
+//     try {
+//         const prod = await bookService.editProduct(data._id, data);
+//         // setBook(p => p?.rows.map(x => x.id === data.id ? prod : x));
+
+//         // navigate(ROUT_NAMES.HOME);
+//     } catch (err) {
+//         console.log('onSubmitEditProduct --->: ', err);
+//     }
+// }, []);
+
+// const onSubmitDeleteProduct = useCallback(async (id: string) => {
+//     try {
+//         await bookService.deleteProduct(id);
+//         // setBook(p => p.filter(prod => prod._id !== id));
+
+//         // navigate(ROUT_NAMES.HOME);
+//     } catch (err) {
+//         console.log('onSubmitDeleteProduct --->: ', err);
+//     }
+// }, []);
