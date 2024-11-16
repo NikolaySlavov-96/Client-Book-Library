@@ -1,4 +1,4 @@
-import { HOST } from "../Constants/connectionData";
+import { HOST } from "../Constants";
 
 import { getDataFromStorage } from "./_Storage";
 
