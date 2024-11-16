@@ -8,3 +8,5 @@ export { default as ServerError } from './_serverError';
 
 export { _HEADER_BUTTON_TITLES as HEADER_BUTTON_TITLES } from './_routNames';
 export { STORAGE_KEYS } from './_storageVariables';
+
+export { HOST } from './_connectionData';
