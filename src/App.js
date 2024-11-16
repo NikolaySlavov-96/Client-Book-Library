@@ -1,7 +1,6 @@
 import './App.css';
 
 import { AuthProvide } from './contexts/AuthContext';
-import { BookProvider } from './contexts/BookContext';
 
 import { Footer, Header } from './component/molecules';
 import { Helmet } from './component/Screens';
@@ -15,9 +14,7 @@ const App = () => {
             <Helmet />
             <AuthProvide>
                 <Header />
-                <BookProvider>
-                    <Navigator />
-                </BookProvider>
+                <Navigator />
             </AuthProvide>
             <Footer />
         </>
