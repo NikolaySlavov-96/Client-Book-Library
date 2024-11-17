@@ -1,7 +1,9 @@
 import { FC, memo, useCallback, useEffect, useRef, useState } from "react";
 
+import { List } from "../../../component/atoms";
+import { TOptionType } from "../../../Types/Select";
+
 import style from './_Select.module.css';
-import { TOptionType } from "~/Types/Select";
 
 interface IIconPops {
     isOpen: boolean;
@@ -14,6 +16,8 @@ const Icon: FC<IIconPops> = memo(({ isOpen }) => {
         </svg>
     );
 });
+
+const keyExtractor = (item: TOptionType) => item.value;
 
 interface ISelectProps {
     onChange: (option: TOptionType) => void;
@@ -48,17 +52,28 @@ const _Select: FC<ISelectProps> = (props) => {
         return selectedValue.label;
     }, [selectedValue, placeHolder]);
 
-    const onItemClick = useCallback((option: TOptionType) => {
-        setSelectedValue(option);
-        onChange(option);
-    }, [setSelectedValue, onChange]);
+    const renderItem = useCallback(({ item }: { item: TOptionType }) => {
+        const onItemPress = () => {
+            setSelectedValue(item);
+            onChange(item);
+        };
 
-    const getOptions = useCallback(() => {
-        return options.filter(
-            (option) =>
-                option.label.toLowerCase()
-        );
-    }, [options]);
+        // TODO Create logic for chose between button and paragraph
+        if (true) {
+            return (
+                <p onClick={onItemPress} className={style[`dropdown__item`]}>
+                    {item.label}
+                </p>
+            )
+        }
+
+        return (
+            <button onClick={onItemPress}>
+                {item.label}
+                {/* <p className={style[`dropdown__item`]}> {item.label}</p> */}
+            </button>
+        )
+    }, [setSelectedValue, onChange]);
 
     useEffect(() => {
         window.addEventListener("click", handler);
@@ -80,17 +95,14 @@ const _Select: FC<ISelectProps> = (props) => {
             </div>
 
             {
-                showMenu && (
-                    <div className={`${size && style['custom__size_' + size]} ${style[`dropdown__menu`]} ${style[`alignment__${align || 'auto'}`]}`}>
-                        {
-                            getOptions().map((option) => (
-                                <div onClick={() => onItemClick(option)} key={option.value} className={style[`dropdown__item`]} >
-                                    {option.label}
-                                </div>
-                            ))
-                        }
-                    </div>
-                )
+                showMenu ? (
+                    <List
+                        data={options}
+                        keyExtractor={keyExtractor}
+                        renderItem={renderItem}
+                        style={`${size && style['custom__size_' + size]} ${style[`dropdown__menu`]} ${style[`alignment__${align || 'auto'}`]}`}
+                    />
+                ) : null
             }
         </div>
     );

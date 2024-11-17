@@ -9,7 +9,7 @@
   width: 40%;
   max-width: 400px;
   margin-right: 20px;
-  background-color: var(--design);
+  background-color: var(--secondary-text);
   overflow: hidden;
   border-radius: 10px;
 }
@@ -18,19 +18,13 @@
   height: 400px;
 }
 
-/* User List */
-.p-style {
-  padding: 0;
-  margin: 0;
-}
-
 /* Room Line (Header) */
 .room__container {
   width: 52%;
 }
 
 .room__header {
-  background-color: var(--fundColor);
+  background-color: var(--primary-accent);
   height: 40px;
   align-content: center;
   margin-bottom: 20px;

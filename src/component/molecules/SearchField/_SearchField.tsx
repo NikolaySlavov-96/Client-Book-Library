@@ -1,14 +1,19 @@
 import { FC, memo } from 'react';
 
-import style from './_Search.module.css';
 import { InputForm } from '../../atoms';
+
+import { IQueryBar } from '../../../Types/QueryBar';
+
+import style from './_Search.module.css';
 
 const BUTTON_LABEL = 'Search';
 
 interface ISearchFieldProps {
+    // TODO replace any
     onSubmit: (e: any) => void;
+    // TODO replace any
     changeHandler: (e: any) => void;
-    values: { search: string };
+    values: IQueryBar;
 }
 
 const _SearchField: FC<ISearchFieldProps> = (props) => {

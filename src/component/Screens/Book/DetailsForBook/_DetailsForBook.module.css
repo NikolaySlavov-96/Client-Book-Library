@@ -1,5 +1,5 @@
 .detail__card {
-  background-color: var(--fundColor);
+  background-color: var(--primary-accent);
   border-radius: 2rem;
   margin: 2rem auto;
   padding: 2rem 2rem 2rem 2rem;
@@ -20,11 +20,11 @@
   margin: 1rem;
   width: 180px;
   padding: 10px 6px;
-  background-color: var(--btn__li);
+  background-color: var(--button-background);
   border: none;
 }
 
 .functionality button:hover {
   cursor: pointer;
-  background-color: var(--btn__li-hover);
+  background-color: var(--button-hover);
 }

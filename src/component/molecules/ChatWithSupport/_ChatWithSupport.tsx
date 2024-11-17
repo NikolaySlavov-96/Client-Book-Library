@@ -1,6 +1,6 @@
 import { Dispatch, FC, memo, SetStateAction, useCallback } from "react";
 
-import { ChatHeader, InputForm } from "../../../component/atoms";
+import { ChatHeader, InputForm, List } from "../../../component/atoms";
 
 import { ToastWithButton } from "../../../Toasts";
 
@@ -11,10 +11,18 @@ import { SUPPORT_TOAST } from "../../../Configuration";
 
 import { useForm, useStoreZ } from "../../../hooks";
 
+import { IMessage } from "../../../Store/Slicers/SupportSlicer";
+
 import style from './_ChatWithSupport.module.css';
 
 const DEFAULT_TITLE = 'Support Chat';
 const BUTTON_LABEL = 'Send';
+
+const renderItem = ({ item }: { item: IMessage }) => {
+    return (<p>{item?.message}</p>)
+}
+
+const keyExtractor = (item: IMessage, index: number) => index.toString();
 
 interface IChatWihSupportProps {
     onPress: Dispatch<SetStateAction<boolean>>
@@ -37,7 +45,7 @@ const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
         if (result?.isConfirmed) {
             onClose()
         }
-    }, [ToastWithButton, onClose]);
+    }, [onClose]);
 
     const sendMessage = useCallback((data: { message: string }) => {
         SocketService.sendData(ESendEvents.SUPPORT_MESSAGE, {
@@ -55,14 +63,16 @@ const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
     return (
         <>
             <ChatHeader>
-                <p className={style['p-style']}>{!!roomName ? roomName : DEFAULT_TITLE}</p>
+                <p>{!!roomName ? roomName : DEFAULT_TITLE}</p>
                 <button onClick={onVerifyChoice}>{'X'}</button>
             </ChatHeader>
             <div className={style['chat__container']}>
                 {welcomeMessage}
-                <>
-                    {roomMessages.map(m => <p>{m.message}</p>)}
-                </>
+                <List
+                    data={roomMessages}
+                    renderItem={renderItem}
+                    keyExtractor={keyExtractor}
+                />
             </div>
             {!!roomName ? <InputForm
                 buttonLabel={BUTTON_LABEL}

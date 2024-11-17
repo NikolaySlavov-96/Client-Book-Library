@@ -7,7 +7,8 @@ import { SEARCH_NAME } from "../../../Constants";
 
 import { useForm, useStoreZ } from "../../../hooks";
 
-import { TOptionType } from "~/Types/Select";
+import { TOptionType } from "../../../Types/Select";
+import { IQueryBar } from "../../../Types/QueryBar";
 
 import style from './_QueryBar.module.css';
 
@@ -33,7 +34,7 @@ const pageSizeOptions = [
 
 interface IQueryBarProps {
     hasLeftSelector: boolean;
-    onPressSearch: (e: any) => void;
+    onPressSearch: ({ search }: IQueryBar) => void;
     leftSelectData?: number;
     leftSelectorData?: TOptionType[];
     onPressLeftSelector?: Dispatch<SetStateAction<number>>,
@@ -81,7 +82,7 @@ const _QueryBar: FC<IQueryBarProps> = (props) => {
             /> : <div></div>}
 
             <SearchField
-                values={values as { search: string }}
+                values={values as unknown as IQueryBar}
                 changeHandler={changeHandler}
                 onSubmit={onSubmit}
             />

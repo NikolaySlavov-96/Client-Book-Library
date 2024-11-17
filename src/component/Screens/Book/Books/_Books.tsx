@@ -9,6 +9,8 @@ import { QueryBar, ListRenderBook } from "../../../organisms";
 
 import { ListRenderBookSkeletons } from "../../../../Skeleton/organisms";
 
+import { IQueryBar } from "../../../../Types/QueryBar";
+
 import { QUERY_LIMIT, SEARCH_NAME } from "../../../../Constants";
 
 const _Books = () => {
@@ -21,7 +23,7 @@ const _Books = () => {
 
     const count = Math.ceil(products.count / pageLimit) || 0;
 
-    const onSearchFunction = useCallback((data: any) => {
+    const onSearchFunction = useCallback((data: IQueryBar) => {
         // Always set on initial search
         setPage(1);
         setSearchContent(data.search)
@@ -69,7 +71,7 @@ const _Books = () => {
                 onPressSearch={onSearchFunction}
             />
 
-            {isLoadingProducts ? <ListRenderBookSkeletons limit={pageLimit} /> : <ListRenderBook data={products?.rows || {}} />}
+            {isLoadingProducts ? <ListRenderBookSkeletons limit={pageLimit} /> : <ListRenderBook data={products?.rows || []} />}
 
             <Pagination count={count} page={page} onSubmit={setPage} />
         </section >

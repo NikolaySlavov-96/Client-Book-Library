@@ -11,7 +11,6 @@
 
 .current__page {
   display: inline-block;
-  background-color: var(--fundColor);
-  margin: 0;
+  background-color: var(--primary-accent);
   padding: 8px 14px;
 }

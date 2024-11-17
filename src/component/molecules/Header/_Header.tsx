@@ -18,7 +18,7 @@ const _Header = () => {
     const onPressLogout = useCallback(() => onSubmitLogout({ token: '1' }), [onSubmitLogout]);
 
     return (
-        <header className={`global__bg-radius ${style['navigation__container']}`}>
+        <header className={`global__bg-radius`}>
             <nav className={style['navigation__nav']}>
                 <h1>Hello {name ? name : FIRST_NAME}</h1>
 

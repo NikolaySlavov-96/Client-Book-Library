@@ -1,10 +1,18 @@
-import { FC, memo, useCallback } from "react";
+import { FC, memo } from "react";
 
+import { List } from "../../atoms";
 import { BookCard } from "../../organisms";
 
 import { TBookCard } from "../../../Types/Book";
 
 import styles from './_ListRenderBook.module.css';
+
+
+const emptyComponent = () => (< h2 > There are no items added yet.</h2>);
+const keyExtractor = (item: TBookCard) => item?.productId.toString();
+const renderItem = ({ item }: { item: TBookCard }) => {
+    return (<BookCard {...item} />)
+};
 
 interface IListRenderBookProps {
     data: TBookCard[];
@@ -13,24 +21,14 @@ interface IListRenderBookProps {
 const _ListRenderBook: FC<IListRenderBookProps> = (props) => {
     const { data } = props;
 
-    const RenderComponent = useCallback(() => {
-        if (!data.length) {
-            return (
-                <h2>There are no items added yet.</h2>
-            );
-        }
-
-        return (
-            <>
-                {data?.map(e => <BookCard key={e.productId} {...e} />)}
-            </>
-        )
-    }, [data]);
-
     return (
-        <div className={styles["list__item"]}>
-            <RenderComponent />
-        </div>
+        <List
+            data={data}
+            EmptyComponent={emptyComponent}
+            renderItem={renderItem}
+            keyExtractor={keyExtractor}
+            style={styles["list__item"]}
+        />
     );
 };
 

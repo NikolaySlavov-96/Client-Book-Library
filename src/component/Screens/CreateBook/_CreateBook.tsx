@@ -7,6 +7,8 @@ import { ESwalIcon } from '../../../Types/Swal';
 
 import { useForm, useStoreZ } from '../../../hooks';
 
+import { IAddProductWithImage } from '../../../Store/Slicers/ProductSlicer.interface';
+
 import style from './_CreateBook.module.css';
 
 const SECTION_TITLE = 'Added new book';
@@ -30,7 +32,7 @@ const _CreateBook = () => {
         }
     };
 
-    const onCreateNewBook = useCallback((data: any) => {
+    const onCreateNewBook = useCallback((data: IAddProductWithImage['data']) => {
         if (!file) { return }
 
         addProductWithImage(data, { file, name });

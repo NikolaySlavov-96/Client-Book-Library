@@ -3,7 +3,7 @@
   height: 300px;
   width: 300px;
   margin: 0 2rem 2rem 0;
-  background-color: var(--fundColor);
+  background-color: var(--primary-accent);
   border-radius: 20px;
   overflow: hidden;
 }
