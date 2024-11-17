@@ -2,7 +2,15 @@ import { StateCreator } from "zustand";
 
 import { BookService as productService } from "../../services";
 
-import { IProductEmailType, IProduct, IProductWithState, IFetchQueryParams, IFetchSearchParams, IState } from "./ProductSlicer.interface";
+import {
+    IProductEmailType,
+    IProduct,
+    IProductWithState,
+    IFetchQueryParams,
+    IFetchSearchParams,
+    IState,
+    IAddProductWithImage
+} from "./ProductSlicer.interface";
 
 
 export interface IProductSlicer {
@@ -38,7 +46,7 @@ export interface IProductSlicer {
     fetchProductCollection: (data: IFetchQueryParams) => void;
 
     isProductAdded: boolean;
-    addProductWithImage: (data: any, fileData: any) => void;
+    addProductWithImage: (data: IAddProductWithImage['data'], fileData: IAddProductWithImage['fileDate']) => void;
 };
 
 const createProductSlicer: StateCreator<IProductSlicer> = (set, get) => ({

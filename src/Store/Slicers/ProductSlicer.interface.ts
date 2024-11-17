@@ -42,3 +42,15 @@ export interface IFetchSearchParams {
 export interface IFetchQueryParams extends IFetchSearchParams {
     type: number;
 }
+
+export interface IAddProductWithImage {
+    data: {
+        author: string;
+        productTitle: string;
+        genre: string;
+    };
+    fileDate: {
+        file: File;
+        name: string;
+    };
+}
