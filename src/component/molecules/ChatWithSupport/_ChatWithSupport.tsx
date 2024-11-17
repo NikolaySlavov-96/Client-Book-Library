@@ -43,7 +43,7 @@ const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
         if (result?.isConfirmed) {
             onClose()
         }
-    }, [ToastWithButton, onClose]);
+    }, [onClose]);
 
     const sendMessage = useCallback((data: { message: string }) => {
         SocketService.sendData(ESendEvents.SUPPORT_MESSAGE, {
