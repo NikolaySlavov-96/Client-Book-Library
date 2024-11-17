@@ -3,7 +3,7 @@ import { Fragment, memo, useCallback } from "react";
 import { IListProps } from '../../../Types/Components';
 
 const _List = <ItemT,>(props: IListProps<ItemT>) => {
-    const { data, renderItem, keyExtractor, EmptyComponent, ...rest } = props;
+    const { data, renderItem, keyExtractor, EmptyComponent, style, ...rest } = props;
 
     const _renderItem = useCallback((item: any, index: number) => (
         <Fragment key={keyExtractor(item, index)}>
@@ -14,7 +14,7 @@ const _List = <ItemT,>(props: IListProps<ItemT>) => {
     ), [keyExtractor, renderItem]);
 
     return (
-        <div {...rest}>
+        <div className={style} {...rest}>
             {data.length === 0 ? EmptyComponent && <EmptyComponent /> : data.map(_renderItem)}
         </div>
     )
