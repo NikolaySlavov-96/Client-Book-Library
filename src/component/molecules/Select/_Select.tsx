@@ -17,7 +17,7 @@ const Icon: FC<IIconPops> = memo(({ isOpen }) => {
     );
 });
 
-const keyExtractor = (item: any) => item.value;
+const keyExtractor = (item: TOptionType) => item.value;
 
 interface ISelectProps {
     onChange: (option: TOptionType) => void;
@@ -52,7 +52,7 @@ const _Select: FC<ISelectProps> = (props) => {
         return selectedValue.label;
     }, [selectedValue, placeHolder]);
 
-    const renderItem = useCallback(({ item }: { item: any }) => {
+    const renderItem = useCallback(({ item }: { item: TOptionType }) => {
         const onItemPress = () => {
             setSelectedValue(item);
             onChange(item);

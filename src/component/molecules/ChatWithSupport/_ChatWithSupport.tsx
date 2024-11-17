@@ -11,16 +11,18 @@ import { SUPPORT_TOAST } from "../../../Configuration";
 
 import { useForm, useStoreZ } from "../../../hooks";
 
+import { IMessage } from "../../../Store/Slicers/SupportSlicer";
+
 import style from './_ChatWithSupport.module.css';
 
 const DEFAULT_TITLE = 'Support Chat';
 const BUTTON_LABEL = 'Send';
 
-const renderItem = ({ item }: { item: any }) => {
+const renderItem = ({ item }: { item: IMessage }) => {
     return (<p>{item?.message}</p>)
 }
 
-const keyExtractor = (item: any, index: number) => index.toString();
+const keyExtractor = (item: IMessage, index: number) => index.toString();
 
 interface IChatWihSupportProps {
     onPress: Dispatch<SetStateAction<boolean>>

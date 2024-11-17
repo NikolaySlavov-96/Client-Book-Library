@@ -9,8 +9,8 @@ import styles from './_ListRenderBook.module.css';
 
 
 const emptyComponent = () => (< h2 > There are no items added yet.</h2>);
-const keyExtractor = (item: any) => item?.productId.toString();
-const renderItem = ({ item }: { item: any }) => {
+const keyExtractor = (item: TBookCard) => item?.productId.toString();
+const renderItem = ({ item }: { item: TBookCard }) => {
     return (<BookCard {...item} />)
 };
 

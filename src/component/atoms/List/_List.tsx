@@ -1,4 +1,4 @@
-import { Fragment, memo, useCallback } from "react";
+import { Fragment, useCallback } from "react";
 
 import { IListProps } from '../../../Types/Components';
 
@@ -20,4 +20,5 @@ const _List = <ItemT,>(props: IListProps<ItemT>) => {
     )
 };
 
-export default memo(_List);
+// With "memo" i have the problem at use on component
+export default _List;

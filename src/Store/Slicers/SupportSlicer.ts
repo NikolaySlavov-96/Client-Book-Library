@@ -1,6 +1,6 @@
 import { StateCreator } from "zustand";
 
-interface IUserQueue {
+export interface IUserQueue {
     connectId: string;
 
     name: string;
@@ -11,13 +11,13 @@ interface INotifyAdminOfNewUser {
     userQueue: IUserQueue[];
 }
 
-interface IMessage {
+export interface IMessage {
     roomName: string;
     from?: string;
     message: string;
 }
 
-interface IMessages {
+export interface IMessages {
     [key: string]: IMessage[];
 }
 

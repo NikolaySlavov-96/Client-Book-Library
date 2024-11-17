@@ -5,9 +5,11 @@ import { BookCardSkeleton } from "../../molecules";
 
 import styles from './_ListRenderBookSkeleton.module.css';
 
-const keyExtractor = (item: any, index: number) => index.toString();
-const renderItem = ({ item }: { item: any }) => {
-    return (<BookCardSkeleton {...item} />)
+type IType = { [key: number]: string };
+
+const keyExtractor = (item: IType) => item.toString();
+const renderItem = ({ item }: { item: { [key: number]: string } }) => {
+    return (<BookCardSkeleton />)
 };
 
 interface IListRenderBookSkeletonProps {
@@ -20,7 +22,7 @@ const _ListRenderBookSkeleton: FC<IListRenderBookSkeletonProps> = (props) => {
     const renderedElements = useMemo(() => (
         Array.from({ length: limit }, (_, index) => index.toString())
     ), [limit]);
-    
+
     return (
         <List
             data={renderedElements}

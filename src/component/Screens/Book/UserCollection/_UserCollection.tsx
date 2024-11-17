@@ -11,6 +11,8 @@ import { ListRenderBookSkeletons } from "../../../../Skeleton/organisms";
 
 import { QUERY_LIMIT, SEARCH_NAME } from "../../../../Constants";
 
+import { IQueryBar } from "../../../../Types/QueryBar";
+
 import { FormatSelectOptions } from "../../../../Helpers";
 
 const DEFAULT_LOADED_COLLECTION = 1;
@@ -32,7 +34,7 @@ const _UserCollection = () => {
 
     const count = Math.ceil(productCollection.count / pageLimit) || 0;
 
-    const onSearchFunction = useCallback((data: any) => {
+    const onSearchFunction = useCallback((data: IQueryBar) => {
         // Always set on initial search
         setPage(1);
         setSearchContent(data.search)

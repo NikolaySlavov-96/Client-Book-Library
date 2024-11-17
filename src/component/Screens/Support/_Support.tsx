@@ -7,15 +7,17 @@ import { useStoreZ } from '../../../hooks';
 import { ESendEvents } from '../../../Constants';
 import { useAuthContext } from '../../../contexts/AuthContext';
 
+import { IMessage, IRoom, IUserQueue } from '../../../Store/Slicers/SupportSlicer';
+
 import { SocketService } from '../../../services';
 
 import style from './_Support.module.css';
 
 const DEFAULT_TITLE = 'Support Chat - ';
 
-const keyExtractorUser = (item: any) => item.connectId.toString();
-const keyExtractorRoom = (item: any) => item.roomName.toString();
-const keyExtractorMessage = (item: any) => item.roomName.toString();
+const keyExtractorUser = (item: IUserQueue) => item.connectId.toString();
+const keyExtractorRoom = (item: IRoom) => item.roomName.toString();
+const keyExtractorMessage = (item: IMessage) => item.roomName.toString();
 
 
 const _Support = () => {
@@ -24,7 +26,7 @@ const _Support = () => {
 
     const currentRoomMessages = messages[selectedRoom] || [];
 
-    const renderItemUser = useCallback(({ item, }: { item: any }) => {
+    const renderItemUser = useCallback(({ item, }: { item: IUserQueue }) => {
         const onClick = () => {
             SocketService.sendData(ESendEvents.SUPPORT_ACCEPT_USER, { supportId: connectId, acceptUserId: item.connectId });
         };
@@ -37,7 +39,7 @@ const _Support = () => {
         )
     }, [connectId]);
 
-    const renderItemRoom = useCallback(({ item, }: { item: any }) => {
+    const renderItemRoom = useCallback(({ item, }: { item: IRoom }) => {
         const onClick = () => {
             setSelectedRoom(item.roomName)
         };
@@ -51,7 +53,7 @@ const _Support = () => {
         )
     }, [setSelectedRoom]);
 
-    const renderItemMessage = useCallback(({ item, }: { item: any }) => {
+    const renderItemMessage = useCallback(({ item, }: { item: IMessage }) => {
         const onClick = () => {
             setSelectedRoom(item.roomName)
         };
