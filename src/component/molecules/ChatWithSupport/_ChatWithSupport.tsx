@@ -1,6 +1,6 @@
 import { Dispatch, FC, memo, SetStateAction, useCallback } from "react";
 
-import { ChatHeader, InputForm } from "../../../component/atoms";
+import { ChatHeader, InputForm, List } from "../../../component/atoms";
 
 import { ToastWithButton } from "../../../Toasts";
 
@@ -15,6 +15,12 @@ import style from './_ChatWithSupport.module.css';
 
 const DEFAULT_TITLE = 'Support Chat';
 const BUTTON_LABEL = 'Send';
+
+const renderItem = ({ item }: { item: any }) => {
+    return (<p>{item?.message}</p>)
+}
+
+const keyExtractor = (item: any, index: number) => index.toString();
 
 interface IChatWihSupportProps {
     onPress: Dispatch<SetStateAction<boolean>>
@@ -60,9 +66,11 @@ const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
             </ChatHeader>
             <div className={style['chat__container']}>
                 {welcomeMessage}
-                <>
-                    {roomMessages.map(m => <p>{m.message}</p>)}
-                </>
+                <List
+                    data={roomMessages}
+                    renderItem={renderItem}
+                    keyExtractor={keyExtractor}
+                />
             </div>
             {!!roomName ? <InputForm
                 buttonLabel={BUTTON_LABEL}

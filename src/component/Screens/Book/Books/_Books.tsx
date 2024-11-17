@@ -69,7 +69,7 @@ const _Books = () => {
                 onPressSearch={onSearchFunction}
             />
 
-            {isLoadingProducts ? <ListRenderBookSkeletons limit={pageLimit} /> : <ListRenderBook data={products?.rows || {}} />}
+            {isLoadingProducts ? <ListRenderBookSkeletons limit={pageLimit} /> : <ListRenderBook data={products?.rows || []} />}
 
             <Pagination count={count} page={page} onSubmit={setPage} />
         </section >

@@ -1,8 +1,14 @@
-import { FC, memo, useCallback, useMemo } from "react";
+import { FC, memo, useMemo } from "react";
 
+import { List } from "../../../component/atoms";
 import { BookCardSkeleton } from "../../molecules";
 
 import styles from './_ListRenderBookSkeleton.module.css';
+
+const keyExtractor = (item: any, index: number) => index.toString();
+const renderItem = ({ item }: { item: any }) => {
+    return (<BookCardSkeleton {...item} />)
+};
 
 interface IListRenderBookSkeletonProps {
     limit: number;
@@ -14,19 +20,14 @@ const _ListRenderBookSkeleton: FC<IListRenderBookSkeletonProps> = (props) => {
     const renderedElements = useMemo(() => (
         Array.from({ length: limit }, (_, index) => index.toString())
     ), [limit]);
-
-    const RenderComponent = useCallback(() => {
-        return (
-            <>
-                {renderedElements?.map(e => <BookCardSkeleton key={e} />)}
-            </>
-        )
-    }, [renderedElements]);
-
+    
     return (
-        <div className={styles["list__item"]}>
-            <RenderComponent />
-        </div>
+        <List
+            data={renderedElements}
+            renderItem={renderItem}
+            keyExtractor={keyExtractor}
+            style={styles["list__item"]}
+        />
     );
 };
 
