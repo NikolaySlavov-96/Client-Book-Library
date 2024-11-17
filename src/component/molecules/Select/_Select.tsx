@@ -104,7 +104,7 @@ const _Select: FC<ISelectProps> = (props) => {
                     />
                 ) : null
             }
-        </div >
+        </div>
     );
 }
 
