@@ -23,9 +23,6 @@ export interface IProductSlicer {
     isLoadingProductAddition: boolean;
     isAddingProductState: boolean;
 
-    pageLimit: number;
-    setPageLimit: (limit: number) => void;
-
     productStates: IState[];
     fetchAllProductStates: () => void;
 
@@ -57,9 +54,6 @@ const createProductSlicer: StateCreator<IProductSlicer> = (set, get) => ({
     isLoadingProductCollection: false,
     isLoadingProductAddition: false,
     isAddingProductState: false,
-
-    pageLimit: 12,
-    setPageLimit: (limit) => set({ pageLimit: limit }),
 
     productStates: [],
     fetchAllProductStates: async () => {
