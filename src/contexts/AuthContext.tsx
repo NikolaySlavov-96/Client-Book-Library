@@ -7,7 +7,7 @@ import { AuthService, SocketService } from "../services";
 import { ServerError, STORAGE_KEYS } from '../Constants';
 
 interface IAuthContext {
-    onSubmitLogin: (data: any) => any;
+    onSubmitLogin: (data: { email: string, password: string }) => any;
     onSubmitLogout: (data: any) => void;
     onSubmitRegister: (data: any) => any;
     verifyAccountWithToken: (data: any) => void;
@@ -39,14 +39,14 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
         }
     }
 
-    const onSubmitLogin = async (value: any) => {
+    const onSubmitLogin = async (value: { email: string, password: string }) => {
         try {
             const newValue = { ...value, connectId };
             const data = await authService.login(newValue);
 
             if (data.messageCode === ServerError.SUCCESSFULLY_LOGIN.messageCode) {
-                const newValue = value;
-                newValue.currentDate = new Date();
+                // const newValue2 = value;
+                // newValue2.currentDate = new Date();
                 setUserData(newValue);
                 setTokenData(data.userInfo);
             }
