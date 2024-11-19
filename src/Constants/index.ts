@@ -10,3 +10,5 @@ export { _HEADER_BUTTON_TITLES as HEADER_BUTTON_TITLES } from './_routNames';
 export { STORAGE_KEYS } from './_storageVariables';
 
 export { HOST } from './_connectionData';
+
+export { E_FORM_NAMES, E_FORM_FIELDS } from './_form';
