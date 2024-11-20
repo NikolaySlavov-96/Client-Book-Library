@@ -5,9 +5,9 @@ import { InputField, InputForm, SectionTitle } from '../../atoms';
 import { InformationToast } from '../../../Toasts';
 import { ESwalIcon } from '../../../Types/Swal';
 
-import { useForm, useStoreZ } from '../../../hooks';
+import { useStoreZ } from '../../../hooks';
 
-import { IAddProductWithImage } from '../../../Store/Slicers/ProductSlicer.interface';
+import { E_FORM_FIELDS, E_FORM_NAMES } from '../../../Constants';
 
 import style from './_CreateBook.module.css';
 
@@ -16,12 +16,10 @@ const BUTTON_LABEL = 'Create new Book';
 const SUCCESS_MESSAGE = "Successfully added picture";
 
 const _CreateBook = () => {
-
-    const { addProductWithImage, isProductAdded, isLoadingProductAddition } = useStoreZ();
+    const { addProductWithImage, isProductAdded, isLoadingProductAddition, search } = useStoreZ();
 
     const [file, setFile] = useState<File>();
     const [name, setName] = useState('');
-
 
     const changeHandlerImage = (e: any) => {
         const target = e.target;
@@ -32,22 +30,17 @@ const _CreateBook = () => {
         }
     };
 
-    const onCreateNewBook = useCallback((data: IAddProductWithImage['data']) => {
+    const onCreateNewBook = useCallback(() => {
         if (!file) { return }
 
-        addProductWithImage(data, { file, name });
-    }, [name, file, addProductWithImage]);
+        const getValue = search?.get(E_FORM_NAMES.CREATE_BOOK || '')?.fields;
 
-    const { values, changeHandler, onSubmit, errors } = useForm({
-        author: '',
-        productTitle: '',
-        genre: '',
-    }, onCreateNewBook, {
-        author: ['required', 5],
-        productTitle: ['required', 5],
-        genre: ['required', 5],
-    });
+        const author = getValue?.get(E_FORM_FIELDS.AUTHOR) || '';
+        const productTitle = getValue?.get(E_FORM_FIELDS.PRODUCT_TITLE) || '';
+        const genre = getValue?.get(E_FORM_FIELDS.GENRE) || '';
 
+        addProductWithImage({ author, productTitle, genre }, { file, name });
+    }, [name, file, addProductWithImage, search]);
 
     useEffect(() => {
         if (!isLoadingProductAddition) {
@@ -59,7 +52,7 @@ const _CreateBook = () => {
         }
     }, [isLoadingProductAddition, isProductAdded])
 
-    if(isLoadingProductAddition) {
+    if (isLoadingProductAddition) {
         // Added Loader screen
     }
 
@@ -70,37 +63,28 @@ const _CreateBook = () => {
 
             <div className={`form__container global__bg-radius`}>
                 <InputForm
-                    onSubmit={onSubmit}
+                    onSubmit={onCreateNewBook}
                     buttonLabel={BUTTON_LABEL}
                 >
                     <InputField
-                        error={errors.author}
                         label='Author Name:'
                         name='author'
-                        onBlur={changeHandler}
-                        onChange={changeHandler}
+                        formName={E_FORM_NAMES.CREATE_BOOK}
                         placeholder='Author Name'
-                        value={values.author}
                     />
 
                     <InputField
-                        error={errors.productTitle}
                         label='Book title:'
                         name='productTitle'
-                        onBlur={changeHandler}
-                        onChange={changeHandler}
+                        formName={E_FORM_NAMES.CREATE_BOOK}
                         placeholder='Book title'
-                        value={values.productTitle}
                     />
 
                     <InputField
-                        error={errors.genre}
                         label='Book genre:'
                         name='genre'
-                        onBlur={changeHandler}
-                        onChange={changeHandler}
+                        formName={E_FORM_NAMES.CREATE_BOOK}
                         placeholder='Book genre'
-                        value={values.genre}
                     />
 
                     <InputField

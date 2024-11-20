@@ -52,7 +52,7 @@ const _InputField: FC<IInputFieldProps> = (props) => {
         if (errorTarget[e.target.name] && errorTarget[e.target.name][0] === 'required') {
             if (fieldValue.length <= 1) {
                 setError(state => ({ ...state, [e.target.name]: `${e.target.name} is required` }))
-                // } else if (errorTarget[e.target.name]?.[1]! > Number(fieldValue?.length)) {
+                // } else if (errorTarget[e.target.name]?.[1] > fieldValue?.length) {
                 // setError(state => ({ ...state, [e.target.name]: `Minimal length is ${errorTarget[e.target.name][1]}` }))
             } else {
                 setError(state => ({ ...state, [e.target.name]: '' }))
