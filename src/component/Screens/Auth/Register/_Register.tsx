@@ -9,9 +9,9 @@ import { ESwalIcon } from '../../../../Types/Swal';
 
 import { useAuthContext } from '../../../../contexts/AuthContext';
 
-import { ROUT_NAMES, ServerError } from '../../../../Constants';
+import { E_FORM_FIELDS, E_FORM_NAMES, ROUT_NAMES, ServerError } from '../../../../Constants';
 
-import { useForm } from '../../../../hooks';
+import { useStoreZ } from '../../../../hooks';
 
 const BUTTON_LABEL = 'Register';
 
@@ -19,39 +19,42 @@ const _Register = () => {
     const navigate = useNavigate();
 
     const { onSubmitRegister } = useAuthContext();
+    const { search } = useStoreZ();
 
-    const onSubmitFunction = useCallback(async (data: { email: string; password: string; year: string }) => {
-        const result = await onSubmitRegister(data);
+    const onSubmitFunction = useCallback(async () => {
+        const getValue = search?.get(E_FORM_NAMES.REGISTER || '')?.fields;
+
+        const email = getValue?.get(E_FORM_FIELDS.EMAIL) || '';
+        const password = getValue?.get(E_FORM_FIELDS.PASSWORD) || '';
+        const rePassword = getValue?.get(E_FORM_FIELDS.RE_PASSWORD) || '';
+        const year = getValue?.get(E_FORM_FIELDS.YEAR) || '';
+
+        if (password === '' || password !== rePassword) {
+            return;
+        }
+
+        const result = await onSubmitRegister({ email, password, year });
+
         if (result?.messageCode === ServerError.SUCCESSFULLY_REGISTER.messageCode) {
             Toast({ title: 'Success', typeIcon: ESwalIcon.SUCCESS })
             navigate(ROUT_NAMES.LOGIN);
         } else {
             Toast({ title: result?.message, typeIcon: ESwalIcon.ERROR })
         }
-    }, [onSubmitRegister, navigate]);
+    }, [onSubmitRegister, search, navigate]);
 
-    const { values, changeHandler, onSubmit, errors } = useForm({
-        email: '',
-        password: '',
-        rePassword: '',
-        year: '',
-    }, onSubmitFunction, {
-        email: ['required'],
-        password: ['required', 5],
-    });
+    // const err = {
+    //     rePassword: '',
+    //     year: '',
+    // }
+    // if (values.password !== values.rePassword) {
+    //     err.rePassword = 'Password don\'t match';
+    // }
 
-    const err = {
-        rePassword: '',
-        year: '',
-    }
-    if (values.password !== values.rePassword) {
-        err.rePassword = 'Password don\'t match';
-    }
-
-    const yearToNumber = Number(values.year);
-    if (yearToNumber < 0 || yearToNumber > 110) {
-        err.year = 'Year not valid'
-    }
+    // const yearToNumber = Number(values.year);
+    // if (yearToNumber < 0 || yearToNumber > 110) {
+    //     err.year = 'Year not valid'
+    // }
 
     return (
         <section className={`section`}>
@@ -60,7 +63,7 @@ const _Register = () => {
 
             <div className={`global__bg-radius form__container`}>
                 <InputForm
-                    onSubmit={onSubmit}
+                    onSubmit={onSubmitFunction}
                     buttonLabel={BUTTON_LABEL}
                     addSeparatorAfterButton
                     afterButton={
@@ -72,43 +75,31 @@ const _Register = () => {
                     }
                 >
                     <InputField
-                        error={errors.email}
                         label='Email'
                         name='email'
-                        onBlur={changeHandler}
-                        onChange={changeHandler}
+                        formName={E_FORM_NAMES.REGISTER}
                         type="email"
-                        value={values.email}
                     />
 
                     <InputField
-                        error={errors.password}
                         label='Password'
                         name='password'
-                        onBlur={changeHandler}
-                        onChange={changeHandler}
+                        formName={E_FORM_NAMES.REGISTER}
                         type='password'
-                        value={values.password}
                     />
 
                     <InputField
-                        error={err.rePassword}
                         label='Repeat Password'
                         name='rePassword'
-                        onBlur={changeHandler}
-                        onChange={changeHandler}
+                        formName={E_FORM_NAMES.REGISTER}
                         type='password'
-                        value={values.rePassword}
                     />
 
                     <InputField
-                        error={err.year}
                         label='Year'
                         name='year'
-                        onBlur={changeHandler}
-                        onChange={changeHandler}
+                        formName={E_FORM_NAMES.REGISTER}
                         type='number'
-                        value={values.year}
                     />
                 </InputForm>
             </div >

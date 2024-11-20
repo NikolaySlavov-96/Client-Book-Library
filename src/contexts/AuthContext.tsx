@@ -9,7 +9,7 @@ import { ServerError, STORAGE_KEYS } from '../Constants';
 interface IAuthContext {
     onSubmitLogin: (data: { email: string, password: string }) => any;
     onSubmitLogout: (data: any) => void;
-    onSubmitRegister: (data: any) => any;
+    onSubmitRegister: (data: { email: string, password: string, year: string }) => any;
     verifyAccountWithToken: (data: any) => void;
     email: string;
     isAuthenticated: boolean;
@@ -30,7 +30,7 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
 
     const authService = AuthService();
 
-    const onSubmitRegister = async (value: any) => {
+    const onSubmitRegister = async (value: { email: string, password: string, year: string }) => {
         try {
             const data = await authService.register(value);
             return data;
