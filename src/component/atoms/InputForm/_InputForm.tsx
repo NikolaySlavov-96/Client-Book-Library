@@ -31,10 +31,15 @@ const _InputForm: FC<IInputFormProps> = (props) => {
         onSubmit,
     } = props;
 
+    const onPress = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        onSubmit(e);
+    }
+
     return (
         <form
             className={formStyles}
-            onSubmit={onSubmit}
+            onSubmit={onPress}
         >
             {beforeChildren}
 

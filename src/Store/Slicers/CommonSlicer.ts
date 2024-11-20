@@ -1,5 +1,7 @@
 import { StateCreator } from "zustand";
 
+import { E_FORM_NAMES } from "../../Constants";
+
 type FormFiled = Map<string, string>
 type FormData = {
     fields: FormFiled;
@@ -12,7 +14,7 @@ export interface ICommonSlicer {
     setConnectId: (id: string) => void;
 
     search: Map<string, FormData>,
-    setSearch: (formName: 'login', field: string, value: string) => void;
+    setSearch: (formName: E_FORM_NAMES, field: string, value: string) => void;
     clearSearch: () => void;
 }
 
