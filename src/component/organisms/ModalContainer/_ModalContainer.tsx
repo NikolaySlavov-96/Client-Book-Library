@@ -7,7 +7,7 @@ import { MODAL_NAMES } from "../../../Constants";
 import { useStoreZ } from "../../../hooks";
 
 const components = {
-    [MODAL_NAMES.NEW_BOOK]: NewBookModal,
+    [MODAL_NAMES.NEW_PRODUCT]: NewBookModal,
 }
 
 const _ModalContainer = () => {

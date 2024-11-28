@@ -24,7 +24,7 @@ const _Socket = () => {
     const userAddressData = useGetUserAddress();
 
     const result = useCallback((data: { dailyUsers: number, uncialUsers: number, isNewUser: boolean }) => {
-        setModalName(MODAL_NAMES.NEW_BOOK);
+        setModalName(MODAL_NAMES.NEW_PRODUCT);
         setContent(data);
         openModal();
     }, [setModalName, setContent, openModal]);
