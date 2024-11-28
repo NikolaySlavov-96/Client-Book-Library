@@ -23,11 +23,6 @@ const _messages = {
     INVALID_USER: { messageCode: 'user-0018', },
     DELETED_PROFILE: { messageCode: 'user-0019', },
     ACCOUNT_IS_NOT_VERIFY: { messageCode: 'user-0020', },
-
-    // Book
-    BOOK_ALREADY_EXIST: { messageCode: 'book-0001', },
-    SUCCESSFULLY_ADDED_BOOK: { messageCode: 'book-0002', },
-    SUCCESSFULLY_ADDED_BOOK_IN_COLLECTION: { messageCode: 'book-0003', },
 };
 
 export default _messages;

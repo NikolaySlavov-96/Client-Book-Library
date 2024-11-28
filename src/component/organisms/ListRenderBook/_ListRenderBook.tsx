@@ -3,19 +3,19 @@ import { FC, memo } from "react";
 import { List } from "../../atoms";
 import { BookCard } from "../../organisms";
 
-import { TBookCard } from "../../../Types/Book";
+import { TProductCard } from "../../../Types/Product";
 
 import styles from './_ListRenderBook.module.css';
 
 
 const emptyComponent = () => (< h2 > There are no items added yet.</h2>);
-const keyExtractor = (item: TBookCard) => item?.productId.toString();
-const renderItem = ({ item }: { item: TBookCard }) => {
+const keyExtractor = (item: TProductCard) => item?.productId.toString();
+const renderItem = ({ item }: { item: TProductCard }) => {
     return (<BookCard {...item} />)
 };
 
 interface IListRenderBookProps {
-    data: TBookCard[];
+    data: TProductCard[];
 }
 
 const _ListRenderBook: FC<IListRenderBookProps> = (props) => {

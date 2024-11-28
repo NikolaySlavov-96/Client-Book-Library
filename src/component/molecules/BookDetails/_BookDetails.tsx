@@ -1,10 +1,10 @@
 import { FC, memo } from "react";
 
-import { TBookCard } from "../../../Types/Book";
+import { TProductCard } from "../../../Types/Product";
 
 import style from './_BookDetails.module.css';
 
-type TBookDetails = TBookCard & {
+type TBookDetails = TProductCard & {
     hasTitle?: boolean;
 }
 

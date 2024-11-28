@@ -5,13 +5,13 @@ import { BookDetails } from "../../molecules";
 
 import { ROUT_NAMES } from "../../../Constants";
 
-import { TBookCard } from "../../../Types/Book";
+import { TProductCard } from "../../../Types/Product";
 
 import style from './_BookCard.module.css';
 
 const BUTTON_LABEL = 'View';
 
-const _BookCard: FC<TBookCard> = (props) => {
+const _BookCard: FC<TProductCard> = (props) => {
     const {
         productTitle,
         productId,
