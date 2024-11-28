@@ -24,7 +24,7 @@ const _BookCard: FC<TBookCard> = (props) => {
 
             <div className={style['card__link']}>
                 <Link
-                    to={`${ROUT_NAMES.BOOK}/${productId}`}
+                    to={`${ROUT_NAMES.PRODUCT}/${productId}`}
                     state={{ productTitle }}
                 >
                     {BUTTON_LABEL}

@@ -29,7 +29,7 @@ const _NewBookModal = () => {
 
     return (
         <Link
-            to={`${ROUT_NAMES.BOOK}/${currentBookData?.id}`}
+            to={`${ROUT_NAMES.PRODUCT}/${currentBookData?.id}`}
             className={`shadow ${style['container']} ${!isVisible ? '' : style['visible']}`}
         >
             <h3>Lastly added books</h3>
