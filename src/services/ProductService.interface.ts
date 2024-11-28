@@ -1,4 +1,4 @@
-interface IBook {
+interface IProduct {
     productId: number;
     productType: string;
     productStatus: boolean;
@@ -22,7 +22,7 @@ export interface IGetStatesResponse {
 
 export interface IGetProductRequest { }
 
-export interface IGetProductResponse extends IBook { }
+export interface IGetProductResponse extends IProduct { }
 
 export interface IGetProductsRequest {
     limit: number;
@@ -32,7 +32,7 @@ export interface IGetProductsRequest {
 
 export interface IGetProductsResponse {
     count: number;
-    rows: IBook[];
+    rows: IProduct[];
 }
 
 export interface ICreateProductRequest {
@@ -66,7 +66,7 @@ export interface ISearchProductByEmailRequest {
     limit: number;
 }
 
-interface IBookEmailType extends IBook {
+interface IProductEmailType extends IProduct {
     email: string;
     userId: number;
     userYear: number;
@@ -77,7 +77,7 @@ interface IBookEmailType extends IBook {
 
 export interface ISearchProductByEmailResponse {
     count: number;
-    rows: IBookEmailType[];
+    rows: IProductEmailType[];
 }
 
 export interface IGetAllProductByStateRequest extends IGetProductsRequest {
@@ -85,7 +85,7 @@ export interface IGetAllProductByStateRequest extends IGetProductsRequest {
 }
 
 
-interface IBookWithState extends IBook {
+interface IProductWithState extends IProduct {
     productStateId: number;
     productStateStatus: boolean; // IsDelete
     bookImage: string;
@@ -94,19 +94,19 @@ interface IBookWithState extends IBook {
 }
 export interface IGetAllProductByStateResponse {
     count: number;
-    rows: IBookWithState[];
+    rows: IProductWithState[];
 }
 
-export interface IGetBookStateResponse {
-    stateId: number;
+export interface IGetStatusResponse {
+    statusId: number;
 }
 
-export interface IAddingBookInLibraryRequest {
-    state: string;
-    bookId: string;
+export interface IAddingProductInLibraryRequest {
+    statusId: string;
+    productId: string;
 }
 
-export interface IAddingBookInLibraryResponse {
+export interface IAddingProductInLibraryResponse {
     userInfo: {};
     message: string;
     messageCode: string;

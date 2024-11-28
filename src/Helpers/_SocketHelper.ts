@@ -47,7 +47,7 @@ const _Socket = () => {
 
         SocketService.subscribeToEvent(EReceiveEvents.ERROR, (data) => console.log(data));
 
-        SocketService.subscribeToEvent(EReceiveEvents.NEW_BOOK_ADDED, result);
+        SocketService.subscribeToEvent(EReceiveEvents.NEW_PRODUCT_ADDED, result);
 
         SocketService.subscribeToEvent(EReceiveEvents.USER_CONNECT, updateCountOfVisitors);
 
@@ -69,7 +69,7 @@ const _Socket = () => {
         SocketService.subscribeToEvent(EReceiveEvents.SUPPORT_MESSAGE, addMessage);
 
         return () => {
-            SocketService.unsubscribeFromEvent(EReceiveEvents.NEW_BOOK_ADDED, onUnsubscribe);
+            SocketService.unsubscribeFromEvent(EReceiveEvents.NEW_PRODUCT_ADDED, onUnsubscribe);
             SocketService.unsubscribeFromEvent(EReceiveEvents.ERROR, onUnsubscribe);
             SocketService.unsubscribeFromEvent(EReceiveEvents.COMPLETE_ISSUE, onUnsubscribe);
             SocketService.unsubscribeFromEvent(EReceiveEvents.USER_CONNECT, onUnsubscribe);
