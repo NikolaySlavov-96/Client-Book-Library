@@ -1,11 +1,11 @@
 import { FC, memo } from "react";
 
 import { List } from "../../atoms";
-import { BookCard } from "../../organisms";
+import { BookCard } from "..";
 
 import { TProductCard } from "../../../Types/Product";
 
-import styles from './_ListRenderBook.module.css';
+import styles from './_ListRenderProduct.module.css';
 
 
 const emptyComponent = () => (< h2 > There are no items added yet.</h2>);
@@ -18,7 +18,7 @@ interface IListRenderBookProps {
     data: TProductCard[];
 }
 
-const _ListRenderBook: FC<IListRenderBookProps> = (props) => {
+const _ListRenderProduct: FC<IListRenderBookProps> = (props) => {
     const { data } = props;
 
     return (
@@ -32,4 +32,4 @@ const _ListRenderBook: FC<IListRenderBookProps> = (props) => {
     );
 };
 
-export default memo(_ListRenderBook);
+export default memo(_ListRenderProduct);

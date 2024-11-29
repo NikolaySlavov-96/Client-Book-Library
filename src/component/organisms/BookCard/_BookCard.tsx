@@ -1,7 +1,7 @@
 import { FC, memo } from "react";
 
 import { Link } from "../../atoms";
-import { BookDetails } from "../../molecules";
+import { ProductDetails } from "../../molecules";
 
 import { ROUT_NAMES } from "../../../Constants";
 
@@ -20,7 +20,7 @@ const _BookCard: FC<TProductCard> = (props) => {
     return (
         <article className={`shadow ${style["container"]}`}>
 
-            <BookDetails {...props} hasTitle />
+            <ProductDetails {...props} hasTitle />
 
             <div className={style['card__link']}>
                 <Link

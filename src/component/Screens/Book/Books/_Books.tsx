@@ -5,9 +5,9 @@ import { useStoreZ } from "../../../../hooks";
 
 import { SectionTitle } from "../../../atoms";
 import { Pagination } from "../../../molecules";
-import { QueryBar, ListRenderBook } from "../../../organisms";
+import { QueryBar, ListRenderProduct } from "../../../organisms";
 
-import { ListRenderBookSkeletons } from "../../../../Skeleton/organisms";
+import { ListRenderProductSkeletons } from "../../../../Skeleton/organisms";
 
 import { IQueryBar } from "../../../../Types/QueryBar";
 
@@ -71,7 +71,7 @@ const _Books = () => {
                 onPressSearch={onSearchFunction}
             />
 
-            {isLoadingProducts ? <ListRenderBookSkeletons limit={pageLimit} /> : <ListRenderBook data={products?.rows || []} />}
+            {isLoadingProducts ? <ListRenderProductSkeletons limit={pageLimit} /> : <ListRenderProduct data={products?.rows || []} />}
 
             <Pagination count={count} page={page} onSubmit={setPage} />
         </section >

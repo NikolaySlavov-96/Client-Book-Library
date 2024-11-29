@@ -1,4 +1,4 @@
-import { HOST } from "../Constants";
+import { HOST, STORAGE_KEYS } from "../Constants";
 
 import { getDataFromStorage } from "./_Storage";
 
@@ -29,7 +29,7 @@ const _API = async (method: TMethod, url: string, moreData?: IMoreData) => {
         options.body = moreData?.inputData;
     }
 
-    const token = getDataFromStorage('@Book_TokenData');
+    const token = getDataFromStorage(STORAGE_KEYS.TOKEN_DATE);
     if (token?.accessToken) {
         options.headers = {
             ...options.headers,

@@ -32,7 +32,7 @@ const _CreateProduct = () => {
         }
     };
 
-    const onCreateNewBook = useCallback((data: IAddProductWithImage['data']) => {
+    const onCreateNewProduct = useCallback((data: IAddProductWithImage['data']) => {
         if (!file) { return }
 
         addProductWithImage(data, { file, name });
@@ -42,7 +42,7 @@ const _CreateProduct = () => {
         author: '',
         productTitle: '',
         genre: '',
-    }, onCreateNewBook, {
+    }, onCreateNewProduct, {
         author: ['required', 5],
         productTitle: ['required', 5],
         genre: ['required', 5],

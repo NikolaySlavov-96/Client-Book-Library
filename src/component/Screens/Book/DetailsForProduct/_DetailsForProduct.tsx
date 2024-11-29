@@ -2,7 +2,7 @@ import { memo, useCallback, useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom"
 
 import { IconActionButton } from "../../../atoms";
-import { BookDetails, Select } from "../../../molecules";
+import { ProductDetails, Select } from "../../../molecules";
 
 import { ProductDetailSkeleton, SelectSkeleton } from "../../../../Skeleton/molecules";
 
@@ -83,7 +83,7 @@ const _DetailsForProduct = () => {
             <div className={style['product-card__detail']}>
                 {isLoadingProduct ?
                     <ProductDetailSkeleton /> :
-                    <BookDetails {...productById} />}
+                    <ProductDetails {...productById} />}
             </div>
 
             {!!email ?

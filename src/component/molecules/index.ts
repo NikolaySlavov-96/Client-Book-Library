@@ -1,4 +1,4 @@
-export { default as BookDetails } from './BookDetails/_BookDetails';
+export { default as ProductDetails } from './ProductDetails/_ProductDetails';
 export { default as ChatWindowCloser } from './ChatWindowCloser/_ChatWindowCloser';
 export { default as ChatWithSupport } from './ChatWithSupport/_ChatWithSupport';
 export { default as Footer } from './Footer/_Footer';
