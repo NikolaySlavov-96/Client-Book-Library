@@ -16,7 +16,7 @@ import { TOptionType } from "../../../../Types/Select";
 import style from './_DetailsForProduct.module.css';
 
 // TODO replace any
-const createBookOptions = (bookState: any, mappedStates: any) => {
+const createProductOptions = (bookState: any, mappedStates: any) => {
     return mappedStates.filter((b: any) => b.value !== bookState)
 }
 
@@ -53,7 +53,7 @@ const _DetailsForProduct = () => {
     }, [mappedStates, productState]);
 
     const selectOptions = useMemo(() => (
-        createBookOptions(productState?.stateId, mappedStates)
+        createProductOptions(productState?.stateId, mappedStates)
     ), [productState?.stateId, mappedStates]);
 
     useEffect(() => {

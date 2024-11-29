@@ -5,11 +5,11 @@ import { useAuthContext } from '../contexts/AuthContext';
 
 import { CustomerSupportChat, ModalContainer } from '../component/organisms';
 import {
-    Books,
     CreateProduct,
     DetailsForProduct,
     Login,
     NotFound,
+    Products,
     Register,
     SearchByEmail,
     Support,
@@ -36,8 +36,8 @@ const _Navigator = () => {
     return (
         <>
             <Routes>
-                <Route path={ROUT_NAMES.HOME} element={<Books />} />
-                <Route path={ROUT_NAMES.PRODUCT} element={<Books />} />
+                <Route path={ROUT_NAMES.HOME} element={<Products />} />
+                <Route path={ROUT_NAMES.PRODUCT} element={<Products />} />
                 {/* Route Defense */}
                 <Route path={ROUT_NAMES.REVIEW_PRODUCTS_BY_EMAIL} element={<SearchByEmail />} />
                 <Route path={ROUT_NAMES.CREATE_PRODUCT} element={<CreateProduct />} />

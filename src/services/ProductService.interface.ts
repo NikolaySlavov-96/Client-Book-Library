@@ -88,6 +88,7 @@ export interface IGetAllProductByStateRequest extends IGetProductsRequest {
 interface IProductWithState extends IProduct {
     productStateId: number;
     productStateStatus: boolean; // IsDelete
+    // TODO Check name
     bookImage: string;
     email: string;
     userId: number;

@@ -6,9 +6,9 @@ import { ROUT_NAMES } from '../../../../Constants';
 
 import { useStoreZ } from '../../../../hooks';
 
-import style from './_NewBookModal.module.css';
+import style from './_NewProductModal.module.css';
 
-const _NewBookModal = () => {
+const _NewProductModal = () => {
     const { content, isVisible, closeModal } = useStoreZ();
 
     useEffect(() => {
@@ -41,4 +41,4 @@ const _NewBookModal = () => {
     )
 }
 
-export default memo(_NewBookModal);
+export default memo(_NewProductModal);

@@ -13,7 +13,7 @@ import { IQueryBar } from "../../../../Types/QueryBar";
 
 import { QUERY_LIMIT, SEARCH_NAME } from "../../../../Constants";
 
-const _Books = () => {
+const _Products = () => {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [page, setPage] = useState(1);
@@ -78,4 +78,4 @@ const _Books = () => {
     );
 }
 
-export default memo(_Books);
+export default memo(_Products);

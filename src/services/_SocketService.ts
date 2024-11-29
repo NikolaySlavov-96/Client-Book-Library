@@ -7,6 +7,7 @@ import { useStoreZ } from "../hooks";
 let socket: Socket;
 
 const options: Partial<ManagerOptions & SocketOptions> = {
+    // TODO Extract in constants
     path: '/bookHub',
 }
 

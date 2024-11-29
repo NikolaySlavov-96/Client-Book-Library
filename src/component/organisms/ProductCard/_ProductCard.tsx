@@ -7,11 +7,11 @@ import { ROUT_NAMES } from "../../../Constants";
 
 import { TProductCard } from "../../../Types/Product";
 
-import style from './_BookCard.module.css';
+import style from './_ProductCard.module.css';
 
 const BUTTON_LABEL = 'View';
 
-const _BookCard: FC<TProductCard> = (props) => {
+const _ProductCard: FC<TProductCard> = (props) => {
     const {
         productTitle,
         productId,
@@ -34,4 +34,4 @@ const _BookCard: FC<TProductCard> = (props) => {
     );
 }
 
-export default memo(_BookCard);
+export default memo(_ProductCard);

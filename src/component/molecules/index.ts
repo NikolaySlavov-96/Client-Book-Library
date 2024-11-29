@@ -9,4 +9,4 @@ export { default as SearchField } from './SearchField/_SearchField';
 export { default as Select } from './Select/_Select';
 
 // Modals
-export { default as NewBookModal } from './Modals/NewBookModal/_NewBookModal';
+export { default as NewProductModal } from './Modals/NewProductModal/_NewProductModal';

@@ -1,7 +1,7 @@
 import { FC, memo } from "react";
 
 import { List } from "../../atoms";
-import { BookCard } from "..";
+import { ProductCard } from "..";
 
 import { TProductCard } from "../../../Types/Product";
 
@@ -11,7 +11,7 @@ import styles from './_ListRenderProduct.module.css';
 const emptyComponent = () => (< h2 > There are no items added yet.</h2>);
 const keyExtractor = (item: TProductCard) => item?.productId.toString();
 const renderItem = ({ item }: { item: TProductCard }) => {
-    return (<BookCard {...item} />)
+    return (<ProductCard {...item} />)
 };
 
 interface IListRenderBookProps {
