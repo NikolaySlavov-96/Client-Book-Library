@@ -16,8 +16,8 @@ import { TOptionType } from "../../../../Types/Select";
 import style from './_DetailsForProduct.module.css';
 
 // TODO replace any
-const createProductOptions = (bookState: any, mappedStates: any) => {
-    return mappedStates.filter((b: any) => b.value !== bookState)
+const createProductOptions = (productState: any, mappedStates: any) => {
+    return mappedStates.filter((b: any) => b.value !== productState)
 }
 
 const DEFAULT_MESSAGE = 'Please select...';
