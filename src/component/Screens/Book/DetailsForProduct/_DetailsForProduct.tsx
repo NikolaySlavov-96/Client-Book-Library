@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { IconActionButton } from "../../../atoms";
 import { BookDetails, Select } from "../../../molecules";
 
-import { BookDetailSkeleton, SelectSkeleton } from "../../../../Skeleton/molecules";
+import { ProductDetailSkeleton, SelectSkeleton } from "../../../../Skeleton/molecules";
 
 import { useAuthContext } from "../../../../contexts/AuthContext";
 
@@ -13,7 +13,7 @@ import { useStoreZ } from "../../../../hooks";
 import { FormatSelectOptions } from "../../../../Helpers";
 import { TOptionType } from "../../../../Types/Select";
 
-import style from './_DetailsForBook.module.css';
+import style from './_DetailsForProduct.module.css';
 
 // TODO replace any
 const createBookOptions = (bookState: any, mappedStates: any) => {
@@ -22,7 +22,7 @@ const createBookOptions = (bookState: any, mappedStates: any) => {
 
 const DEFAULT_MESSAGE = 'Please select...';
 
-const _DetailsForBook = () => {
+const _DetailsForProduct = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -80,9 +80,9 @@ const _DetailsForBook = () => {
 
             <IconActionButton onClick={onPressBackButton} />
 
-            <div className={style['book-card__detail']}>
+            <div className={style['product-card__detail']}>
                 {isLoadingProduct ?
-                    <BookDetailSkeleton /> :
+                    <ProductDetailSkeleton /> :
                     <BookDetails {...productById} />}
             </div>
 
@@ -104,4 +104,4 @@ const _DetailsForBook = () => {
     );
 }
 
-export default memo(_DetailsForBook);
+export default memo(_DetailsForProduct);

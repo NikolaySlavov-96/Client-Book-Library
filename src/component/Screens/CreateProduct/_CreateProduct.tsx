@@ -9,13 +9,13 @@ import { useForm, useStoreZ } from '../../../hooks';
 
 import { IAddProductWithImage } from '../../../Store/Slicers/ProductSlicer.interface';
 
-import style from './_CreateBook.module.css';
+import style from './_CreateProduct.module.css';
 
 const SECTION_TITLE = 'Added new book';
 const BUTTON_LABEL = 'Create new Book';
 const SUCCESS_MESSAGE = "Successfully added picture";
 
-const _CreateBook = () => {
+const _CreateProduct = () => {
 
     const { addProductWithImage, isProductAdded, isLoadingProductAddition } = useStoreZ();
 
@@ -59,7 +59,7 @@ const _CreateBook = () => {
         }
     }, [isLoadingProductAddition, isProductAdded])
 
-    if(isLoadingProductAddition) {
+    if (isLoadingProductAddition) {
         // Added Loader screen
     }
 
@@ -125,4 +125,4 @@ const _CreateBook = () => {
     );
 }
 
-export default memo(_CreateBook);
+export default memo(_CreateProduct);

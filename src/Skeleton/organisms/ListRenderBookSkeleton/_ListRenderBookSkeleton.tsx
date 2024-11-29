@@ -1,7 +1,7 @@
 import { FC, memo, useMemo } from "react";
 
 import { List } from "../../../component/atoms";
-import { BookCardSkeleton } from "../../molecules";
+import { ProductCardSkeleton } from "../../molecules";
 
 import styles from './_ListRenderBookSkeleton.module.css';
 
@@ -9,7 +9,7 @@ type IType = { [key: number]: string };
 
 const keyExtractor = (item: IType) => item.toString();
 const renderItem = ({ item }: { item: { [key: number]: string } }) => {
-    return (<BookCardSkeleton />)
+    return (<ProductCardSkeleton />)
 };
 
 interface IListRenderBookSkeletonProps {
