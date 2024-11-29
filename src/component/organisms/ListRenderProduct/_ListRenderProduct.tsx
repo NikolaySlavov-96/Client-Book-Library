@@ -14,11 +14,11 @@ const renderItem = ({ item }: { item: TProductCard }) => {
     return (<ProductCard {...item} />)
 };
 
-interface IListRenderBookProps {
+interface IListRenderProductProps {
     data: TProductCard[];
 }
 
-const _ListRenderProduct: FC<IListRenderBookProps> = (props) => {
+const _ListRenderProduct: FC<IListRenderProductProps> = (props) => {
     const { data } = props;
 
     return (

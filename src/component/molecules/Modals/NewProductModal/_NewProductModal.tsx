@@ -23,18 +23,18 @@ const _NewProductModal = () => {
         return null;
     }
 
-    const lastBook = content.length - 1;
+    const lastProduct = content.length - 1;
 
-    const currentBookData = content[lastBook];
+    const currentProductData = content[lastProduct];
 
     return (
         <Link
-            to={`${ROUT_NAMES.PRODUCT}/${currentBookData?.id}`}
+            to={`${ROUT_NAMES.PRODUCT}/${currentProductData?.id}`}
             className={`shadow ${style['container']} ${!isVisible ? '' : style['visible']}`}
         >
             <h3>Lastly added books</h3>
             <div>
-                <h1>{currentBookData?.productTitle}</h1>
+                <h1>{currentProductData?.productTitle}</h1>
             </div>
             <p>Added before 10 second</p>
         </Link>
