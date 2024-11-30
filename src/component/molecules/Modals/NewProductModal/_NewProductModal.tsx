@@ -6,9 +6,9 @@ import { ROUT_NAMES } from '../../../../Constants';
 
 import { useStoreZ } from '../../../../hooks';
 
-import style from './_NewBookModal.module.css';
+import style from './_NewProductModal.module.css';
 
-const _NewBookModal = () => {
+const _NewProductModal = () => {
     const { content, isVisible, closeModal } = useStoreZ();
 
     useEffect(() => {
@@ -23,22 +23,22 @@ const _NewBookModal = () => {
         return null;
     }
 
-    const lastBook = content.length - 1;
+    const lastProduct = content.length - 1;
 
-    const currentBookData = content[lastBook];
+    const currentProductData = content[lastProduct];
 
     return (
         <Link
-            to={`${ROUT_NAMES.BOOK}/${currentBookData?.id}`}
+            to={`${ROUT_NAMES.PRODUCT}/${currentProductData?.id}`}
             className={`shadow ${style['container']} ${!isVisible ? '' : style['visible']}`}
         >
             <h3>Lastly added books</h3>
             <div>
-                <h1>{currentBookData?.productTitle}</h1>
+                <h1>{currentProductData?.productTitle}</h1>
             </div>
             <p>Added before 10 second</p>
         </Link>
     )
 }
 
-export default memo(_NewBookModal);
+export default memo(_NewProductModal);

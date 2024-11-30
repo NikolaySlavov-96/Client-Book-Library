@@ -2,9 +2,9 @@ import { memo, useCallback, useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom"
 
 import { IconActionButton } from "../../../atoms";
-import { BookDetails, Select } from "../../../molecules";
+import { ProductDetails, Select } from "../../../molecules";
 
-import { BookDetailSkeleton, SelectSkeleton } from "../../../../Skeleton/molecules";
+import { ProductDetailSkeleton, SelectSkeleton } from "../../../../Skeleton/molecules";
 
 import { useAuthContext } from "../../../../contexts/AuthContext";
 
@@ -13,16 +13,16 @@ import { useStoreZ } from "../../../../hooks";
 import { FormatSelectOptions } from "../../../../Helpers";
 import { TOptionType } from "../../../../Types/Select";
 
-import style from './_DetailsForBook.module.css';
+import style from './_DetailsForProduct.module.css';
 
 // TODO replace any
-const createBookOptions = (bookState: any, mappedStates: any) => {
-    return mappedStates.filter((b: any) => b.value !== bookState)
+const createProductOptions = (productState: any, mappedStates: any) => {
+    return mappedStates.filter((b: any) => b.value !== productState)
 }
 
 const DEFAULT_MESSAGE = 'Please select...';
 
-const _DetailsForBook = () => {
+const _DetailsForProduct = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -53,7 +53,7 @@ const _DetailsForBook = () => {
     }, [mappedStates, productState]);
 
     const selectOptions = useMemo(() => (
-        createBookOptions(productState?.stateId, mappedStates)
+        createProductOptions(productState?.stateId, mappedStates)
     ), [productState?.stateId, mappedStates]);
 
     useEffect(() => {
@@ -80,10 +80,10 @@ const _DetailsForBook = () => {
 
             <IconActionButton onClick={onPressBackButton} />
 
-            <div className={style['book-card__detail']}>
+            <div className={style['product-card__detail']}>
                 {isLoadingProduct ?
-                    <BookDetailSkeleton /> :
-                    <BookDetails {...productById} />}
+                    <ProductDetailSkeleton /> :
+                    <ProductDetails {...productById} />}
             </div>
 
             {!!email ?
@@ -104,4 +104,4 @@ const _DetailsForBook = () => {
     );
 }
 
-export default memo(_DetailsForBook);
+export default memo(_DetailsForProduct);

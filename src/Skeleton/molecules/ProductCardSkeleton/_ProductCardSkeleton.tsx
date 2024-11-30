@@ -2,13 +2,13 @@ import { FC, memo } from "react";
 
 import { ViewElement } from '../../atoms';
 
-import { IBookSkeleton } from "../Types/Book";
+import { IProductSkeleton } from "../Types/Product";
 
-import style from './_BookCardSkeleton.module.css';
+import style from './_ProductCardSkeleton.module.css';
 
 const DEFAULT_HEIGHT = 20;
 
-const _BookCardSkeleton: FC<IBookSkeleton> = (props) => {
+const _ProductCardSkeleton: FC<IProductSkeleton> = (props) => {
     const {
         hasTitle = true,
     } = props;
@@ -30,4 +30,4 @@ const _BookCardSkeleton: FC<IBookSkeleton> = (props) => {
     );
 };
 
-export default memo(_BookCardSkeleton);
+export default memo(_ProductCardSkeleton);

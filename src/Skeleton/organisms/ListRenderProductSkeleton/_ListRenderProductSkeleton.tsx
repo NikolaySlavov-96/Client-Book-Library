@@ -1,22 +1,22 @@
 import { FC, memo, useMemo } from "react";
 
 import { List } from "../../../component/atoms";
-import { BookCardSkeleton } from "../../molecules";
+import { ProductCardSkeleton } from "../../molecules";
 
-import styles from './_ListRenderBookSkeleton.module.css';
+import styles from './_ListRenderProductSkeleton.module.css';
 
 type IType = { [key: number]: string };
 
 const keyExtractor = (item: IType) => item.toString();
 const renderItem = ({ item }: { item: { [key: number]: string } }) => {
-    return (<BookCardSkeleton />)
+    return (<ProductCardSkeleton />)
 };
 
-interface IListRenderBookSkeletonProps {
+interface IListRenderProductSkeletonProps {
     limit: number;
 }
 
-const _ListRenderBookSkeleton: FC<IListRenderBookSkeletonProps> = (props) => {
+const _ListRenderProductSkeleton: FC<IListRenderProductSkeletonProps> = (props) => {
     const { limit } = props;
 
     const renderedElements = useMemo(() => (
@@ -33,4 +33,4 @@ const _ListRenderBookSkeleton: FC<IListRenderBookSkeletonProps> = (props) => {
     );
 };
 
-export default memo(_ListRenderBookSkeleton);
+export default memo(_ListRenderProductSkeleton);

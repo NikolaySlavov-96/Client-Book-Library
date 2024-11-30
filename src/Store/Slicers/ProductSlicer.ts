@@ -1,6 +1,6 @@
 import { StateCreator } from "zustand";
 
-import { BookService as productService } from "../../services";
+import { ProductService as productService } from "../../services";
 
 import {
     IProductEmailType,
@@ -58,7 +58,7 @@ const createProductSlicer: StateCreator<IProductSlicer> = (set, get) => ({
     productStates: [],
     fetchAllProductStates: async () => {
         try {
-            const result = await productService.getStates();
+            const result = await productService.getAllStatus();
             set({ productStates: result })
         } catch (err) {
             console.log('fetchAllProductStates error --->: ', err);
@@ -69,7 +69,7 @@ const createProductSlicer: StateCreator<IProductSlicer> = (set, get) => ({
     fetchProductsForEmail: async (data) => {
         set({ isLoadingProductByEmails: true });
         try {
-            const result = await productService.searchBookByEmailOnUser(data);
+            const result = await productService.searchProductByEmailOnUser(data);
             set({ productByEmail: result });
         } catch (err) {
             console.log('fetchProductsForEmail error --->: ', err);
@@ -128,8 +128,8 @@ const createProductSlicer: StateCreator<IProductSlicer> = (set, get) => ({
     fetchProductState: async (id) => {
         set({ isLoadingProductState: true });
         try {
-            const result = await productService.getBookState(id);
-            set({ productState: result });
+            const result = await productService.getProductStatus(id);
+            set({ productState: { stateId: result.statusId } });
         } catch (err) {
             console.log('fetchProductState error --->: ', err);
         } finally {
@@ -139,7 +139,7 @@ const createProductSlicer: StateCreator<IProductSlicer> = (set, get) => ({
     addingProductState: async (id, state) => {
         set({ isAddingProductState: true });
         try {
-            const result = await productService.addBookToLibrary({ bookId: id, state }); // Refactor from bookId to productId or only id
+            const result = await productService.addStatusOnProduct({ productId: id, statusId: state });
             console.log("🚀 ~ addingProductState: ~ result:", result)
             // TODO Visualize success message
             set({ productState: { stateId: Number(state) } });
@@ -154,7 +154,7 @@ const createProductSlicer: StateCreator<IProductSlicer> = (set, get) => ({
     fetchProductCollection: async (data) => {
         set({ isLoadingProductCollection: true });
         try {
-            const result = await productService.getAllBooksByState(data); // TODO refactor rename getAllBooksByState
+            const result = await productService.getAllProductStatus(data);
             set({ productCollection: result });
         } catch (err) {
             console.log('fetchProductCollection error --->: ', err);
@@ -193,7 +193,7 @@ export default createProductSlicer;
 
 // const onSubmitEditProduct = useCallback(async (data: any) => {
 //     try {
-//         const prod = await bookService.editProduct(data._id, data);
+//         const prod = await productService.editProduct(data._id, data);
 //         // setBook(p => p?.rows.map(x => x.id === data.id ? prod : x));
 
 //         // navigate(ROUT_NAMES.HOME);
@@ -204,7 +204,7 @@ export default createProductSlicer;
 
 // const onSubmitDeleteProduct = useCallback(async (id: string) => {
 //     try {
-//         await bookService.deleteProduct(id);
+//         await productService.deleteProduct(id);
 //         // setBook(p => p.filter(prod => prod._id !== id));
 
 //         // navigate(ROUT_NAMES.HOME);

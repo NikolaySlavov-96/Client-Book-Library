@@ -5,9 +5,9 @@ import { useStoreZ } from "../../../../hooks";
 
 import { SectionTitle } from "../../../atoms";
 import { Pagination } from "../../../molecules";
-import { QueryBar, ListRenderBook } from "../../../organisms";
+import { QueryBar, ListRenderProduct } from "../../../organisms";
 
-import { ListRenderBookSkeletons } from "../../../../Skeleton/organisms";
+import { ListRenderProductSkeletons } from "../../../../Skeleton/organisms";
 
 import { QUERY_LIMIT, SEARCH_NAME } from "../../../../Constants";
 
@@ -91,7 +91,7 @@ const _UserCollection = () => {
                 onPressSearch={onSearchFunction}
             />
 
-            {isLoadingProductCollection ? <ListRenderBookSkeletons limit={pageLimit} /> : <ListRenderBook data={productCollection?.rows || {}} />}
+            {isLoadingProductCollection ? <ListRenderProductSkeletons limit={pageLimit} /> : <ListRenderProduct data={productCollection?.rows || {}} />}
 
             <Pagination count={count} page={page} onSubmit={setPage} />
         </section >

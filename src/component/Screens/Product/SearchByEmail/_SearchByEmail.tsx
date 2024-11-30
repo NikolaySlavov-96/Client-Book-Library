@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 
 import { SectionTitle } from "../../../atoms";
 import { Pagination } from "../../../molecules";
-import { QueryBar, ListRenderBook } from "../../../organisms";
+import { QueryBar, ListRenderProduct } from "../../../organisms";
 
 import { useStoreZ } from "../../../../hooks";
 
@@ -36,7 +36,7 @@ const _SearchByEmail = () => {
                 onPressSearch={(data) => console.log('SearchByEmail', data)}
             />
 
-            <ListRenderBook data={productByEmail?.rows || []} />
+            <ListRenderProduct data={productByEmail?.rows || []} />
 
             <Pagination count={count} page={page} onSubmit={setPage} />
         </section >
