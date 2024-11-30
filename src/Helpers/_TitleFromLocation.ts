@@ -9,13 +9,15 @@ interface ITitleFromLocation {
     key: string;
 }
 
+const DEFAULT_PAGE_TITLE = 'book';
+
 const _TitleFromLocation = (location: ITitleFromLocation) => {
     const hasState = location.state;
     const pathName = location.pathname;
 
     const splittedPatchName = pathName.split('/')[1];
 
-    let newTitle = 'book';
+    let newTitle = DEFAULT_PAGE_TITLE;
 
     if (hasState && hasState.productTitle) {
         newTitle = hasState.productTitle;

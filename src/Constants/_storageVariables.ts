@@ -1,4 +1,4 @@
-const STORAGE_PREFIX = '@Book_';
+const STORAGE_PREFIX = '@Product_';
 
 export const STORAGE_KEYS = {
     TOKEN_DATE: `${STORAGE_PREFIX}TokenData`,

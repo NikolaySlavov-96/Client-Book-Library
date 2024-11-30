@@ -1,4 +1,4 @@
-export { default as BookDetails } from './BookDetails/_BookDetails';
+export { default as ProductDetails } from './ProductDetails/_ProductDetails';
 export { default as ChatWindowCloser } from './ChatWindowCloser/_ChatWindowCloser';
 export { default as ChatWithSupport } from './ChatWithSupport/_ChatWithSupport';
 export { default as Footer } from './Footer/_Footer';
@@ -9,4 +9,4 @@ export { default as SearchField } from './SearchField/_SearchField';
 export { default as Select } from './Select/_Select';
 
 // Modals
-export { default as NewBookModal } from './Modals/NewBookModal/_NewBookModal';
+export { default as NewProductModal } from './Modals/NewProductModal/_NewProductModal';

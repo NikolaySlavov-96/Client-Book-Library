@@ -1,3 +1,3 @@
-export { default as BookCardSkeleton } from './BookCardSkeleton/_BookCardSkeleton';
-export { default as BookDetailSkeleton } from './BookDetailSkeleton/_BookDetailSkeleton';
+export { default as ProductCardSkeleton } from './ProductCardSkeleton/_ProductCardSkeleton';
+export { default as ProductDetailSkeleton } from './ProductDetailSkeleton/_ProductDetailSkeleton';
 export { default as SelectSkeleton } from './SelectSkeleton/_SelectSkeleton';

@@ -1,14 +1,14 @@
 import { FC, memo } from "react";
 
-import { TBookCard } from "../../../Types/Book";
+import { TProductCard } from "../../../Types/Product";
 
-import style from './_BookDetails.module.css';
+import style from './_ProductDetails.module.css';
 
-type TBookDetails = TBookCard & {
+type TProductDetails = TProductCard & {
     hasTitle?: boolean;
 }
 
-const _BookDetails: FC<TBookDetails> = (props) => {
+const _ProductDetails: FC<TProductDetails> = (props) => {
     const {
         authorName,
         productType,
@@ -24,9 +24,9 @@ const _BookDetails: FC<TBookDetails> = (props) => {
                 <img src={fileUrl} alt={fileSrc} />
             </div>
 
-            {hasTitle ? <h1 className={style['book_title']}>{productTitle}</h1> : ''}
+            {hasTitle ? <h1 className={style['product_title']}>{productTitle}</h1> : ''}
 
-            <div className={style['book__container']}>
+            <div className={style['product__container']}>
                 {!hasTitle ? <p>Title: <span >{productTitle}</span></p> : null}
                 <p>Author: <span >{authorName}</span></p>
                 <p>Genre: <span >{productType}</span></p>
@@ -35,4 +35,4 @@ const _BookDetails: FC<TBookDetails> = (props) => {
     );
 };
 
-export default memo(_BookDetails);
+export default memo(_ProductDetails);

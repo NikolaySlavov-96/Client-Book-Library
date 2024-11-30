@@ -1,6 +1,6 @@
 export enum _EReceiveEvents {
     ERROR = 'error',
-    NEW_BOOK_ADDED = 'new-book-added',
+    NEW_PRODUCT_ADDED = 'new-product-added',
     COMPLETE_ISSUE = 'complete-issue',
     USER_CONNECT = 'user_connect',
     SUPPORT_CHAT_USER_JOIN_ACKNOWLEDGMENT = 'support_chat_user_join_acknowledgment',

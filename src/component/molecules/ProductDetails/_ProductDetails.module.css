@@ -15,19 +15,19 @@
   opacity: 10%;
 }
 
-.book_title {
+.product_title {
   margin: 3px 0 20px 0;
 }
 
-.book__container {
+.product__container {
   margin-bottom: 2rem;
 }
 
-.book__container p {
+.product__container p {
   margin: 2px;
   margin-bottom: 8px;
 }
 
-.book__container span {
+.product__container span {
   margin-left: 6px;
 }

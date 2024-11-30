@@ -1,17 +1,17 @@
 import { FC, memo } from "react";
 
 import { Link } from "../../atoms";
-import { BookDetails } from "../../molecules";
+import { ProductDetails } from "../../molecules";
 
 import { ROUT_NAMES } from "../../../Constants";
 
-import { TBookCard } from "../../../Types/Book";
+import { TProductCard } from "../../../Types/Product";
 
-import style from './_BookCard.module.css';
+import style from './_ProductCard.module.css';
 
 const BUTTON_LABEL = 'View';
 
-const _BookCard: FC<TBookCard> = (props) => {
+const _ProductCard: FC<TProductCard> = (props) => {
     const {
         productTitle,
         productId,
@@ -20,11 +20,11 @@ const _BookCard: FC<TBookCard> = (props) => {
     return (
         <article className={`shadow ${style["container"]}`}>
 
-            <BookDetails {...props} hasTitle />
+            <ProductDetails {...props} hasTitle />
 
             <div className={style['card__link']}>
                 <Link
-                    to={`${ROUT_NAMES.BOOK}/${productId}`}
+                    to={`${ROUT_NAMES.PRODUCT}/${productId}`}
                     state={{ productTitle }}
                 >
                     {BUTTON_LABEL}
@@ -34,4 +34,4 @@ const _BookCard: FC<TBookCard> = (props) => {
     );
 }
 
-export default memo(_BookCard);
+export default memo(_ProductCard);

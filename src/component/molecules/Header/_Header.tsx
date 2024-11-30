@@ -23,12 +23,12 @@ const _Header = () => {
                 <h1>Hello {name ? name : FIRST_NAME}</h1>
 
                 <ul className={style['navigation__ul']}>
-                    <NavigationButton path={ROUT_NAMES.BOOK} title={HEADER_BUTTON_TITLES.BOOK} />
+                    <NavigationButton path={ROUT_NAMES.PRODUCT} title={HEADER_BUTTON_TITLES.PRODUCT} />
                     {
                         !!email ? (
                             <>
-                                <NavigationButton path={ROUT_NAMES.CREATE_BOOK} title={HEADER_BUTTON_TITLES.CREATE_BOOK} isDisabled={!isVerifyUser} />
-                                <NavigationButton path={ROUT_NAMES.USER_COLLECTION} title={HEADER_BUTTON_TITLES.COLLECTION_OF_BOOKS} />
+                                <NavigationButton path={ROUT_NAMES.CREATE_PRODUCT} title={HEADER_BUTTON_TITLES.CREATE_PRODUCT} isDisabled={!isVerifyUser} />
+                                <NavigationButton path={ROUT_NAMES.USER_COLLECTION} title={HEADER_BUTTON_TITLES.COLLECTION_OF_PRODUCTS} />
                                 <NavigationButton path="/" onCustomClick={onPressLogout} title={HEADER_BUTTON_TITLES.LOGOUT} />
                             </>)
                             :
