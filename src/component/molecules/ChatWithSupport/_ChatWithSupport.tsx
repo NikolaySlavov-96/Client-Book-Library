@@ -1,6 +1,6 @@
 import { Dispatch, FC, memo, SetStateAction, useCallback } from "react";
 
-import { ChatHeader, InputForm, List } from "../../../component/atoms";
+import { ChatHeader, InputForm, List, MessageLine } from "../../../component/atoms";
 
 import { ToastWithButton } from "../../../Toasts";
 
@@ -17,10 +17,6 @@ import style from './_ChatWithSupport.module.css';
 
 const DEFAULT_TITLE = 'Support Chat';
 const BUTTON_LABEL = 'Send';
-
-const renderItem = ({ item }: { item: IMessage }) => {
-    return (<p>{item?.message}</p>)
-}
 
 const keyExtractor = (item: IMessage, index: number) => index.toString();
 
@@ -60,6 +56,10 @@ const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
         message: ['required', 1]
     });
 
+    const renderItem = useCallback(({ item }: { item: IMessage }) => {
+        return (<MessageLine {...item} connectId={connectId} />);
+    }, [connectId]);
+
     return (
         <>
             <ChatHeader>
@@ -67,7 +67,9 @@ const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
                 <button onClick={onVerifyChoice}>{'X'}</button>
             </ChatHeader>
             <div className={style['chat__container']}>
-                {welcomeMessage}
+                <div className={style['welcome__message']}>
+                    {welcomeMessage}
+                </div>
                 <List
                     data={roomMessages}
                     renderItem={renderItem}

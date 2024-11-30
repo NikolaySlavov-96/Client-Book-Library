@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect } from 'react'
 
-import { ChatHeader, List } from '../../../component/atoms';
+import { ChatHeader, List, MessageLine } from '../../../component/atoms';
 
 import { useStoreZ } from '../../../hooks';
 
@@ -17,7 +17,7 @@ const DEFAULT_TITLE = 'Support Chat - ';
 
 const keyExtractorUser = (item: IUserQueue) => item.connectId.toString();
 const keyExtractorRoom = (item: IRoom) => item.roomName.toString();
-const keyExtractorMessage = (item: IMessage) => item.roomName.toString();
+const keyExtractorMessage = (item: IMessage) => item.message.toString();
 
 
 const _Support = () => {
@@ -54,18 +54,8 @@ const _Support = () => {
     }, [setSelectedRoom]);
 
     const renderItemMessage = useCallback(({ item, }: { item: IMessage }) => {
-        const onClick = () => {
-            setSelectedRoom(item.roomName)
-        };
-
-        return (
-            <button
-                onClick={onClick}
-                style={{ display: 'inline-block', marginRight: 10, }}>
-                {item.roomName.slice(0, 5)}
-            </button>
-        )
-    }, [setSelectedRoom]);
+        return (<MessageLine {...item} connectId={connectId} />);
+    }, [connectId]);
 
     useEffect(() => {
         SocketService.sendData(ESendEvents.SUPPORT_CHAT_USER_JOIN, { connectId, });
