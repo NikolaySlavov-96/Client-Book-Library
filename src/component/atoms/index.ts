@@ -5,5 +5,6 @@ export { default as InputField } from './InputField/_InputField';
 export { default as InputForm } from './InputForm/_InputForm';
 export { default as Link } from './Link/_Link';
 export { default as List } from './List/_List';
+export { default as MessageLine } from './MessageLine/_MessageLine';
 export { default as NavigationButton } from './NavigationButton/_NavigationButton';
 export { default as SectionTitle } from './SectionTitle/_SectionTitle';
