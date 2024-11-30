@@ -8,6 +8,8 @@ import { useGetUserAddress, useStoreZ } from "../hooks";
 
 import { useAuthContext } from "../contexts/AuthContext";
 
+import { IMessage } from "~/Store/Slicers/SupportSlicer";
+
 const onUnsubscribe = () => {
     console.log('Unsubscribe')
 }
@@ -33,7 +35,7 @@ const _Socket = () => {
         console.log(data)
     }
 
-    const notifyForCreatedRoom = (data: { roomName: string, message: string }) => {
+    const notifyForCreatedRoom = (data: IMessage) => {
         setRooms({ roomName: data.roomName });
         addMessage(data);
         if (userRole !== 'support') {

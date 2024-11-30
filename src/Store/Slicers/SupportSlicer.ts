@@ -12,9 +12,12 @@ interface INotifyAdminOfNewUser {
 }
 
 export interface IMessage {
-    roomName: string;
-    from?: string;
+    connectId: string;
+    createAt: string;
     message: string;
+    roomName: string;
+    senderId?: string;
+    updatedAt: string;
 }
 
 export interface IMessages {
@@ -77,6 +80,7 @@ const createSupportSlicer: StateCreator<ISupportSlicer> = (set) => ({
 
     messages: {},
     addMessage: (data) => set((state) => {
+        console.log("🚀 ~ addMessage: ~ data:", data)
         const roomName = data.roomName;
         const currentMessages = state.messages[roomName] || [];
         return {
