@@ -18,6 +18,7 @@ export interface IMessage {
     roomName: string;
     senderId?: string;
     updatedAt: string;
+    status: 'deliver' | 'read' | '' | null;
 }
 
 export interface IMessages {
