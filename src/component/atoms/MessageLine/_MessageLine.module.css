@@ -1,7 +1,22 @@
+.container {
+}
+
+.content__container {
+  display: flex;
+  flex-direction: row;
+  margin: 4px 0;
+  padding: 2px 8px;
+  background-color: rgb(17, 207, 198);
+}
+
 .message__center {
   text-align: center;
 }
 
 .message__owner {
-  text-align: right;
+  justify-content: right;
+}
+
+.message {
+  margin-right: 4px;
 }
