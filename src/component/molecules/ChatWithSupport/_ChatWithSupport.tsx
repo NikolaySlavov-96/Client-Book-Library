@@ -1,6 +1,6 @@
 import { Dispatch, FC, memo, SetStateAction, useCallback } from "react";
 
-import { ChatHeader, InputForm, List, MessageLine } from "../../../component/atoms";
+import { ChatHeader, List, MessageForm, MessageLine } from "../../../component/atoms";
 
 import { ToastWithButton } from "../../../Toasts";
 
@@ -9,14 +9,13 @@ import { SocketService } from "../../../services";
 import { ESendEvents } from "../../../Constants";
 import { SUPPORT_TOAST } from "../../../Configuration";
 
-import { useForm, useStoreZ } from "../../../hooks";
+import { useStoreZ } from "../../../hooks";
 
 import { IMessage } from "../../../Store/Slicers/SupportSlicer";
 
 import style from './_ChatWithSupport.module.css';
 
 const DEFAULT_TITLE = 'Support Chat';
-const BUTTON_LABEL = 'Send';
 
 const keyExtractor = (item: IMessage, index: number) => index.toString();
 
@@ -43,19 +42,6 @@ const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
         }
     }, [onClose]);
 
-    const sendMessage = useCallback((data: { message: string }) => {
-        SocketService.sendData(ESendEvents.SUPPORT_MESSAGE, {
-            roomName,
-            message: data.message,
-        })
-    }, [roomName]);
-
-    const { values, changeHandler, onSubmit } = useForm({
-        message: '',
-    }, sendMessage, {
-        message: ['required', 1]
-    });
-
     const renderItem = useCallback(({ item }: { item: IMessage }) => {
         return (<MessageLine {...item} connectId={connectId} />);
     }, [connectId]);
@@ -76,21 +62,7 @@ const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
                     keyExtractor={keyExtractor}
                 />
             </div>
-            {!!roomName ? <InputForm
-                buttonLabel={BUTTON_LABEL}
-                formStyles={style['send__input-button']}
-                onSubmit={onSubmit}
-            >
-                <input
-                    type="text"
-                    name='message'
-                    id='message'
-                    placeholder={BUTTON_LABEL}
-                    value={values.message}
-                    onChange={changeHandler}
-                    onBlur={changeHandler}
-                />
-            </InputForm> : null}
+            {!!roomName ? <MessageForm roomName={roomName} connectId={connectId} /> : null}
         </>
     );
 }

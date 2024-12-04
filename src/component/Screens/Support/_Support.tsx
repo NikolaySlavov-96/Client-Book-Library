@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect } from 'react'
 
-import { ChatHeader, List, MessageLine } from '../../../component/atoms';
+import { ChatHeader, List, MessageForm, MessageLine } from '../../../component/atoms';
 
 import { useStoreZ } from '../../../hooks';
 
@@ -88,6 +88,8 @@ const _Support = () => {
                     EmptyComponent={() => null}
                     style={style['chat__window']}
                 />
+
+                {selectedRoom !== '' ? <MessageForm roomName={selectedRoom} connectId={connectId} /> : null}
             </div>
         </section>
     )
