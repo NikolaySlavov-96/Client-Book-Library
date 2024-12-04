@@ -1,4 +1,4 @@
-import { Dispatch, FC, memo, SetStateAction, useCallback } from "react";
+import { Dispatch, FC, memo, SetStateAction, useCallback, useEffect, useRef } from "react";
 
 import { ChatHeader, List, MessageForm, MessageLine } from "../../../component/atoms";
 
@@ -26,6 +26,7 @@ interface IChatWihSupportProps {
 const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
     const { onPress, roomName } = props;
 
+    const messageEndRef = useRef<HTMLDivElement | null>(null);
     const { connectId, welcomeMessage, messages } = useStoreZ();
 
     const roomMessages = messages[roomName] || [];
@@ -46,6 +47,14 @@ const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
         return (<MessageLine {...item} connectId={connectId} />);
     }, [connectId]);
 
+    const scrollToBottom = () => {
+        messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [roomMessages.length]);
+
     return (
         <>
             <ChatHeader>
@@ -53,14 +62,13 @@ const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
                 <button onClick={onVerifyChoice}>{'X'}</button>
             </ChatHeader>
             <div className={style['chat__container']}>
-                <div className={style['welcome__message']}>
-                    {welcomeMessage}
-                </div>
+                <p className={style['welcome__message']}>{welcomeMessage}</p>
                 <List
                     data={roomMessages}
                     renderItem={renderItem}
                     keyExtractor={keyExtractor}
                 />
+                <div ref={messageEndRef} />
             </div>
             {!!roomName ? <MessageForm roomName={roomName} connectId={connectId} /> : null}
         </>
