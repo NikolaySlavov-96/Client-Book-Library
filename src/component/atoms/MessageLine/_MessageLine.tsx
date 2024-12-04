@@ -22,8 +22,8 @@ const _MessageLine = (props: IMessageLine) => {
     }
 
     return (
-        <div className={style['container']}>
-            <div className={`${style['content__container']} ${isSender ? style['message__owner'] : ''}`}>
+        <div className={`${style['container']} ${isSender ? style['message__owner'] : style['message__sender']}`}>
+            <div className={style['content__container']}>
                 <p className={style['message']}>{message}</p>
                 <p>{currentTime}</p>
             </div>
