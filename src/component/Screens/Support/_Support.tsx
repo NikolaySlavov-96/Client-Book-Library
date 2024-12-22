@@ -1,6 +1,6 @@
-import { memo, useCallback, useEffect } from 'react'
+import { memo, useCallback, useEffect, useRef } from 'react'
 
-import { ChatHeader, List } from '../../../component/atoms';
+import { ChatHeader, List, MessageForm, MessageLine } from '../../../component/atoms';
 
 import { useStoreZ } from '../../../hooks';
 
@@ -17,13 +17,14 @@ const DEFAULT_TITLE = 'Support Chat - ';
 
 const keyExtractorUser = (item: IUserQueue) => item.connectId.toString();
 const keyExtractorRoom = (item: IRoom) => item.roomName.toString();
-const keyExtractorMessage = (item: IMessage) => item.roomName.toString();
+const keyExtractorMessage = (item: IMessage) => item.message.toString();
 
 
 const _Support = () => {
     const { rooms, connectId, users, messages, selectedRoom, setSelectedRoom } = useStoreZ();
     const { email } = useAuthContext();
 
+    const messageEndRef = useRef<HTMLDivElement | null>(null);
     const currentRoomMessages = messages[selectedRoom] || [];
 
     const renderItemUser = useCallback(({ item, }: { item: IUserQueue }) => {
@@ -54,22 +55,22 @@ const _Support = () => {
     }, [setSelectedRoom]);
 
     const renderItemMessage = useCallback(({ item, }: { item: IMessage }) => {
-        const onClick = () => {
-            setSelectedRoom(item.roomName)
-        };
-
-        return (
-            <button
-                onClick={onClick}
-                style={{ display: 'inline-block', marginRight: 10, }}>
-                {item.roomName.slice(0, 5)}
-            </button>
-        )
-    }, [setSelectedRoom]);
+        return (<MessageLine {...item} connectId={connectId} />);
+    }, [connectId]);
 
     useEffect(() => {
         SocketService.sendData(ESendEvents.SUPPORT_CHAT_USER_JOIN, { connectId, });
     }, [connectId]);
+
+    const scrollToBottom = () => {
+        messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    useEffect(() => {
+        if (selectedRoom) {
+            scrollToBottom();
+        }
+    }, [selectedRoom, currentRoomMessages.length]);
 
     return (
         <section className={style.container}>
@@ -91,13 +92,18 @@ const _Support = () => {
                     keyExtractor={keyExtractorRoom}
                     style={style['room__header']}
                 />
-                <List
-                    data={currentRoomMessages}
-                    renderItem={renderItemMessage}
-                    keyExtractor={keyExtractorMessage}
-                    EmptyComponent={() => null}
-                    style={style['chat__window']}
-                />
+                <div className={style['message__container']}>
+                    <List
+                        data={currentRoomMessages}
+                        renderItem={renderItemMessage}
+                        keyExtractor={keyExtractorMessage}
+                        EmptyComponent={() => null}
+                        style={style['chat__window']}
+                    />
+                    <div ref={messageEndRef} />
+                </div>
+
+                {selectedRoom !== '' ? <MessageForm roomName={selectedRoom} connectId={connectId} /> : null}
             </div>
         </section>
     )

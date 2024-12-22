@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { InputField, InputForm, SectionTitle } from '../../../atoms';
@@ -12,6 +12,7 @@ import { useAuthContext } from '../../../../contexts/AuthContext';
 import { ROUT_NAMES, ServerError, E_FORM_NAMES, E_FORM_FIELDS } from '../../../../Constants';
 
 import { useStoreZ } from '../../../../hooks';
+// import { IInputMethods } from '../../../atoms/InputField/_InputField';
 
 const BUTTON_LABEL = 'Login in';
 
@@ -29,7 +30,6 @@ const _Login = () => {
         if (!email || !password) {
             return;
         }
-
         const result = await onSubmitLogin({ email, password });
 
         if (result?.messageCode === ServerError.SUCCESSFULLY_LOGIN.messageCode) {
@@ -38,7 +38,21 @@ const _Login = () => {
         } else {
             Toast({ title: result?.message, typeIcon: ESwalIcon.ERROR })
         }
-    }, [navigate, search, onSubmitLogin]);
+    }, [onSubmitLogin]);
+
+    // const inputRef = useRef<IInputMethods>(null);
+
+    // const handleFocus = () => {
+    //     if (inputRef.current) {
+    //         inputRef.current.focusInput();
+    //     }
+    // };
+
+    // const handleClear = () => {
+    //     if (inputRef.current) {
+    //         inputRef.current.clearInput();
+    //     }
+    // };
 
     return (
         <section className={`section`}>
@@ -59,6 +73,7 @@ const _Login = () => {
                     }
                 >
                     <InputField
+                        // ref={inputRef}
                         label='Email'
                         name={E_FORM_FIELDS.EMAIL}
                         formName={E_FORM_NAMES.LOGIN}

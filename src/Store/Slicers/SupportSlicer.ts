@@ -12,9 +12,13 @@ interface INotifyAdminOfNewUser {
 }
 
 export interface IMessage {
-    roomName: string;
-    from?: string;
+    connectId: string;
+    createdAt: string;
     message: string;
+    roomName: string;
+    senderId?: string;
+    updatedAt: string;
+    status: 'deliver' | 'read' | '' | null;
 }
 
 export interface IMessages {

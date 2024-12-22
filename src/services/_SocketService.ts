@@ -9,6 +9,7 @@ let socket: Socket;
 const options: Partial<ManagerOptions & SocketOptions> = {
     // TODO Extract in constants
     path: '/bookHub',
+    transports: ['websocket']
 }
 
 const connect = (token?: string) => {

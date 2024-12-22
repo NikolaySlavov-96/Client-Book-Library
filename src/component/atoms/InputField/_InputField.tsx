@@ -1,10 +1,15 @@
-import { ChangeEvent, FC, FocusEvent, HTMLInputTypeAttribute, memo, useState } from "react";
+import { ChangeEvent, FocusEvent, HTMLInputTypeAttribute, memo, useState, forwardRef, useImperativeHandle, useRef, } from "react";
 
 import { useStoreZ } from "../../../hooks";
 
 import { E_FORM_NAMES } from "../../../Constants";
 
 import style from './_InputField.module.css';
+
+export interface IInputMethods {
+    focusInput: () => void;
+    clearInput: () => void;
+}
 
 interface IInputFieldProps {
     label: string;
@@ -18,7 +23,7 @@ interface IInputFieldProps {
     type?: HTMLInputTypeAttribute;
 }
 
-const _InputField: FC<IInputFieldProps> = (props) => {
+const _InputField = forwardRef<IInputMethods, IInputFieldProps>((props, ref) => {
     const {
         error: outError,
         formName,
@@ -60,6 +65,20 @@ const _InputField: FC<IInputFieldProps> = (props) => {
         }
     }
 
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useImperativeHandle(ref, () => ({
+        focusInput: () => {
+            if (inputRef.current) {
+                inputRef.current.focus();
+            }
+        },
+        clearInput: () => {
+            if (inputRef.current) {
+                inputRef.current.value = '';
+            }
+        }
+    }));
 
     return (
         <div className={style['container']}>
@@ -71,6 +90,7 @@ const _InputField: FC<IInputFieldProps> = (props) => {
             }
 
             <input
+                ref={inputRef}
                 checked={!!value}
                 id={name}
                 name={name}
@@ -83,6 +103,6 @@ const _InputField: FC<IInputFieldProps> = (props) => {
             {!!error ? (<p>{!!formName ? error[name] : outError}</p>) : null}
         </div >
     );
-};
+});
 
 export default memo(_InputField);

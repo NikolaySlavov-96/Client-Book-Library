@@ -19,6 +19,12 @@
 }
 
 /* Room Line (Header) */
+.message__container {
+  height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
 .room__container {
   width: 52%;
 }
@@ -28,6 +34,8 @@
   height: 40px;
   align-content: center;
   margin-bottom: 20px;
+  overflow: auto;
+  box-sizing: border-box;
 }
 
 .room__header button:hover {
@@ -41,4 +49,7 @@
 .chat__window {
   background-color: antiquewhite;
   height: 80%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
