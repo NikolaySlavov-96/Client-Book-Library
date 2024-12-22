@@ -70,7 +70,11 @@ const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
                 />
                 <div ref={messageEndRef} />
             </div>
-            {!!roomName ? <MessageForm roomName={roomName} connectId={connectId} /> : null}
+            {!!roomName ? (
+                <div className={style['input__container']}>
+                    <MessageForm roomName={roomName} connectId={connectId} />
+                </div>
+            ) : null}
         </>
     );
 }
