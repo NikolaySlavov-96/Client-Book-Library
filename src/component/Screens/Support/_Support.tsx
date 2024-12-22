@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect } from 'react'
+import { memo, useCallback, useEffect, useRef } from 'react'
 
 import { ChatHeader, List, MessageForm, MessageLine } from '../../../component/atoms';
 
@@ -24,6 +24,7 @@ const _Support = () => {
     const { rooms, connectId, users, messages, selectedRoom, setSelectedRoom } = useStoreZ();
     const { email } = useAuthContext();
 
+    const messageEndRef = useRef<HTMLDivElement | null>(null);
     const currentRoomMessages = messages[selectedRoom] || [];
 
     const renderItemUser = useCallback(({ item, }: { item: IUserQueue }) => {
@@ -61,6 +62,16 @@ const _Support = () => {
         SocketService.sendData(ESendEvents.SUPPORT_CHAT_USER_JOIN, { connectId, });
     }, [connectId]);
 
+    const scrollToBottom = () => {
+        messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    useEffect(() => {
+        if (selectedRoom) {
+            scrollToBottom();
+        }
+    }, [selectedRoom, currentRoomMessages.length]);
+
     return (
         <section className={style.container}>
             <div className={`shadow__window ${style['chat__container']}`}>
@@ -81,13 +92,16 @@ const _Support = () => {
                     keyExtractor={keyExtractorRoom}
                     style={style['room__header']}
                 />
-                <List
-                    data={currentRoomMessages}
-                    renderItem={renderItemMessage}
-                    keyExtractor={keyExtractorMessage}
-                    EmptyComponent={() => null}
-                    style={style['chat__window']}
-                />
+                <div className={style['message__container']}>
+                    <List
+                        data={currentRoomMessages}
+                        renderItem={renderItemMessage}
+                        keyExtractor={keyExtractorMessage}
+                        EmptyComponent={() => null}
+                        style={style['chat__window']}
+                    />
+                    <div ref={messageEndRef} />
+                </div>
 
                 {selectedRoom !== '' ? <MessageForm roomName={selectedRoom} connectId={connectId} /> : null}
             </div>
