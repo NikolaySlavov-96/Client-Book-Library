@@ -8,6 +8,8 @@ import { useGetUserAddress, useStoreZ } from "../hooks";
 
 import { useAuthContext } from "../contexts/AuthContext";
 
+import { IMessage } from "~/Store/Slicers/SupportSlicer";
+
 const onUnsubscribe = () => {
     console.log('Unsubscribe')
 }
@@ -16,6 +18,7 @@ const _Socket = () => {
     const { userRole, token } = useAuthContext();
 
     const {
+        connectId,
         openModal, setModalName, setContent, setUsers, setRooms,
         setSelectedRoom, setWelcomeMessage, addMessage, resetRooms,
         removeRoom
@@ -33,7 +36,7 @@ const _Socket = () => {
         console.log(data)
     }
 
-    const notifyForCreatedRoom = (data: { roomName: string, message: string }) => {
+    const notifyForCreatedRoom = (data: IMessage) => {
         setRooms({ roomName: data.roomName });
         addMessage(data);
         if (userRole !== 'support') {
@@ -89,6 +92,15 @@ const _Socket = () => {
             SocketService.sendData(ESendEvents.USER_ACCEPT_JOIN_TO_ROOM, { roomName, })
         }
     }, [setRooms]);
+
+    // useEffect(() => {
+    //     SocketService.subscribeToEvent(EReceiveEvents.SUPPORT_ACTIVITY, (data: { connectId: string }) => {
+    //         if (connectId !== data.connectId) {
+    //         }
+    //         console.log(data);
+    //     });
+
+    // }, [connectId])
 
     useEffect(() => {
         if (userAddressData.hasOwnProperty('IPv4')) {

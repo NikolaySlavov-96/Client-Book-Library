@@ -1,5 +1,8 @@
 .chat__container {
   height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 /* Input With button */
@@ -7,4 +10,13 @@
   display: flex;
   justify-content: space-between;
   padding: 10px;
+}
+
+.welcome__message {
+  text-align: center;
+}
+
+.input__container {
+  padding: 4px;
+  text-align: center;
 }

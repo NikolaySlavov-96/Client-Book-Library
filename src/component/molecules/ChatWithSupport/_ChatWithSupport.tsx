@@ -1,6 +1,6 @@
-import { Dispatch, FC, memo, SetStateAction, useCallback } from "react";
+import { Dispatch, FC, memo, SetStateAction, useCallback, useEffect, useRef } from "react";
 
-import { ChatHeader, InputForm, List } from "../../../component/atoms";
+import { ChatHeader, List, MessageForm, MessageLine } from "../../../component/atoms";
 
 import { ToastWithButton } from "../../../Toasts";
 
@@ -9,18 +9,13 @@ import { SocketService } from "../../../services";
 import { ESendEvents } from "../../../Constants";
 import { SUPPORT_TOAST } from "../../../Configuration";
 
-import { useForm, useStoreZ } from "../../../hooks";
+import { useStoreZ } from "../../../hooks";
 
 import { IMessage } from "../../../Store/Slicers/SupportSlicer";
 
 import style from './_ChatWithSupport.module.css';
 
 const DEFAULT_TITLE = 'Support Chat';
-const BUTTON_LABEL = 'Send';
-
-const renderItem = ({ item }: { item: IMessage }) => {
-    return (<p>{item?.message}</p>)
-}
 
 const keyExtractor = (item: IMessage, index: number) => index.toString();
 
@@ -31,6 +26,7 @@ interface IChatWihSupportProps {
 const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
     const { onPress, roomName } = props;
 
+    const messageEndRef = useRef<HTMLDivElement | null>(null);
     const { connectId, welcomeMessage, messages } = useStoreZ();
 
     const roomMessages = messages[roomName] || [];
@@ -47,18 +43,17 @@ const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
         }
     }, [onClose]);
 
-    const sendMessage = useCallback((data: { message: string }) => {
-        SocketService.sendData(ESendEvents.SUPPORT_MESSAGE, {
-            roomName,
-            message: data.message,
-        })
-    }, [roomName]);
+    const renderItem = useCallback(({ item }: { item: IMessage }) => {
+        return (<MessageLine {...item} connectId={connectId} />);
+    }, [connectId]);
 
-    const { values, changeHandler, onSubmit } = useForm({
-        message: '',
-    }, sendMessage, {
-        message: ['required', 1]
-    });
+    const scrollToBottom = () => {
+        messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [roomMessages.length]);
 
     return (
         <>
@@ -67,28 +62,19 @@ const _ChatWithSupport: FC<IChatWihSupportProps> = (props) => {
                 <button onClick={onVerifyChoice}>{'X'}</button>
             </ChatHeader>
             <div className={style['chat__container']}>
-                {welcomeMessage}
+                <p className={style['welcome__message']}>{welcomeMessage}</p>
                 <List
                     data={roomMessages}
                     renderItem={renderItem}
                     keyExtractor={keyExtractor}
                 />
+                <div ref={messageEndRef} />
             </div>
-            {!!roomName ? <InputForm
-                buttonLabel={BUTTON_LABEL}
-                formStyles={style['send__input-button']}
-                onSubmit={onSubmit}
-            >
-                <input
-                    type="text"
-                    name='message'
-                    id='message'
-                    placeholder={BUTTON_LABEL}
-                    value={values.message}
-                    onChange={changeHandler}
-                    onBlur={changeHandler}
-                />
-            </InputForm> : null}
+            {!!roomName ? (
+                <div className={style['input__container']}>
+                    <MessageForm roomName={roomName} connectId={connectId} />
+                </div>
+            ) : null}
         </>
     );
 }
