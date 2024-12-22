@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { InputField, InputForm, SectionTitle } from '../../../atoms';
@@ -12,6 +12,7 @@ import { useAuthContext } from '../../../../contexts/AuthContext';
 import { ROUT_NAMES, ServerError } from '../../../../Constants';
 
 import { useForm } from '../../../../hooks';
+// import { IInputMethods } from '../../../atoms/InputField/_InputField';
 
 const BUTTON_LABEL = 'Login in';
 
@@ -19,6 +20,21 @@ const _Login = () => {
     const navigate = useNavigate();
 
     const { onSubmitLogin } = useAuthContext();
+
+    // const inputRef = useRef<IInputMethods>(null);
+
+    // const handleFocus = () => {
+    //     if (inputRef.current) {
+    //         inputRef.current.focusInput();
+    //     }
+    // };
+
+    // const handleClear = () => {
+    //     if (inputRef.current) {
+    //         inputRef.current.clearInput();
+    //     }
+    // };
+
 
     const onSubmitFunction = useCallback(async (data: { email: string, password: string }) => {
         const result = await onSubmitLogin(data);
@@ -58,6 +74,7 @@ const _Login = () => {
                     }
                 >
                     <InputField
+                        // ref={inputRef}
                         error={errors.email}
                         label='Email'
                         name='email'
