@@ -59,7 +59,7 @@ export const AuthProvide = ({ children }: { children: ReactNode }) => {
 
     const onSubmitLogout = async () => {
         try {
-            await authService.logout({ connectId, token: '1' });
+            // await authService.logout({ connectId, token: '1' });
             setTokenData({});
             setUserData({});
             resetRooms();
