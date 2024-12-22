@@ -17,7 +17,6 @@ const _MessageForm = (props: any) => {
         roomName,
         connectId,
     } = props;
-        console.log("🚀 ~ roomName:", roomName)
 
     const sendMessage = useCallback((data: { message: string }) => {
         SocketService.sendData(ESendEvents.SUPPORT_MESSAGE, {
@@ -33,7 +32,6 @@ const _MessageForm = (props: any) => {
     });
 
     const activityHandler = useCallback((e: any) => {
-        console.log("🚀 ~ activityHandler ~ e:", e)
         changeHandler(e);
         // add debounce from 2 second before send event again
         SocketService.sendData(ESendEvents.SUPPORT_ACTIVITY, { roomName, connectId })

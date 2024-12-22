@@ -18,6 +18,7 @@ const _Socket = () => {
     const { userRole, token } = useAuthContext();
 
     const {
+        connectId,
         openModal, setModalName, setContent, setUsers, setRooms,
         setSelectedRoom, setWelcomeMessage, addMessage, resetRooms,
         removeRoom
@@ -91,6 +92,15 @@ const _Socket = () => {
             SocketService.sendData(ESendEvents.USER_ACCEPT_JOIN_TO_ROOM, { roomName, })
         }
     }, [setRooms]);
+
+    // useEffect(() => {
+    //     SocketService.subscribeToEvent(EReceiveEvents.SUPPORT_ACTIVITY, (data: { connectId: string }) => {
+    //         if (connectId !== data.connectId) {
+    //         }
+    //         console.log(data);
+    //     });
+
+    // }, [connectId])
 
     useEffect(() => {
         if (userAddressData.hasOwnProperty('IPv4')) {
