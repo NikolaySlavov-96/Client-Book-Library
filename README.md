@@ -1,14 +1,14 @@
 #Introduction of Project
 
 The idea of my project is that all the books you have read or want to read are in one place easily accessibile and without repetition.
-In it you can add book from any user with an account. You can view the project at: https://books.slavo-v.dev
+In it you can add book from any user with an account. You can view the project at: ...
 
 #Functionality
 
 If you are a user with account you can create Book or adding already exsisting book in your collection with tags read, for-reading, purchase, for-purcase and listening. 
 Guest can view only exsistings books.
 
-The application uses API with address: https://api-books.slavo-v.dev which uses for database mongo atlas. Repository of API can be view in: https://github.com/NikolaySlavov-96/API-Book-Library
+The application uses API with address: ... which uses for database mongo atlas. Repository of API can be view in: https://github.com/NikolaySlavov-96/API-Book-Library
 with fundamental paths: /book/ and /auth/
 
 #Using of application
