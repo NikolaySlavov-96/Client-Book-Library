@@ -4,7 +4,7 @@ import { useForm } from "../../../hooks";
 
 import { SocketService } from "../../../services";
 
-import { ESendEvents } from "../../../Constants";
+import { ESendEvents } from "../../../constants";
 
 import { InputForm } from "..";
 

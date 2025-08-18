@@ -2,7 +2,7 @@ import { memo } from "react";
 
 import { NewProductModal } from "../../molecules";
 
-import { MODAL_NAMES } from "../../../Constants";
+import { MODAL_NAMES } from "../../../constants";
 
 import { useStoreZ } from "../../../hooks";
 

@@ -2,7 +2,7 @@ import { useCallback, useEffect } from "react";
 
 import { SocketService } from '../services';
 
-import { EReceiveEvents, ESendEvents, MODAL_NAMES, STORAGE_KEYS } from '../Constants';
+import { EReceiveEvents, ESendEvents, MODAL_NAMES, STORAGE_KEYS } from '../constants';
 
 import { useGetUserAddress, useStoreZ } from "../hooks";
 

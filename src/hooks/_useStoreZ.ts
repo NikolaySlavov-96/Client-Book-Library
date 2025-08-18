@@ -6,7 +6,7 @@ import createModalSlicer, { IModalSlicer } from "../Store/Slicers/ModalSlicer";
 import createSupportSlicer, { ISupportSlicer } from "../Store/Slicers/SupportSlicer";
 import createProductSlicer, { IProductSlicer } from "../Store/Slicers/ProductSlicer";
 
-import { STORAGE_KEYS } from "../Constants";
+import { STORAGE_KEYS } from "../constants";
 
 // const commonSlicerPersist = persist(createCommonSlicer, {
 //     name: STORAGE_KEYS.CONNECT_ID

@@ -1,6 +1,6 @@
 import { StateCreator } from "zustand";
 
-import { E_FORM_NAMES } from "../../Constants";
+import { E_FORM_NAMES } from "../../constants";
 
 type FormFiled = Map<string, string>
 type FormData = {
@@ -43,6 +43,11 @@ const createCommonSlicer: StateCreator<ICommonSlicer> = (set) => ({
     clearSearch: () => {
 
     },
+
+    // getFormData: (formName) => {
+    //     const data = get().data;
+    //     return data.has(formName) ? data.get(formName).fields : new Map();
+    //   }
 });
 
 export default createCommonSlicer;
