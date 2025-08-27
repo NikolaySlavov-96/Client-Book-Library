@@ -5,8 +5,8 @@ import { LinkedParagraph } from '../../molecules';
 import style from './_Footer.module.css';
 
 const FOOTED_CONTENT = {
-    LINK: 'https://slavo-v.dev',
-    BUTTON_LABEL: 'Slavo-v',
+    LINK: 'https://nnsn.pro',
+    BUTTON_LABEL: 'NNSN',
     CONTENT: 'Designed and Implement from '
 }
 

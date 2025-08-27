@@ -33,7 +33,7 @@ const _API = async (method: TMethod, url: string, moreData?: IMoreData) => {
     if (token?.accessToken) {
         options.headers = {
             ...options.headers,
-            'product-id': token.accessToken,
+            'authorization': token.accessToken,
         }
     }
 
