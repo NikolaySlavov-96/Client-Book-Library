@@ -2,7 +2,7 @@ import { ChangeEvent, FocusEvent, HTMLInputTypeAttribute, memo, useState, forwar
 
 import { useStoreZ } from "../../../hooks";
 
-import { E_FORM_NAMES } from "../../../constants2";
+import { E_FORM_NAMES } from "../../../constants";
 
 import style from './_InputField.module.css';
 

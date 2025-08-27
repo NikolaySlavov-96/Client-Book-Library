@@ -1,7 +1,7 @@
 import { io, ManagerOptions, Socket, SocketOptions } from "socket.io-client";
 
-import { HOST } from "../constants2";
-import { EReceiveEvents, ESendEvents, } from '../constants2';
+import { HOST } from "../constants";
+import { EReceiveEvents, ESendEvents, } from '../constants';
 import { useStoreZ } from "../hooks";
 
 let socket: Socket;

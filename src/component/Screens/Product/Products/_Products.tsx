@@ -11,7 +11,7 @@ import { ListRenderProductSkeletons } from "../../../../Skeleton/organisms";
 
 import { IQueryBar } from "../../../../Types/QueryBar";
 
-import { QUERY_LIMIT, SEARCH_NAME } from "../../../../constants2";
+import { QUERY_LIMIT, SEARCH_NAME } from "../../../../constants";
 
 const _Products = () => {
     const [searchParams, setSearchParams] = useSearchParams();

@@ -17,7 +17,7 @@ import {
     VerifyAccount,
 } from '../component/Screens';
 
-import { ROUT_NAMES } from '../constants2';
+import { ROUT_NAMES } from '../constants';
 
 import { useStoreZ } from '../hooks';
 

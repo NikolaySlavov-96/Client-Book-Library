@@ -1,6 +1,6 @@
 import { StateCreator } from "zustand";
 
-import { E_FORM_NAMES } from "../../constants2";
+import { E_FORM_NAMES } from "../../constants";
 
 type FormFiled = Map<string, string>
 type FormData = {

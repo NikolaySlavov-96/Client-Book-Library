@@ -9,7 +9,7 @@ import { QueryBar, ListRenderProduct } from "../../../organisms";
 
 import { ListRenderProductSkeletons } from "../../../../Skeleton/organisms";
 
-import { QUERY_LIMIT, SEARCH_NAME } from "../../../../constants2";
+import { QUERY_LIMIT, SEARCH_NAME } from "../../../../constants";
 
 import { IQueryBar } from "../../../../Types/QueryBar";
 

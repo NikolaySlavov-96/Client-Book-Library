@@ -4,7 +4,7 @@ import { NavigationButton } from "../../atoms";
 
 import { useAuthContext } from "../../../contexts/AuthContext";
 
-import { HEADER_BUTTON_TITLES, ROUT_NAMES } from "../../../constants2";
+import { HEADER_BUTTON_TITLES, ROUT_NAMES } from "../../../constants";
 
 import style from './_Header.module.css';
 
