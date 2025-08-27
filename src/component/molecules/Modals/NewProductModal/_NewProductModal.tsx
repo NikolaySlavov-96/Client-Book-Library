@@ -2,7 +2,7 @@ import { memo, useEffect } from 'react';
 
 import { Link } from '../../../atoms';
 
-import { ROUT_NAMES } from '../../../../constants';
+import { ROUT_NAMES } from '../../../../constants2';
 
 import { useStoreZ } from '../../../../hooks';
 

@@ -7,7 +7,7 @@ import { ESwalIcon } from '../../../Types/Swal';
 
 import { useStoreZ } from '../../../hooks';
 
-import { E_FORM_FIELDS, E_FORM_NAMES } from '../../../constants';
+import { E_FORM_FIELDS, E_FORM_NAMES } from '../../../constants2';
 
 import style from './_CreateProduct.module.css';
 

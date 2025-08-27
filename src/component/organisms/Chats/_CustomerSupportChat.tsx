@@ -4,7 +4,7 @@ import { ChatWindowCloser, ChatWithSupport } from '../../molecules';
 
 import { SocketService } from '../../../services';
 
-import { ESendEvents } from '../../../constants';
+import { ESendEvents } from '../../../constants2';
 
 import { useStoreZ } from '../../../hooks';
 

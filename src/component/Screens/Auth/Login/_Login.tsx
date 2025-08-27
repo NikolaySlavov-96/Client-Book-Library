@@ -9,7 +9,7 @@ import { ESwalIcon } from '../../../../Types/Swal';
 
 import { useAuthContext } from '../../../../contexts/AuthContext';
 
-import { ROUT_NAMES, ServerError, E_FORM_NAMES, E_FORM_FIELDS } from '../../../../constants';
+import { ROUT_NAMES, ServerError, E_FORM_NAMES, E_FORM_FIELDS } from '../../../../constants2';
 
 import { useStoreZ } from '../../../../hooks';
 // import { IInputMethods } from '../../../atoms/InputField/_InputField';

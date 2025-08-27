@@ -4,7 +4,7 @@ import { useLocalStorage, useStoreZ } from "../hooks";
 
 import { AuthService, SocketService } from "../services";
 
-import { ServerError, STORAGE_KEYS } from '../constants';
+import { ServerError, STORAGE_KEYS } from '../constants2';
 
 interface IAuthContext {
     onSubmitLogin: (data: { email: string, password: string }) => any;

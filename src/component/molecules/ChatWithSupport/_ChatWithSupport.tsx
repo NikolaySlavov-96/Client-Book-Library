@@ -6,7 +6,7 @@ import { ToastWithButton } from "../../../Toasts";
 
 import { SocketService } from "../../../services";
 
-import { ESendEvents } from "../../../constants";
+import { ESendEvents } from "../../../constants2";
 import { SUPPORT_TOAST } from "../../../Configuration";
 
 import { useStoreZ } from "../../../hooks";

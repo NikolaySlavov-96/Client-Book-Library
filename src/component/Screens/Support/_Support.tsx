@@ -4,7 +4,7 @@ import { ChatHeader, List, MessageForm, MessageLine } from '../../../component/a
 
 import { useStoreZ } from '../../../hooks';
 
-import { ESendEvents } from '../../../constants';
+import { ESendEvents } from '../../../constants2';
 import { useAuthContext } from '../../../contexts/AuthContext';
 
 import { IMessage, IRoom, IUserQueue } from '../../../Store/Slicers/SupportSlicer';

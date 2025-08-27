@@ -3,7 +3,7 @@ import { FC, memo } from "react";
 import { Link } from "../../atoms";
 import { ProductDetails } from "../../molecules";
 
-import { ROUT_NAMES } from "../../../constants";
+import { ROUT_NAMES } from "../../../constants2";
 
 import { TProductCard } from "../../../Types/Product";
 

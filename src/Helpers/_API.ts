@@ -1,4 +1,4 @@
-import { HOST, STORAGE_KEYS } from "../constants";
+import { HOST, STORAGE_KEYS } from "../constants2";
 
 import { getDataFromStorage } from "./_Storage";
 

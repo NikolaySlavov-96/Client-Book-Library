@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 
 import { Select, SearchField } from "../../molecules";
 
-import { SEARCH_NAME } from "../../../constants";
+import { SEARCH_NAME } from "../../../constants2";
 
 import { useForm, useStoreZ } from "../../../hooks";
 
