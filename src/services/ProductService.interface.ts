@@ -39,21 +39,11 @@ export interface ICreateProductRequest {
     author: string;
     productTitle: string;
     genre: string;
+    filesId?: number[],
 }
 
 export interface ICreateProductResponse {
     productId: number;
-}
-
-export interface ISendFileRequest {
-    deliverFile: File;
-    src: string;
-    fileId: number;
-}
-
-export interface ISendFileResponse {
-    resourcePath: string;
-    fileId: number;
 }
 
 export interface IEditProductRequest { }

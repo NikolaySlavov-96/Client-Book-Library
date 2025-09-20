@@ -27,7 +27,6 @@ const _Header = () => {
                     {
                         !!email ? (
                             <>
-                                {/* <NavigationButton path={ROUT_NAMES.CREATE_PRODUCT} title={HEADER_BUTTON_TITLES.CREATE_PRODUCT} isDisabled={!isVerifyUser} /> */}
                                 <NavigationButton path={ROUT_NAMES.USER_COLLECTION} title={HEADER_BUTTON_TITLES.COLLECTION_OF_PRODUCTS} />
                                 <NavigationButton path="/" onCustomClick={onPressLogout} title={HEADER_BUTTON_TITLES.LOGOUT} />
                             </>)
@@ -40,6 +39,7 @@ const _Header = () => {
                     {
                         userRole === 'support' ?
                             <>
+                                <NavigationButton path={ROUT_NAMES.CREATE_PRODUCT} title={HEADER_BUTTON_TITLES.CREATE_PRODUCT} isDisabled={!isVerifyUser} />
                                 <NavigationButton path={ROUT_NAMES.SUPPORT_CHAT} title={HEADER_BUTTON_TITLES.CHAT} />
                             </>
                             :

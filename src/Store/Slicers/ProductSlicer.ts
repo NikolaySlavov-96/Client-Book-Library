@@ -1,6 +1,6 @@
 import { StateCreator } from "zustand";
 
-import { ProductService as productService } from "../../services";
+import { ProductService as productService, FileService as fileService } from "../../services";
 
 import {
     IProductEmailType,
@@ -167,14 +167,13 @@ const createProductSlicer: StateCreator<IProductSlicer> = (set, get) => ({
     addProductWithImage: async (data, fileData) => {
         set({ isLoadingProductAddition: true });
         try {
-            const result = await productService.createProduct(data);
-
             const formData = new FormData();
             formData.append('deliverFile', fileData.file);
             formData.append('src', fileData.name);
-            formData.append('fileId', result?.productId.toString());
 
-            await productService.sendFile(formData as unknown as { deliverFile: File, src: string, fileId: number });
+            const fileResponseData = await fileService.sendFile(formData as unknown as { deliverFile: File, src: string });
+
+            await productService.createProduct({ ...data, filesId: [fileResponseData.fileId], });
 
             set({ isProductAdded: true });
         } catch (err) {

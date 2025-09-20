@@ -16,8 +16,6 @@ import {
     IGetStatesResponse,
     ISearchProductByEmailRequest,
     ISearchProductByEmailResponse,
-    ISendFileRequest,
-    ISendFileResponse,
 } from './ProductService.interface';
 
 const PREFIX = '/product'
@@ -32,8 +30,6 @@ export const getProducts = async (data: IGetProductsRequest): Promise<IGetProduc
 export const getProduct = async (id: string): Promise<IGetProductResponse> => api.get(`${PREFIX}/` + id);
 
 export const createProduct = async (data: ICreateProductRequest): Promise<ICreateProductResponse> => api.post(`${PREFIX}`, { inputData: data });
-
-export const sendFile = async (data: ISendFileRequest): Promise<ISendFileResponse> => api.post(`${PREFIX}/addImage`, { inputData: data, isImage: true });
 
 export const editProduct = async (id: string, data: IEditProductRequest): Promise<IEditProductResponse> => api.put(`${PREFIX}/` + id, { inputData: data });
 
