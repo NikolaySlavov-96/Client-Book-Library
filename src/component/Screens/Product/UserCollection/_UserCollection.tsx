@@ -91,7 +91,10 @@ const _UserCollection = () => {
                 onPressSearch={onSearchFunction}
             />
 
-            {isLoadingProductCollection ? <ListRenderProductSkeletons limit={pageLimit} /> : <ListRenderProduct data={productCollection?.rows || {}} />}
+            {isLoadingProductCollection ? (
+                <ListRenderProductSkeletons limit={pageLimit} viewType="row" />) : (
+                <ListRenderProduct data={productCollection?.rows || {}} viewType="row" />
+            )}
 
             <Pagination count={count} page={page} onSubmit={setPage} />
         </section >

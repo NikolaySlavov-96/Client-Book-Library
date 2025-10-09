@@ -71,7 +71,10 @@ const _Products = () => {
                 onPressSearch={onSearchFunction}
             />
 
-            {isLoadingProducts ? <ListRenderProductSkeletons limit={pageLimit} /> : <ListRenderProduct data={products?.rows || []} />}
+            {isLoadingProducts ? (
+                <ListRenderProductSkeletons limit={pageLimit} viewType="row" />) : (
+                <ListRenderProduct data={products?.rows || []} viewType="row" />
+            )}
 
             <Pagination count={count} page={page} onSubmit={setPage} />
         </section >

@@ -7,6 +7,7 @@ import { Pagination } from "../../../molecules";
 import { QueryBar, ListRenderProduct } from "../../../organisms";
 
 import { useStoreZ } from "../../../../hooks";
+import { ListRenderProductSkeletons } from "../../../../Skeleton/organisms";
 
 const SECTION_TITLE = 'Review user books - ??with email';
 
@@ -36,7 +37,10 @@ const _SearchByEmail = () => {
                 onPressSearch={(data) => console.log('SearchByEmail', data)}
             />
 
-            <ListRenderProduct data={productByEmail?.rows || []} />
+            {isLoadingProductByEmails ? (
+                <ListRenderProductSkeletons limit={pageLimit} viewType="row" />) : (
+                <ListRenderProduct data={productByEmail?.rows || []} viewType="row" />
+            )}
 
             <Pagination count={count} page={page} onSubmit={setPage} />
         </section >

@@ -1,6 +1,11 @@
-.list__item {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 60px 0;
-  }
+.item {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 60px 0;
+}
+
+.row__item {
+  display: block;
+  width: 100%;
+}
