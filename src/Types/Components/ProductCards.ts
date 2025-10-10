@@ -1,1 +1,1 @@
-export type TViewType = 'row' | 'list';
+export type TViewType = 'list' | 'grid';

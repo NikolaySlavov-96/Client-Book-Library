@@ -38,8 +38,8 @@ const _SearchByEmail = () => {
             />
 
             {isLoadingProductByEmails ? (
-                <ListRenderProductSkeletons limit={pageLimit} viewType="row" />) : (
-                <ListRenderProduct data={productByEmail?.rows || []} viewType="row" />
+                <ListRenderProductSkeletons limit={pageLimit} viewType="list" />) : (
+                <ListRenderProduct data={productByEmail?.rows || []} viewType="list" />
             )}
 
             <Pagination count={count} page={page} onSubmit={setPage} />

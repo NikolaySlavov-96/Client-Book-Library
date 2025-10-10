@@ -92,8 +92,8 @@ const _UserCollection = () => {
             />
 
             {isLoadingProductCollection ? (
-                <ListRenderProductSkeletons limit={pageLimit} viewType="row" />) : (
-                <ListRenderProduct data={productCollection?.rows || {}} viewType="row" />
+                <ListRenderProductSkeletons limit={pageLimit} viewType="list" />) : (
+                <ListRenderProduct data={productCollection?.rows || {}} viewType="list" />
             )}
 
             <Pagination count={count} page={page} onSubmit={setPage} />

@@ -4,11 +4,11 @@ import { ViewElement } from '../../atoms';
 
 import { IProductSkeleton } from "../Types/Product";
 
-import style from './_ProductCardSkeleton.module.css';
+import style from './_ListProductCardSkeleton.module.css';
 
 const DEFAULT_HEIGHT = 20;
 
-const _ProductCardSkeleton: FC<IProductSkeleton> = (props) => {
+const _ListProductCardSkeleton: FC<IProductSkeleton> = (props) => {
     const {
         hasTitle = true,
     } = props;
@@ -30,4 +30,4 @@ const _ProductCardSkeleton: FC<IProductSkeleton> = (props) => {
     );
 };
 
-export default memo(_ProductCardSkeleton);
+export default memo(_ListProductCardSkeleton);

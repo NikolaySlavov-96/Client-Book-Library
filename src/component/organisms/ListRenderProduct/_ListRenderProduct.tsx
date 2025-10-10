@@ -22,7 +22,7 @@ const _ListRenderProduct: FC<IListRenderProductProps> = (props) => {
     const { data, viewType } = props;
 
     const containerStyles = useMemo(() => {
-        if (viewType === 'row') {
+        if (viewType === 'list') {
             return `${styles.item} ${styles[`${viewType}__item`]}`
         }
         return styles['item']

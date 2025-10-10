@@ -1,7 +1,7 @@
 import { FC, memo, useCallback, useMemo } from "react";
 
 import { List } from "../../../component/atoms";
-import { ProductCardRowSkeleton, ProductCardSkeleton } from "../../molecules";
+import { ListProductCardSkeleton, GridProductCardSkeleton } from "../../molecules";
 
 import styles from './_ListRenderProductSkeleton.module.css';
 import { TViewType } from "~/Types/Components";
@@ -23,8 +23,8 @@ const _ListRenderProductSkeleton: FC<IListRenderProductSkeletonProps> = (props) 
     ), [limit]);
 
     const component: Record<TViewType, any> = {
-        list: ProductCardSkeleton,
-        row: ProductCardRowSkeleton,
+        list: ListProductCardSkeleton,
+        grid: GridProductCardSkeleton,
     }
 
     const renderItem = useCallback(({ item }: { item: { [key: number]: string } }) => {

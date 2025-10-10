@@ -72,8 +72,8 @@ const _Products = () => {
             />
 
             {isLoadingProducts ? (
-                <ListRenderProductSkeletons limit={pageLimit} viewType="row" />) : (
-                <ListRenderProduct data={products?.rows || []} viewType="row" />
+                <ListRenderProductSkeletons limit={pageLimit} viewType="list" />) : (
+                <ListRenderProduct data={products?.rows || []} viewType="list" />
             )}
 
             <Pagination count={count} page={page} onSubmit={setPage} />

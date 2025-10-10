@@ -4,14 +4,14 @@
   overflow: hidden;
 }
 
-.list__container {
+.grid__container {
   height: 300px;
   width: 300px;
   margin: 0 2rem 2rem 0;
   position: relative;
 }
 
-.row__container {
+.list__container {
   height: 60px;
   width: 100%;
   display: flex;
