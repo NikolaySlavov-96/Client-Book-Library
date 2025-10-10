@@ -15,17 +15,17 @@ interface IListRenderProductSkeletonProps {
     viewType: TViewType;
 }
 
+const component: Record<TViewType, any> = {
+    list: ListProductCardSkeleton,
+    grid: GridProductCardSkeleton,
+}
+
 const _ListRenderProductSkeleton: FC<IListRenderProductSkeletonProps> = (props) => {
     const { limit, viewType } = props;
 
     const renderedElements = useMemo(() => (
         Array.from({ length: limit }, (_, index) => index.toString())
     ), [limit]);
-
-    const component: Record<TViewType, any> = {
-        list: ListProductCardSkeleton,
-        grid: GridProductCardSkeleton,
-    }
 
     const renderItem = useCallback(({ item }: { item: { [key: number]: string } }) => {
         const Component = component[viewType];

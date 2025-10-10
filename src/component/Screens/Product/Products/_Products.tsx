@@ -56,8 +56,9 @@ const _Products = () => {
     }, []);
 
     useEffect(() => {
-        if (page || pageLimit || searchContent)
+        if (page || pageLimit || searchContent) {
             setSearchParams({ page: page.toString(), limit: pageLimit.toString(), content: searchContent });
+        }
 
         fetchProducts({ page: page, limit: pageLimit, searchContent });
     }, [fetchProducts, setSearchParams, pageLimit, page, searchContent]);
