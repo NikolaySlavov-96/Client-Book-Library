@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { useStoreZ } from "../../../../hooks";
+import { useStoreZ, useViewType } from "../../../../hooks";
 
 import { SectionTitle } from "../../../atoms";
 import { Pagination } from "../../../molecules";
@@ -25,6 +25,7 @@ const _UserCollection = () => {
     const [collection, setCollection] = useState(1);
     const [searchContent, setSearchContent] = useState('');
 
+    const { viewType, onChangeViewType } = useViewType();
     const { productStates, isLoadingProductCollection, productCollection, fetchProductCollection, pageLimit, setPageLimit } = useStoreZ();
 
     const mappedStates = useMemo(() => {
@@ -89,11 +90,13 @@ const _UserCollection = () => {
                 leftSelectData={collection || DEFAULT_LOADED_COLLECTION}
                 onPressLeftSelector={setCollection}
                 onPressSearch={onSearchFunction}
+                viewType={viewType}
+                onPressViewType={onChangeViewType}
             />
 
             {isLoadingProductCollection ? (
-                <ListRenderProductSkeletons limit={pageLimit} viewType="list" />) : (
-                <ListRenderProduct data={productCollection?.rows || {}} viewType="list" />
+                <ListRenderProductSkeletons limit={pageLimit} viewType={viewType} />) : (
+                <ListRenderProduct data={productCollection?.rows || {}} viewType={viewType} />
             )}
 
             <Pagination count={count} page={page} onSubmit={setPage} />
