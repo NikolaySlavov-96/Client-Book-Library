@@ -1,17 +1,8 @@
 .container {
+  margin: 0 2rem 2rem 0;
   background-color: var(--primary-accent);
   border-radius: 20px;
   overflow: hidden;
-}
-
-.grid__container {
-  height: 300px;
-  width: 300px;
-  margin: 0 2rem 2rem 0;
-  position: relative;
-}
-
-.list__container {
   height: 60px;
   width: 100%;
   display: flex;

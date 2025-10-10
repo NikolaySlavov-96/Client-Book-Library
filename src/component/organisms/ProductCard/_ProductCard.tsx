@@ -8,29 +8,29 @@ import { ROUT_NAMES } from "../../../constants";
 import { TProductCard } from "../../../Types/Product";
 
 import style from './_ProductCard.module.css';
+import { TViewType } from "~/Types/Components";
 
-const BUTTON_LABEL = 'View';
 
-const _ProductCard: FC<TProductCard> = (props) => {
+type TProductCardProps = TProductCard & {
+    viewType: TViewType;
+}
+
+const _ProductCard: FC<TProductCardProps> = (props) => {
     const {
         productTitle,
         productId,
+        viewType,
     } = props;
 
     return (
-        <article className={`shadow ${style["container"]}`}>
-
-            <ProductDetails {...props} hasTitle />
-
-            <div className={style['card__link']}>
-                <Link
-                    to={`${ROUT_NAMES.PRODUCT}/${productId}`}
-                    state={{ productTitle }}
-                >
-                    {BUTTON_LABEL}
-                </Link>
-            </div>
-        </article >
+        <Link
+            to={`${ROUT_NAMES.PRODUCT}/${productId}`}
+            state={{ productTitle }}
+        >
+            <article className={`shadow ${style.container} ${style[`${viewType}__container`]}`}>
+                <ProductDetails {...props} hasTitle />
+            </article >
+        </Link>
     );
 }
 

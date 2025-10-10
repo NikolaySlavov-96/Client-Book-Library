@@ -6,7 +6,8 @@ import { SectionTitle } from "../../../atoms";
 import { Pagination } from "../../../molecules";
 import { QueryBar, ListRenderProduct } from "../../../organisms";
 
-import { useStoreZ } from "../../../../hooks";
+import { useStoreZ, useViewType } from "../../../../hooks";
+import { ListRenderProductSkeletons } from "../../../../Skeleton/organisms";
 
 const SECTION_TITLE = 'Review user books - ??with email';
 
@@ -15,6 +16,7 @@ const _SearchByEmail = () => {
 
     const [page, setPage] = useState(1);
 
+    const { viewType, onChangeViewType } = useViewType();
     const { isLoadingProductByEmails, pageLimit, productByEmail, fetchProductsForEmail } = useStoreZ();
 
     const count = Math.ceil(productByEmail.count / pageLimit) || 0;
@@ -34,9 +36,14 @@ const _SearchByEmail = () => {
                 hasLeftSelector={false}
                 // TODO 
                 onPressSearch={(data) => console.log('SearchByEmail', data)}
+                viewType={viewType}
+                onPressViewType={onChangeViewType}
             />
 
-            <ListRenderProduct data={productByEmail?.rows || []} />
+            {isLoadingProductByEmails ? (
+                <ListRenderProductSkeletons limit={pageLimit} viewType={viewType} />) : (
+                <ListRenderProduct data={productByEmail?.rows || []} viewType={viewType} />
+            )}
 
             <Pagination count={count} page={page} onSubmit={setPage} />
         </section >

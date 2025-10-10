@@ -26,7 +26,7 @@ const _ProductDetails: FC<TProductDetails> = (props) => {
 
             {hasTitle ? <h1 className={style['product_title']}>{productTitle}</h1> : ''}
 
-            <div className={style['product__container']}>
+            <div>
                 {!hasTitle ? <p>Title: <span >{productTitle}</span></p> : null}
                 <p>Author: <span >{authorName}</span></p>
                 <p>Genre: <span >{productType}</span></p>

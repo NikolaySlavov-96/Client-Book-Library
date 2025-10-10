@@ -1,0 +1,7 @@
+.container {
+    cursor: pointer;
+}
+
+.container button {
+    background-color: transparent;
+}

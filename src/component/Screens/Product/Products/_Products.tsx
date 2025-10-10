@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { useStoreZ } from "../../../../hooks";
+import { useStoreZ, useViewType } from "../../../../hooks";
 
 import { SectionTitle } from "../../../atoms";
 import { Pagination } from "../../../molecules";
@@ -19,6 +19,7 @@ const _Products = () => {
     const [page, setPage] = useState(1);
     const [searchContent, setSearchContent] = useState('');
 
+    const { viewType, onChangeViewType } = useViewType();
     const { products, fetchProducts, pageLimit, setPageLimit, isLoadingProducts } = useStoreZ();
 
     const count = Math.ceil(products.count / pageLimit) || 0;
@@ -55,8 +56,9 @@ const _Products = () => {
     }, []);
 
     useEffect(() => {
-        if (page || pageLimit || searchContent)
+        if (page || pageLimit || searchContent) {
             setSearchParams({ page: page.toString(), limit: pageLimit.toString(), content: searchContent });
+        }
 
         fetchProducts({ page: page, limit: pageLimit, searchContent });
     }, [fetchProducts, setSearchParams, pageLimit, page, searchContent]);
@@ -69,9 +71,14 @@ const _Products = () => {
             <QueryBar
                 hasLeftSelector={false}
                 onPressSearch={onSearchFunction}
+                viewType={viewType}
+                onPressViewType={onChangeViewType}
             />
 
-            {isLoadingProducts ? <ListRenderProductSkeletons limit={pageLimit} /> : <ListRenderProduct data={products?.rows || []} />}
+            {isLoadingProducts ? (
+                <ListRenderProductSkeletons limit={pageLimit} viewType={viewType} />) : (
+                <ListRenderProduct data={products?.rows || []} viewType={viewType} />
+            )}
 
             <Pagination count={count} page={page} onSubmit={setPage} />
         </section >

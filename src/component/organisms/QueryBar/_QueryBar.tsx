@@ -1,7 +1,7 @@
 import { Dispatch, FC, memo, SetStateAction, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { Select, SearchField } from "../../molecules";
+import { Select, SearchField, LayoutIcon } from "../../molecules";
 
 import { SEARCH_NAME } from "../../../constants";
 
@@ -11,6 +11,7 @@ import { TOptionType } from "../../../Types/Select";
 import { IQueryBar } from "../../../Types/QueryBar";
 
 import style from './_QueryBar.module.css';
+import { TViewType } from "~/Types/Components";
 
 // TODO Moving
 const pageSizeOptions = [
@@ -38,6 +39,8 @@ interface IQueryBarProps {
     leftSelectData?: number;
     leftSelectorData?: TOptionType[];
     onPressLeftSelector?: Dispatch<SetStateAction<number>>,
+    viewType?: TViewType,
+    onPressViewType?: (viewTypeParam: TViewType) => void,
 }
 
 const _QueryBar: FC<IQueryBarProps> = (props) => {
@@ -47,6 +50,8 @@ const _QueryBar: FC<IQueryBarProps> = (props) => {
         leftSelectData,
         onPressLeftSelector,
         onPressSearch,
+        viewType,
+        onPressViewType,
     } = props;
 
     const [searchParams, setSearchParams] = useSearchParams();
@@ -87,12 +92,16 @@ const _QueryBar: FC<IQueryBarProps> = (props) => {
                 onSubmit={onSubmit}
             />
 
-            <Select
-                options={pageSizeOptions}
-                placeHolder={currentLimitParam || ''}
-                onChange={pageLimit}
-                size={'70'}
-            />
+            <div className={`${style['right__container']}`}>
+                {onPressViewType && viewType ? (<LayoutIcon typeView={viewType} onChange={onPressViewType} />) : null}
+
+                <Select
+                    options={pageSizeOptions}
+                    placeHolder={currentLimitParam || ''}
+                    onChange={pageLimit}
+                    size={'70'}
+                />
+            </div>
         </div>
     );
 };
