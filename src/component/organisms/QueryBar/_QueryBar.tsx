@@ -92,14 +92,16 @@ const _QueryBar: FC<IQueryBarProps> = (props) => {
                 onSubmit={onSubmit}
             />
 
-            {onPressViewType && viewType ? (<LayoutIcon typeView={viewType} onChange={onPressViewType} />) : null}
+            <div className={`${style['right__container']}`}>
+                {onPressViewType && viewType ? (<LayoutIcon typeView={viewType} onChange={onPressViewType} />) : null}
 
-            <Select
-                options={pageSizeOptions}
-                placeHolder={currentLimitParam || ''}
-                onChange={pageLimit}
-                size={'70'}
-            />
+                <Select
+                    options={pageSizeOptions}
+                    placeHolder={currentLimitParam || ''}
+                    onChange={pageLimit}
+                    size={'70'}
+                />
+            </div>
         </div>
     );
 };
