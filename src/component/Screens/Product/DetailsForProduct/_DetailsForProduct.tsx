@@ -1,107 +1,142 @@
-import { memo, useCallback, useEffect, useMemo } from "react";
-import { useNavigate, useParams } from "react-router-dom"
+import { memo, useCallback, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { IconActionButton } from "../../../atoms";
-import { ProductDetails, Select } from "../../../molecules";
+import NavBar from '../../../../component/molecules/NavBar/NavBar';
+import Badge from '../../../../component/atoms/Badge/Badge';
+import Button from '../../../../component/atoms/Button/Button';
 
-import { ProductDetailSkeleton, SelectSkeleton } from "../../../../Skeleton/molecules";
+import { useStoreZ } from '../../../../hooks';
+import { TEXTS } from '../../../../constants';
+import { EStatusId, STATUS_META, isValidStatusId } from '../../../../constants/statusMap';
 
-import { useAuthContext } from "../../../../contexts/AuthContext";
+import styles from './_DetailsForProduct.module.css';
 
-import { useStoreZ } from "../../../../hooks";
+const COVER_GRADIENTS = [
+  'linear-gradient(145deg, #5c4b8a, #3d3366)',
+  'linear-gradient(145deg, #8b5e3c, #6b4528)',
+  'linear-gradient(145deg, #2d6a4f, #1b4332)',
+  'linear-gradient(145deg, #374151, #1f2937)',
+  'linear-gradient(145deg, #1e6091, #0d3b6e)',
+  'linear-gradient(145deg, #7c3d3d, #5a2020)',
+  'linear-gradient(145deg, #8b1a1a, #6b1212)',
+  'linear-gradient(145deg, #4a5568, #2d3748)',
+  'linear-gradient(145deg, #6b4226, #4a2c18)',
+  'linear-gradient(145deg, #1a365d, #0f2340)',
+];
 
-import { FormatSelectOptions } from "../../../../Helpers";
-import { TOptionType } from "../../../../Types/Select";
-
-import style from './_DetailsForProduct.module.css';
-
-// TODO replace any
-const createProductOptions = (productState: any, mappedStates: any) => {
-    return mappedStates.filter((b: any) => b.value !== productState)
-}
-
-const DEFAULT_MESSAGE = 'Please select...';
+const STATUS_BUTTONS: EStatusId[] = [EStatusId.WANT, EStatusId.READING, EStatusId.READ];
 
 const _DetailsForProduct = () => {
-    const { id } = useParams();
-    const navigate = useNavigate();
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-    const { email } = useAuthContext();
-    const { productStates, fetchProductById, productById, isLoadingProduct, fetchProductState, addingProductState, productState } = useStoreZ();
+  const {
+    isAuthenticated,
+    fetchProductById,
+    productById,
+    isLoadingProduct,
+    fetchProductState,
+    addingProductState,
+    productState,
+    email,
+  } = useStoreZ();
 
-    const mappedStates = useMemo(() => {
-        const data = FormatSelectOptions(productStates, { value: 'id', label: 'stateName' });
-        return data;
-    }, [productStates]);
+  const currentStatusId = productState?.stateId ?? 0;
 
-    const changeState = useCallback((e: TOptionType, id: string) => {
-        const state = e.value;
-        addingProductState(id, state);
-    }, [addingProductState]);
+  const handleBack = useCallback(() => navigate(-1), [navigate]);
 
-    const onPressBackButton = useCallback(() => {
-        navigate(-1);
-    }, [navigate]);
+  const handleStatusChange = useCallback((statusId: EStatusId) => {
+    if (id) addingProductState(id, String(statusId));
+  }, [id, addingProductState]);
 
-    const selectedLabel = useMemo(() => {
-        const hasProductState = productState && typeof productState.stateId === 'number' && productState.stateId !== 0
-        const hasMappedStates = !!mappedStates.length
-        if (hasProductState && hasMappedStates) {
-            return mappedStates[productState.stateId - 1].label
-        }
-        return DEFAULT_MESSAGE
-    }, [mappedStates, productState]);
-
-    const selectOptions = useMemo(() => (
-        createProductOptions(productState?.stateId, mappedStates)
-    ), [productState?.stateId, mappedStates]);
-
-    useEffect(() => {
-        const productId = id?.toString();
-        if (productId && productId !== '0') {
-            fetchProductById(productId);
-        }
-    }, [id, fetchProductById]);
-
-    useEffect(() => {
-        const productId = id?.toString();
-        if (!!email && productId && productId !== '0') {
-            fetchProductState(productId);
-        }
-    }, [id, fetchProductState, email])
-
-    const productId = productById?.productId?.toString();
-    if (!isLoadingProduct && productId === '0') {
-        return null;
+  useEffect(() => {
+    if (id && id !== '0') {
+      fetchProductById(id);
     }
+  }, [id, fetchProductById]);
 
-    return (
-        <section className={style['detail__card']}>
+  useEffect(() => {
+    if (email && id && id !== '0') {
+      fetchProductState(id);
+    }
+  }, [id, email, fetchProductState]);
 
-            <IconActionButton onClick={onPressBackButton} />
+  const coverGradient = COVER_GRADIENTS[(productById?.productId ?? 0) % COVER_GRADIENTS.length];
 
-            <div className={style['product-card__detail']}>
-                {isLoadingProduct ?
-                    <ProductDetailSkeleton /> :
-                    <ProductDetails {...productById} />}
+  return (
+    <>
+      <NavBar />
+      <main className={styles.wrap}>
+        <button className={styles.back} onClick={handleBack} type="button">
+          {TEXTS.DETAIL_BACK}
+        </button>
+
+        {isLoadingProduct ? (
+          <div className={styles.loading}>{TEXTS.COMMON_LOADING}</div>
+        ) : (
+          <div className={styles.grid}>
+            <div className={styles.cover} style={{ background: coverGradient }}>
+              {productById?.fileUrl ? (
+                <img
+                  className={styles.cover__img}
+                  src={productById.fileUrl}
+                  alt={productById.fileSrc ?? productById.productTitle}
+                />
+              ) : (
+                <span className={styles.cover__placeholder}>{productById?.productTitle}</span>
+              )}
+              {isValidStatusId(currentStatusId) ? (
+                <div className={styles.cover__badge}>
+                  <Badge statusId={currentStatusId} badgeStyle="solid" />
+                </div>
+              ) : null}
             </div>
 
-            {!!email ?
-                isLoadingProduct ?
-                    <SelectSkeleton />
-                    : (
-                        <div className={`${style['functionality']}`}>
-                            <Select
-                                options={selectOptions}
-                                placeHolder={selectedLabel}
-                                onChange={(e) => changeState(e, productId)}
-                                size='70'
-                            />
-                        </div>)
-                : null
-            }
-        </section>
-    );
-}
+            <div className={styles.info}>
+              <p className={styles.info__genre}>{productById?.authorGenre ?? TEXTS.COMMON_PLACEHOLDER_VALUE}</p>
+              <h1 className={styles.info__title}>{productById?.productTitle}</h1>
+              <p className={styles.info__author}>{productById?.authorName}</p>
+
+              <div className={styles.stats}>
+                <div className={styles.stat}>
+                  <span className={styles.stat__value}>{TEXTS.COMMON_PLACEHOLDER_VALUE}</span>
+                  <span className={styles.stat__label}>{TEXTS.DETAIL_PAGES}</span>
+                </div>
+                <div className={styles.stat}>
+                  <span className={styles.stat__value}>{TEXTS.COMMON_PLACEHOLDER_VALUE}</span>
+                  <span className={styles.stat__label}>{TEXTS.DETAIL_YEAR}</span>
+                </div>
+                <div className={styles.stat}>
+                  <span className={styles.stat__value}>{TEXTS.COMMON_PLACEHOLDER_VALUE}</span>
+                  <span className={styles.stat__label}>{TEXTS.DETAIL_RATING}</span>
+                </div>
+              </div>
+
+              <p className={styles.desc}>{TEXTS.DETAIL_DESC_PLACEHOLDER}</p>
+
+              {isAuthenticated ? (
+                <div className={styles.actions}>
+                  <p className={styles.actions__label}>{TEXTS.DETAIL_ADD_TO_SHELF}</p>
+                  <div className={styles.actions__btns}>
+                    {STATUS_BUTTONS.map((sid) => (
+                      <Button
+                        key={sid}
+                        label={STATUS_META[sid].label}
+                        variant={currentStatusId === sid ? 'primary' : 'outline'}
+                        size="sm"
+                        onClick={() => handleStatusChange(sid)}
+                        ariaLabel={`${TEXTS.DETAIL_ADD_TO_SHELF}: ${STATUS_META[sid].label}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+            </div>
+          </div>
+        )}
+      </main>
+    </>
+  );
+};
 
 export default memo(_DetailsForProduct);

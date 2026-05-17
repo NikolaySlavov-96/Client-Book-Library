@@ -1,4 +1,4 @@
-import { io, ManagerOptions, Socket, SocketOptions } from "socket.io-client";
+import { io, ManagerOptions, Socket, SocketOptions } from "../lib/socket";
 
 import { HOST } from "../constants";
 import { EReceiveEvents, ESendEvents, } from '../constants';

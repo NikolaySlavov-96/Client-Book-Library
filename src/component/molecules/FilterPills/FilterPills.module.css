@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-5);
+}
+
+.pill {
+  padding: 6px var(--spacing-4);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  border: var(--border-default);
+  background: var(--white);
+  color: var(--ink-2);
+  transition: var(--transition-fast);
+  font-family: var(--font-sans);
+}
+
+.pill:hover {
+  border-color: var(--accent-2);
+  color: var(--accent);
+}
+
+.pill--active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--white);
+}

@@ -1,0 +1,39 @@
+.container {
+  background: var(--cream-2);
+  border-radius: var(--spacing-2);
+  padding: var(--spacing-4) var(--spacing-5);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-5);
+  margin-bottom: var(--spacing-7);
+}
+
+.label {
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+.track {
+  flex: 1;
+  height: 6px;
+  background: var(--cream-3);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.pct {
+  font-size: var(--text-sm);
+  color: var(--ink-3);
+  min-width: 36px;
+  text-align: right;
+  flex-shrink: 0;
+}

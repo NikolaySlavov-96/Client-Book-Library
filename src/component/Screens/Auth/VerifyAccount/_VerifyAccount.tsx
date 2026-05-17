@@ -1,20 +1,17 @@
 import { memo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useAuthContext } from '../../../../contexts/AuthContext';
-
+import { useStoreZ } from '../../../../hooks';
 
 const _VerifyAccount = () => {
+  const { verifyToken } = useParams();
+  const { verifyAccountWithToken } = useStoreZ();
 
-    const { verifyToken } = useParams();
-    const { verifyAccountWithToken } = useAuthContext();
+  useEffect(() => {
+    verifyAccountWithToken(verifyToken);
+  }, [verifyToken, verifyAccountWithToken]);
 
-    useEffect(() => {
-        verifyAccountWithToken(verifyToken);
-    }, []);
-
-
-    return (<></>);
-}
+  return null;
+};
 
 export default memo(_VerifyAccount);

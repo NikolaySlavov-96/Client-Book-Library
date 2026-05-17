@@ -11,3 +11,13 @@ export { default as Select } from './Select/_Select';
 
 // Modals
 export { default as NewProductModal } from './Modals/NewProductModal/_NewProductModal';
+
+// New design-system molecules
+export { default as NavBar } from './NavBar/NavBar';
+export { default as BookCard } from './BookCard/BookCard';
+export { default as ShelfCard } from './ShelfCard/ShelfCard';
+export { default as FilterPills } from './FilterPills/FilterPills';
+export { default as ShelfTabs } from './ShelfTabs/ShelfTabs';
+export { default as ProgressBar } from './ProgressBar/ProgressBar';
+export { default as AuthTabs } from './AuthTabs/AuthTabs';
+export { default as SearchModal } from './SearchModal/SearchModal';

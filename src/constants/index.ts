@@ -12,3 +12,6 @@ export { STORAGE_KEYS } from './_storageVariables';
 export { HOST } from './_connectionData';
 
 export { E_FORM_NAMES, E_FORM_FIELDS } from './_form';
+export { TEXTS } from './texts';
+export { EStatusId, STATUS_META, STATUS_IDS, isValidStatusId } from './statusMap';
+export type { TStatusKey } from './statusMap';

@@ -6,8 +6,6 @@ import { EReceiveEvents, ESendEvents, MODAL_NAMES, STORAGE_KEYS } from '../const
 
 import { useGetUserAddress, useStoreZ } from "../hooks";
 
-import { useAuthContext } from "../contexts/AuthContext";
-
 import { IMessage } from "~/Store/Slicers/SupportSlicer";
 
 const onUnsubscribe = () => {
@@ -15,7 +13,7 @@ const onUnsubscribe = () => {
 }
 
 const _Socket = () => {
-    const { userRole, token } = useAuthContext();
+    const { userRole, token } = useStoreZ();
 
     const {
         connectId,
@@ -49,13 +47,9 @@ const _Socket = () => {
         SocketService.connect(token);
 
         SocketService.subscribeToEvent(EReceiveEvents.ERROR, (data) => console.log(data));
-
         SocketService.subscribeToEvent(EReceiveEvents.NEW_PRODUCT_ADDED, result);
-
         SocketService.subscribeToEvent(EReceiveEvents.USER_CONNECT, updateCountOfVisitors);
-
         SocketService.subscribeToEvent(EReceiveEvents.SUPPORT_CHAT_USER_JOIN_ACKNOWLEDGMENT, setWelcomeMessage);
-
         SocketService.subscribeToEvent(EReceiveEvents.NOTIFY_FOR_CREATE_ROOM, notifyForCreatedRoom);
         SocketService.subscribeToEvent(EReceiveEvents.NOTIFY_ADMINS_OF_NEW_USER, setUsers);
 
@@ -93,17 +87,8 @@ const _Socket = () => {
         }
     }, [setRooms]);
 
-    // useEffect(() => {
-    //     SocketService.subscribeToEvent(EReceiveEvents.SUPPORT_ACTIVITY, (data: { connectId: string }) => {
-    //         if (connectId !== data.connectId) {
-    //         }
-    //         console.log(data);
-    //     });
-
-    // }, [connectId])
-
     useEffect(() => {
-        if (userAddressData.hasOwnProperty('IPv4')) {
+        if (Object.prototype.hasOwnProperty.call(userAddressData, 'IPv4')) {
             SocketService.sendData(ESendEvents.USER_CONNECT, userAddressData);
         }
     }, [userAddressData]);

@@ -1,107 +1,164 @@
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { useStoreZ, useViewType } from "../../../../hooks";
+import NavBar from '../../../../component/molecules/NavBar/NavBar';
+import Avatar from '../../../../component/atoms/Avatar/Avatar';
+import ShelfTabs from '../../../../component/molecules/ShelfTabs/ShelfTabs';
+import ProgressBar from '../../../../component/molecules/ProgressBar/ProgressBar';
+import ShelfGrid from '../../../../component/organisms/ShelfGrid/ShelfGrid';
 
-import { SectionTitle } from "../../../atoms";
-import { Pagination } from "../../../molecules";
-import { QueryBar, ListRenderProduct } from "../../../organisms";
+import { useStoreZ } from '../../../../hooks';
+import { ROUT_NAMES, TEXTS } from '../../../../constants';
+import { type ITexts } from '../../../../constants/texts';
+import { EStatusId } from '../../../../constants/statusMap';
+import { IProductWithState } from '../../../../Store/Slicers/ProductSlicer.interface';
 
-import { ListRenderProductSkeletons } from "../../../../Skeleton/organisms";
+import styles from './_UserCollection.module.css';
 
-import { QUERY_LIMIT, SEARCH_NAME } from "../../../../constants";
+const YEAR_GOAL = 12;
 
-import { IQueryBar } from "../../../../Types/QueryBar";
+type TTabValue = 'all' | 'read' | 'reading' | 'want' | 'listening' | 'listened';
 
-import { FormatSelectOptions } from "../../../../Helpers";
+interface ITabConfig {
+  readonly value: TTabValue;
+  readonly labelKey: keyof ITexts;
+  readonly statusId: number;
+}
 
-const DEFAULT_LOADED_COLLECTION = 1;
-const SECTION_TITLE = 'Collection of Books';
+const SHELF_TABS_CONFIG: readonly ITabConfig[] = [
+  { value: 'all', labelKey: 'SHELF_TAB_ALL', statusId: 0 },
+  { value: 'read', labelKey: 'SHELF_TAB_READ', statusId: EStatusId.READ },
+  { value: 'reading', labelKey: 'SHELF_TAB_READING', statusId: EStatusId.READING },
+  { value: 'want', labelKey: 'SHELF_TAB_WANT', statusId: EStatusId.WANT },
+  { value: 'listening', labelKey: 'SHELF_TAB_LISTENING', statusId: EStatusId.LISTENING },
+  { value: 'listened', labelKey: 'SHELF_TAB_LISTENED', statusId: EStatusId.LISTENED },
+];
+
+const isTabValue = (v: string): v is TTabValue => SHELF_TABS_CONFIG.some((t) => t.value === v);
 
 const _UserCollection = () => {
-    const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<TTabValue>('all');
+  const [friendEmail, setFriendEmail] = useState('');
 
-    const [page, setPage] = useState(1);
-    const [collection, setCollection] = useState(1);
-    const [searchContent, setSearchContent] = useState('');
+  const {
+    email,
+    productCollection,
+    fetchProductCollection,
+    pageLimit,
+    isLoadingProductCollection,
+  } = useStoreZ();
 
-    const { viewType, onChangeViewType } = useViewType();
-    const { productStates, isLoadingProductCollection, productCollection, fetchProductCollection, pageLimit, setPageLimit } = useStoreZ();
+  const initials = email ? email.slice(0, 2).toUpperCase() : '';
+  const username = email ? email.split('@')[0] : TEXTS.NAV_GUEST;
 
-    const mappedStates = useMemo(() => {
-        const data = FormatSelectOptions(productStates, { value: 'id', label: 'stateName' });
-        return data;
-    }, [productStates]);
+  useEffect(() => {
+    fetchProductCollection({ page: 1, limit: 999, type: 0, searchContent: '' });
+  }, [fetchProductCollection]);
 
-    const count = Math.ceil(productCollection.count / pageLimit) || 0;
+  const allBooks: IProductWithState[] = useMemo(
+    () => productCollection.rows,
+    [productCollection.rows]
+  );
 
-    const onSearchFunction = useCallback((data: IQueryBar) => {
-        // Always set on initial search
-        setPage(1);
-        setSearchContent(data.search)
-    }, [setSearchContent, setPage]);
+  const filteredBooks = useMemo(() => {
+    if (activeTab === 'all') return allBooks;
+    const tab = SHELF_TABS_CONFIG.find((t) => t.value === activeTab);
+    if (!tab || tab.statusId === 0) return allBooks;
+    return allBooks.filter((b) => b.productStateId === tab.statusId);
+  }, [allBooks, activeTab]);
 
-    useEffect(() => {
-        const searchPage = Number(searchParams.get(SEARCH_NAME.PAGE));
-        const searchLimit = Number(searchParams.get(SEARCH_NAME.LIMIT));
-        const collectionNumber = Number(searchParams.get(SEARCH_NAME.COLLECTION));
-        const searchContent = searchParams.get(SEARCH_NAME.CONTENT);
+  const tabsWithCount = useMemo(
+    () =>
+      SHELF_TABS_CONFIG.map((t) => ({
+        value: t.value,
+        label: TEXTS[t.labelKey],
+        count:
+          t.statusId === 0
+            ? allBooks.length
+            : allBooks.filter((b) => b.productStateId === t.statusId).length,
+      })),
+    [allBooks]
+  );
 
-        if (!searchPage) {
-            setPage(QUERY_LIMIT.PAGE);
-        } else {
-            setPage(searchPage);
-        }
-        if (!searchLimit) {
-            setPageLimit(QUERY_LIMIT.LIMIT);
-        } else {
-            setPageLimit(searchLimit);
-        }
-        if (!collectionNumber) {
-            setCollection(QUERY_LIMIT.COLLECTION)
-        } else {
-            setCollection(collectionNumber)
-        }
+  const readCount = allBooks.filter((b) => b.productStateId === EStatusId.READ).length;
+  const readingCount = allBooks.filter((b) => b.productStateId === EStatusId.READING).length;
+  const listenedCount = allBooks.filter((b) => b.productStateId === EStatusId.LISTENED).length;
 
-        if (searchContent) {
-            setSearchContent(searchContent);
-        }
+  const handleFriendView = useCallback(() => {
+    if (friendEmail.trim()) {
+      navigate(`${ROUT_NAMES.REVIEW_PRODUCTS_BY_EMAIL.replace(':email', '')}${encodeURIComponent(friendEmail.trim())}`);
+    }
+  }, [friendEmail, navigate]);
 
-        if (!searchPage || !searchLimit || !collectionNumber) {
-            setSearchParams({ page: QUERY_LIMIT.PAGE.toString(), limit: QUERY_LIMIT.LIMIT.toString(), collectionNumber: QUERY_LIMIT.COLLECTION.toString() });
-        }
-    }, []);
+  return (
+    <>
+      <NavBar />
+      <main className={styles.wrap}>
+        <header className={styles.header}>
+          <Avatar initials={initials} size="lg" />
+          <div className={styles.header__info}>
+            <h1 className={styles.header__name}>{username}</h1>
+            <p className={styles.header__email}>{email}</p>
+            <div className={styles.stats}>
+              <div className={styles.stat}>
+                <span className={styles.stat__n}>{allBooks.length}</span>
+                <span className={styles.stat__l}>{TEXTS.PROFILE_STAT_TOTAL}</span>
+              </div>
+              <div className={styles.stat}>
+                <span className={styles.stat__n}>{readCount}</span>
+                <span className={styles.stat__l}>{TEXTS.PROFILE_STAT_READ}</span>
+              </div>
+              <div className={styles.stat}>
+                <span className={styles.stat__n}>{readingCount}</span>
+                <span className={styles.stat__l}>{TEXTS.PROFILE_STAT_READING}</span>
+              </div>
+              <div className={styles.stat}>
+                <span className={styles.stat__n}>{listenedCount}</span>
+                <span className={styles.stat__l}>{TEXTS.PROFILE_STAT_LISTENED}</span>
+              </div>
+            </div>
+          </div>
+        </header>
 
-    useEffect(() => {
-        if (page || pageLimit || collection || searchContent) {
-            setSearchParams({ page: page.toString(), limit: pageLimit.toString(), collection: collection.toString(), content: searchContent });
-        }
-        fetchProductCollection({ page: page, limit: pageLimit, type: collection, searchContent });
-    }, [fetchProductCollection, setSearchParams, pageLimit, page, collection, searchContent]);
+        <ProgressBar
+          current={readCount}
+          goal={YEAR_GOAL}
+          label={TEXTS.PROFILE_GOAL_LABEL}
+        />
 
-    return (
-        <section className={'content__page'}>
+        <div className={styles.friendBar}>
+          <label className={styles.friendBar__label} htmlFor="friend-email">
+            {TEXTS.PROFILE_FRIEND_LABEL}
+          </label>
+          <input
+            id="friend-email"
+            className={styles.friendBar__input}
+            type="email"
+            placeholder={TEXTS.PROFILE_FRIEND_PLACEHOLDER}
+            value={friendEmail}
+            onChange={(e) => setFriendEmail(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' ? handleFriendView() : undefined}
+          />
+          <button className={styles.friendBar__btn} onClick={handleFriendView} type="button">
+            {TEXTS.PROFILE_FRIEND_BTN}
+          </button>
+        </div>
 
-            <SectionTitle content={SECTION_TITLE} />
+        <ShelfTabs
+          tabs={tabsWithCount}
+          activeValue={activeTab}
+          onSelect={(v) => { if (isTabValue(v)) setActiveTab(v); }}
+        />
 
-            <QueryBar
-                hasLeftSelector={!!mappedStates.length}
-                leftSelectorData={mappedStates}
-                leftSelectData={collection || DEFAULT_LOADED_COLLECTION}
-                onPressLeftSelector={setCollection}
-                onPressSearch={onSearchFunction}
-                viewType={viewType}
-                onPressViewType={onChangeViewType}
-            />
-
-            {isLoadingProductCollection ? (
-                <ListRenderProductSkeletons limit={pageLimit} viewType={viewType} />) : (
-                <ListRenderProduct data={productCollection?.rows || {}} viewType={viewType} />
-            )}
-
-            <Pagination count={count} page={page} onSubmit={setPage} />
-        </section >
-    );
-}
+        {isLoadingProductCollection ? (
+          <div className={styles.loading}>{TEXTS.COMMON_LOADING}</div>
+        ) : (
+          <ShelfGrid books={filteredBooks} />
+        )}
+      </main>
+    </>
+  );
+};
 
 export default memo(_UserCollection);

@@ -1,4 +1,4 @@
-import Swal from 'sweetalert2';
+import { Swal } from '../lib/toast';
 
 import { IToastGlobal } from './ToastInterface';
 

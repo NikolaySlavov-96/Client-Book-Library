@@ -1,23 +1,36 @@
-import { create } from "zustand";
-import { persist } from 'zustand/middleware';
+import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
-import createCommonSlicer, { ICommonSlicer } from "../Store/Slicers/CommonSlicer";
-import createModalSlicer, { IModalSlicer } from "../Store/Slicers/ModalSlicer";
-import createSupportSlicer, { ISupportSlicer } from "../Store/Slicers/SupportSlicer";
-import createProductSlicer, { IProductSlicer } from "../Store/Slicers/ProductSlicer";
+import createCommonSlicer, { ICommonSlicer } from '../Store/Slicers/CommonSlicer';
+import createModalSlicer, { IModalSlicer } from '../Store/Slicers/ModalSlicer';
+import createSupportSlicer, { ISupportSlicer } from '../Store/Slicers/SupportSlicer';
+import createProductSlicer, { IProductSlicer } from '../Store/Slicers/ProductSlicer';
+import createAuthSlicer, { IAuthSlicer } from '../Store/Slicers/AuthSlicer';
 
-import { STORAGE_KEYS } from "../constants";
+type TStoreState = IAuthSlicer & IModalSlicer & ISupportSlicer & ICommonSlicer & IProductSlicer;
 
-// const commonSlicerPersist = persist(createCommonSlicer, {
-//     name: STORAGE_KEYS.CONNECT_ID
-// })
-type StoreState = IModalSlicer & ISupportSlicer & ICommonSlicer & IProductSlicer;
-
-const _useStoreZ = create<StoreState>((set, get, store) => ({
-    ...createModalSlicer(set, get, store),
-    ...createSupportSlicer(set, get, store),
-    ...createCommonSlicer(set, get, store),
-    ...createProductSlicer(set, get, store),
-}));
+const _useStoreZ = create<TStoreState>()(
+  persist(
+    (set, get, store) => ({
+      ...createAuthSlicer(set, get, store),
+      ...createModalSlicer(set, get, store),
+      ...createSupportSlicer(set, get, store),
+      ...createCommonSlicer(set, get, store),
+      ...createProductSlicer(set, get, store),
+    }),
+    {
+      name: '@Product_AuthState',
+      storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({
+        email: state.email,
+        token: state.token,
+        userId: state.userId,
+        userRole: state.userRole,
+        isAuthenticated: state.isAuthenticated,
+        isVerifyUser: state.isVerifyUser,
+      }),
+    }
+  )
+);
 
 export default _useStoreZ;
