@@ -1,6 +1,5 @@
 export { default as CreateProduct } from './CreateProduct/_CreateProduct';
 export { default as DetailsForProduct } from './Product/DetailsForProduct/_DetailsForProduct';
-export { default as Helmet } from './Helmet/_Helmet';
 export { default as Login } from './Auth/Login/_Login';
 export { default as Products } from './Product/Products/_Products';
 export { default as Register } from './Auth/Register/_Register';

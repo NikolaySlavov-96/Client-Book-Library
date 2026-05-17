@@ -1,8 +1,8 @@
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import NavBar from '../../../../component/molecules/NavBar/NavBar';
 import Avatar from '../../../../component/atoms/Avatar/Avatar';
+import Button from '../../../../component/atoms/Button/Button';
 import ShelfTabs from '../../../../component/molecules/ShelfTabs/ShelfTabs';
 import ProgressBar from '../../../../component/molecules/ProgressBar/ProgressBar';
 import ShelfGrid from '../../../../component/organisms/ShelfGrid/ShelfGrid';
@@ -92,9 +92,7 @@ const _UserCollection = () => {
   }, [friendEmail, navigate]);
 
   return (
-    <>
-      <NavBar />
-      <main className={styles.wrap}>
+    <main className={styles.wrap}>
         <header className={styles.header}>
           <Avatar initials={initials} size="lg" />
           <div className={styles.header__info}>
@@ -118,6 +116,16 @@ const _UserCollection = () => {
                 <span className={styles.stat__l}>{TEXTS.PROFILE_STAT_LISTENED}</span>
               </div>
             </div>
+          </div>
+          <div className={styles.header__actions}>
+            <Button
+              label={TEXTS.PROFILE_SETTINGS}
+              variant="outline"
+              size="sm"
+              isDisabled
+              title={TEXTS.COMMON_COMING_SOON}
+              ariaLabel={`${TEXTS.PROFILE_SETTINGS} — ${TEXTS.COMMON_COMING_SOON}`}
+            />
           </div>
         </header>
 
@@ -157,7 +165,6 @@ const _UserCollection = () => {
           <ShelfGrid books={filteredBooks} />
         )}
       </main>
-    </>
   );
 };
 

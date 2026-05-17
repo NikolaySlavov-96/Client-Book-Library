@@ -1,9 +1,10 @@
 .container {
-  padding-top: 4px;
+  padding-top: var(--spacing-1);
   height: 300px;
   width: 300px;
-  margin: 0 2rem 2rem 0;
-  background-color: var(--primary-accent);
-  border-radius: 20px;
+  margin: 0 var(--spacing-8) var(--spacing-8) 0;
+  background: var(--cream-2);
+  border: var(--border-default);
+  border-radius: var(--radius-2xl);
   overflow: hidden;
 }

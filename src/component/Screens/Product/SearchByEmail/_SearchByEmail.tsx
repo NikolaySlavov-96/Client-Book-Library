@@ -1,7 +1,6 @@
 import { memo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import NavBar from '../../../../component/molecules/NavBar/NavBar';
 import ShelfGrid from '../../../../component/organisms/ShelfGrid/ShelfGrid';
 
 import { useStoreZ } from '../../../../hooks';
@@ -23,21 +22,18 @@ const _SearchByEmail = () => {
   const displayEmail = decodeURIComponent(email ?? '');
 
   return (
-    <>
-      <NavBar />
-      <main className={styles.wrap}>
-        <header className={styles.header}>
-          <h1 className={styles.header__title}>{TEXTS.SEARCH_EMAIL_TITLE}</h1>
-          <p className={styles.header__email}>{displayEmail}</p>
-        </header>
+    <main className={styles.wrap}>
+      <header className={styles.header}>
+        <h1 className={styles.header__title}>{TEXTS.SEARCH_EMAIL_TITLE}</h1>
+        <p className={styles.header__email}>{displayEmail}</p>
+      </header>
 
-        {isLoadingProductByEmails ? (
-          <div className={styles.loading}>{TEXTS.COMMON_LOADING}</div>
-        ) : (
-          <ShelfGrid books={productByEmail.rows} />
-        )}
-      </main>
-    </>
+      {isLoadingProductByEmails ? (
+        <div className={styles.loading}>{TEXTS.COMMON_LOADING}</div>
+      ) : (
+        <ShelfGrid books={productByEmail.rows} />
+      )}
+    </main>
   );
 };
 

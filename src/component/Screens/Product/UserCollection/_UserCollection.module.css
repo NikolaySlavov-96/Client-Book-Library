@@ -17,6 +17,12 @@
   flex: 1;
 }
 
+.header__actions {
+  display: flex;
+  gap: var(--spacing-2);
+  align-self: flex-start;
+}
+
 .header__name {
   font-family: var(--font-serif);
   font-size: var(--text-3xl);

@@ -888,7 +888,7 @@ export interface IAuthSlicer {
 }
 ```
 
-State is persisted via Zustand `persist` middleware to `localStorage` key `@Product_TokenData` (same key as before — backward compatible).
+State is persisted via Zustand `persist` middleware to `localStorage` key `@Product_AuthState`. The persist payload shape differs from the legacy `useLocalStorage` storage (Zustand wraps state in `{ state, version }`), so a new key is used to avoid shape mismatches. Users will be logged out once on upgrade — accepted trade-off.
 
 `_useStoreZ.ts` update: add `AuthSlicer` to combined store type and slice composition. Add `persist` middleware for auth fields only using `partialize`.
 

@@ -1,15 +1,12 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 
-import NavBar from '../../../../component/molecules/NavBar/NavBar';
 import FilterPills from '../../../../component/molecules/FilterPills/FilterPills';
-import SearchModal from '../../../../component/molecules/SearchModal/SearchModal';
 import BookGrid from '../../../../component/organisms/BookGrid/BookGrid';
 import { Pagination } from '../../../molecules';
 
 import { useStoreZ } from '../../../../hooks';
 import { TEXTS } from '../../../../constants';
 import { EStatusId } from '../../../../constants/statusMap';
-import { IProduct } from '../../../../Store/Slicers/ProductSlicer.interface';
 
 import styles from './_Products.module.css';
 
@@ -26,7 +23,6 @@ const _Products = () => {
   const [page, setPage] = useState(1);
   const [searchContent, setSearchContent] = useState('');
   const [activeFilter, setActiveFilter] = useState('all');
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const {
     products,
@@ -57,15 +53,8 @@ const _Products = () => {
     addingProductState(String(productId), String(statusId));
   }, [addingProductState]);
 
-  const handleSelectFromSearch = useCallback((book: IProduct) => {
-    handleSearch(book.productTitle);
-  }, [handleSearch]);
-
   return (
-    <>
-      <NavBar onSearchOpen={() => setIsSearchOpen(true)} />
-
-      <main className={styles.wrap}>
+    <section className={styles.wrap}>
         <header className={styles.header}>
           <h1 className={styles.header__title}>{TEXTS.CATALOG_TITLE}</h1>
           <p className={styles.header__sub}>{TEXTS.CATALOG_SUBTITLE}</p>
@@ -104,15 +93,7 @@ const _Products = () => {
         )}
 
         <Pagination count={count} page={page} onSubmit={setPage} />
-      </main>
-
-      <SearchModal
-        isOpen={isSearchOpen}
-        books={products.rows}
-        onClose={() => setIsSearchOpen(false)}
-        onSelect={handleSelectFromSearch}
-      />
-    </>
+    </section>
   );
 };
 

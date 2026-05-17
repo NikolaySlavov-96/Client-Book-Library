@@ -1,6 +1,5 @@
 import { memo, useCallback, useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
 
-import NavBar from '../../molecules/NavBar/NavBar';
 import Button from '../../atoms/Button/Button';
 
 import { InformationToast } from '../../../Toasts';
@@ -44,9 +43,7 @@ const _CreateProduct = () => {
   }, [isLoadingProductAddition, isProductAdded]);
 
   return (
-    <>
-      <NavBar />
-      <main className={styles.wrap}>
+    <main className={styles.wrap}>
         <header className={styles.header}>
           <h1 className={styles.header__title}>{TEXTS.CREATE_TITLE}</h1>
         </header>
@@ -133,8 +130,7 @@ const _CreateProduct = () => {
             />
           </form>
         </div>
-      </main>
-    </>
+    </main>
   );
 };
 

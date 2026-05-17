@@ -1,12 +1,11 @@
-import { memo, useCallback, useEffect } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import NavBar from '../../../../component/molecules/NavBar/NavBar';
 import Badge from '../../../../component/atoms/Badge/Badge';
 import Button from '../../../../component/atoms/Button/Button';
 
 import { useStoreZ } from '../../../../hooks';
-import { TEXTS } from '../../../../constants';
+import { ROUT_NAMES, TEXTS } from '../../../../constants';
 import { EStatusId, STATUS_META, isValidStatusId } from '../../../../constants/statusMap';
 
 import styles from './_DetailsForProduct.module.css';
@@ -24,11 +23,18 @@ const COVER_GRADIENTS = [
   'linear-gradient(145deg, #1a365d, #0f2340)',
 ];
 
-const STATUS_BUTTONS: EStatusId[] = [EStatusId.WANT, EStatusId.READING, EStatusId.READ];
+const STATUS_BUTTONS: EStatusId[] = [
+  EStatusId.WANT,
+  EStatusId.READING,
+  EStatusId.READ,
+  EStatusId.LISTENING,
+  EStatusId.LISTENED,
+];
 
 const _DetailsForProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [shareEmail, setShareEmail] = useState('');
 
   const {
     isAuthenticated,
@@ -49,6 +55,12 @@ const _DetailsForProduct = () => {
     if (id) addingProductState(id, String(statusId));
   }, [id, addingProductState]);
 
+  const handleShareSubmit = useCallback(() => {
+    const trimmed = shareEmail.trim();
+    if (!trimmed) return;
+    navigate(`${ROUT_NAMES.REVIEW_PRODUCTS_BY_EMAIL.replace(':email', '')}${encodeURIComponent(trimmed)}`);
+  }, [shareEmail, navigate]);
+
   useEffect(() => {
     if (id && id !== '0') {
       fetchProductById(id);
@@ -64,9 +76,7 @@ const _DetailsForProduct = () => {
   const coverGradient = COVER_GRADIENTS[(productById?.productId ?? 0) % COVER_GRADIENTS.length];
 
   return (
-    <>
-      <NavBar />
-      <main className={styles.wrap}>
+    <main className={styles.wrap}>
         <button className={styles.back} onClick={handleBack} type="button">
           {TEXTS.DETAIL_BACK}
         </button>
@@ -115,27 +125,51 @@ const _DetailsForProduct = () => {
               <p className={styles.desc}>{TEXTS.DETAIL_DESC_PLACEHOLDER}</p>
 
               {isAuthenticated ? (
-                <div className={styles.actions}>
-                  <p className={styles.actions__label}>{TEXTS.DETAIL_ADD_TO_SHELF}</p>
-                  <div className={styles.actions__btns}>
-                    {STATUS_BUTTONS.map((sid) => (
-                      <Button
-                        key={sid}
-                        label={STATUS_META[sid].label}
-                        variant={currentStatusId === sid ? 'primary' : 'outline'}
-                        size="sm"
-                        onClick={() => handleStatusChange(sid)}
-                        ariaLabel={`${TEXTS.DETAIL_ADD_TO_SHELF}: ${STATUS_META[sid].label}`}
-                      />
-                    ))}
+                <>
+                  <div className={styles.actions}>
+                    <p className={styles.actions__label}>{TEXTS.DETAIL_ADD_TO_SHELF}</p>
+                    <div className={styles.actions__btns}>
+                      {STATUS_BUTTONS.map((sid) => (
+                        <Button
+                          key={sid}
+                          label={STATUS_META[sid].label}
+                          variant={currentStatusId === sid ? 'primary' : 'outline'}
+                          size="sm"
+                          onClick={() => handleStatusChange(sid)}
+                          ariaLabel={`${TEXTS.DETAIL_ADD_TO_SHELF}: ${STATUS_META[sid].label}`}
+                        />
+                      ))}
+                    </div>
                   </div>
-                </div>
+
+                  <div className={styles.share}>
+                    <p className={styles.share__label}>{TEXTS.DETAIL_SHARE_LABEL}</p>
+                    <div className={styles.share__row}>
+                      <input
+                        className={styles.share__input}
+                        type="email"
+                        placeholder={TEXTS.DETAIL_SHARE_PLACEHOLDER}
+                        value={shareEmail}
+                        onChange={(e) => setShareEmail(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' ? handleShareSubmit() : undefined}
+                        aria-label={TEXTS.DETAIL_SHARE_LABEL}
+                      />
+                      <button
+                        className={styles.share__btn}
+                        onClick={handleShareSubmit}
+                        type="button"
+                        disabled={!shareEmail.trim()}
+                      >
+                        {TEXTS.DETAIL_SHARE_BTN}
+                      </button>
+                    </div>
+                  </div>
+                </>
               ) : null}
             </div>
           </div>
         )}
-      </main>
-    </>
+    </main>
   );
 };
 

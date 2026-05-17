@@ -78,7 +78,7 @@ const _QueryBar: FC<IQueryBarProps> = (props) => {
     }, [onPressLeftSelector]);
 
     return (
-        <div className={`global__bg-radius ${style['container']}`}>
+        <div className={`flex-between ${style['container']}`}>
             {hasLeftSelector ? <Select
                 options={leftSelectorData || []}
                 placeHolder={(leftSelectorData && leftSelectData) ? leftSelectorData[leftSelectData - 1].label : ''}

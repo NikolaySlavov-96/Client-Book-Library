@@ -1,6 +1,7 @@
 .container {
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  background-color: var(--primary-accent);
+  padding: var(--spacing-3) var(--spacing-4);
+  background: var(--accent);
+  color: var(--white);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
 }

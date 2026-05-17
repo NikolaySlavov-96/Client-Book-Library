@@ -18,7 +18,7 @@ const _CustomerSupportChat = () => {
     const roomName = rooms[0]?.roomName;
 
     const containerStyle = useMemo(() => (
-        `shadow__window ${style['container']} ${isOpenChat ? style['border__open'] : ''}`
+        `${style['container']} ${isOpenChat ? style['border__open'] : ''}`
     ), [isOpenChat]);
 
     useEffect(() => {

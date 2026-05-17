@@ -1,4 +1,4 @@
-import { FC, memo, ReactNode } from 'react';
+import { memo } from 'react';
 
 import { LinkedParagraph } from '../../molecules';
 
@@ -10,14 +10,10 @@ const FOOTED_CONTENT = {
     CONTENT: 'Designed and Implement from '
 }
 
-interface IFooterProps {
-    children: ReactNode
-}
-
-const _Footer: FC<IFooterProps> = () => {
+const _Footer = () => {
     return (
-        <footer className={`global__bg-radius ${style['footer_container']}`}>
-            <div className={`${style['div']}`}>
+        <footer className={style.footer}>
+            <div className={style.inner}>
                 <LinkedParagraph
                     staticContent={FOOTED_CONTENT.CONTENT}
                     to={FOOTED_CONTENT.LINK}

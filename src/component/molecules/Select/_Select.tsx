@@ -85,7 +85,7 @@ const _Select: FC<ISelectProps> = (props) => {
     return (
         <div className={`${style["dropdown-container"]} ${size && style['custom__size_' + size]}`}>
 
-            <div ref={inputRef} onClick={handleInputClick} className={style["dropdown__input"]}>
+            <div ref={inputRef} onClick={handleInputClick} className={`flex-between ${style["dropdown__input"]}`}>
                 <div className={`${!selectedValue ? style['placeholder'] : ''}`}>{getDisplay()}</div>
                 <div className={style['dropdown__tools']}>
                     <div className={style['dropdown__tool']}>

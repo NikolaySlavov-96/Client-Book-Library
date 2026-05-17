@@ -1,55 +1,95 @@
 .container {
   display: flex;
   flex-wrap: wrap;
-  margin: 20px;
+  gap: var(--spacing-5);
+  padding: var(--spacing-5);
+  max-width: 1140px;
+  margin: 0 auto;
 }
 
 .chat__container {
   max-height: 400px;
   width: 40%;
   max-width: 400px;
-  margin-right: 20px;
-  background-color: var(--secondary-text);
+  background: var(--white);
+  border: var(--border-default);
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  border-radius: 10px;
+  box-shadow: var(--shadow-card);
 }
 
 .list-chat__container {
   height: 400px;
+  overflow-y: auto;
 }
 
-/* Room Line (Header) */
-.message__container {
-  height: 400px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  box-sizing: border-box;
-}
+/* Rooms / messages */
 .room__container {
-  width: 52%;
+  flex: 1;
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
 }
 
 .room__header {
-  background-color: var(--primary-accent);
-  height: 40px;
-  align-content: center;
-  margin-bottom: 20px;
-  overflow: auto;
-  box-sizing: border-box;
+  background: var(--cream-2);
+  border: var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-2) var(--spacing-3);
+  margin-bottom: var(--spacing-4);
+  display: flex;
+  gap: var(--spacing-2);
+  overflow-x: auto;
+}
+
+.room__header button {
+  padding: var(--spacing-1) var(--spacing-3);
+  border-radius: var(--radius-sm);
+  border: var(--border-default);
+  background: var(--white);
+  color: var(--ink-2);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
 }
 
 .room__header button:hover {
-  background-color: wheat;
+  background: var(--accent-light);
+  border-color: var(--accent-2);
+  color: var(--accent);
 }
 
 .room__header button:active {
-  background-color: red;
+  background: var(--accent);
+  color: var(--white);
+  border-color: var(--accent);
+}
+
+.message__container {
+  flex: 1;
+  background: var(--white);
+  border: var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 400px;
 }
 
 .chat__window {
-  background-color: antiquewhite;
-  height: 80%;
+  flex: 1;
+  background: var(--cream);
+  padding: var(--spacing-3);
   overflow-y: auto;
-  overflow-x: hidden;
-  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  .chat__container {
+    width: 100%;
+    max-width: none;
+  }
 }

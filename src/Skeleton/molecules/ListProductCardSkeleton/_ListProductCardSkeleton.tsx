@@ -14,7 +14,7 @@ const _ListProductCardSkeleton: FC<IProductSkeleton> = (props) => {
     } = props;
 
     return (
-        <div className={`shadow ${style['container']}`}>
+        <div className={`shadow flex-between ${style['container']}`}>
             <ViewElement width={200} height={100} />
 
             {hasTitle ? <ViewElement width={180} height={DEFAULT_HEIGHT} /> : null}

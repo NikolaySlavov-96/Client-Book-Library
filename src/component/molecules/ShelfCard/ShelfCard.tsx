@@ -41,7 +41,7 @@ function ShelfCard({
 
       <div className={styles.body}>
         <p className={styles.author}>{authorName}</p>
-        <div className={styles.footer}>
+        <div className={`flex-between ${styles.footer}`}>
           <Badge statusId={statusId} badgeStyle="light" />
           <button
             className={styles['remove-btn']}

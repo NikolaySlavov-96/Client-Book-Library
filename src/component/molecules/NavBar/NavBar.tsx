@@ -1,16 +1,16 @@
 import { useCallback, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Avatar from '../../atoms/Avatar/Avatar';
 import Button from '../../atoms/Button/Button';
 
 import { useStoreZ } from '../../../hooks';
-import { ROUT_NAMES, TEXTS } from '../../../constants';
+import { MODAL_NAMES, ROUT_NAMES, TEXTS } from '../../../constants';
+import type { ISearchModalPayload } from '../SearchModal/SearchModal';
 
 import styles from './NavBar.module.css';
 
 interface INavBarProps {
-  onSearchOpen?: () => void;
   className?: string;
 }
 
@@ -22,9 +22,30 @@ const LOGO_SVG = (
   </svg>
 );
 
-function NavBar({ onSearchOpen, className }: INavBarProps) {
+const SEARCH_SCOPE_BY_ROUTE: ReadonlyArray<{ match: (path: string) => boolean; scope: ISearchModalPayload['scope'] }> = [
+  { match: (p) => p.startsWith('/collections'), scope: 'shelf' },
+  { match: (p) => p.startsWith('/search/'),     scope: 'friend' },
+  { match: () => true,                          scope: 'catalog' },
+];
+
+const resolveSearchScope = (pathname: string): ISearchModalPayload['scope'] => {
+  for (const r of SEARCH_SCOPE_BY_ROUTE) {
+    if (r.match(pathname)) return r.scope;
+  }
+  return 'catalog';
+};
+
+function NavBar({ className }: INavBarProps) {
   const navigate = useNavigate();
-  const { email, isAuthenticated, isVerifyUser, userRole, onSubmitLogout } = useStoreZ();
+  const location = useLocation();
+  const {
+    email,
+    isAuthenticated,
+    isVerifyUser,
+    userRole,
+    onSubmitLogout,
+    openNamedModal,
+  } = useStoreZ();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -37,6 +58,10 @@ function NavBar({ onSearchOpen, className }: INavBarProps) {
   }, [onSubmitLogout, navigate]);
   const handleProfileClick = useCallback(() => navigate(ROUT_NAMES.USER_COLLECTION), [navigate]);
   const handleToggleMenu = useCallback(() => setIsMenuOpen((prev) => !prev), []);
+  const handleSearchOpen = useCallback(() => {
+    const payload: ISearchModalPayload = { scope: resolveSearchScope(location.pathname) };
+    openNamedModal(MODAL_NAMES.SEARCH, payload);
+  }, [location.pathname, openNamedModal]);
 
   const linksClass = [
     styles.nav__links,
@@ -61,16 +86,15 @@ function NavBar({ onSearchOpen, className }: INavBarProps) {
         <span className={styles['nav__logo-accent']}>{TEXTS.NAV_LOGO_SUFFIX}</span>
       </a>
 
-      {onSearchOpen ? (
-        <button
-          className={[styles['nav__search-trigger'], 'flex-align'].join(' ')}
-          onClick={onSearchOpen}
-          aria-label={TEXTS.NAV_SEARCH_TRIGGER}
-        >
-          <span className={styles['nav__search-icon']} aria-hidden="true">⌕</span>
-          {TEXTS.NAV_SEARCH_TRIGGER}
-        </button>
-      ) : null}
+      <button
+        className={[styles['nav__search-trigger'], 'flex-align'].join(' ')}
+        onClick={handleSearchOpen}
+        aria-label={TEXTS.NAV_SEARCH_TRIGGER}
+        type="button"
+      >
+        <span className={styles['nav__search-icon']} aria-hidden="true">⌕</span>
+        {TEXTS.NAV_SEARCH_TRIGGER}
+      </button>
 
       <button
         className={styles.nav__toggle}

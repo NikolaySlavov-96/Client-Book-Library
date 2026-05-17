@@ -1,9 +1,18 @@
-import { memo, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { TEXTS } from '../../../constants';
-import { IProduct } from '../../../Store/Slicers/ProductSlicer.interface';
+import { ROUT_NAMES, TEXTS, MODAL_NAMES } from '../../../constants';
+import { useStoreZ } from '../../../hooks';
+import { IProduct, IProductEmailType, IProductWithState } from '../../../Store/Slicers/ProductSlicer.interface';
 
 import styles from './SearchModal.module.css';
+
+type TSearchScope = 'catalog' | 'shelf' | 'friend';
+type TAnyBook = IProduct | IProductWithState | IProductEmailType;
+
+export interface ISearchModalPayload {
+  scope?: TSearchScope;
+}
 
 const COVER_GRADIENTS: readonly [string, string][] = [
   ['#e8d5b7', '#c9a96e'],
@@ -18,17 +27,32 @@ const COVER_GRADIENTS: readonly [string, string][] = [
   ['#d4d4b8', '#aaaa70'],
 ];
 
-interface ISearchModalProps {
-  isOpen: boolean;
-  books: IProduct[];
-  onClose: () => void;
-  onSelect: (book: IProduct) => void;
-  className?: string;
-}
+function SearchModal() {
+  const navigate = useNavigate();
+  const {
+    modalName,
+    isVisible,
+    modalPayload,
+    closeModal,
+    products,
+    productCollection,
+    productByEmail,
+  } = useStoreZ();
 
-function SearchModal({ isOpen, books, onClose, onSelect, className }: ISearchModalProps) {
   const [query, setQuery] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const isOpen = isVisible && modalName === MODAL_NAMES.SEARCH;
+  const scope: TSearchScope = (modalPayload as ISearchModalPayload | undefined)?.scope ?? 'catalog';
+
+  const source: TAnyBook[] = useMemo(() => {
+    switch (scope) {
+      case 'shelf': return productCollection.rows;
+      case 'friend': return productByEmail.rows;
+      case 'catalog':
+      default: return products.rows;
+    }
+  }, [scope, products.rows, productCollection.rows, productByEmail.rows]);
 
   useEffect(() => {
     if (isOpen) {
@@ -39,35 +63,38 @@ function SearchModal({ isOpen, books, onClose, onSelect, className }: ISearchMod
 
   useEffect(() => {
     if (!isOpen) return;
-
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') closeModal();
     };
-
     document.addEventListener('keydown', handleKey);
     return () => document.removeEventListener('keydown', handleKey);
-  }, [isOpen, onClose]);
+  }, [isOpen, closeModal]);
+
+  const handleSelect = useCallback((book: TAnyBook) => {
+    navigate(`${ROUT_NAMES.PRODUCT}/${book.productId}`);
+    closeModal();
+  }, [navigate, closeModal]);
 
   if (!isOpen) return null;
 
   const trimmed = query.trim().toLowerCase();
   const filtered = trimmed
-    ? books.filter(
+    ? source.filter(
         (b) =>
           b.productTitle.toLowerCase().includes(trimmed) ||
           b.authorName.toLowerCase().includes(trimmed),
       )
-    : books.slice(0, 6);
+    : source.slice(0, 6);
 
   const sectionLabel = trimmed ? TEXTS.SEARCH_RESULTS_LABEL : TEXTS.SEARCH_SUGGESTED_LABEL;
 
   return (
     <div
-      className={[styles.overlay, className].filter(Boolean).join(' ')}
+      className={styles.overlay}
       role="dialog"
       aria-modal="true"
       aria-label={TEXTS.COMMON_SEARCH_LABEL}
-      onClick={onClose}
+      onClick={closeModal}
     >
       <div className={styles.box} onClick={(e) => e.stopPropagation()}>
         <div className={styles.searchRow}>
@@ -81,7 +108,7 @@ function SearchModal({ isOpen, books, onClose, onSelect, className }: ISearchMod
             onChange={(e) => setQuery(e.target.value)}
             aria-label={TEXTS.SEARCH_PLACEHOLDER}
           />
-          <button className={styles.closeBtn} onClick={onClose} type="button">
+          <button className={styles.closeBtn} onClick={closeModal} type="button">
             {TEXTS.SEARCH_CLOSE}
           </button>
         </div>
@@ -98,7 +125,7 @@ function SearchModal({ isOpen, books, onClose, onSelect, className }: ISearchMod
                     className={styles.resultItem}
                     role="option"
                     aria-selected={false}
-                    onClick={() => { onSelect(book); onClose(); }}
+                    onClick={() => handleSelect(book)}
                     type="button"
                   >
                     <span

@@ -62,7 +62,7 @@ const _Support = () => {
 
   return (
     <section className={style.container}>
-      <div className={`shadow__window ${style['chat__container']}`}>
+      <div className={style['chat__container']}>
         <ChatHeader>
           <p>{`${DEFAULT_TITLE}${email.split('@')[0]}`}</p>
         </ChatHeader>
