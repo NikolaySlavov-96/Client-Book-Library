@@ -90,7 +90,7 @@ function SearchModal() {
 
   return (
     <div
-      className={styles.overlay}
+      className={`flex-col ${styles.overlay}`}
       role="dialog"
       aria-modal="true"
       aria-label={TEXTS.COMMON_SEARCH_LABEL}
@@ -133,7 +133,7 @@ function SearchModal() {
                       style={{ background: `linear-gradient(145deg, ${from}, ${to})` }}
                       aria-hidden="true"
                     />
-                    <span className={styles.bookInfo}>
+                    <span className={`flex-col ${styles.bookInfo}`}>
                       <span className={styles.bookTitle}>{book.productTitle}</span>
                       <span className={styles.bookAuthor}>{book.authorName}</span>
                     </span>

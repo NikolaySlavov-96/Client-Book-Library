@@ -11,7 +11,7 @@ const _NotFound = () => {
   const navigate = useNavigate();
 
   return (
-    <main className={styles.wrap}>
+    <main className={`flex-col flex-center ${styles.wrap}`}>
       <div className={styles.spines} aria-hidden="true">
         {[70, 90, 110, 80, 100, 60, 95].map((h, i) => (
           <div

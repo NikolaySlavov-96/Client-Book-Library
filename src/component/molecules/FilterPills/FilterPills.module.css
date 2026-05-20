@@ -6,7 +6,7 @@
 }
 
 .pill {
-  padding: 6px var(--spacing-4);
+  padding: var(--spacing-2) var(--spacing-4);
   border-radius: var(--radius-pill);
   font-size: var(--text-sm);
   cursor: pointer;

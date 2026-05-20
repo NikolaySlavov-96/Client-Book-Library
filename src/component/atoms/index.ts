@@ -9,8 +9,6 @@ export { default as MessageForm } from './MessageForm/_MessageForm';
 export { default as MessageLine } from './MessageLine/_MessageLine';
 export { default as NavigationButton } from './NavigationButton/_NavigationButton';
 export { default as SectionTitle } from './SectionTitle/_SectionTitle';
-
-// New design-system atoms
 export { default as NewButton } from './Button/Button';
 export { default as Badge } from './Badge/Badge';
 export { default as Avatar } from './Avatar/Avatar';

@@ -49,8 +49,8 @@ const _CreateProduct = () => {
         </header>
 
         <div className={styles.card}>
-          <form className={styles.form} onSubmit={handleSubmit} noValidate>
-            <div className={styles.field}>
+          <form className={`flex-col ${styles.form}`} onSubmit={handleSubmit} noValidate>
+            <div className={`flex-col ${styles.field}`}>
               <label className={styles.field__label} htmlFor="create-author">
                 {TEXTS.CREATE_LABEL_AUTHOR}
               </label>
@@ -65,7 +65,7 @@ const _CreateProduct = () => {
               />
             </div>
 
-            <div className={styles.field}>
+            <div className={`flex-col ${styles.field}`}>
               <label className={styles.field__label} htmlFor="create-title">
                 {TEXTS.CREATE_LABEL_TITLE}
               </label>
@@ -80,7 +80,7 @@ const _CreateProduct = () => {
               />
             </div>
 
-            <div className={styles.field}>
+            <div className={`flex-col ${styles.field}`}>
               <label className={styles.field__label} htmlFor="create-genre">
                 {TEXTS.CREATE_LABEL_GENRE}
               </label>
@@ -94,7 +94,7 @@ const _CreateProduct = () => {
               />
             </div>
 
-            <div className={styles.field}>
+            <div className={`flex-col ${styles.field}`}>
               <label className={styles.field__label} htmlFor="create-image">
                 {TEXTS.CREATE_LABEL_IMAGE}
               </label>
@@ -107,7 +107,7 @@ const _CreateProduct = () => {
               />
             </div>
 
-            <div className={styles.field}>
+            <div className={`flex-col ${styles.field}`}>
               <label className={styles.field__label} htmlFor="create-src">
                 {TEXTS.CREATE_LABEL_SRC}
               </label>

@@ -108,15 +108,15 @@ const _DetailsForProduct = () => {
               <p className={styles.info__author}>{productById?.authorName}</p>
 
               <div className={styles.stats}>
-                <div className={styles.stat}>
+                <div className={`flex-col ${styles.stat}`}>
                   <span className={styles.stat__value}>{TEXTS.COMMON_PLACEHOLDER_VALUE}</span>
                   <span className={styles.stat__label}>{TEXTS.DETAIL_PAGES}</span>
                 </div>
-                <div className={styles.stat}>
+                <div className={`flex-col ${styles.stat}`}>
                   <span className={styles.stat__value}>{TEXTS.COMMON_PLACEHOLDER_VALUE}</span>
                   <span className={styles.stat__label}>{TEXTS.DETAIL_YEAR}</span>
                 </div>
-                <div className={styles.stat}>
+                <div className={`flex-col ${styles.stat}`}>
                   <span className={styles.stat__value}>{TEXTS.COMMON_PLACEHOLDER_VALUE}</span>
                   <span className={styles.stat__label}>{TEXTS.DETAIL_RATING}</span>
                 </div>

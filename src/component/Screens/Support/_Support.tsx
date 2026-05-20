@@ -73,14 +73,14 @@ const _Support = () => {
           style={style['list-chat__container']}
         />
       </div>
-      <div className={style['room__container']}>
+      <div className={`flex-col ${style['room__container']}`}>
         <List
           data={rooms}
           renderItem={renderItemRoom}
           keyExtractor={keyExtractorRoom}
           style={style['room__header']}
         />
-        <div className={style['message__container']}>
+        <div className={`flex-col ${style['message__container']}`}>
           <List
             data={currentRoomMessages}
             renderItem={renderItemMessage}

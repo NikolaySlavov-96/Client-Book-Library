@@ -27,7 +27,7 @@ function BookGrid({ books, isAuthenticated = false, layout = 'grid', onStatusCha
     <div
       className={[
         styles.container,
-        layout === 'list' ? styles['container--list'] : styles['container--grid'],
+        layout === 'list' ? `flex-col ${styles['container--list']}` : styles['container--grid'],
         className,
       ]
         .filter(Boolean)

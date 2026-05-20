@@ -27,8 +27,6 @@
 .room__container {
   flex: 1;
   min-width: 320px;
-  display: flex;
-  flex-direction: column;
 }
 
 .room__header {
@@ -72,8 +70,6 @@
   border: var(--border-default);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
   min-height: 400px;
 }
 

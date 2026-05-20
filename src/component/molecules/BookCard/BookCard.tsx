@@ -97,7 +97,7 @@ function BookCard({
         ) : null}
       </div>
 
-      <div className={styles.meta}>
+      <div className={[styles.meta, layout === 'list' ? 'flex-col' : ''].filter(Boolean).join(' ')}>
         <p className={styles.meta__author}>{authorName}</p>
         {isAuthenticated ? (
           <div className={styles.meta__actions}>
