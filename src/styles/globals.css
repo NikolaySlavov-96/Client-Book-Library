@@ -93,7 +93,7 @@ p {
   /* Font sizes */
   --text-xs: var(--spacing-10);
   --text-sm: var(--spacing-12);
-  --text-md: 14px;
+  --text-md: var(--spacing-14);
   --text-lg: var(--spacing-16);
   --text-xl: 18px;
   --text-2xl: 22px;
@@ -117,6 +117,7 @@ p {
   --spacing-8: 8px;
   --spacing-10: 10px;
   --spacing-12: 12px;
+  --spacing-14: 14px;
   --spacing-16: 16px;
   --spacing-20: 20px;
   --spacing-24: 24px;
@@ -167,6 +168,8 @@ p {
   --border-accent-2: 1px solid var(--accent-2);
   --border-transparent: 1px solid transparent;
   --border-2-transparent: 2px solid transparent;
+  --border-2-accent: 2px solid var(--accent);
+  --border-8-accent-2: var(--spacing-8) solid var(--accent-2);
 
   /* --- Opacity --- */
   --opacity-disabled: 0.5;

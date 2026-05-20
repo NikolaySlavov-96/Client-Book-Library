@@ -18,8 +18,8 @@
 .left::before {
   content: '';
   position: absolute;
-  top: -60px;
-  right: -60px;
+  top: calc(-1 * var(--spacing-60));
+  right: calc(-1 * var(--spacing-60));
   width: var(--login-deco-lg);
   height: var(--login-deco-lg);
   border-radius: 50%;
@@ -29,8 +29,8 @@
 .left::after {
   content: '';
   position: absolute;
-  bottom: -40px;
-  left: -40px;
+  bottom: calc(-1 * var(--spacing-40));
+  left: calc(-1 * var(--spacing-40));
   width: var(--login-deco-md);
   height: var(--login-deco-md);
   border-radius: 50%;
@@ -71,7 +71,7 @@
   font-size: var(--text-sm);
   color: var(--white-muted);
   line-height: var(--line-height-loose);
-  border-left: 2px solid var(--accent);
+  border-left: var(--border-2-accent);
   padding-left: var(--spacing-16);
 }
 

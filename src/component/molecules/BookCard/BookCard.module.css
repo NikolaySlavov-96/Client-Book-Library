@@ -11,7 +11,7 @@
 }
 
 .card:hover {
-  transform: translateY(-4px);
+  transform: translateY(calc(-1 * var(--spacing-4)));
   box-shadow: var(--shadow-card);
 }
 
