@@ -8,11 +8,7 @@ export { default as Pagination } from './Pagination/_Pagination';
 export { default as ProductDetails } from './ProductDetails/_ProductDetails';
 export { default as SearchField } from './SearchField/_SearchField';
 export { default as Select } from './Select/_Select';
-
-// Modals
 export { default as NewProductModal } from './Modals/NewProductModal/_NewProductModal';
-
-// New design-system molecules
 export { default as NavBar } from './NavBar/NavBar';
 export { default as BookCard } from './BookCard/BookCard';
 export { default as ShelfCard } from './ShelfCard/ShelfCard';
