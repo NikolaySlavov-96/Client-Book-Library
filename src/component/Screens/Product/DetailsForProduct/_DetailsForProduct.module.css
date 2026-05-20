@@ -55,7 +55,7 @@
 .cover__placeholder {
   font-family: var(--font-serif);
   font-size: var(--text-md);
-  color: rgba(255, 255, 255, 0.7);
+  color: color-mix(in srgb, var(--white) 70%, transparent);
   text-align: center;
   padding: var(--spacing-5);
   line-height: 1.4;

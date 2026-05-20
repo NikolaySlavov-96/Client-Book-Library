@@ -40,3 +40,19 @@ export const COVER_GRADIENTS: readonly string[] = [
 
 export const getCoverGradient = (productId: number): string =>
   COVER_GRADIENTS[productId % COVER_GRADIENTS.length];
+
+export const SEARCH_COVER_GRADIENTS: readonly string[] = [
+  'linear-gradient(145deg, #e8d5b7, #c9a96e)',
+  'linear-gradient(145deg, #b8d4c8, #7aaa95)',
+  'linear-gradient(145deg, #d4b8c8, #a47a95)',
+  'linear-gradient(145deg, #b8c4d4, #7a8faa)',
+  'linear-gradient(145deg, #d4c8b8, #aa9570)',
+  'linear-gradient(145deg, #c8d4b8, #90aa70)',
+  'linear-gradient(145deg, #d4b8b8, #aa7070)',
+  'linear-gradient(145deg, #b8d4d4, #70aaaa)',
+  'linear-gradient(145deg, #c8b8d4, #9070aa)',
+  'linear-gradient(145deg, #d4d4b8, #aaaa70)',
+];
+
+export const getSearchCoverGradient = (productId: number): string =>
+  SEARCH_COVER_GRADIENTS[productId % SEARCH_COVER_GRADIENTS.length];

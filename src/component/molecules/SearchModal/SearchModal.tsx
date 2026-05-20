@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ROUT_NAMES, TEXTS, MODAL_NAMES } from '../../../constants';
+import { ROUT_NAMES, TEXTS, MODAL_NAMES, getSearchCoverGradient } from '../../../constants';
 import { useStoreZ } from '../../../hooks';
 import { IProduct, IProductEmailType, IProductWithState } from '../../../Store/Slicers/ProductSlicer.interface';
 
@@ -13,19 +13,6 @@ type TAnyBook = IProduct | IProductWithState | IProductEmailType;
 export interface ISearchModalPayload {
   scope?: TSearchScope;
 }
-
-const COVER_GRADIENTS: readonly [string, string][] = [
-  ['#e8d5b7', '#c9a96e'],
-  ['#b8d4c8', '#7aaa95'],
-  ['#d4b8c8', '#a47a95'],
-  ['#b8c4d4', '#7a8faa'],
-  ['#d4c8b8', '#aa9570'],
-  ['#c8d4b8', '#90aa70'],
-  ['#d4b8b8', '#aa7070'],
-  ['#b8d4d4', '#70aaaa'],
-  ['#c8b8d4', '#9070aa'],
-  ['#d4d4b8', '#aaaa70'],
-];
 
 function SearchModal() {
   const navigate = useNavigate();
@@ -118,7 +105,6 @@ function SearchModal() {
             <>
               <div className={styles.sectionLabel}>{sectionLabel}</div>
               {filtered.map((book) => {
-                const [from, to] = COVER_GRADIENTS[book.productId % COVER_GRADIENTS.length];
                 return (
                   <button
                     key={book.productId}
@@ -130,7 +116,7 @@ function SearchModal() {
                   >
                     <span
                       className={styles.bookDot}
-                      style={{ background: `linear-gradient(145deg, ${from}, ${to})` }}
+                      style={{ background: getSearchCoverGradient(book.productId) }}
                       aria-hidden="true"
                     />
                     <span className={`flex-col ${styles.bookInfo}`}>

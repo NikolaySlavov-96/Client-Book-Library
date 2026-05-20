@@ -55,14 +55,14 @@ p {
   --accent-2: #c49a6c;
   --accent-light: #f5ece3;
   --white: #ffffff;
-  --border: rgba(90, 85, 80, 0.15);
-  --border-med: rgba(90, 85, 80, 0.25);
+  --border: color-mix(in srgb, var(--ink-2) 15%, transparent);
+  --border-med: color-mix(in srgb, var(--ink-2) 25%, transparent);
   --overlay: rgba(20, 18, 16, 0.55);
   --error: #df4402;
   --select-hover: #ff7300;
-  --deco-accent-2: rgba(196, 154, 108, 0.08);
-  --deco-accent: rgba(139, 94, 60, 0.1);
-  --white-muted: rgba(255, 255, 255, 0.45);
+  --deco-accent-2: color-mix(in srgb, var(--accent-2) 8%, transparent);
+  --deco-accent: color-mix(in srgb, var(--accent) 10%, transparent);
+  --white-muted: color-mix(in srgb, var(--white) 45%, transparent);
 
   /* Status — light (for badges in lists) */
   --status-read-bg: #d1fae5;
@@ -174,7 +174,7 @@ p {
   /* --- Shadows --- */
   --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.07);
   --shadow-tab: 0 1px 3px rgba(0, 0, 0, 0.08);
-  --shadow-focus: 0 0 0 3px rgba(196, 154, 108, 0.12);
+  --shadow-focus: 0 0 0 3px color-mix(in srgb, var(--accent-2) 12%, transparent);
   --shadow-window: 0 0 10px rgba(0, 0, 0, 0.3);
 
   /* --- Transitions --- */
