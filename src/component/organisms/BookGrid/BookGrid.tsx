@@ -2,6 +2,8 @@ import { memo } from 'react';
 
 import BookCard from '../../molecules/BookCard/BookCard';
 
+import { cx } from '../../../Utils';
+
 import { TEXTS } from '../../../constants';
 import { EStatusId } from '../../../constants/statusMap';
 import { IProduct } from '../../../Store/Slicers/ProductSlicer.interface';
@@ -25,13 +27,7 @@ function BookGrid({ books, isAuthenticated = false, layout = 'grid', onStatusCha
 
   return (
     <div
-      className={[
-        styles.container,
-        layout === 'list' ? `flex-col ${styles['container--list']}` : styles['container--grid'],
-        className,
-      ]
-        .filter(Boolean)
-        .join(' ')}
+      className={cx(styles.container, layout === 'list' ? `flex-col ${styles['container--list']}` : styles['container--grid'], className)}
     >
       {books.map((book) => (
         <BookCard

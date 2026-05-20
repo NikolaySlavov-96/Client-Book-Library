@@ -1,3 +1,5 @@
+import { cx } from '../../../Utils';
+
 import styles from './Avatar.module.css';
 
 type TAvatarSize = 'sm' | 'lg';
@@ -11,7 +13,7 @@ interface IAvatarProps {
 function Avatar({ initials, size = 'sm', className }: IAvatarProps) {
   return (
     <div
-      className={[styles.avatar, styles[`avatar--${size}`], className].filter(Boolean).join(' ')}
+      className={cx('flex-center', styles.avatar, styles[`avatar--${size}`], className)}
       aria-label={initials}
       role="img"
     >

@@ -43,9 +43,6 @@
   border: var(--border-default);
   position: relative;
   height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .cover__img {

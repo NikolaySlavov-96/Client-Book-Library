@@ -2,6 +2,8 @@ import { memo } from 'react';
 
 import { TEXTS } from '../../../constants';
 
+import { cx } from '../../../Utils';
+
 import styles from './ProgressBar.module.css';
 
 interface IProgressBarProps {
@@ -16,7 +18,7 @@ function ProgressBar({ label = TEXTS.PROFILE_GOAL_LABEL, current, goal, classNam
 
   return (
     <div
-      className={[styles.container, className].filter(Boolean).join(' ')}
+      className={cx(styles.container, className)}
       title={TEXTS.COMMON_COMING_SOON}
       aria-label={`${label}: ${current} of ${goal}`}
     >

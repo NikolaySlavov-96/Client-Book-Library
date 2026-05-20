@@ -5,6 +5,8 @@ import ShelfCard from '../../molecules/ShelfCard/ShelfCard';
 import { TEXTS } from '../../../constants';
 import { IProductWithState, IProductEmailType } from '../../../Store/Slicers/ProductSlicer.interface';
 
+import { cx } from '../../../Utils';
+
 import styles from './ShelfGrid.module.css';
 
 type TShelfBook = IProductWithState | IProductEmailType;
@@ -39,7 +41,7 @@ function ShelfGrid({ books, className }: IShelfGridProps) {
   }
 
   return (
-    <div className={[styles.container, className].filter(Boolean).join(' ')}>
+    <div className={cx(styles.container, className)}>
       {books.map((book) => (
         <ShelfCard
           key={book.productId}

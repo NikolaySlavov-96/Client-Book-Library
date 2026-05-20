@@ -5,6 +5,8 @@ import Avatar from '../../atoms/Avatar/Avatar';
 import Button from '../../atoms/Button/Button';
 
 import { useStoreZ } from '../../../hooks';
+import { cx } from '../../../Utils';
+
 import { MODAL_NAMES, ROUT_NAMES, TEXTS } from '../../../constants';
 import type { ISearchModalPayload } from '../SearchModal/SearchModal';
 
@@ -63,21 +65,15 @@ function NavBar({ className }: INavBarProps) {
     openNamedModal(MODAL_NAMES.SEARCH, payload);
   }, [location.pathname, openNamedModal]);
 
-  const linksClass = [
-    styles.nav__links,
-    'flex-align',
-    isMenuOpen ? styles['nav__links--open'] : '',
-  ]
-    .filter(Boolean)
-    .join(' ');
+  const linksClass = cx(styles.nav__links, 'flex-align', isMenuOpen ? styles['nav__links--open'] : '');
 
   return (
     <header
-      className={[styles.nav, 'flex-between', 'sticky-top', className].filter(Boolean).join(' ')}
+      className={cx(styles.nav, 'flex-between', 'sticky-top', className)}
     >
       <a
         href={ROUT_NAMES.HOME}
-        className={[styles.nav__logo, 'flex-align', 'text-serif'].join(' ')}
+        className={cx(styles.nav__logo, 'flex-align', 'text-serif')}
         onClick={(e) => { e.preventDefault(); handleLogoClick(); }}
         aria-label={TEXTS.NAV_LOGO}
       >
@@ -87,7 +83,7 @@ function NavBar({ className }: INavBarProps) {
       </a>
 
       <button
-        className={[styles['nav__search-trigger'], 'flex-align'].join(' ')}
+        className={cx(styles['nav__search-trigger'], 'flex-align')}
         onClick={handleSearchOpen}
         aria-label={TEXTS.NAV_SEARCH_TRIGGER}
         type="button"
@@ -108,7 +104,7 @@ function NavBar({ className }: INavBarProps) {
       <nav className={linksClass} aria-label="Main navigation">
         {isAuthenticated ? (
           <>
-            <button className={[styles.nav__user, 'flex-align'].join(' ')} onClick={handleProfileClick}>
+            <button className={cx(styles.nav__user, 'flex-align')} onClick={handleProfileClick}>
               <Avatar initials={initials} size="sm" />
               <span className={styles.nav__name}>{email.split('@')[0]}</span>
             </button>

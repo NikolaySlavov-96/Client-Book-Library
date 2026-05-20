@@ -1,5 +1,7 @@
 import { memo } from 'react';
 
+import { cx } from '../../../Utils';
+
 import styles from './FilterPills.module.css';
 
 interface IFilterPillOption {
@@ -17,16 +19,14 @@ interface IFilterPillsProps {
 function FilterPills({ options, activeValue, onSelect, className }: IFilterPillsProps) {
   return (
     <div
-      className={[styles.container, className].filter(Boolean).join(' ')}
+      className={cx(styles.container, className)}
       role="group"
       aria-label="Filter options"
     >
       {options.map((opt) => (
         <button
           key={opt.value}
-          className={[styles.pill, activeValue === opt.value ? styles['pill--active'] : '']
-            .filter(Boolean)
-            .join(' ')}
+          className={cx(styles.pill, activeValue === opt.value ? styles['pill--active'] : '')}
           onClick={() => onSelect(opt.value)}
           aria-pressed={activeValue === opt.value}
         >

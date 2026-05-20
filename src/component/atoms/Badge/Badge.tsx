@@ -1,6 +1,8 @@
 import { isValidStatusId, EStatusId } from '../../../constants/statusMap';
 import { BADGE_CONFIG } from './Badge.config';
 
+import { cx } from '../../../Utils';
+
 import styles from './Badge.module.css';
 
 type TBadgeStyle = 'light' | 'solid';
@@ -20,7 +22,7 @@ function Badge({ statusId, badgeStyle = 'light', className }: IBadgeProps) {
   const variantClass = badgeStyle === 'solid' ? config.solidClass : config.lightClass;
 
   return (
-    <span className={[styles.badge, styles[variantClass], className].filter(Boolean).join(' ')}>
+    <span className={cx(styles.badge, styles[variantClass], className)}>
       {config.label}
     </span>
   );

@@ -4,6 +4,8 @@ import Badge from '../../atoms/Badge/Badge';
 
 import { TEXTS } from '../../../constants';
 
+import { cx } from '../../../Utils';
+
 import styles from './ShelfCard.module.css';
 
 interface IShelfCardProps {
@@ -29,7 +31,7 @@ function ShelfCard({
   const coverStyle = fileUrl ? undefined : { background: coverGradient };
 
   return (
-    <article className={[styles.card, className].filter(Boolean).join(' ')}>
+    <article className={cx(styles.card, className)}>
       <div className={styles.cover} style={coverStyle}>
         {fileUrl ? (
           <img src={fileUrl} alt={fileSrc ?? productTitle} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />

@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 
+import { cx } from '../../../Utils';
+
 import styles from './Button.module.css';
 
 type TButtonVariant = 'primary' | 'ghost' | 'outline' | 'text';
@@ -32,14 +34,7 @@ function Button({
   title,
   ariaLabel,
 }: IButtonProps) {
-  const classes = [
-    styles.btn,
-    styles[`btn--${variant}`],
-    styles[`btn--${size}`],
-    className,
-  ]
-    .filter(Boolean)
-    .join(' ');
+  const classes = cx(styles.btn, styles[`btn--${variant}`], styles[`btn--${size}`], className);
 
   return (
     <button

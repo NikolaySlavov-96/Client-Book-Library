@@ -2,6 +2,8 @@ import { memo } from 'react';
 
 import { TEXTS } from '../../../constants';
 
+import { cx } from '../../../Utils';
+
 import styles from './AuthTabs.module.css';
 
 type TAuthTab = 'login' | 'register';
@@ -20,7 +22,7 @@ const TABS: { value: TAuthTab; label: string }[] = [
 function AuthTabs({ activeTab, onSwitch, className }: IAuthTabsProps) {
   return (
     <div
-      className={[styles.tabs, className].filter(Boolean).join(' ')}
+      className={cx(styles.tabs, className)}
       role="tablist"
       aria-label="Authentication"
     >
@@ -29,9 +31,7 @@ function AuthTabs({ activeTab, onSwitch, className }: IAuthTabsProps) {
           key={tab.value}
           role="tab"
           aria-selected={activeTab === tab.value}
-          className={[styles.tab, activeTab === tab.value ? styles['tab--active'] : '']
-            .filter(Boolean)
-            .join(' ')}
+          className={cx(styles.tab, activeTab === tab.value ? styles['tab--active'] : '')}
           onClick={() => onSwitch(tab.value)}
         >
           {tab.label}

@@ -103,8 +103,9 @@ p {
   --font-weight-medium: 500;
   --font-weight-bold: 600;
 
-  /* --- Spacing (even numbers only) --- */
+  /* --- Spacing --- */
   --spacing-1: 4px;
+  --spacing-1-5: 6px;
   --spacing-2: 8px;
   --spacing-3: 12px;
   --spacing-4: 16px;
@@ -117,6 +118,10 @@ p {
   --spacing-12: 48px;
   --spacing-14: 56px;
   --spacing-15: 60px;
+
+  /* --- Component sizes --- */
+  --avatar-sm: 32px;
+  --avatar-lg: 88px;
 
   /* --- Border radius --- */
   --radius-sm: 6px;

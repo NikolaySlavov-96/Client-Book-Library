@@ -1,10 +1,7 @@
 .avatar {
   border-radius: var(--radius-full);
   background: var(--accent-light);
-  border: 2px solid var(--accent-2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: var(--spacing-2) solid var(--accent-2);
   font-weight: var(--font-weight-medium);
   color: var(--accent);
   flex-shrink: 0;
@@ -12,15 +9,15 @@
 }
 
 .avatar--sm {
-  width: 32px;
-  height: 32px;
+  width: var(--avatar-sm);
+  height: var(--avatar-sm);
   font-size: var(--text-sm);
 }
 
 .avatar--lg {
-  width: 88px;
-  height: 88px;
+  width: var(--avatar-lg);
+  height: var(--avatar-lg);
   font-size: var(--text-3xl);
   font-family: var(--font-serif);
-  border-width: 4px;
+  border-width: var(--spacing-1);
 }

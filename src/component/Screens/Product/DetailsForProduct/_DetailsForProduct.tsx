@@ -85,7 +85,7 @@ const _DetailsForProduct = () => {
           <div className={styles.loading}>{TEXTS.COMMON_LOADING}</div>
         ) : (
           <div className={styles.grid}>
-            <div className={styles.cover} style={{ background: coverGradient }}>
+            <div className={`flex-center ${styles.cover}`} style={{ background: coverGradient }}>
               {productById?.fileUrl ? (
                 <img
                   className={styles.cover__img}

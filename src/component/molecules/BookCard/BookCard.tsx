@@ -2,7 +2,8 @@ import { memo, useCallback, type MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Badge from '../../atoms/Badge/Badge';
-import Button from '../../atoms/Button/Button';
+
+import { cx } from '../../../Utils';
 
 import { ROUT_NAMES, TEXTS } from '../../../constants';
 import { EStatusId, STATUS_META, isValidStatusId } from '../../../constants/statusMap';
@@ -71,13 +72,7 @@ function BookCard({
     [onStatusChange, productId]
   );
 
-  const cardClass = [
-    styles.card,
-    layout === 'list' ? styles['card--list'] : '',
-    className,
-  ]
-    .filter(Boolean)
-    .join(' ');
+  const cardClass = cx(styles.card, layout === 'list' ? styles['card--list'] : '', className);
 
   const coverStyle = fileUrl ? undefined : { background: getCoverGradient(productId) };
 
@@ -97,7 +92,7 @@ function BookCard({
         ) : null}
       </div>
 
-      <div className={[styles.meta, layout === 'list' ? 'flex-col' : ''].filter(Boolean).join(' ')}>
+      <div className={cx(styles.meta, layout === 'list' ? 'flex-col' : '')}>
         <p className={styles.meta__author}>{authorName}</p>
         {isAuthenticated ? (
           <div className={styles.meta__actions}>
@@ -106,12 +101,7 @@ function BookCard({
               return (
                 <button
                   key={sid}
-                  className={[
-                    styles['act-btn'],
-                    statusId === sid ? styles['act-btn--active'] : '',
-                  ]
-                    .filter(Boolean)
-                    .join(' ')}
+                  className={cx(styles['act-btn'], statusId === sid ? styles['act-btn--active'] : '')}
                   onClick={(e) => handleStatusClick(e, sid)}
                   aria-label={`${TEXTS.DETAIL_ADD_TO_SHELF}: ${meta.label}`}
                   aria-pressed={statusId === sid}

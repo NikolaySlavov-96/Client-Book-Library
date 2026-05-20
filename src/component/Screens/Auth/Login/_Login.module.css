@@ -78,9 +78,6 @@
 /* Right form panel */
 .right {
   width: 420px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: var(--spacing-10);
 }
 
