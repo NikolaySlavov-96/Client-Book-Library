@@ -18,18 +18,18 @@
 
 /* --- Sizes --- */
 .btn--sm {
-  padding: var(--spacing-1-5) var(--spacing-3);
+  padding: var(--spacing-24) var(--spacing-12);
   font-size: var(--text-sm);
 }
 
 .btn--md {
-  padding: var(--spacing-2) var(--spacing-5);
+  padding: var(--spacing-8) var(--spacing-20);
   font-size: var(--text-md);
 }
 
 .btn--full {
   width: 100%;
-  padding: var(--spacing-2) var(--spacing-5);
+  padding: var(--spacing-8) var(--spacing-20);
   font-size: var(--text-md);
 }
 

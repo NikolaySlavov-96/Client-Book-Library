@@ -3,8 +3,8 @@
     border-radius: var(--radius-xl);
     border: none;
     height: 22px;
-    margin-right: var(--spacing-4);
-    padding: var(--spacing-1) var(--spacing-1-5);
+    margin-right: var(--spacing-16);
+    padding: var(--spacing-4) var(--spacing-24);
     width: 240px;
 }
 

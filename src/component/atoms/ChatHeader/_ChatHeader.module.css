@@ -1,5 +1,5 @@
 .container {
-  padding: var(--spacing-3) var(--spacing-4);
+  padding: var(--spacing-12) var(--spacing-16);
   background: var(--accent);
   color: var(--white);
   font-family: var(--font-sans);

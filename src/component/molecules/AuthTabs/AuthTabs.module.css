@@ -2,14 +2,14 @@
   display: flex;
   background: var(--cream-2);
   border-radius: var(--radius-md);
-  padding: var(--spacing-1);
-  margin-bottom: var(--spacing-6);
-  gap: var(--spacing-1);
+  padding: var(--spacing-4);
+  margin-bottom: var(--spacing-24);
+  gap: var(--spacing-4);
 }
 
 .tab {
   flex: 1;
-  padding: var(--spacing-2);
+  padding: var(--spacing-8);
   text-align: center;
   font-size: var(--text-md);
   border-radius: var(--radius-sm);

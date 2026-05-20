@@ -4,7 +4,7 @@
   background: var(--overlay);
   z-index: var(--z-modal);
   align-items: center;
-  padding-top: var(--spacing-20);
+  padding-top: var(--spacing-80);
 }
 
 .box {
@@ -14,12 +14,12 @@
   max-width: var(--search-modal-width);
   overflow: hidden;
   border: var(--border-default);
-  margin: 0 var(--spacing-4);
+  margin: 0 var(--spacing-16);
 }
 
 .searchRow {
-  gap: var(--spacing-3);
-  padding: var(--spacing-4) var(--spacing-4);
+  gap: var(--spacing-12);
+  padding: var(--spacing-16) var(--spacing-16);
   border-bottom: var(--border-default);
 }
 
@@ -44,7 +44,7 @@
 }
 
 .closeBtn {
-  padding: var(--spacing-1) var(--spacing-3);
+  padding: var(--spacing-4) var(--spacing-12);
   border: var(--border-default);
   border-radius: var(--radius-sm);
   font-size: var(--text-xs);
@@ -66,7 +66,7 @@
 }
 
 .sectionLabel {
-  padding: var(--spacing-3) var(--spacing-4) var(--spacing-2);
+  padding: var(--spacing-12) var(--spacing-16) var(--spacing-8);
   font-size: var(--text-xs);
   font-weight: var(--font-weight-medium);
   color: var(--ink-3);
@@ -76,8 +76,8 @@
 }
 
 .resultItem {
-  gap: var(--spacing-3);
-  padding: var(--spacing-3) var(--spacing-4);
+  gap: var(--spacing-12);
+  padding: var(--spacing-12) var(--spacing-16);
   cursor: pointer;
   transition: var(--transition-fast);
   border-bottom: var(--border-default);
@@ -99,8 +99,8 @@
 }
 
 .bookDot {
-  width: var(--spacing-9);
-  height: var(--spacing-12);
+  width: var(--spacing-36);
+  height: var(--spacing-48);
   border-radius: var(--radius-sm);
   flex-shrink: 0;
 }
@@ -108,7 +108,7 @@
 .bookInfo {
   flex: 1;
   min-width: 0;
-  gap: var(--spacing-0-5);
+  gap: var(--spacing-8);
 }
 
 .bookTitle {
@@ -132,7 +132,7 @@
 }
 
 .empty {
-  padding: var(--spacing-8) var(--spacing-4);
+  padding: var(--spacing-32) var(--spacing-16);
   text-align: center;
   color: var(--ink-3);
   font-size: var(--text-sm);

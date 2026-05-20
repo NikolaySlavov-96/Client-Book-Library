@@ -1,7 +1,7 @@
 .avatar {
   border-radius: var(--radius-full);
   background: var(--accent-light);
-  border: var(--spacing-2) solid var(--accent-2);
+  border: var(--spacing-8) solid var(--accent-2);
   font-weight: var(--font-weight-medium);
   color: var(--accent);
   flex-shrink: 0;
@@ -19,5 +19,5 @@
   height: var(--avatar-lg);
   font-size: var(--text-3xl);
   font-family: var(--font-serif);
-  border-width: var(--spacing-1);
+  border-width: var(--spacing-4);
 }

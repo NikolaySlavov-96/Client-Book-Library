@@ -1,12 +1,12 @@
 .container {
   flex-wrap: wrap;
-  gap: var(--spacing-1);
-  margin-top: var(--spacing-6);
+  gap: var(--spacing-4);
+  margin-top: var(--spacing-24);
   font-family: var(--font-sans);
 }
 
 .page {
-  padding: var(--spacing-1) var(--spacing-3);
+  padding: var(--spacing-4) var(--spacing-12);
   border: var(--border-default);
   border-radius: var(--radius-sm);
   background: var(--white);

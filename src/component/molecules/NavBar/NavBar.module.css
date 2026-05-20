@@ -2,7 +2,7 @@
   height: var(--nav-height);
   background: var(--cream);
   border-bottom: var(--border-default);
-  padding: 0 var(--spacing-10);
+  padding: 0 var(--spacing-40);
   z-index: 100;
 }
 
@@ -10,7 +10,7 @@
   font-family: var(--font-serif);
   font-size: var(--text-2xl);
   color: var(--ink);
-  gap: var(--spacing-2);
+  gap: var(--spacing-8);
   cursor: pointer;
   text-decoration: none;
 }
@@ -20,8 +20,8 @@
 }
 
 .nav__search-trigger {
-  gap: var(--spacing-2);
-  padding: var(--spacing-2) var(--spacing-4);
+  gap: var(--spacing-8);
+  padding: var(--spacing-8) var(--spacing-16);
   border: var(--border-default);
   border-radius: var(--radius-md);
   background: var(--white);
@@ -43,7 +43,7 @@
 }
 
 .nav__user {
-  gap: var(--spacing-2);
+  gap: var(--spacing-8);
   cursor: pointer;
 }
 
@@ -58,13 +58,13 @@
 }
 
 .nav__links {
-  gap: var(--spacing-2);
+  gap: var(--spacing-8);
 }
 
 /* Hamburger — mobile */
 .nav__toggle {
   display: none;
-  padding: var(--spacing-1);
+  padding: var(--spacing-4);
   border-radius: var(--radius-md);
   border: var(--border-default);
   background: transparent;
@@ -75,7 +75,7 @@
 
 @media (max-width: 639px) {
   .nav {
-    padding: 0 var(--spacing-4);
+    padding: 0 var(--spacing-16);
   }
 
   .nav__links {
@@ -96,8 +96,8 @@
     right: 0;
     background: var(--cream);
     border-bottom: var(--border-default);
-    padding: var(--spacing-4);
-    gap: var(--spacing-2);
+    padding: var(--spacing-16);
+    gap: var(--spacing-8);
     z-index: 99;
   }
 }

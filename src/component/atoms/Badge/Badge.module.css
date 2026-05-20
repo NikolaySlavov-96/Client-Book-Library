@@ -1,6 +1,6 @@
 .badge {
   display: inline-block;
-  padding: 4px var(--spacing-2);
+  padding: 4px var(--spacing-8);
   border-radius: var(--radius-pill);
   font-size: var(--text-xs);
   font-weight: var(--font-weight-medium);

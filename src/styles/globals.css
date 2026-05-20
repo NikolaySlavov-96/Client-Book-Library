@@ -90,18 +90,18 @@ p {
   --line-height-tight: 1.2;
   --line-height-loose: 1.7;
 
-  /* Font sizes (even numbers only) */
-  --text-xs: 10px;
-  --text-sm: 12px;
+  /* Font sizes */
+  --text-xs: var(--spacing-10);
+  --text-sm: var(--spacing-12);
   --text-md: 14px;
-  --text-lg: 16px;
+  --text-lg: var(--spacing-16);
   --text-xl: 18px;
   --text-2xl: 22px;
   --text-3xl: 26px;
-  --text-4xl: 28px;
+  --text-4xl: var(--spacing-28);
   --text-5xl: 30px;
-  --text-6xl: 32px;
-  --text-7xl: 40px;
+  --text-6xl: var(--spacing-32);
+  --text-7xl: var(--spacing-40);
 
   /* Font weights */
   --font-weight-light: 300;
@@ -111,36 +111,36 @@ p {
   --font-weight-extra-bold: 700;
 
   /* --- Spacing --- */
-  --spacing-0-5: 2px;
-  --spacing-1: 4px;
-  --spacing-1-5: 6px;
-  --spacing-2: 8px;
-  --spacing-2-5: 10px;
-  --spacing-3: 12px;
-  --spacing-4: 16px;
-  --spacing-5: 20px;
-  --spacing-6: 24px;
-  --spacing-7: 28px;
-  --spacing-8: 32px;
-  --spacing-9: 36px;
-  --spacing-10: 40px;
-  --spacing-12: 48px;
-  --spacing-14: 56px;
-  --spacing-15: 60px;
-  --spacing-16: 64px;
-  --spacing-20: 80px;
+  --spacing-2: 2px;
+  --spacing-4: 4px;
+  --spacing-6: 6px;
+  --spacing-8: 8px;
+  --spacing-10: 10px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-28: 28px;
+  --spacing-32: 32px;
+  --spacing-36: 36px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-56: 56px;
+  --spacing-60: 60px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
 
   /* --- Component sizes --- */
-  --avatar-sm: 32px;
+  --avatar-sm: var(--spacing-32);
   --avatar-lg: 88px;
-  --scrollbar-width: 5px;
+  --scrollbar-width: var(--spacing-6);
   --select-sm: 70px;
   --select-md: 240px;
   --product-card-size: 300px;
   --login-panel-width: 420px;
   --login-card-width: 340px;
   --login-deco-lg: 320px;
-  --login-deco-md: 240px;
+  --login-deco-md: var(--select-md);
   --icon-input-offset: 38px;
   --search-modal-width: 580px;
   --search-modal-results-height: 380px;
@@ -151,13 +151,13 @@ p {
   --z-modal: 300;
 
   /* --- Border radius --- */
-  --radius-xs: 3px;
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 10px;
-  --radius-xl: 12px;
-  --radius-2xl: 16px;
-  --radius-pill: 20px;
+  --radius-xs: var(--spacing-4);
+  --radius-sm: var(--spacing-6);
+  --radius-md: var(--spacing-8);
+  --radius-lg: var(--spacing-10);
+  --radius-xl: var(--spacing-12);
+  --radius-2xl: var(--spacing-16);
+  --radius-pill: var(--spacing-20);
   --radius-full: 50%;
 
   /* --- Composite border tokens --- */
@@ -183,7 +183,7 @@ p {
   --transition-slow: all 0.20s;
 
   /* --- Layout --- */
-  --nav-height: 60px;
+  --nav-height: var(--spacing-60);
 }
 
 /* ===== GLOBAL BASE ===== */
@@ -224,29 +224,29 @@ body {
 .grid-auto-fill-180 {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: var(--spacing-5);
+  gap: var(--spacing-20);
 }
 
 .grid-auto-fill-160 {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: var(--spacing-5);
+  gap: var(--spacing-20);
 }
 
 .grid-detail {
   display: grid;
   grid-template-columns: 220px 1fr;
-  gap: var(--spacing-12);
+  gap: var(--spacing-48);
   align-items: start;
 }
 
 /* ===== SPACING UTILITIES ===== */
-.gap-1 { gap: var(--spacing-1); }
-.gap-2 { gap: var(--spacing-2); }
-.gap-3 { gap: var(--spacing-3); }
-.gap-4 { gap: var(--spacing-4); }
-.gap-5 { gap: var(--spacing-5); }
-.gap-6 { gap: var(--spacing-6); }
+.gap-1 { gap: var(--spacing-4); }
+.gap-2 { gap: var(--spacing-8); }
+.gap-3 { gap: var(--spacing-12); }
+.gap-4 { gap: var(--spacing-16); }
+.gap-5 { gap: var(--spacing-20); }
+.gap-6 { gap: var(--spacing-24); }
 
 .mt-auto { margin-top: auto; }
 .mb-auto { margin-bottom: auto; }
@@ -341,13 +341,13 @@ body {
 .page-wrap {
   max-width: 1140px;
   margin: 0 auto;
-  padding: var(--spacing-9) var(--spacing-10);
+  padding: var(--spacing-36) var(--spacing-40);
 }
 
 .page-wrap--narrow {
   max-width: 1000px;
   margin: 0 auto;
-  padding: var(--spacing-9) var(--spacing-10);
+  padding: var(--spacing-36) var(--spacing-40);
 }
 
 /* ===== DISABLED / COMING SOON ===== */
@@ -361,7 +361,7 @@ body {
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(var(--spacing-6));
   }
   to {
     opacity: 1;
@@ -377,7 +377,7 @@ body {
 @media (max-width: 639px) {
   .page-wrap,
   .page-wrap--narrow {
-    padding: var(--spacing-4) var(--spacing-4);
+    padding: var(--spacing-16) var(--spacing-16);
   }
 
   .grid-auto-fill-180 {
@@ -392,13 +392,13 @@ body {
 @media (min-width: 640px) {
   .page-wrap,
   .page-wrap--narrow {
-    padding: var(--spacing-6) var(--spacing-6);
+    padding: var(--spacing-24) var(--spacing-24);
   }
 }
 
 @media (min-width: 1024px) {
   .page-wrap,
   .page-wrap--narrow {
-    padding: var(--spacing-9) var(--spacing-10);
+    padding: var(--spacing-36) var(--spacing-40);
   }
 }

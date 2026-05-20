@@ -1,5 +1,5 @@
 .footer {
-    padding: var(--spacing-5) var(--spacing-10);
+    padding: var(--spacing-20) var(--spacing-40);
     background: var(--cream-2);
     border-top: var(--border-default);
     text-align: center;
@@ -15,6 +15,6 @@
 
 @media (max-width: 640px) {
     .footer {
-        padding: var(--spacing-4);
+        padding: var(--spacing-16);
     }
 }

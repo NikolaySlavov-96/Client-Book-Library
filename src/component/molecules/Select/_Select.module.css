@@ -15,10 +15,10 @@
 }
 
 .dropdown__input {
-    padding: var(--spacing-0-5) var(--spacing-3);
+    padding: var(--spacing-8) var(--spacing-12);
     -webkit-user-select: none;
     user-select: none;
-    gap: var(--spacing-2);
+    gap: var(--spacing-8);
 }
 
 .placeholder {
@@ -36,7 +36,7 @@
 /* Menu */
 .dropdown__menu {
     position: absolute;
-    transform: translateY(var(--spacing-1-5));
+    transform: translateY(var(--spacing-24));
     border: var(--border-default);
     border-radius: var(--radius-sm);
     overflow: auto;
@@ -71,7 +71,7 @@
 
 /* Items */
 .dropdown__item {
-    padding: var(--spacing-2) var(--spacing-2-5);
+    padding: var(--spacing-8) var(--spacing-10);
     cursor: pointer;
     transition: var(--transition-slow);
     border-radius: var(--radius-sm);

@@ -1,8 +1,8 @@
 .container {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-5);
-  padding: var(--spacing-5);
+  gap: var(--spacing-20);
+  padding: var(--spacing-20);
   max-width: 1140px;
   margin: 0 auto;
 }
@@ -33,15 +33,15 @@
   background: var(--cream-2);
   border: var(--border-default);
   border-radius: var(--radius-md);
-  padding: var(--spacing-2) var(--spacing-3);
-  margin-bottom: var(--spacing-4);
+  padding: var(--spacing-8) var(--spacing-12);
+  margin-bottom: var(--spacing-16);
   display: flex;
-  gap: var(--spacing-2);
+  gap: var(--spacing-8);
   overflow-x: auto;
 }
 
 .room__header button {
-  padding: var(--spacing-1) var(--spacing-3);
+  padding: var(--spacing-4) var(--spacing-12);
   border-radius: var(--radius-sm);
   border: var(--border-default);
   background: var(--white);
@@ -76,7 +76,7 @@
 .chat__window {
   flex: 1;
   background: var(--cream);
-  padding: var(--spacing-3);
+  padding: var(--spacing-12);
   overflow-y: auto;
 }
 

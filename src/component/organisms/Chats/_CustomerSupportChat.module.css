@@ -7,8 +7,8 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-window);
   position: fixed;
-  right: var(--spacing-3);
-  bottom: var(--spacing-3);
+  right: var(--spacing-12);
+  bottom: var(--spacing-12);
   overflow: hidden;
   z-index: 200;
 }

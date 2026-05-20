@@ -1,12 +1,12 @@
 .container {
   display: flex;
-  gap: var(--spacing-2);
+  gap: var(--spacing-8);
   flex-wrap: wrap;
-  margin-bottom: var(--spacing-5);
+  margin-bottom: var(--spacing-20);
 }
 
 .pill {
-  padding: var(--spacing-2) var(--spacing-4);
+  padding: var(--spacing-8) var(--spacing-16);
   border-radius: var(--radius-pill);
   font-size: var(--text-sm);
   cursor: pointer;

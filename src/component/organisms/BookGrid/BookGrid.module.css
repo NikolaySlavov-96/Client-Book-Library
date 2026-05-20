@@ -1,16 +1,16 @@
 .container--grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: var(--spacing-6);
+  gap: var(--spacing-24);
 }
 
 .container--list {
-  gap: var(--spacing-4);
+  gap: var(--spacing-16);
 }
 
 .empty {
   text-align: center;
   color: var(--ink-3);
   font-size: var(--text-sm);
-  padding: var(--spacing-12) 0;
+  padding: var(--spacing-48) 0;
 }
