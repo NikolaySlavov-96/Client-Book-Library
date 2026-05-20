@@ -1,6 +1,7 @@
 import { memo, type ComponentType } from "react";
 
-import { NewProductModal, SearchModal } from "../../molecules";
+import NewProductModal from "../../molecules/Modals/NewProductModal/_NewProductModal";
+import SearchModal from "../../molecules/SearchModal/SearchModal";
 
 import { MODAL_NAMES } from "../../../constants";
 
