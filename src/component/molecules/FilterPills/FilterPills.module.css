@@ -27,3 +27,8 @@
   border-color: var(--accent);
   color: var(--white);
 }
+
+.pill--active:hover {
+  color: var(--white);
+  border-color: var(--accent);
+}

@@ -27,3 +27,8 @@
   color: var(--white);
   font-weight: var(--font-weight-medium);
 }
+
+.current__page:hover {
+  color: var(--white);
+  border-color: var(--accent);
+}

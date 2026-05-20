@@ -26,8 +26,8 @@ const LOGO_SVG = (
 
 const SEARCH_SCOPE_BY_ROUTE: ReadonlyArray<{ match: (path: string) => boolean; scope: ISearchModalPayload['scope'] }> = [
   { match: (p) => p.startsWith('/collections'), scope: 'shelf' },
-  { match: (p) => p.startsWith('/search/'),     scope: 'friend' },
-  { match: () => true,                          scope: 'catalog' },
+  { match: (p) => p.startsWith('/search/'), scope: 'friend' },
+  { match: () => true, scope: 'catalog' },
 ];
 
 const resolveSearchScope = (pathname: string): ISearchModalPayload['scope'] => {
@@ -134,13 +134,13 @@ function NavBar({ className }: INavBarProps) {
             <Button
               label={TEXTS.NAV_LOGIN}
               variant="ghost"
-              size="sm"
+              size="md"
               onClick={() => navigate(ROUT_NAMES.LOGIN)}
             />
             <Button
               label={TEXTS.NAV_REGISTER}
               variant="primary"
-              size="sm"
+              size="md"
               onClick={() => navigate(ROUT_NAMES.REGISTER)}
             />
           </>

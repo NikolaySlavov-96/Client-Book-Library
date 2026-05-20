@@ -7,7 +7,7 @@ import { ESwalIcon } from '../Types/Swal';
 const BUTTON_COLORS = {
     CONFIRM: 'red',
     DENY: 'yellow',
-    CANCEL: 'gree'
+    CANCEL: 'green'
 }
 
 interface ITostWithButton extends Omit<IToastGlobal, 'typeIcon'> {
