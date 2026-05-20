@@ -1,10 +1,10 @@
 .container {
     position: absolute;
-    padding: 2px 40px;
-    top: 80px;
-    background-color: antiquewhite;
-    border-radius: 20px;
-    right: 1rem;
+    padding: var(--spacing-0-5) var(--spacing-10);
+    top: var(--spacing-20);
+    background-color: var(--cream-2);
+    border-radius: var(--radius-pill);
+    right: var(--spacing-4);
     opacity: 0;
     transition: opacity 1s ease-in-out;
 }

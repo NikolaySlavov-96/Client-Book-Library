@@ -5,23 +5,10 @@ import Badge from '../../../../component/atoms/Badge/Badge';
 import Button from '../../../../component/atoms/Button/Button';
 
 import { useStoreZ } from '../../../../hooks';
-import { ROUT_NAMES, TEXTS } from '../../../../constants';
+import { ROUT_NAMES, TEXTS, getCoverGradient } from '../../../../constants';
 import { EStatusId, STATUS_META, isValidStatusId } from '../../../../constants/statusMap';
 
 import styles from './_DetailsForProduct.module.css';
-
-const COVER_GRADIENTS = [
-  'linear-gradient(145deg, #5c4b8a, #3d3366)',
-  'linear-gradient(145deg, #8b5e3c, #6b4528)',
-  'linear-gradient(145deg, #2d6a4f, #1b4332)',
-  'linear-gradient(145deg, #374151, #1f2937)',
-  'linear-gradient(145deg, #1e6091, #0d3b6e)',
-  'linear-gradient(145deg, #7c3d3d, #5a2020)',
-  'linear-gradient(145deg, #8b1a1a, #6b1212)',
-  'linear-gradient(145deg, #4a5568, #2d3748)',
-  'linear-gradient(145deg, #6b4226, #4a2c18)',
-  'linear-gradient(145deg, #1a365d, #0f2340)',
-];
 
 const STATUS_BUTTONS: EStatusId[] = [
   EStatusId.WANT,
@@ -73,7 +60,7 @@ const _DetailsForProduct = () => {
     }
   }, [id, email, fetchProductState]);
 
-  const coverGradient = COVER_GRADIENTS[(productById?.productId ?? 0) % COVER_GRADIENTS.length];
+  const coverGradient = getCoverGradient(productById?.productId ?? 0);
 
   return (
     <main className={styles.wrap}>

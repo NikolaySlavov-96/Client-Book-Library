@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from '../../atoms/Button/Button';
 
-import { ROUT_NAMES, TEXTS } from '../../../constants';
+import { ROUT_NAMES, TEXTS, NOT_FOUND_SPINES } from '../../../constants';
 
 import styles from './_NotFound.module.css';
 
@@ -13,14 +13,11 @@ const _NotFound = () => {
   return (
     <main className={`flex-col flex-center ${styles.wrap}`}>
       <div className={styles.spines} aria-hidden="true">
-        {[70, 90, 110, 80, 100, 60, 95].map((h, i) => (
+        {NOT_FOUND_SPINES.map((s, i) => (
           <div
             key={i}
             className={styles.spine}
-            style={{
-              height: h,
-              background: ['#8b5e3c', '#c49a6c', '#374151', '#2d6a4f', '#5c6bc0', '#e67e22', '#9c9690'][i],
-            }}
+            style={{ height: s.height, background: s.color }}
           />
         ))}
       </div>

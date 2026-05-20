@@ -79,7 +79,7 @@
 .info__title {
   font-family: var(--font-serif);
   font-size: var(--text-4xl);
-  font-weight: 600;
+  font-weight: var(--font-weight-bold);
   line-height: 1.2;
   margin-bottom: var(--spacing-2);
   color: var(--ink);
@@ -107,7 +107,7 @@
 .stat__value {
   font-family: var(--font-serif);
   font-size: var(--text-xl);
-  font-weight: 600;
+  font-weight: var(--font-weight-bold);
   color: var(--ink);
 }
 

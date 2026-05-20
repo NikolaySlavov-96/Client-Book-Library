@@ -11,7 +11,7 @@
 .header__title {
   font-family: var(--font-serif);
   font-size: var(--text-4xl);
-  font-weight: 600;
+  font-weight: var(--font-weight-bold);
   margin-bottom: var(--spacing-1);
   color: var(--ink);
 }
@@ -22,10 +22,8 @@
 }
 
 .searchRow {
-  display: flex;
   gap: var(--spacing-3);
   margin-bottom: var(--spacing-6);
-  align-items: center;
 }
 
 .searchBox {
@@ -35,7 +33,7 @@
 
 .searchBox__icon {
   position: absolute;
-  left: 12px;
+  left: var(--spacing-3);
   top: 50%;
   transform: translateY(-50%);
   color: var(--ink-3);
@@ -45,7 +43,7 @@
 
 .searchBox__input {
   width: 100%;
-  padding: var(--spacing-2) var(--spacing-4) var(--spacing-2) 38px;
+  padding: var(--spacing-2) var(--spacing-4) var(--spacing-2) var(--icon-input-offset);
   border-radius: var(--radius-md);
   border: var(--border-default);
   background: var(--white);
@@ -59,7 +57,7 @@
 
 .searchBox__input:focus {
   border-color: var(--accent-2);
-  box-shadow: 0 0 0 3px rgba(196, 154, 108, 0.12);
+  box-shadow: var(--shadow-focus);
 }
 
 .searchBox__input::placeholder {

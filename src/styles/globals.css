@@ -58,6 +58,11 @@ p {
   --border: rgba(90, 85, 80, 0.15);
   --border-med: rgba(90, 85, 80, 0.25);
   --overlay: rgba(20, 18, 16, 0.55);
+  --error: #df4402;
+  --select-hover: #ff7300;
+  --deco-accent-2: rgba(196, 154, 108, 0.08);
+  --deco-accent: rgba(139, 94, 60, 0.1);
+  --white-muted: rgba(255, 255, 255, 0.45);
 
   /* Status — light (for badges in lists) */
   --status-read-bg: #d1fae5;
@@ -83,6 +88,7 @@ p {
   --font-sans: 'DM Sans', system-ui, sans-serif;
   --line-height-base: 1.5;
   --line-height-tight: 1.2;
+  --line-height-loose: 1.7;
 
   /* Font sizes (even numbers only) */
   --text-xs: 10px;
@@ -102,11 +108,14 @@ p {
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-bold: 600;
+  --font-weight-extra-bold: 700;
 
   /* --- Spacing --- */
+  --spacing-0-5: 2px;
   --spacing-1: 4px;
   --spacing-1-5: 6px;
   --spacing-2: 8px;
+  --spacing-2-5: 10px;
   --spacing-3: 12px;
   --spacing-4: 16px;
   --spacing-5: 20px;
@@ -118,12 +127,31 @@ p {
   --spacing-12: 48px;
   --spacing-14: 56px;
   --spacing-15: 60px;
+  --spacing-16: 64px;
+  --spacing-20: 80px;
 
   /* --- Component sizes --- */
   --avatar-sm: 32px;
   --avatar-lg: 88px;
+  --scrollbar-width: 5px;
+  --select-sm: 70px;
+  --select-md: 240px;
+  --product-card-size: 300px;
+  --login-panel-width: 420px;
+  --login-card-width: 340px;
+  --login-deco-lg: 320px;
+  --login-deco-md: 240px;
+  --icon-input-offset: 38px;
+  --search-modal-width: 580px;
+  --search-modal-results-height: 380px;
+
+  /* --- Z-index --- */
+  --z-dropdown: 99;
+  --z-nav: 100;
+  --z-modal: 300;
 
   /* --- Border radius --- */
+  --radius-xs: 3px;
   --radius-sm: 6px;
   --radius-md: 8px;
   --radius-lg: 10px;
@@ -137,6 +165,11 @@ p {
   --border-med-default: 1px solid var(--border-med);
   --border-accent: 1px solid var(--accent);
   --border-accent-2: 1px solid var(--accent-2);
+  --border-transparent: 1px solid transparent;
+  --border-2-transparent: 2px solid transparent;
+
+  /* --- Opacity --- */
+  --opacity-disabled: 0.5;
 
   /* --- Shadows --- */
   --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.07);
@@ -293,8 +326,8 @@ body {
 .relative { position: relative; }
 .absolute { position: absolute; }
 .sticky-top { position: sticky; top: 0; }
-.z-nav { z-index: 100; }
-.z-modal { z-index: 300; }
+.z-nav { z-index: var(--z-nav); }
+.z-modal { z-index: var(--z-modal); }
 
 .absolute-fill {
   position: absolute;

@@ -15,7 +15,7 @@
   border: none;
   background: transparent;
   font-family: var(--font-sans);
-  border-bottom: 2px solid transparent;
+  border-bottom: var(--border-2-transparent);
   margin-bottom: -1px;
   transition: var(--transition-fast);
   white-space: nowrap;
@@ -35,8 +35,8 @@
 .tab__count {
   display: inline-block;
   background: var(--cream-3);
-  border-radius: var(--spacing-2);
-  padding: 2px 8px;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-0-5) var(--spacing-2);
   font-size: var(--text-xs);
   margin-left: var(--spacing-1);
   color: var(--ink-3);

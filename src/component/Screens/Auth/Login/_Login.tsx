@@ -8,18 +8,9 @@ import { Toast } from '../../../../Toasts';
 import { ESwalIcon } from '../../../../Types/Swal';
 
 import { useStoreZ } from '../../../../hooks';
-import { ROUT_NAMES, ServerError, TEXTS } from '../../../../constants';
+import { ROUT_NAMES, ServerError, TEXTS, BOOK_SPINES } from '../../../../constants';
 
 import styles from './_Login.module.css';
-
-const BOOK_SPINES = [
-  { color: '#8b5e3c', height: 92 },
-  { color: '#c49a6c', height: 78 },
-  { color: '#5c6bc0', height: 100 },
-  { color: '#2d6a4f', height: 84 },
-  { color: '#e67e22', height: 70 },
-  { color: '#9c9690', height: 88 },
-];
 
 const _Login = () => {
   const navigate = useNavigate();

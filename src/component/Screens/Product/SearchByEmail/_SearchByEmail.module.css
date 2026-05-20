@@ -21,7 +21,7 @@
 .header__email {
   font-family: var(--font-serif);
   font-size: var(--text-3xl);
-  font-weight: 600;
+  font-weight: var(--font-weight-bold);
   color: var(--ink);
 }
 

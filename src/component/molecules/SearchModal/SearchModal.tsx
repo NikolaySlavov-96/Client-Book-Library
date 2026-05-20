@@ -97,7 +97,7 @@ function SearchModal() {
       onClick={closeModal}
     >
       <div className={styles.box} onClick={(e) => e.stopPropagation()}>
-        <div className={styles.searchRow}>
+        <div className={`flex-align ${styles.searchRow}`}>
           <span className={styles.searchIcon} aria-hidden="true">⌕</span>
           <input
             ref={inputRef}
@@ -122,7 +122,7 @@ function SearchModal() {
                 return (
                   <button
                     key={book.productId}
-                    className={styles.resultItem}
+                    className={`flex-align ${styles.resultItem}`}
                     role="option"
                     aria-selected={false}
                     onClick={() => handleSelect(book)}

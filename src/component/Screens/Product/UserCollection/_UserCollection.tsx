@@ -135,7 +135,7 @@ const _UserCollection = () => {
           label={TEXTS.PROFILE_GOAL_LABEL}
         />
 
-        <div className={styles.friendBar}>
+        <div className={`flex-align ${styles.friendBar}`}>
           <label className={styles.friendBar__label} htmlFor="friend-email">
             {TEXTS.PROFILE_FRIEND_LABEL}
           </label>

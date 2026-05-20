@@ -60,7 +60,7 @@ const _Products = () => {
           <p className={styles.header__sub}>{TEXTS.CATALOG_SUBTITLE}</p>
         </header>
 
-        <div className={styles.searchRow}>
+        <div className={`flex-align ${styles.searchRow}`}>
           <div className={styles.searchBox}>
             <span className={styles.searchBox__icon} aria-hidden="true">⌕</span>
             <input

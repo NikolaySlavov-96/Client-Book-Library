@@ -5,7 +5,7 @@ import Badge from '../../atoms/Badge/Badge';
 
 import { cx } from '../../../Utils';
 
-import { ROUT_NAMES, TEXTS } from '../../../constants';
+import { ROUT_NAMES, TEXTS, getCoverGradient } from '../../../constants';
 import { EStatusId, STATUS_META, isValidStatusId } from '../../../constants/statusMap';
 
 import styles from './BookCard.module.css';
@@ -25,24 +25,6 @@ interface IBookCardProps {
   onStatusChange?: (productId: number, statusId: EStatusId) => void;
   className?: string;
 }
-
-const COVER_GRADIENTS = [
-  ['#5c4b8a', '#3d3366'],
-  ['#8b5e3c', '#6b4528'],
-  ['#2d6a4f', '#1b4332'],
-  ['#374151', '#1f2937'],
-  ['#1e6091', '#0d3b6e'],
-  ['#7c3d3d', '#5a2020'],
-  ['#8b1a1a', '#6b1212'],
-  ['#b8860b', '#8b6508'],
-  ['#1a3a5c', '#0d2040'],
-  ['#4a2c6e', '#2d1a47'],
-];
-
-const getCoverGradient = (productId: number): string => {
-  const [c1, c2] = COVER_GRADIENTS[productId % COVER_GRADIENTS.length];
-  return `linear-gradient(145deg, ${c1}, ${c2})`;
-};
 
 const QUICK_STATUS_IDS: EStatusId[] = [EStatusId.WANT, EStatusId.READING, EStatusId.READ];
 

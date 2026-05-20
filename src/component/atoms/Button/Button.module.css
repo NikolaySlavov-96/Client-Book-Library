@@ -4,7 +4,7 @@
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: var(--transition-base);
-  border: 1px solid transparent;
+  border: var(--border-transparent);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -12,13 +12,13 @@
 }
 
 .btn:disabled {
-  opacity: 0.5;
+  opacity: var(--opacity-disabled);
   cursor: not-allowed;
 }
 
 /* --- Sizes --- */
 .btn--sm {
-  padding: 6px var(--spacing-3);
+  padding: var(--spacing-1-5) var(--spacing-3);
   font-size: var(--text-sm);
 }
 

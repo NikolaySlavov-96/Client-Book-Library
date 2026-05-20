@@ -1,9 +1,7 @@
 .container {
   background: var(--cream-2);
-  border-radius: var(--spacing-2);
+  border-radius: var(--radius-md);
   padding: var(--spacing-4) var(--spacing-5);
-  display: flex;
-  align-items: center;
   gap: var(--spacing-5);
   margin-bottom: var(--spacing-7);
 }
@@ -11,29 +9,29 @@
 .label {
   font-size: var(--text-sm);
   color: var(--ink-2);
-  min-width: 80px;
+  min-width: var(--spacing-20);
   flex-shrink: 0;
 }
 
 .track {
   flex: 1;
-  height: 6px;
+  height: var(--spacing-1-5);
   background: var(--cream-3);
-  border-radius: 3px;
+  border-radius: var(--radius-xs);
   overflow: hidden;
 }
 
 .fill {
   height: 100%;
   background: var(--accent);
-  border-radius: 3px;
+  border-radius: var(--radius-xs);
   transition: width 0.4s ease;
 }
 
 .pct {
   font-size: var(--text-sm);
   color: var(--ink-3);
-  min-width: 36px;
+  min-width: var(--spacing-9);
   text-align: right;
   flex-shrink: 0;
 }

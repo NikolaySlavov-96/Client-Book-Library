@@ -1,20 +1,20 @@
 .container {
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-4);
   text-align: right;
 }
 
 .container label {
-  margin-right: 0.3rem;
+  margin-right: var(--spacing-1);
 }
 
 .container input {
   border: none;
-  padding: 4px 6px;
-  border-radius: 8px;
+  padding: var(--spacing-1) var(--spacing-1-5);
+  border-radius: var(--radius-md);
   background-color: var(--input-placeholder);
 }
 
 .container input::placeholder {
   color: var(--input-placeholder);
-  letter-spacing: 2px;
+  letter-spacing: var(--spacing-0-5);
 }

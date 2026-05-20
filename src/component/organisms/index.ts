@@ -3,7 +3,5 @@ export { default as ListRenderProduct } from './ListRenderProduct/_ListRenderPro
 export { default as ModalContainer } from './ModalContainer/_ModalContainer';
 export { default as ProductCard } from './ProductCard/_ProductCard';
 export { default as QueryBar } from './QueryBar/_QueryBar';
-
-// New design-system organisms
 export { default as BookGrid } from './BookGrid/BookGrid';
 export { default as ShelfGrid } from './ShelfGrid/ShelfGrid';

@@ -72,7 +72,7 @@
 }
 
 .act-btn {
-  padding: 4px var(--spacing-2);
+  padding: var(--spacing-1) var(--spacing-2);
   border-radius: var(--radius-sm);
   font-size: var(--text-xs);
   cursor: pointer;
@@ -103,8 +103,8 @@
 }
 
 .card--list .cover {
-  width: 64px;
-  height: 80px;
+  width: var(--spacing-16);
+  height: var(--spacing-20);
   flex-shrink: 0;
   border-radius: 0;
 }

@@ -1,11 +1,11 @@
 .li {
-  padding: 6px 0px;
+  padding: var(--spacing-1-5) 0;
   list-style: none;
   background-color: var(--button-background);
 }
 
 .li a {
-  padding: 6px 12px;
+  padding: var(--spacing-1-5) var(--spacing-3);
 }
 
 .li:hover {

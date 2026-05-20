@@ -18,7 +18,7 @@ function ProgressBar({ label = TEXTS.PROFILE_GOAL_LABEL, current, goal, classNam
 
   return (
     <div
-      className={cx(styles.container, className)}
+      className={cx('flex-align', styles.container, className)}
       title={TEXTS.COMMON_COMING_SOON}
       aria-label={`${label}: ${current} of ${goal}`}
     >

@@ -1,25 +1,23 @@
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(20, 18, 16, 0.55);
-  z-index: 300;
+  background: var(--overlay);
+  z-index: var(--z-modal);
   align-items: center;
-  padding-top: 80px;
+  padding-top: var(--spacing-20);
 }
 
 .box {
   background: var(--white);
   border-radius: var(--radius-lg);
   width: 100%;
-  max-width: 580px;
+  max-width: var(--search-modal-width);
   overflow: hidden;
   border: var(--border-default);
   margin: 0 var(--spacing-4);
 }
 
 .searchRow {
-  display: flex;
-  align-items: center;
   gap: var(--spacing-3);
   padding: var(--spacing-4) var(--spacing-4);
   border-bottom: var(--border-default);
@@ -63,7 +61,7 @@
 }
 
 .results {
-  max-height: 380px;
+  max-height: var(--search-modal-results-height);
   overflow-y: auto;
 }
 
@@ -78,13 +76,11 @@
 }
 
 .resultItem {
-  display: flex;
-  align-items: center;
   gap: var(--spacing-3);
   padding: var(--spacing-3) var(--spacing-4);
   cursor: pointer;
   transition: var(--transition-fast);
-  border-bottom: 1px solid var(--border);
+  border-bottom: var(--border-default);
   width: 100%;
   background: transparent;
   border-left: none;
@@ -103,8 +99,8 @@
 }
 
 .bookDot {
-  width: 36px;
-  height: 48px;
+  width: var(--spacing-9);
+  height: var(--spacing-12);
   border-radius: var(--radius-sm);
   flex-shrink: 0;
 }
@@ -112,7 +108,7 @@
 .bookInfo {
   flex: 1;
   min-width: 0;
-  gap: 2px;
+  gap: var(--spacing-0-5);
 }
 
 .bookTitle {
