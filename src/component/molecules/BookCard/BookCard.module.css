@@ -17,7 +17,7 @@
 
 /* --- Grid layout --- */
 .cover {
-  height: 200px;
+  height: var(--book-cover-grid);
   position: relative;
   display: flex;
   align-items: flex-end;
@@ -29,7 +29,7 @@
   left: 0;
   right: 0;
   padding: var(--spacing-28) var(--spacing-12) var(--spacing-8);
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, transparent 100%);
+  background: linear-gradient(to top, var(--overlay) 0%, transparent 100%);
 }
 
 .cover__title {

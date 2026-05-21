@@ -48,3 +48,44 @@ export interface IVerifyTokenResponse {
     message: string;
     messageCode: string;
 }
+
+export interface IMagicLinkRequest {
+    email: string;
+}
+
+export interface IMagicLinkResponse {
+    userInfo: Record<string, unknown>;
+    message: string;
+    messageCode: string;
+}
+
+export interface IVerifyMagicRequest {
+    token: string;
+}
+
+export interface IVerifyMagicResponse {
+    userInfo: IAuthUserInfo;
+    message: string;
+    messageCode: string;
+}
+
+export interface IProfile {
+    id: number;
+    email: string;
+    year: number;
+    role: 'user' | 'support';
+    isVerify: boolean;
+    readingGoal: number;
+    displayName: string | null;
+    notifyByEmail: boolean;
+    avatarFileId: number | null;
+    avatarUrl: string | null;
+    avatarSrc: string | null;
+}
+
+export interface IUpdateProfileRequest {
+    readingGoal?: number;
+    displayName?: string | null;
+    avatarFileId?: number | null;
+    notifyByEmail?: boolean;
+}

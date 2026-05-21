@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import Badge from '../../../../component/atoms/Badge/Badge';
 import Button from '../../../../component/atoms/Button/Button';
+import StarRating from '../../../../component/atoms/StarRating/StarRating';
 
 import { useStoreZ } from '../../../../hooks';
 import { ROUT_NAMES, TEXTS, getCoverGradient } from '../../../../constants';
@@ -31,6 +32,9 @@ const _DetailsForProduct = () => {
     fetchProductState,
     addingProductState,
     productState,
+    productRating,
+    fetchProductRating,
+    rateProduct,
     email,
   } = useStoreZ();
 
@@ -42,6 +46,10 @@ const _DetailsForProduct = () => {
     if (id) addingProductState(id, String(statusId));
   }, [id, addingProductState]);
 
+  const handleRate = useCallback((rating: number) => {
+    if (id) rateProduct(id, rating);
+  }, [id, rateProduct]);
+
   const handleShareSubmit = useCallback(() => {
     const trimmed = shareEmail.trim();
     if (!trimmed) return;
@@ -51,8 +59,9 @@ const _DetailsForProduct = () => {
   useEffect(() => {
     if (id && id !== '0') {
       fetchProductById(id);
+      fetchProductRating(id);
     }
-  }, [id, fetchProductById]);
+  }, [id, fetchProductById, fetchProductRating]);
 
   useEffect(() => {
     if (email && id && id !== '0') {
@@ -96,23 +105,38 @@ const _DetailsForProduct = () => {
 
               <div className={styles.stats}>
                 <div className={`flex-col ${styles.stat}`}>
-                  <span className={styles.stat__value}>{TEXTS.COMMON_PLACEHOLDER_VALUE}</span>
+                  <span className={styles.stat__value}>{productById?.pages ?? TEXTS.COMMON_PLACEHOLDER_VALUE}</span>
                   <span className={styles.stat__label}>{TEXTS.DETAIL_PAGES}</span>
                 </div>
                 <div className={`flex-col ${styles.stat}`}>
-                  <span className={styles.stat__value}>{TEXTS.COMMON_PLACEHOLDER_VALUE}</span>
+                  <span className={styles.stat__value}>{productById?.publishedYear ?? TEXTS.COMMON_PLACEHOLDER_VALUE}</span>
                   <span className={styles.stat__label}>{TEXTS.DETAIL_YEAR}</span>
                 </div>
                 <div className={`flex-col ${styles.stat}`}>
-                  <span className={styles.stat__value}>{TEXTS.COMMON_PLACEHOLDER_VALUE}</span>
-                  <span className={styles.stat__label}>{TEXTS.DETAIL_RATING}</span>
+                  <span className={styles.stat__value}>
+                    <StarRating value={Math.round(productRating.average)} ariaLabel={TEXTS.DETAIL_RATING} />
+                  </span>
+                  <span className={styles.stat__label}>
+                    {TEXTS.DETAIL_RATING}
+                    {productRating.count > 0 ? ` (${productRating.count})` : ''}
+                  </span>
                 </div>
               </div>
 
-              <p className={styles.desc}>{TEXTS.DETAIL_DESC_PLACEHOLDER}</p>
+              <p className={styles.desc}>{productById?.description ?? TEXTS.DETAIL_DESC_PLACEHOLDER}</p>
 
               {isAuthenticated ? (
                 <>
+                  <div className={styles.actions}>
+                    <p className={styles.actions__label}>{TEXTS.DETAIL_YOUR_RATING}</p>
+                    <StarRating
+                      value={productRating.userRating}
+                      interactive
+                      onRate={handleRate}
+                      ariaLabel={TEXTS.DETAIL_YOUR_RATING}
+                    />
+                  </div>
+
                   <div className={styles.actions}>
                     <p className={styles.actions__label}>{TEXTS.DETAIL_ADD_TO_SHELF}</p>
                     <div className={styles.actions__btns}>

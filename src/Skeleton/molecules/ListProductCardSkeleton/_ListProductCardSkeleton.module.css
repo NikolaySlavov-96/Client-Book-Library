@@ -4,7 +4,7 @@
   border: var(--border-default);
   border-radius: var(--radius-pill);
   overflow: hidden;
-  height: 60px;
+  height: var(--spacing-60);
   width: 100%;
   padding: var(--spacing-4) var(--spacing-16);
 }

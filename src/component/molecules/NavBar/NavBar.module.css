@@ -3,7 +3,7 @@
   background: var(--cream);
   border-bottom: var(--border-default);
   padding: 0 var(--spacing-40);
-  z-index: 100;
+  z-index: var(--z-nav);
 }
 
 .nav__logo {
@@ -27,7 +27,7 @@
   background: var(--white);
   font-size: var(--text-md);
   color: var(--ink-3);
-  min-width: 200px;
+  min-width: var(--search-trigger-min-width);
   transition: var(--transition-base);
   cursor: pointer;
 }
@@ -38,7 +38,7 @@
 
 .nav__search-icon {
   font-size: var(--text-lg);
-  opacity: 0.6;
+  opacity: var(--opacity-muted);
   flex-shrink: 0;
 }
 
@@ -98,6 +98,6 @@
     border-bottom: var(--border-default);
     padding: var(--spacing-16);
     gap: var(--spacing-8);
-    z-index: 99;
+    z-index: var(--z-dropdown);
   }
 }

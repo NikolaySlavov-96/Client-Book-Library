@@ -1,6 +1,9 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 
 import Badge from '../../atoms/Badge/Badge';
+
+import { ToastWithButton, Toast } from '../../../Toasts';
+import { ESwalIcon } from '../../../Types/Swal';
 
 import { TEXTS } from '../../../constants';
 
@@ -16,19 +19,40 @@ interface IShelfCardProps {
   fileUrl?: string;
   fileSrc?: string;
   coverGradient?: string;
+  onRemove?: (productId: number) => void;
   className?: string;
 }
 
 function ShelfCard({
+  productId,
   productTitle,
   authorName,
   statusId,
   fileUrl,
   fileSrc,
   coverGradient,
+  onRemove,
   className,
 }: IShelfCardProps) {
   const coverStyle = fileUrl ? undefined : { background: coverGradient };
+
+  const handleRemove = useCallback(async () => {
+    if (!onRemove) return;
+    const result = await ToastWithButton({
+      title: TEXTS.PROFILE_REMOVE_CONFIRM_TITLE,
+      subContent: TEXTS.PROFILE_REMOVE_CONFIRM_TEXT,
+      typeIcon: ESwalIcon.WARNING,
+      isConfirmButton: true,
+      isCancelButton: true,
+      confirmButtonTitle: TEXTS.PROFILE_REMOVE_CONFIRM_BTN,
+      cancelButtonTitle: TEXTS.PROFILE_REMOVE_CANCEL_BTN,
+      isOutsidePress: false,
+    });
+    if (result.isConfirmed) {
+      onRemove(productId);
+      Toast({ title: TEXTS.TOAST_REMOVE_SUCCESS, typeIcon: ESwalIcon.SUCCESS });
+    }
+  }, [onRemove, productId]);
 
   return (
     <article className={cx(styles.card, className)}>
@@ -45,14 +69,16 @@ function ShelfCard({
         <p className={styles.author}>{authorName}</p>
         <div className={`flex-between ${styles.footer}`}>
           <Badge statusId={statusId} badgeStyle="light" />
-          <button
-            className={styles['remove-btn']}
-            disabled
-            title={TEXTS.COMMON_COMING_SOON}
-            aria-label={TEXTS.COMMON_COMING_SOON}
-          >
-            {TEXTS.PROFILE_REMOVE}
-          </button>
+          {onRemove ? (
+            <button
+              className={styles['remove-btn']}
+              type="button"
+              onClick={handleRemove}
+              aria-label={`${TEXTS.PROFILE_REMOVE}: ${productTitle}`}
+            >
+              {TEXTS.PROFILE_REMOVE}
+            </button>
+          ) : null}
         </div>
       </div>
     </article>

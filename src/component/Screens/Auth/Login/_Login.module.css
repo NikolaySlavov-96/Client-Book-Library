@@ -114,7 +114,7 @@
   color: var(--ink-2);
   margin-bottom: var(--spacing-4);
   font-weight: var(--font-weight-medium);
-  letter-spacing: 0.02em;
+  letter-spacing: var(--tracking-tight);
 }
 
 .field__input {
@@ -152,7 +152,7 @@
 .divider::after {
   content: '';
   flex: 1;
-  height: 1px;
+  height: var(--hairline);
   background: var(--border);
 }
 

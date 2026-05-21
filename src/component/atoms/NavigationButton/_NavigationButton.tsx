@@ -32,7 +32,7 @@ const _NavigationButton: FC<INavigationButtonProps> = (props) => {
 
     const activePageOnHeader = useCallback(({ isActive }: { isActive: boolean }) => {
         return isActive ? {
-            color: 'lightYellow', background: '#023E8A'
+            color: 'var(--white)', background: 'var(--accent)'
         } : {};
     }, []);
 

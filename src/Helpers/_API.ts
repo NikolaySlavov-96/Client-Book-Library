@@ -2,7 +2,7 @@ import { HOST, STORAGE_KEYS } from "../constants";
 
 import { getDataFromStorage } from "./_Storage";
 
-export type TMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+export type TMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 export interface IOptions {
     method: TMethod;

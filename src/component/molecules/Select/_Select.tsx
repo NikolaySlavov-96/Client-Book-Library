@@ -11,7 +11,7 @@ interface IIconPops {
 
 const Icon: FC<IIconPops> = memo(({ isOpen }) => {
     return (
-        <svg viewBox="0 0 24 24" width="18" height="18" stroke="#222" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" className={isOpen ? style['translate'] : ''}>
+        <svg viewBox="0 0 24 24" width="18" height="18" stroke="var(--ink)" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" className={isOpen ? style['translate'] : ''}>
             <polyline points="6 9 12 15 18 9"></polyline>
         </svg>
     );

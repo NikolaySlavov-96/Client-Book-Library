@@ -18,9 +18,9 @@ interface INavBarProps {
 
 const LOGO_SVG = (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-    <rect x="2" y="3" width="5" height="14" rx="1.5" fill="#8b5e3c" />
-    <rect x="8" y="3" width="4" height="14" rx="1.5" fill="#c49a6c" />
-    <rect x="13.5" y="3" width="4.5" height="14" rx="1.5" fill="#5a5550" opacity="0.4" />
+    <rect x="2" y="3" width="5" height="14" rx="1.5" fill="var(--accent)" />
+    <rect x="8" y="3" width="4" height="14" rx="1.5" fill="var(--accent-2)" />
+    <rect x="13.5" y="3" width="4.5" height="14" rx="1.5" fill="var(--ink-2)" opacity="var(--opacity-faint)" />
   </svg>
 );
 

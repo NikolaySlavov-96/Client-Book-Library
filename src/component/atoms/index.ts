@@ -11,3 +11,4 @@ export { default as NavigationButton } from './NavigationButton/_NavigationButto
 export { default as SectionTitle } from './SectionTitle/_SectionTitle';
 export { default as Badge } from './Badge/Badge';
 export { default as Avatar } from './Avatar/Avatar';
+export { default as StarRating } from './StarRating/StarRating';

@@ -12,7 +12,7 @@
 }
 
 .cover {
-  height: 190px;
+  height: var(--book-cover-shelf);
   display: flex;
   align-items: flex-end;
   position: relative;
@@ -24,7 +24,7 @@
   left: 0;
   right: 0;
   padding: var(--spacing-20) var(--spacing-8) var(--spacing-8);
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent);
+  background: linear-gradient(to top, var(--overlay), transparent);
 }
 
 .cover__title {
@@ -66,5 +66,5 @@
   font-family: var(--font-sans);
   transition: var(--transition-fast);
   cursor: not-allowed;
-  opacity: 0.5;
+  opacity: var(--opacity-disabled);
 }

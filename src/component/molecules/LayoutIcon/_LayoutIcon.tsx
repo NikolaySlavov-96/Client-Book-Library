@@ -4,7 +4,7 @@ import style from './_LayoutIcon.module.css';
 import { TViewType } from "~/Types/Components";
 
 const getColor = (status: boolean) => {
-    return status ? 'red023e8a' : '#e3e3e3'
+    return status ? 'var(--accent)' : 'var(--ink-3)'
 }
 
 interface IIconProps {
@@ -32,11 +32,21 @@ const _LayoutIcon: FC<ISelectProps> = (props) => {
     const { typeView, onChange, } = props;
 
     return (
-        <div className={`${style["container"]}`}>
-            <button onClick={() => onChange('list')}>
+        <div className={`${style["container"]}`} role="group" aria-label="View layout">
+            <button
+                type="button"
+                onClick={() => onChange('list')}
+                aria-pressed={typeView === 'list'}
+                aria-label="List view"
+            >
                 <List isSelected={typeView === 'list'} />
             </button>
-            <button onClick={() => onChange('grid')}>
+            <button
+                type="button"
+                onClick={() => onChange('grid')}
+                aria-pressed={typeView === 'grid'}
+                aria-label="Grid view"
+            >
                 <Grid isSelected={typeView === 'grid'} />
             </button>
         </div>

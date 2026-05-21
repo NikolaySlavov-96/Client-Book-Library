@@ -14,11 +14,27 @@ import styles from './_Login.module.css';
 
 const _Login = () => {
   const navigate = useNavigate();
-  const { onSubmitLogin } = useStoreZ();
+  const { onSubmitLogin, requestMagicLink } = useStoreZ();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isMagicLoading, setIsMagicLoading] = useState(false);
+
+  const handleMagicLink = useCallback(async () => {
+    if (!email.trim()) {
+      Toast({ title: TEXTS.TOAST_MAGIC_ENTER_EMAIL, typeIcon: ESwalIcon.INFO });
+      return;
+    }
+    setIsMagicLoading(true);
+    try {
+      await requestMagicLink(email.trim());
+      // Always show the same message regardless of whether the email exists
+      Toast({ title: TEXTS.TOAST_MAGIC_LINK_SENT, typeIcon: ESwalIcon.SUCCESS });
+    } finally {
+      setIsMagicLoading(false);
+    }
+  }, [email, requestMagicLink]);
 
   const handleSubmit = useCallback(async (e: FormEvent) => {
     e.preventDefault();
@@ -114,8 +130,14 @@ const _Login = () => {
             <span className={styles.divider__text}>{TEXTS.AUTH_OR_DIVIDER}</span>
           </div>
 
-          <button className={styles.emailLink} type="button" title={TEXTS.COMMON_COMING_SOON} disabled>
-            {TEXTS.AUTH_EMAIL_LINK}
+          <button
+            className={styles.emailLink}
+            type="button"
+            onClick={handleMagicLink}
+            disabled={isMagicLoading}
+            aria-busy={isMagicLoading}
+          >
+            {isMagicLoading ? TEXTS.COMMON_LOADING : TEXTS.AUTH_EMAIL_LINK}
           </button>
 
           <p className={styles.footer}>

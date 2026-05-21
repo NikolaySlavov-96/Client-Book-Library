@@ -6,10 +6,12 @@ import {
   CreateProduct,
   DetailsForProduct,
   Login,
+  MagicVerify,
   NotFound,
   Products,
   Register,
   SearchByEmail,
+  Settings,
   Support,
   UserCollection,
   VerifyAccount,
@@ -37,9 +39,11 @@ const _Navigator = () => {
         <Route path={ROUT_NAMES.CREATE_PRODUCT} element={<CreateProduct />} />
         <Route path={ROUT_NAMES.PRODUCT_DETAILS} element={<DetailsForProduct />} />
         <Route path={ROUT_NAMES.USER_COLLECTION} element={<UserCollection />} />
+        <Route path={ROUT_NAMES.SETTINGS} element={<Settings />} />
         <Route path={ROUT_NAMES.LOGIN} element={<Login />} />
         <Route path={ROUT_NAMES.REGISTER} element={<Register />} />
         <Route path={ROUT_NAMES.VERIFY_TOKEN} element={<VerifyAccount />} />
+        <Route path={ROUT_NAMES.MAGIC_VERIFY} element={<MagicVerify />} />
         {userRole === 'support' ? (
           <Route path={ROUT_NAMES.SUPPORT_CHAT} element={<Support />} />
         ) : null}

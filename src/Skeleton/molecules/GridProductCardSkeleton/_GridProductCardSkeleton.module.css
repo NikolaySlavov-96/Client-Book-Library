@@ -1,7 +1,7 @@
 .container {
   padding-top: var(--spacing-4);
-  height: 300px;
-  width: 300px;
+  height: var(--product-card-size);
+  width: var(--product-card-size);
   margin: 0 var(--spacing-32) var(--spacing-32) 0;
   background: var(--cream-2);
   border: var(--border-default);

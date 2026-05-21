@@ -1,5 +1,5 @@
 .chat__container {
-  height: 300px;
+  height: var(--chat-height);
   overflow-y: auto;
   overflow-x: hidden;
   box-sizing: border-box;

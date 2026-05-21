@@ -2,13 +2,20 @@ import { memo, useCallback, useEffect, useState } from 'react';
 
 import FilterPills from '../../../../component/molecules/FilterPills/FilterPills';
 import BookGrid from '../../../../component/organisms/BookGrid/BookGrid';
-import { Pagination } from '../../../molecules';
+import { Pagination, LayoutIcon } from '../../../molecules';
 
 import { useStoreZ } from '../../../../hooks';
-import { TEXTS } from '../../../../constants';
+import { TEXTS, STORAGE_KEYS } from '../../../../constants';
 import { EStatusId } from '../../../../constants/statusMap';
+import { getDataFromStorage } from '../../../../Helpers/_Storage';
+import { TViewType } from '~/Types/Components';
 
 import styles from './_Products.module.css';
+
+const getInitialLayout = (): TViewType => {
+  const stored = getDataFromStorage(STORAGE_KEYS.VIEW_TYPE);
+  return stored === 'list' || stored === 'grid' ? stored : 'grid';
+};
 
 const FILTER_OPTIONS = [
   { value: 'all', label: TEXTS.CATALOG_FILTER_ALL },
@@ -19,10 +26,25 @@ const FILTER_OPTIONS = [
   { value: 'listened', label: TEXTS.CATALOG_FILTER_LISTENED },
 ];
 
+const FILTER_TO_STATUS: Record<string, EStatusId | null> = {
+  all: null,
+  read: EStatusId.READ,
+  reading: EStatusId.READING,
+  want: EStatusId.WANT,
+  listening: EStatusId.LISTENING,
+  listened: EStatusId.LISTENED,
+};
+
 const _Products = () => {
   const [page, setPage] = useState(1);
   const [searchContent, setSearchContent] = useState('');
   const [activeFilter, setActiveFilter] = useState('all');
+  const [layout, setLayout] = useState<TViewType>(getInitialLayout);
+
+  const handleLayoutChange = useCallback((next: TViewType) => {
+    setLayout(next);
+    localStorage.setItem(STORAGE_KEYS.VIEW_TYPE, JSON.stringify(next));
+  }, []);
 
   const {
     products,
@@ -35,9 +57,13 @@ const _Products = () => {
 
   const count = Math.ceil(products.count / pageLimit) || 0;
 
+  // Guests cannot filter by shelf status, so the status pills are hidden for them
+  const filterOptions = isAuthenticated ? FILTER_OPTIONS : [FILTER_OPTIONS[0]];
+  const statusId = isAuthenticated ? FILTER_TO_STATUS[activeFilter] : null;
+
   useEffect(() => {
-    fetchProducts({ page, limit: pageLimit, searchContent });
-  }, [fetchProducts, page, pageLimit, searchContent]);
+    fetchProducts({ page, limit: pageLimit, searchContent, statusId });
+  }, [fetchProducts, page, pageLimit, searchContent, statusId]);
 
   const handleFilterChange = useCallback((value: string) => {
     setActiveFilter(value);
@@ -72,10 +98,11 @@ const _Products = () => {
               aria-label={TEXTS.CATALOG_SEARCH_PLACEHOLDER}
             />
           </div>
+          <LayoutIcon typeView={layout} onChange={handleLayoutChange} />
         </div>
 
         <FilterPills
-          options={FILTER_OPTIONS}
+          options={filterOptions}
           activeValue={activeFilter}
           onSelect={handleFilterChange}
           className={styles.filters}
@@ -87,7 +114,7 @@ const _Products = () => {
           <BookGrid
             books={products.rows}
             isAuthenticated={isAuthenticated}
-            layout="grid"
+            layout={layout}
             onStatusChange={handleStatusChange}
           />
         )}

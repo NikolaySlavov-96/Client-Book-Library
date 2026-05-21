@@ -6,16 +6,14 @@ import Button from '../../../../component/atoms/Button/Button';
 import ShelfTabs from '../../../../component/molecules/ShelfTabs/ShelfTabs';
 import ProgressBar from '../../../../component/molecules/ProgressBar/ProgressBar';
 import ShelfGrid from '../../../../component/organisms/ShelfGrid/ShelfGrid';
+import { Pagination } from '../../../molecules';
 
 import { useStoreZ } from '../../../../hooks';
 import { ROUT_NAMES, TEXTS } from '../../../../constants';
 import { type ITexts } from '../../../../constants/texts';
 import { EStatusId } from '../../../../constants/statusMap';
-import { IProductWithState } from '../../../../Store/Slicers/ProductSlicer.interface';
 
 import styles from './_UserCollection.module.css';
-
-const YEAR_GOAL = 12;
 
 type TTabValue = 'all' | 'read' | 'reading' | 'want' | 'listening' | 'listened';
 
@@ -36,54 +34,97 @@ const SHELF_TABS_CONFIG: readonly ITabConfig[] = [
 
 const isTabValue = (v: string): v is TTabValue => SHELF_TABS_CONFIG.some((t) => t.value === v);
 
+const DEFAULT_GOAL = 12;
+
 const _UserCollection = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<TTabValue>('all');
+  const [page, setPage] = useState(1);
   const [friendEmail, setFriendEmail] = useState('');
+  const [isEditingGoal, setIsEditingGoal] = useState(false);
+  const [goalDraft, setGoalDraft] = useState('');
 
   const {
     email,
     productCollection,
     fetchProductCollection,
+    removeProductState,
+    statusCounts,
+    fetchStatusCounts,
+    profile,
+    fetchProfile,
+    updateReadingGoal,
     pageLimit,
     isLoadingProductCollection,
   } = useStoreZ();
 
-  const initials = email ? email.slice(0, 2).toUpperCase() : '';
-  const username = email ? email.split('@')[0] : TEXTS.NAV_GUEST;
+  const initials = (profile?.displayName || email) ? (profile?.displayName ?? email).slice(0, 2).toUpperCase() : '';
+  const username = profile?.displayName || (email ? email.split('@')[0] : TEXTS.NAV_GUEST);
+  const readingGoal = profile?.readingGoal ?? DEFAULT_GOAL;
 
-  useEffect(() => {
-    fetchProductCollection({ page: 1, limit: 999, type: 0, searchContent: '' });
-  }, [fetchProductCollection]);
-
-  const allBooks: IProductWithState[] = useMemo(
-    () => productCollection.rows,
-    [productCollection.rows]
+  const activeStatusId = useMemo(
+    () => SHELF_TABS_CONFIG.find((t) => t.value === activeTab)?.statusId ?? 0,
+    [activeTab]
   );
 
-  const filteredBooks = useMemo(() => {
-    if (activeTab === 'all') return allBooks;
-    const tab = SHELF_TABS_CONFIG.find((t) => t.value === activeTab);
-    if (!tab || tab.statusId === 0) return allBooks;
-    return allBooks.filter((b) => b.productStateId === tab.statusId);
-  }, [allBooks, activeTab]);
+  // Server-side: re-fetch the current page whenever the tab or page changes
+  useEffect(() => {
+    fetchProductCollection({ page, limit: pageLimit, type: activeStatusId, searchContent: '' });
+  }, [fetchProductCollection, page, pageLimit, activeStatusId]);
+
+  // Accurate per-tab counts come from a lightweight aggregate endpoint
+  useEffect(() => {
+    fetchStatusCounts();
+  }, [fetchStatusCounts]);
+
+  useEffect(() => {
+    fetchProfile();
+  }, [fetchProfile]);
+
+  const handleStartEditGoal = useCallback(() => {
+    setGoalDraft(String(readingGoal));
+    setIsEditingGoal(true);
+  }, [readingGoal]);
+
+  const handleSaveGoal = useCallback(async () => {
+    const next = parseInt(goalDraft, 10);
+    if (Number.isFinite(next) && next >= 1 && next <= 999) {
+      await updateReadingGoal(next);
+    }
+    setIsEditingGoal(false);
+  }, [goalDraft, updateReadingGoal]);
+
+  const countFor = useCallback(
+    (statusId: number) => statusCounts.find((c) => c.statusId === statusId)?.count ?? 0,
+    [statusCounts]
+  );
+  const totalCount = useMemo(
+    () => statusCounts.reduce((sum, c) => sum + c.count, 0),
+    [statusCounts]
+  );
 
   const tabsWithCount = useMemo(
     () =>
       SHELF_TABS_CONFIG.map((t) => ({
         value: t.value,
         label: TEXTS[t.labelKey],
-        count:
-          t.statusId === 0
-            ? allBooks.length
-            : allBooks.filter((b) => b.productStateId === t.statusId).length,
+        count: t.statusId === 0 ? totalCount : countFor(t.statusId),
       })),
-    [allBooks]
+    [totalCount, countFor]
   );
 
-  const readCount = allBooks.filter((b) => b.productStateId === EStatusId.READ).length;
-  const readingCount = allBooks.filter((b) => b.productStateId === EStatusId.READING).length;
-  const listenedCount = allBooks.filter((b) => b.productStateId === EStatusId.LISTENED).length;
+  const readCount = countFor(EStatusId.READ);
+  const readingCount = countFor(EStatusId.READING);
+  const listenedCount = countFor(EStatusId.LISTENED);
+
+  const pageCount = Math.ceil(productCollection.count / pageLimit) || 0;
+
+  const handleTabSelect = useCallback((v: string) => {
+    if (isTabValue(v)) {
+      setActiveTab(v);
+      setPage(1);
+    }
+  }, []);
 
   const handleFriendView = useCallback(() => {
     if (friendEmail.trim()) {
@@ -94,13 +135,13 @@ const _UserCollection = () => {
   return (
     <main className={styles.wrap}>
         <header className={styles.header}>
-          <Avatar initials={initials} size="lg" />
+          <Avatar initials={initials} src={profile?.avatarUrl ?? undefined} size="lg" />
           <div className={styles.header__info}>
             <h1 className={styles.header__name}>{username}</h1>
             <p className={styles.header__email}>{email}</p>
             <div className={styles.stats}>
               <div className={styles.stat}>
-                <span className={styles.stat__n}>{allBooks.length}</span>
+                <span className={styles.stat__n}>{totalCount}</span>
                 <span className={styles.stat__l}>{TEXTS.PROFILE_STAT_TOTAL}</span>
               </div>
               <div className={styles.stat}>
@@ -122,18 +163,52 @@ const _UserCollection = () => {
               label={TEXTS.PROFILE_SETTINGS}
               variant="outline"
               size="sm"
-              isDisabled
-              title={TEXTS.COMMON_COMING_SOON}
-              ariaLabel={`${TEXTS.PROFILE_SETTINGS} — ${TEXTS.COMMON_COMING_SOON}`}
+              onClick={() => navigate(ROUT_NAMES.SETTINGS)}
+              ariaLabel={TEXTS.PROFILE_SETTINGS}
             />
           </div>
         </header>
 
-        <ProgressBar
-          current={readCount}
-          goal={YEAR_GOAL}
-          label={TEXTS.PROFILE_GOAL_LABEL}
-        />
+        <div className={`flex-align ${styles.goalRow}`}>
+          <ProgressBar
+            current={readCount}
+            goal={readingGoal}
+            label={TEXTS.PROFILE_GOAL_LABEL}
+          />
+          {isEditingGoal ? (
+            <div className="flex-align">
+              <label className={styles.srOnly} htmlFor="reading-goal">
+                {TEXTS.PROFILE_GOAL_INPUT_LABEL}
+              </label>
+              <input
+                id="reading-goal"
+                className={styles.goalInput}
+                type="number"
+                min={1}
+                max={999}
+                value={goalDraft}
+                onChange={(e) => setGoalDraft(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' ? handleSaveGoal() : undefined}
+                autoFocus
+              />
+              <button className={styles.goalBtn} type="button" onClick={handleSaveGoal}>
+                {TEXTS.PROFILE_GOAL_SAVE}
+              </button>
+              <button className={styles.goalBtn} type="button" onClick={() => setIsEditingGoal(false)}>
+                {TEXTS.PROFILE_GOAL_CANCEL}
+              </button>
+            </div>
+          ) : (
+            <button
+              className={styles.goalBtn}
+              type="button"
+              onClick={handleStartEditGoal}
+              aria-label={TEXTS.PROFILE_GOAL_EDIT}
+            >
+              {TEXTS.PROFILE_GOAL_EDIT}
+            </button>
+          )}
+        </div>
 
         <div className={`flex-align ${styles.friendBar}`}>
           <label className={styles.friendBar__label} htmlFor="friend-email">
@@ -156,13 +231,16 @@ const _UserCollection = () => {
         <ShelfTabs
           tabs={tabsWithCount}
           activeValue={activeTab}
-          onSelect={(v) => { if (isTabValue(v)) setActiveTab(v); }}
+          onSelect={handleTabSelect}
         />
 
         {isLoadingProductCollection ? (
           <div className={styles.loading}>{TEXTS.COMMON_LOADING}</div>
         ) : (
-          <ShelfGrid books={filteredBooks} />
+          <>
+            <ShelfGrid books={productCollection.rows} onRemove={removeProductState} />
+            <Pagination count={pageCount} page={page} onSubmit={setPage} />
+          </>
         )}
       </main>
   );

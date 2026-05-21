@@ -9,6 +9,11 @@ import {
     IRegisterResponse,
     IVerifyTokenResponse,
     IVerifyTokeRequest,
+    IMagicLinkRequest,
+    IMagicLinkResponse,
+    IVerifyMagicResponse,
+    IProfile,
+    IUpdateProfileRequest,
 } from '~/Types/services/AuthService';
 
 const PREFIX = '/auth';
@@ -24,12 +29,24 @@ const _AuthServiceFactory = () => {
 
     const verifyToken = async (verifyToken: IVerifyTokeRequest): Promise<IVerifyTokenResponse> => api.post(`${PREFIX}/verify`, { inputData: { verifyToken } });
 
+    const requestMagicLink = async (data: IMagicLinkRequest): Promise<IMagicLinkResponse> => api.post(`${PREFIX}/magic-link`, { inputData: data });
+
+    const verifyMagicLink = async (token: string): Promise<IVerifyMagicResponse> => api.post(`${PREFIX}/magic-link/verify`, { inputData: { token } });
+
+    const getProfile = async (): Promise<IProfile> => api.get(`${PREFIX}/profile`);
+
+    const updateProfile = async (data: IUpdateProfileRequest): Promise<IProfile> => api.patch(`${PREFIX}/profile`, { inputData: data });
+
     return {
         register,
         login,
         logout,
         checkField,
         verifyToken,
+        requestMagicLink,
+        verifyMagicLink,
+        getProfile,
+        updateProfile,
     }
 }
 

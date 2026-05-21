@@ -9,7 +9,7 @@
   flex-direction: row;
   justify-content: space-between;
   max-width: 50%;
-  background-color: rgb(17, 207, 198);
+  background-color: var(--accent-2);
   border-radius: var(--radius-lg);
 }
 

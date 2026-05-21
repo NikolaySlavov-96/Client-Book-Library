@@ -88,7 +88,16 @@ p {
   --font-sans: 'DM Sans', system-ui, sans-serif;
   --line-height-base: 1.5;
   --line-height-tight: 1.2;
+  --line-height-snug: 1.4;
   --line-height-loose: 1.7;
+  --line-height-none: 1;
+
+  /* Letter spacing (tracking) */
+  --tracking-tight: 0.02em;
+  --tracking-snug: 0.03em;
+  --tracking-normal: 0.05em;
+  --tracking-wide: 0.06em;
+  --tracking-wider: 0.08em;
 
   /* Font sizes */
   --text-xs: var(--spacing-10);
@@ -145,10 +154,31 @@ p {
   --icon-input-offset: 38px;
   --search-modal-width: 580px;
   --search-modal-results-height: 380px;
+  --grid-min-160: 160px;
+  --grid-min-180: 180px;
+  --book-cover-grid: 200px;
+  --book-cover-shelf: 190px;
+  --book-cover-detail: 300px;
+  --book-cover-detail-sm: 240px;
+  --detail-cover-col: 220px;
+  --product-img-w: 200px;
+  --product-img-h: 100px;
+  --goal-input-width: 72px;
+  --search-input-width: var(--select-md);
+  --search-input-height: 22px;
+  --search-btn-width: var(--spacing-80);
+  --search-btn-height: 26px;
+  --search-trigger-min-width: 200px;
+  --chat-height: 300px;
+  --chat-panel-height: 400px;
+  --chat-float-max-width: 350px;
+  --chat-float-min-width: 300px;
+  --support-room-min-width: 320px;
 
   /* --- Z-index --- */
   --z-dropdown: 99;
   --z-nav: 100;
+  --z-chat: 200;
   --z-modal: 300;
 
   /* --- Border radius --- */
@@ -173,6 +203,10 @@ p {
 
   /* --- Opacity --- */
   --opacity-disabled: 0.5;
+  --opacity-muted: 0.6;
+  --opacity-faint: 0.4;
+  --opacity-high: 0.9;
+  --opacity-low: 0.1;
 
   /* --- Shadows --- */
   --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.07);
@@ -185,8 +219,18 @@ p {
   --transition-base: all 0.15s;
   --transition-slow: all 0.20s;
 
+  /* Durations (for property-specific transitions / animations) */
+  --duration-bar: 0.4s;
+  --duration-fade: 1s;
+  --duration-skeleton: 2.5s;
+
   /* --- Layout --- */
   --nav-height: var(--spacing-60);
+  --page-max: 1140px;
+  --page-max-md: 1100px;
+  --page-max-sm: 1000px;
+  --page-max-form: 640px;
+  --hairline: 1px;
 }
 
 /* ===== GLOBAL BASE ===== */
@@ -204,10 +248,10 @@ body {
 /* ===== ACCESSIBILITY ===== */
 .sr-only {
   position: absolute;
-  width: 1px;
-  height: 1px;
+  width: var(--hairline);
+  height: var(--hairline);
   padding: 0;
-  margin: -1px;
+  margin: calc(-1 * var(--hairline));
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
@@ -226,19 +270,19 @@ body {
 
 .grid-auto-fill-180 {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(var(--grid-min-180), 1fr));
   gap: var(--spacing-20);
 }
 
 .grid-auto-fill-160 {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(var(--grid-min-160), 1fr));
   gap: var(--spacing-20);
 }
 
 .grid-detail {
   display: grid;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: var(--detail-cover-col) 1fr;
   gap: var(--spacing-48);
   align-items: start;
 }
@@ -276,7 +320,7 @@ body {
 .text-white { color: var(--white); }
 .text-ink { color: var(--ink); }
 
-.text-uppercase { text-transform: uppercase; letter-spacing: 0.08em; }
+.text-uppercase { text-transform: uppercase; letter-spacing: var(--tracking-wider); }
 .text-truncate { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .text-clamp-2 {
   display: -webkit-box;
@@ -342,20 +386,20 @@ body {
 
 /* ===== PAGE LAYOUT ===== */
 .page-wrap {
-  max-width: 1140px;
+  max-width: var(--page-max);
   margin: 0 auto;
   padding: var(--spacing-36) var(--spacing-40);
 }
 
 .page-wrap--narrow {
-  max-width: 1000px;
+  max-width: var(--page-max-sm);
   margin: 0 auto;
   padding: var(--spacing-36) var(--spacing-40);
 }
 
 /* ===== DISABLED / COMING SOON ===== */
 .coming-soon {
-  opacity: 0.5;
+  opacity: var(--opacity-disabled);
   cursor: not-allowed;
   pointer-events: none;
 }

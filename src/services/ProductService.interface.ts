@@ -3,6 +3,11 @@ interface IProduct {
     productType: string;
     productStatus: boolean;
     productTitle: string;
+    pages: number | null;
+    publishedYear: number | null;
+    description: string | null;
+    ratingAverage?: number;
+    ratingCount?: number;
     authorName: string;
     authorImage: string;
     authorGenre: string;
@@ -10,6 +15,18 @@ interface IProduct {
     fileUrl: string;
     fileId: number;
     fileSrc: string;
+}
+
+export interface IGetProductRatingResponse {
+    average: number;
+    count: number;
+    userRating: number;
+}
+
+export interface IRateProductResponse {
+    average: number;
+    count: number;
+    userRating: number;
 }
 
 export interface IGetStatesRequest { };
@@ -28,6 +45,7 @@ export interface IGetProductsRequest {
     limit: number;
     page: number;
     searchContent: string;
+    statusId?: number | null;
 }
 
 export interface IGetProductsResponse {
@@ -91,6 +109,13 @@ export interface IGetAllProductByStateResponse {
 export interface IGetStatusResponse {
     statusId: number;
 }
+
+export interface IStatusCount {
+    statusId: number;
+    count: number;
+}
+
+export type IGetStatusCountsResponse = IStatusCount[];
 
 export interface IAddingProductInLibraryRequest {
     statusId: string;

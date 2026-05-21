@@ -1,8 +1,9 @@
 import { StateCreator } from 'zustand';
 
-import { AuthService } from '../../services';
+import { AuthService, FileService } from '../../services';
 import { ServerError } from '../../constants';
 import { SocketService } from '../../services';
+import { IProfile, IUpdateProfileRequest } from '~/Types/services/AuthService';
 
 import { ICommonSlicer } from './CommonSlicer';
 import { ISupportSlicer } from './SupportSlicer';
@@ -21,6 +22,14 @@ export interface IAuthSlicer {
   onSubmitLogout: () => Promise<void>;
   onSubmitRegister: (data: { email: string; password: string; year: string }) => Promise<unknown>;
   verifyAccountWithToken: (token: string | undefined) => Promise<void>;
+  requestMagicLink: (email: string) => Promise<unknown>;
+  verifyMagicLink: (token: string | undefined) => Promise<boolean>;
+
+  profile: IProfile | null;
+  fetchProfile: () => Promise<void>;
+  updateProfile: (data: IUpdateProfileRequest) => Promise<boolean>;
+  updateReadingGoal: (goal: number) => Promise<boolean>;
+  uploadAvatar: (file: File, name: string) => Promise<boolean>;
 }
 
 type TFullStore = IAuthSlicer & ICommonSlicer & ISupportSlicer & IModalSlicer & IProductSlicer;
@@ -92,6 +101,76 @@ const createAuthSlicer: StateCreator<TFullStore, [], [], IAuthSlicer> = (set, ge
       await authService.verifyToken({ token });
     } catch (_err) {
       // silent
+    }
+  },
+
+  requestMagicLink: async (email: string) => {
+    try {
+      return await authService.requestMagicLink({ email });
+    } catch (err) {
+      return err;
+    }
+  },
+
+  verifyMagicLink: async (token) => {
+    if (!token) return false;
+    try {
+      const result = await authService.verifyMagicLink(token);
+      if (result.messageCode === ServerError.SUCCESSFULLY_LOGIN.messageCode) {
+        const { userInfo } = result;
+        set({
+          email: userInfo.email,
+          token: userInfo.accessToken,
+          userId: String(userInfo.id ?? userInfo._id),
+          userRole: userInfo.role,
+          isAuthenticated: !!userInfo.accessToken,
+          isVerifyUser: userInfo.isVerify,
+        });
+        return true;
+      }
+      return false;
+    } catch (_err) {
+      return false;
+    }
+  },
+
+  profile: null,
+  fetchProfile: async () => {
+    try {
+      const result = await authService.getProfile();
+      set({ profile: result });
+    } catch (_err) {
+      // silent — profile is non-critical
+    }
+  },
+
+  updateProfile: async (data) => {
+    try {
+      const result = await authService.updateProfile(data);
+      set({ profile: result });
+      return true;
+    } catch (_err) {
+      return false;
+    }
+  },
+
+  updateReadingGoal: async (goal: number) => {
+    return await get().updateProfile({ readingGoal: goal });
+  },
+
+  uploadAvatar: async (file: File, name: string) => {
+    try {
+      const formData = new FormData();
+      formData.append('deliverFile', file);
+      formData.append('src', name);
+
+      const fileResponse = await FileService.sendFile(
+        formData as unknown as { deliverFile: File; src: string }
+      );
+
+      return await get().updateProfile({ avatarFileId: fileResponse.fileId });
+    } catch (_err) {
+      return false;
     }
   },
 });
