@@ -108,14 +108,14 @@ function NavBar({ className }: INavBarProps) {
               <Avatar initials={initials} size="sm" />
               <span className={styles.nav__name}>{email.split('@')[0]}</span>
             </button>
-            <Button label={TEXTS.NAV_COLLECTIONS} variant="ghost" size="sm" onClick={handleProfileClick} />
-            <Button label={TEXTS.NAV_LOGOUT} variant="ghost" size="sm" onClick={handleLogout} />
+            <Button label={TEXTS.NAV_COLLECTIONS} variant="ghost" size="md" onClick={handleProfileClick} />
+            <Button label={TEXTS.NAV_LOGOUT} variant="ghost" size="md" onClick={handleLogout} />
             {userRole === 'support' ? (
               <>
                 <Button
                   label={TEXTS.NAV_CREATE}
                   variant="ghost"
-                  size="sm"
+                  size="md"
                   onClick={() => navigate(ROUT_NAMES.CREATE_PRODUCT)}
                   isDisabled={!isVerifyUser}
                   title={!isVerifyUser ? TEXTS.COMMON_COMING_SOON : undefined}
@@ -123,7 +123,7 @@ function NavBar({ className }: INavBarProps) {
                 <Button
                   label={TEXTS.NAV_CHAT}
                   variant="ghost"
-                  size="sm"
+                  size="md"
                   onClick={() => navigate(ROUT_NAMES.SUPPORT_CHAT)}
                 />
               </>
