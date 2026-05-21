@@ -66,113 +66,113 @@ const _DetailsForProduct = () => {
 
   return (
     <main className={styles.wrap}>
-        <button className={styles.back} onClick={handleBack} type="button">
-          {TEXTS.DETAIL_BACK}
-        </button>
+      <button className={styles.back} onClick={handleBack} type="button">
+        {TEXTS.DETAIL_BACK}
+      </button>
 
-        {isLoadingProduct ? (
-          <div className={styles.loading}>{TEXTS.COMMON_LOADING}</div>
-        ) : (
-          <div className={styles.grid}>
-            <div className={`flex-center ${styles.cover}`} style={{ background: coverGradient }}>
-              {productById?.fileUrl ? (
-                <img
-                  className={styles.cover__img}
-                  src={productById.fileUrl}
-                  alt={productById.fileSrc ?? productById.productTitle}
-                />
-              ) : (
-                <span className={styles.cover__placeholder}>{productById?.productTitle}</span>
-              )}
-              {currentStatusId ? (
-                <div className={styles.cover__badge}>
-                  <Badge statusId={currentStatusId} badgeStyle="solid" />
-                </div>
-              ) : null}
-            </div>
-
-            <div className={styles.info}>
-              <p className={styles.info__genre}>{productById?.authorGenre ?? TEXTS.COMMON_PLACEHOLDER_VALUE}</p>
-              <h1 className={styles.info__title}>{productById?.productTitle}</h1>
-              <p className={styles.info__author}>{productById?.authorName}</p>
-
-              <div className={styles.stats}>
-                <div className={`flex-col ${styles.stat}`}>
-                  <span className={styles.stat__value}>{productById?.pages ?? TEXTS.COMMON_PLACEHOLDER_VALUE}</span>
-                  <span className={styles.stat__label}>{TEXTS.DETAIL_PAGES}</span>
-                </div>
-                <div className={`flex-col ${styles.stat}`}>
-                  <span className={styles.stat__value}>{productById?.publishedYear ?? TEXTS.COMMON_PLACEHOLDER_VALUE}</span>
-                  <span className={styles.stat__label}>{TEXTS.DETAIL_YEAR}</span>
-                </div>
-                <div className={`flex-col ${styles.stat}`}>
-                  <span className={styles.stat__value}>
-                    <StarRating value={Math.round(productRating.average)} ariaLabel={TEXTS.DETAIL_RATING} />
-                  </span>
-                  <span className={styles.stat__label}>
-                    {TEXTS.DETAIL_RATING}
-                    {productRating.count > 0 ? ` (${productRating.count})` : ''}
-                  </span>
-                </div>
+      {isLoadingProduct ? (
+        <div className={styles.loading}>{TEXTS.COMMON_LOADING}</div>
+      ) : (
+        <div className={styles.grid}>
+          <div className={`flex-center ${styles.cover}`} style={{ background: coverGradient }}>
+            {productById?.fileUrl ? (
+              <img
+                className={styles.cover__img}
+                src={productById.fileUrl}
+                alt={productById.fileSrc ?? productById.productTitle}
+              />
+            ) : (
+              <span className={styles.cover__placeholder}>{productById?.productTitle}</span>
+            )}
+            {currentStatusId ? (
+              <div className={styles.cover__badge}>
+                <Badge statusId={currentStatusId} badgeStyle="solid" />
               </div>
-
-              <p className={styles.desc}>{productById?.description ?? TEXTS.DETAIL_DESC_PLACEHOLDER}</p>
-
-              {isAuthenticated ? (
-                <>
-                  <div className={styles.actions}>
-                    <p className={styles.actions__label}>{TEXTS.DETAIL_YOUR_RATING}</p>
-                    <StarRating
-                      value={productRating.userRating}
-                      interactive
-                      onRate={handleRate}
-                      ariaLabel={TEXTS.DETAIL_YOUR_RATING}
-                    />
-                  </div>
-
-                  <div className={styles.actions}>
-                    <p className={styles.actions__label}>{TEXTS.DETAIL_ADD_TO_SHELF}</p>
-                    <div className={styles.actions__btns}>
-                      {statuses.map((s) => (
-                        <Button
-                          key={s.id}
-                          label={s.symbol ? `${s.symbol} ${s.stateName}` : s.stateName}
-                          variant={currentStatusId === s.id ? 'primary' : 'outline'}
-                          size="sm"
-                          onClick={() => handleStatusChange(s.id)}
-                          ariaLabel={`${TEXTS.DETAIL_ADD_TO_SHELF}: ${s.stateName}`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className={styles.share}>
-                    <p className={styles.share__label}>{TEXTS.DETAIL_SHARE_LABEL}</p>
-                    <div className={styles.share__row}>
-                      <input
-                        className={styles.share__input}
-                        type="email"
-                        placeholder={TEXTS.DETAIL_SHARE_PLACEHOLDER}
-                        value={shareEmail}
-                        onChange={(e) => setShareEmail(e.target.value)}
-                        onKeyDown={(e) => e.key === 'Enter' ? handleShareSubmit() : undefined}
-                        aria-label={TEXTS.DETAIL_SHARE_LABEL}
-                      />
-                      <button
-                        className={styles.share__btn}
-                        onClick={handleShareSubmit}
-                        type="button"
-                        disabled={!shareEmail.trim()}
-                      >
-                        {TEXTS.DETAIL_SHARE_BTN}
-                      </button>
-                    </div>
-                  </div>
-                </>
-              ) : null}
-            </div>
+            ) : null}
           </div>
-        )}
+
+          <div className={styles.info}>
+            <p className={styles.info__genre}>{productById?.authorGenre ?? TEXTS.COMMON_PLACEHOLDER_VALUE}</p>
+            <h1 className={styles.info__title}>{productById?.productTitle}</h1>
+            <p className={styles.info__author}>{productById?.authorName}</p>
+
+            <div className={styles.stats}>
+              <div className={`flex-col ${styles.stat}`}>
+                <span className={styles.stat__value}>{productById?.pages ?? TEXTS.COMMON_PLACEHOLDER_VALUE}</span>
+                <span className={styles.stat__label}>{TEXTS.DETAIL_PAGES}</span>
+              </div>
+              <div className={`flex-col ${styles.stat}`}>
+                <span className={styles.stat__value}>{productById?.publishedYear ?? TEXTS.COMMON_PLACEHOLDER_VALUE}</span>
+                <span className={styles.stat__label}>{TEXTS.DETAIL_YEAR}</span>
+              </div>
+              <div className={`flex-col ${styles.stat}`}>
+                <span className={styles.stat__value}>
+                  <StarRating value={Math.round(productRating.average)} ariaLabel={TEXTS.DETAIL_RATING} />
+                </span>
+                <span className={styles.stat__label}>
+                  {TEXTS.DETAIL_RATING}
+                  {productRating.count > 0 ? ` (${productRating.count})` : ''}
+                </span>
+              </div>
+            </div>
+
+            <p className={styles.desc}>{productById?.description ?? TEXTS.DETAIL_DESC_PLACEHOLDER}</p>
+
+            {isAuthenticated ? (
+              <>
+                <div className={styles.actions}>
+                  <p className={styles.actions__label}>{TEXTS.DETAIL_YOUR_RATING}</p>
+                  <StarRating
+                    value={productRating.userRating}
+                    interactive
+                    onRate={handleRate}
+                    ariaLabel={TEXTS.DETAIL_YOUR_RATING}
+                  />
+                </div>
+
+                <div className={styles.actions}>
+                  <p className={styles.actions__label}>{TEXTS.DETAIL_ADD_TO_SHELF}</p>
+                  <div className={styles.actions__btns}>
+                    {statuses.map((s) => (
+                      <Button
+                        key={s.id}
+                        label={s.symbol ? `${s.symbol} ${s.stateName}` : s.stateName}
+                        variant={currentStatusId === s.id ? 'primary' : 'outline'}
+                        size="md"
+                        onClick={() => handleStatusChange(s.id)}
+                        ariaLabel={`${TEXTS.DETAIL_ADD_TO_SHELF}: ${s.stateName}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div className={styles.share}>
+                  <p className={styles.share__label}>{TEXTS.DETAIL_SHARE_LABEL}</p>
+                  <div className={styles.share__row}>
+                    <input
+                      className={styles.share__input}
+                      type="email"
+                      placeholder={TEXTS.DETAIL_SHARE_PLACEHOLDER}
+                      value={shareEmail}
+                      onChange={(e) => setShareEmail(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' ? handleShareSubmit() : undefined}
+                      aria-label={TEXTS.DETAIL_SHARE_LABEL}
+                    />
+                    <button
+                      className={styles.share__btn}
+                      onClick={handleShareSubmit}
+                      type="button"
+                      disabled={!shareEmail.trim()}
+                    >
+                      {TEXTS.DETAIL_SHARE_BTN}
+                    </button>
+                  </div>
+                </div>
+              </>
+            ) : null}
+          </div>
+        </div>
+      )}
     </main>
   );
 };
