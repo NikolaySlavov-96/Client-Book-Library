@@ -1,5 +1,5 @@
-import { isValidStatusId, EStatusId } from '../../../constants/statusMap';
-import { BADGE_CONFIG } from './Badge.config';
+import { useStoreZ } from '../../../hooks';
+import { getStatusStyle } from '../../../constants/statusMap';
 
 import { cx } from '../../../Utils';
 
@@ -14,16 +14,19 @@ interface IBadgeProps {
 }
 
 function Badge({ statusId, badgeStyle = 'light', className }: IBadgeProps) {
-  if (!isValidStatusId(statusId)) {
+  // Label is data: it comes from the API-backed status list, not from the client
+  const label = useStoreZ((s) => s.productStates.find((st) => st.id === statusId)?.stateName);
+
+  if (!label) {
     return null;
   }
 
-  const config = BADGE_CONFIG[statusId as EStatusId];
-  const variantClass = badgeStyle === 'solid' ? config.solidClass : config.lightClass;
+  const style = getStatusStyle(statusId);
+  const variantClass = badgeStyle === 'solid' ? style.solidClass : style.lightClass;
 
   return (
     <span className={cx(styles.badge, styles[variantClass], className)}>
-      {config.label}
+      {label}
     </span>
   );
 }

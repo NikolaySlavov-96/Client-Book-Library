@@ -3,7 +3,6 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 
 import Products from './_Products';
-import { TEXTS } from '../../../../constants';
 import { EStatusId } from '../../../../constants/statusMap';
 
 const mockFetchProducts = jest.fn();
@@ -31,6 +30,13 @@ describe('Products status filter', () => {
       isLoadingProducts: false,
       isAuthenticated: true,
       addingProductState: jest.fn(),
+      // status filters are data-driven: the list comes from the API/store
+      productStates: [
+        { id: EStatusId.READ, stateName: 'Read', symbol: '' },
+        { id: EStatusId.READING, stateName: 'Reading', symbol: '' },
+        { id: EStatusId.WANT, stateName: 'To read', symbol: '' },
+      ],
+      fetchAllProductStates: jest.fn(),
     };
   });
 
@@ -45,7 +51,7 @@ describe('Products status filter', () => {
     renderProducts();
     mockFetchProducts.mockClear();
 
-    await userEvent.click(screen.getByRole('button', { name: TEXTS.CATALOG_FILTER_READING }));
+    await userEvent.click(screen.getByRole('button', { name: 'Reading' }));
 
     expect(mockFetchProducts).toHaveBeenCalledWith(
       expect.objectContaining({ statusId: EStatusId.READING })
@@ -55,6 +61,6 @@ describe('Products status filter', () => {
   it('hides status filters for guests', () => {
     storeValue.isAuthenticated = false;
     renderProducts();
-    expect(screen.queryByRole('button', { name: TEXTS.CATALOG_FILTER_READING })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Reading' })).toBeNull();
   });
 });

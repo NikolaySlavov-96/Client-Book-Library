@@ -40,11 +40,6 @@ export const TEXTS = {
   CATALOG_SEARCH_PLACEHOLDER: 'Search by title or author...',
   CATALOG_EMPTY: 'No books found.',
   CATALOG_FILTER_ALL: 'All',
-  CATALOG_FILTER_READ: 'Read',
-  CATALOG_FILTER_READING: 'Reading',
-  CATALOG_FILTER_WANT: 'To read',
-  CATALOG_FILTER_LISTENING: 'Listening',
-  CATALOG_FILTER_LISTENED: 'Listened',
   // Book Detail
   DETAIL_BACK: '← Back to catalog',
   DETAIL_PAGES: 'Pages',
@@ -95,11 +90,6 @@ export const TEXTS = {
   SETTINGS_AVATAR_SUCCESS: 'Avatar updated',
   // Shelf Tabs
   SHELF_TAB_ALL: 'All',
-  SHELF_TAB_READ: 'Read',
-  SHELF_TAB_READING: 'Reading',
-  SHELF_TAB_WANT: 'To read',
-  SHELF_TAB_LISTENING: 'Listening',
-  SHELF_TAB_LISTENED: 'Listened',
   // Search Modal
   SEARCH_PLACEHOLDER: 'Search by title or author...',
   SEARCH_CLOSE: 'Close',
@@ -107,12 +97,6 @@ export const TEXTS = {
   SEARCH_RESULTS_LABEL: 'Results',
   SEARCH_EMPTY: 'No results found.',
   SEARCH_ADD: '+ Add',
-  // Status labels
-  STATUS_READ: 'Read',
-  STATUS_READING: 'Reading',
-  STATUS_WANT: 'To read',
-  STATUS_LISTENING: 'Listening',
-  STATUS_LISTENED: 'Listened',
   // Create Product
   CREATE_TITLE: 'Add new book',
   CREATE_BTN: 'Create book',
@@ -149,5 +133,3 @@ export const TEXTS = {
   AUTH_MAGIC_SUCCESS: 'Signed in successfully',
   AUTH_MAGIC_ERROR: 'This sign-in link is invalid or has expired.',
 };
-
-export type ITexts = typeof TEXTS;

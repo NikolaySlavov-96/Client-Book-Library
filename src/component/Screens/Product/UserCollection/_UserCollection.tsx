@@ -10,35 +10,18 @@ import { Pagination } from '../../../molecules';
 
 import { useStoreZ } from '../../../../hooks';
 import { ROUT_NAMES, TEXTS } from '../../../../constants';
-import { type ITexts } from '../../../../constants/texts';
 import { EStatusId } from '../../../../constants/statusMap';
 
 import styles from './_UserCollection.module.css';
 
-type TTabValue = 'all' | 'read' | 'reading' | 'want' | 'listening' | 'listened';
-
-interface ITabConfig {
-  readonly value: TTabValue;
-  readonly labelKey: keyof ITexts;
-  readonly statusId: number;
-}
-
-const SHELF_TABS_CONFIG: readonly ITabConfig[] = [
-  { value: 'all', labelKey: 'SHELF_TAB_ALL', statusId: 0 },
-  { value: 'read', labelKey: 'SHELF_TAB_READ', statusId: EStatusId.READ },
-  { value: 'reading', labelKey: 'SHELF_TAB_READING', statusId: EStatusId.READING },
-  { value: 'want', labelKey: 'SHELF_TAB_WANT', statusId: EStatusId.WANT },
-  { value: 'listening', labelKey: 'SHELF_TAB_LISTENING', statusId: EStatusId.LISTENING },
-  { value: 'listened', labelKey: 'SHELF_TAB_LISTENED', statusId: EStatusId.LISTENED },
-];
-
-const isTabValue = (v: string): v is TTabValue => SHELF_TABS_CONFIG.some((t) => t.value === v);
+// statusId 0 is the synthetic "All" tab; every other tab comes from the DB-backed state list
+const ALL_STATUS_ID = 0;
 
 const DEFAULT_GOAL = 12;
 
 const _UserCollection = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<TTabValue>('all');
+  const [activeStatusId, setActiveStatusId] = useState<number>(ALL_STATUS_ID);
   const [page, setPage] = useState(1);
   const [friendEmail, setFriendEmail] = useState('');
   const [isEditingGoal, setIsEditingGoal] = useState(false);
@@ -46,6 +29,8 @@ const _UserCollection = () => {
 
   const {
     email,
+    productStates,
+    fetchAllProductStates,
     productCollection,
     fetchProductCollection,
     removeProductState,
@@ -62,10 +47,10 @@ const _UserCollection = () => {
   const username = profile?.displayName || (email ? email.split('@')[0] : TEXTS.NAV_GUEST);
   const readingGoal = profile?.readingGoal ?? DEFAULT_GOAL;
 
-  const activeStatusId = useMemo(
-    () => SHELF_TABS_CONFIG.find((t) => t.value === activeTab)?.statusId ?? 0,
-    [activeTab]
-  );
+  // The available statuses are data: they come from the API, not the client
+  useEffect(() => {
+    fetchAllProductStates();
+  }, [fetchAllProductStates]);
 
   // Server-side: re-fetch the current page whenever the tab or page changes
   useEffect(() => {
@@ -103,15 +88,21 @@ const _UserCollection = () => {
     [statusCounts]
   );
 
-  const tabsWithCount = useMemo(
-    () =>
-      SHELF_TABS_CONFIG.map((t) => ({
-        value: t.value,
-        label: TEXTS[t.labelKey],
-        count: t.statusId === 0 ? totalCount : countFor(t.statusId),
+  // Tabs are built from whatever the API returns: no states → no tabs at all
+  const tabsWithCount = useMemo(() => {
+    if (productStates.length === 0) {
+      return [];
+    }
+
+    return [
+      { value: String(ALL_STATUS_ID), label: TEXTS.SHELF_TAB_ALL, count: totalCount },
+      ...productStates.map((s) => ({
+        value: String(s.id),
+        label: s.symbol ? `${s.symbol} ${s.stateName}` : s.stateName,
+        count: countFor(s.id),
       })),
-    [totalCount, countFor]
-  );
+    ];
+  }, [productStates, totalCount, countFor]);
 
   const readCount = countFor(EStatusId.READ);
   const readingCount = countFor(EStatusId.READING);
@@ -120,8 +111,9 @@ const _UserCollection = () => {
   const pageCount = Math.ceil(productCollection.count / pageLimit) || 0;
 
   const handleTabSelect = useCallback((v: string) => {
-    if (isTabValue(v)) {
-      setActiveTab(v);
+    const nextStatusId = Number(v);
+    if (Number.isFinite(nextStatusId)) {
+      setActiveStatusId(nextStatusId);
       setPage(1);
     }
   }, []);
@@ -230,7 +222,7 @@ const _UserCollection = () => {
 
       <ShelfTabs
         tabs={tabsWithCount}
-        activeValue={activeTab}
+        activeValue={String(activeStatusId)}
         onSelect={handleTabSelect}
       />
 

@@ -6,55 +6,28 @@ export enum EStatusId {
   LISTENED = 5,
 }
 
-export type TStatusKey = 'read' | 'reading' | 'want' | 'listening' | 'listened';
-
-interface IStatusMeta {
-  readonly label: string;
-  readonly key: TStatusKey;
+export interface IStatusStyle {
   readonly solidClass: string;
   readonly lightClass: string;
 }
 
-export const STATUS_META: Record<EStatusId, IStatusMeta> = {
-  [EStatusId.READ]: {
-    label: 'Read',
-    key: 'read',
-    solidClass: 'badge--solid-read',
-    lightClass: 'badge--light-read',
-  },
-  [EStatusId.READING]: {
-    label: 'Reading',
-    key: 'reading',
-    solidClass: 'badge--solid-reading',
-    lightClass: 'badge--light-reading',
-  },
-  [EStatusId.WANT]: {
-    label: 'To read',
-    key: 'want',
-    solidClass: 'badge--solid-want',
-    lightClass: 'badge--light-want',
-  },
-  [EStatusId.LISTENING]: {
-    label: 'Listening',
-    key: 'listening',
-    solidClass: 'badge--solid-listening',
-    lightClass: 'badge--light-listening',
-  },
-  [EStatusId.LISTENED]: {
-    label: 'Listened',
-    key: 'listened',
-    solidClass: 'badge--solid-listened',
-    lightClass: 'badge--light-listened',
-  },
+/**
+ * Presentation only. Maps a status id to the colour it wears in the UI.
+ * The label and the set of statuses that actually exist come from the API
+ * (`GET /status/all`) — never from here. An id we don't have a colour for
+ * falls back to a neutral style so unknown / newly-added statuses still render.
+ */
+const STATUS_STYLE: Record<number, IStatusStyle> = {
+  [EStatusId.READ]: { solidClass: 'badge--solid-read', lightClass: 'badge--light-read' },
+  [EStatusId.READING]: { solidClass: 'badge--solid-reading', lightClass: 'badge--light-reading' },
+  [EStatusId.WANT]: { solidClass: 'badge--solid-want', lightClass: 'badge--light-want' },
+  [EStatusId.LISTENING]: { solidClass: 'badge--solid-listening', lightClass: 'badge--light-listening' },
+  [EStatusId.LISTENED]: { solidClass: 'badge--solid-listened', lightClass: 'badge--light-listened' },
 };
 
-export const STATUS_IDS: EStatusId[] = [
-  EStatusId.READ,
-  EStatusId.READING,
-  EStatusId.WANT,
-  EStatusId.LISTENING,
-  EStatusId.LISTENED,
-];
+const NEUTRAL_STYLE: IStatusStyle = {
+  solidClass: 'badge--solid-neutral',
+  lightClass: 'badge--light-neutral',
+};
 
-export const isValidStatusId = (id: number): id is EStatusId =>
-  Object.values(EStatusId).includes(id as EStatusId);
+export const getStatusStyle = (id: number): IStatusStyle => STATUS_STYLE[id] ?? NEUTRAL_STYLE;

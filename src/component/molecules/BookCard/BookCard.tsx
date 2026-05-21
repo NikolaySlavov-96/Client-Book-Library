@@ -5,8 +5,8 @@ import Badge from '../../atoms/Badge/Badge';
 
 import { cx } from '../../../Utils';
 
+import { useStatuses } from '../../../hooks';
 import { ROUT_NAMES, TEXTS, getCoverGradient } from '../../../constants';
-import { EStatusId, STATUS_META, isValidStatusId } from '../../../constants/statusMap';
 
 import styles from './BookCard.module.css';
 
@@ -22,11 +22,9 @@ interface IBookCardProps {
   statusId?: number;
   layout?: TBookCardLayout;
   isAuthenticated?: boolean;
-  onStatusChange?: (productId: number, statusId: EStatusId) => void;
+  onStatusChange?: (productId: number, statusId: number) => void;
   className?: string;
 }
-
-const QUICK_STATUS_IDS: EStatusId[] = [EStatusId.WANT, EStatusId.READING, EStatusId.READ];
 
 function BookCard({
   productId,
@@ -41,13 +39,14 @@ function BookCard({
   className,
 }: IBookCardProps) {
   const navigate = useNavigate();
+  const { statuses } = useStatuses();
 
   const handleCardClick = useCallback(() => {
     navigate(`${ROUT_NAMES.PRODUCT}/${productId}`);
   }, [navigate, productId]);
 
   const handleStatusClick = useCallback(
-    (e: MouseEvent<HTMLButtonElement>, sid: EStatusId) => {
+    (e: MouseEvent<HTMLButtonElement>, sid: number) => {
       e.stopPropagation();
       onStatusChange?.(productId, sid);
     },
@@ -67,9 +66,9 @@ function BookCard({
         <div className={styles.cover__gradient}>
           <span className={styles.cover__title}>{productTitle}</span>
         </div>
-        {isValidStatusId(statusId ?? 0) ? (
+        {statusId ? (
           <div className={styles.cover__badge}>
-            <Badge statusId={statusId!} badgeStyle="solid" />
+            <Badge statusId={statusId} badgeStyle="solid" />
           </div>
         ) : null}
       </div>
@@ -78,20 +77,17 @@ function BookCard({
         <p className={styles.meta__author}>{authorName}</p>
         {isAuthenticated ? (
           <div className={styles.meta__actions}>
-            {QUICK_STATUS_IDS.map((sid) => {
-              const meta = STATUS_META[sid];
-              return (
-                <button
-                  key={sid}
-                  className={cx(styles['act-btn'], statusId === sid ? styles['act-btn--active'] : '')}
-                  onClick={(e) => handleStatusClick(e, sid)}
-                  aria-label={`${TEXTS.DETAIL_ADD_TO_SHELF}: ${meta.label}`}
-                  aria-pressed={statusId === sid}
-                >
-                  {meta.label}
-                </button>
-              );
-            })}
+            {statuses.map((s) => (
+              <button
+                key={s.id}
+                className={cx(styles['act-btn'], statusId === s.id ? styles['act-btn--active'] : '')}
+                onClick={(e) => handleStatusClick(e, s.id)}
+                aria-label={`${TEXTS.DETAIL_ADD_TO_SHELF}: ${s.stateName}`}
+                aria-pressed={statusId === s.id}
+              >
+                {s.symbol ? `${s.symbol} ${s.stateName}` : s.stateName}
+              </button>
+            ))}
           </div>
         ) : null}
       </div>

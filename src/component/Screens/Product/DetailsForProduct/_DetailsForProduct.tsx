@@ -5,24 +5,17 @@ import Badge from '../../../../component/atoms/Badge/Badge';
 import Button from '../../../../component/atoms/Button/Button';
 import StarRating from '../../../../component/atoms/StarRating/StarRating';
 
-import { useStoreZ } from '../../../../hooks';
+import { useStatuses, useStoreZ } from '../../../../hooks';
 import { ROUT_NAMES, TEXTS, getCoverGradient } from '../../../../constants';
-import { EStatusId, STATUS_META, isValidStatusId } from '../../../../constants/statusMap';
 
 import styles from './_DetailsForProduct.module.css';
-
-const STATUS_BUTTONS: EStatusId[] = [
-  EStatusId.WANT,
-  EStatusId.READING,
-  EStatusId.READ,
-  EStatusId.LISTENING,
-  EStatusId.LISTENED,
-];
 
 const _DetailsForProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [shareEmail, setShareEmail] = useState('');
+
+  const { statuses } = useStatuses();
 
   const {
     isAuthenticated,
@@ -42,7 +35,7 @@ const _DetailsForProduct = () => {
 
   const handleBack = useCallback(() => navigate(-1), [navigate]);
 
-  const handleStatusChange = useCallback((statusId: EStatusId) => {
+  const handleStatusChange = useCallback((statusId: number) => {
     if (id) addingProductState(id, String(statusId));
   }, [id, addingProductState]);
 
@@ -91,7 +84,7 @@ const _DetailsForProduct = () => {
               ) : (
                 <span className={styles.cover__placeholder}>{productById?.productTitle}</span>
               )}
-              {isValidStatusId(currentStatusId) ? (
+              {currentStatusId ? (
                 <div className={styles.cover__badge}>
                   <Badge statusId={currentStatusId} badgeStyle="solid" />
                 </div>
@@ -140,14 +133,14 @@ const _DetailsForProduct = () => {
                   <div className={styles.actions}>
                     <p className={styles.actions__label}>{TEXTS.DETAIL_ADD_TO_SHELF}</p>
                     <div className={styles.actions__btns}>
-                      {STATUS_BUTTONS.map((sid) => (
+                      {statuses.map((s) => (
                         <Button
-                          key={sid}
-                          label={STATUS_META[sid].label}
-                          variant={currentStatusId === sid ? 'primary' : 'outline'}
+                          key={s.id}
+                          label={s.symbol ? `${s.symbol} ${s.stateName}` : s.stateName}
+                          variant={currentStatusId === s.id ? 'primary' : 'outline'}
                           size="sm"
-                          onClick={() => handleStatusChange(sid)}
-                          ariaLabel={`${TEXTS.DETAIL_ADD_TO_SHELF}: ${STATUS_META[sid].label}`}
+                          onClick={() => handleStatusChange(s.id)}
+                          ariaLabel={`${TEXTS.DETAIL_ADD_TO_SHELF}: ${s.stateName}`}
                         />
                       ))}
                     </div>

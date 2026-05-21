@@ -5,7 +5,6 @@ import BookCard from '../../molecules/BookCard/BookCard';
 import { cx } from '../../../Utils';
 
 import { TEXTS } from '../../../constants';
-import { EStatusId } from '../../../constants/statusMap';
 import { IProduct } from '../../../Store/Slicers/ProductSlicer.interface';
 
 import styles from './BookGrid.module.css';
@@ -16,7 +15,7 @@ interface IBookGridProps {
   books: IProduct[];
   isAuthenticated?: boolean;
   layout?: TBookGridLayout;
-  onStatusChange?: (productId: number, statusId: EStatusId) => void;
+  onStatusChange?: (productId: number, statusId: number) => void;
   className?: string;
 }
 
