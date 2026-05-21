@@ -1,12 +1,10 @@
 .container {
-  margin: 0 2rem 2rem 0;
-  background-color: var(--primary-accent);
-  border-radius: 20px;
+  margin: 0 var(--spacing-32) var(--spacing-32) 0;
+  background: var(--cream-2);
+  border: var(--border-default);
+  border-radius: var(--radius-pill);
   overflow: hidden;
-  height: 60px;
+  height: var(--spacing-60);
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.4rem 1rem;
+  padding: var(--spacing-4) var(--spacing-16);
 }

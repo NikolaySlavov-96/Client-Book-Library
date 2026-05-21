@@ -9,7 +9,9 @@ import {
     IFetchQueryParams,
     IFetchSearchParams,
     IState,
-    IAddProductWithImage
+    IAddProductWithImage,
+    IProductRating,
+    IStatusCount
 } from "./ProductSlicer.interface";
 
 
@@ -39,8 +41,16 @@ export interface IProductSlicer {
     fetchProductState: (id: string) => void;
     addingProductState: (id: string, state: string) => void;
 
+    productRating: IProductRating;
+    fetchProductRating: (id: string) => void;
+    rateProduct: (id: string, rating: number) => Promise<void>;
+
     productCollection: { count: number, rows: IProductWithState[] };
     fetchProductCollection: (data: IFetchQueryParams) => void;
+    removeProductState: (productId: number) => Promise<void>;
+
+    statusCounts: IStatusCount[];
+    fetchStatusCounts: () => void;
 
     isProductAdded: boolean;
     addProductWithImage: (data: IAddProductWithImage['data'], fileData: IAddProductWithImage['fileDate']) => void;
@@ -98,6 +108,11 @@ const createProductSlicer: StateCreator<IProductSlicer> = (set, get) => ({
         productType: '',
         productStatus: false,
         productTitle: '',
+        pages: null,
+        publishedYear: null,
+        description: null,
+        ratingAverage: 0,
+        ratingCount: 0,
         authorName: '',
         authorImage: '',
         authorGenre: '',
@@ -150,6 +165,31 @@ const createProductSlicer: StateCreator<IProductSlicer> = (set, get) => ({
         }
     },
 
+    productRating: { average: 0, count: 0, userRating: 0 },
+    fetchProductRating: async (id) => {
+        try {
+            const result = await productService.getProductRating(id);
+            set({ productRating: result });
+        } catch (err) {
+            console.log('fetchProductRating error --->: ', err);
+        }
+    },
+    rateProduct: async (id, rating) => {
+        const { productRating } = get();
+        const previous = productRating;
+
+        // optimistic — reflect the user's pick immediately
+        set({ productRating: { ...productRating, userRating: rating } });
+
+        try {
+            const result = await productService.rateProduct(id, rating);
+            set({ productRating: result });
+        } catch (err) {
+            console.log('rateProduct error --->: ', err);
+            set({ productRating: previous });
+        }
+    },
+
     productCollection: { count: 0, rows: [] },
     fetchProductCollection: async (data) => {
         set({ isLoadingProductCollection: true });
@@ -160,6 +200,38 @@ const createProductSlicer: StateCreator<IProductSlicer> = (set, get) => ({
             console.log('fetchProductCollection error --->: ', err);
         } finally {
             set({ isLoadingProductCollection: false });
+        }
+    },
+
+    statusCounts: [],
+    fetchStatusCounts: async () => {
+        try {
+            const result = await productService.getStatusCounts();
+            set({ statusCounts: result });
+        } catch (err) {
+            console.log('fetchStatusCounts error --->: ', err);
+        }
+    },
+
+    removeProductState: async (productId) => {
+        const { productCollection } = get();
+        const previousRows = productCollection.rows;
+        const optimisticRows = previousRows.filter((p) => p.productId !== productId);
+
+        set({
+            productCollection: {
+                count: Math.max(0, productCollection.count - (previousRows.length - optimisticRows.length)),
+                rows: optimisticRows,
+            },
+        });
+
+        try {
+            await productService.removeStatusFromProduct(productId);
+            get().fetchStatusCounts();
+        } catch (err) {
+            console.log('removeProductState error --->: ', err);
+            // rollback on failure
+            set({ productCollection: { count: productCollection.count, rows: previousRows } });
         }
     },
 

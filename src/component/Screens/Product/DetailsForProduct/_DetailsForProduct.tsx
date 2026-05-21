@@ -1,107 +1,180 @@
-import { memo, useCallback, useEffect, useMemo } from "react";
-import { useNavigate, useParams } from "react-router-dom"
+import { memo, useCallback, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { IconActionButton } from "../../../atoms";
-import { ProductDetails, Select } from "../../../molecules";
+import Badge from '../../../../component/atoms/Badge/Badge';
+import Button from '../../../../component/atoms/Button/Button';
+import StarRating from '../../../../component/atoms/StarRating/StarRating';
 
-import { ProductDetailSkeleton, SelectSkeleton } from "../../../../Skeleton/molecules";
+import { useStatuses, useStoreZ } from '../../../../hooks';
+import { ROUT_NAMES, TEXTS, getCoverGradient } from '../../../../constants';
 
-import { useAuthContext } from "../../../../contexts/AuthContext";
-
-import { useStoreZ } from "../../../../hooks";
-
-import { FormatSelectOptions } from "../../../../Helpers";
-import { TOptionType } from "../../../../Types/Select";
-
-import style from './_DetailsForProduct.module.css';
-
-// TODO replace any
-const createProductOptions = (productState: any, mappedStates: any) => {
-    return mappedStates.filter((b: any) => b.value !== productState)
-}
-
-const DEFAULT_MESSAGE = 'Please select...';
+import styles from './_DetailsForProduct.module.css';
 
 const _DetailsForProduct = () => {
-    const { id } = useParams();
-    const navigate = useNavigate();
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [shareEmail, setShareEmail] = useState('');
 
-    const { email } = useAuthContext();
-    const { productStates, fetchProductById, productById, isLoadingProduct, fetchProductState, addingProductState, productState } = useStoreZ();
+  const { statuses } = useStatuses();
 
-    const mappedStates = useMemo(() => {
-        const data = FormatSelectOptions(productStates, { value: 'id', label: 'stateName' });
-        return data;
-    }, [productStates]);
+  const {
+    isAuthenticated,
+    fetchProductById,
+    productById,
+    isLoadingProduct,
+    fetchProductState,
+    addingProductState,
+    productState,
+    productRating,
+    fetchProductRating,
+    rateProduct,
+    email,
+  } = useStoreZ();
 
-    const changeState = useCallback((e: TOptionType, id: string) => {
-        const state = e.value;
-        addingProductState(id, state);
-    }, [addingProductState]);
+  const currentStatusId = productState?.stateId ?? 0;
 
-    const onPressBackButton = useCallback(() => {
-        navigate(-1);
-    }, [navigate]);
+  const handleBack = useCallback(() => navigate(-1), [navigate]);
 
-    const selectedLabel = useMemo(() => {
-        const hasProductState = productState && typeof productState.stateId === 'number' && productState.stateId !== 0
-        const hasMappedStates = !!mappedStates.length
-        if (hasProductState && hasMappedStates) {
-            return mappedStates[productState.stateId - 1].label
-        }
-        return DEFAULT_MESSAGE
-    }, [mappedStates, productState]);
+  const handleStatusChange = useCallback((statusId: number) => {
+    if (id) addingProductState(id, String(statusId));
+  }, [id, addingProductState]);
 
-    const selectOptions = useMemo(() => (
-        createProductOptions(productState?.stateId, mappedStates)
-    ), [productState?.stateId, mappedStates]);
+  const handleRate = useCallback((rating: number) => {
+    if (id) rateProduct(id, rating);
+  }, [id, rateProduct]);
 
-    useEffect(() => {
-        const productId = id?.toString();
-        if (productId && productId !== '0') {
-            fetchProductById(productId);
-        }
-    }, [id, fetchProductById]);
+  const handleShareSubmit = useCallback(() => {
+    const trimmed = shareEmail.trim();
+    if (!trimmed) return;
+    navigate(`${ROUT_NAMES.REVIEW_PRODUCTS_BY_EMAIL.replace(':email', '')}${encodeURIComponent(trimmed)}`);
+  }, [shareEmail, navigate]);
 
-    useEffect(() => {
-        const productId = id?.toString();
-        if (!!email && productId && productId !== '0') {
-            fetchProductState(productId);
-        }
-    }, [id, fetchProductState, email])
-
-    const productId = productById?.productId?.toString();
-    if (!isLoadingProduct && productId === '0') {
-        return null;
+  useEffect(() => {
+    if (id && id !== '0') {
+      fetchProductById(id);
+      fetchProductRating(id);
     }
+  }, [id, fetchProductById, fetchProductRating]);
 
-    return (
-        <section className={style['detail__card']}>
+  useEffect(() => {
+    if (email && id && id !== '0') {
+      fetchProductState(id);
+    }
+  }, [id, email, fetchProductState]);
 
-            <IconActionButton onClick={onPressBackButton} />
+  const coverGradient = getCoverGradient(productById?.productId ?? 0);
 
-            <div className={style['product-card__detail']}>
-                {isLoadingProduct ?
-                    <ProductDetailSkeleton /> :
-                    <ProductDetails {...productById} />}
+  return (
+    <main className={styles.wrap}>
+      <button className={styles.back} onClick={handleBack} type="button">
+        {TEXTS.DETAIL_BACK}
+      </button>
+
+      {isLoadingProduct ? (
+        <div className={styles.loading}>{TEXTS.COMMON_LOADING}</div>
+      ) : (
+        <div className={styles.grid}>
+          <div className={`flex-center ${styles.cover}`} style={{ background: coverGradient }}>
+            {productById?.fileUrl ? (
+              <img
+                className={styles.cover__img}
+                src={productById.fileUrl}
+                alt={productById.fileSrc ?? productById.productTitle}
+              />
+            ) : (
+              <span className={styles.cover__placeholder}>{productById?.productTitle}</span>
+            )}
+            {currentStatusId ? (
+              <div className={styles.cover__badge}>
+                <Badge statusId={currentStatusId} badgeStyle="solid" />
+              </div>
+            ) : null}
+          </div>
+
+          <div className={styles.info}>
+            <p className={styles.info__genre}>{productById?.authorGenre ?? TEXTS.COMMON_PLACEHOLDER_VALUE}</p>
+            <h1 className={styles.info__title}>{productById?.productTitle}</h1>
+            <p className={styles.info__author}>{productById?.authorName}</p>
+
+            <div className={styles.stats}>
+              <div className={`flex-col ${styles.stat}`}>
+                <span className={styles.stat__value}>{productById?.pages ?? TEXTS.COMMON_PLACEHOLDER_VALUE}</span>
+                <span className={styles.stat__label}>{TEXTS.DETAIL_PAGES}</span>
+              </div>
+              <div className={`flex-col ${styles.stat}`}>
+                <span className={styles.stat__value}>{productById?.publishedYear ?? TEXTS.COMMON_PLACEHOLDER_VALUE}</span>
+                <span className={styles.stat__label}>{TEXTS.DETAIL_YEAR}</span>
+              </div>
+              <div className={`flex-col ${styles.stat}`}>
+                <span className={styles.stat__value}>
+                  <StarRating value={Math.round(productRating.average)} ariaLabel={TEXTS.DETAIL_RATING} />
+                </span>
+                <span className={styles.stat__label}>
+                  {TEXTS.DETAIL_RATING}
+                  {productRating.count > 0 ? ` (${productRating.count})` : ''}
+                </span>
+              </div>
             </div>
 
-            {!!email ?
-                isLoadingProduct ?
-                    <SelectSkeleton />
-                    : (
-                        <div className={`${style['functionality']}`}>
-                            <Select
-                                options={selectOptions}
-                                placeHolder={selectedLabel}
-                                onChange={(e) => changeState(e, productId)}
-                                size='70'
-                            />
-                        </div>)
-                : null
-            }
-        </section>
-    );
-}
+            <p className={styles.desc}>{productById?.description ?? TEXTS.DETAIL_DESC_PLACEHOLDER}</p>
+
+            {isAuthenticated ? (
+              <>
+                <div className={styles.actions}>
+                  <p className={styles.actions__label}>{TEXTS.DETAIL_YOUR_RATING}</p>
+                  <StarRating
+                    value={productRating.userRating}
+                    interactive
+                    onRate={handleRate}
+                    ariaLabel={TEXTS.DETAIL_YOUR_RATING}
+                  />
+                </div>
+
+                <div className={styles.actions}>
+                  <p className={styles.actions__label}>{TEXTS.DETAIL_ADD_TO_SHELF}</p>
+                  <div className={styles.actions__btns}>
+                    {statuses.map((s) => (
+                      <Button
+                        key={s.id}
+                        label={s.symbol ? `${s.symbol} ${s.stateName}` : s.stateName}
+                        variant={currentStatusId === s.id ? 'primary' : 'outline'}
+                        size="md"
+                        onClick={() => handleStatusChange(s.id)}
+                        ariaLabel={`${TEXTS.DETAIL_ADD_TO_SHELF}: ${s.stateName}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div className={styles.share}>
+                  <p className={styles.share__label}>{TEXTS.DETAIL_SHARE_LABEL}</p>
+                  <div className={styles.share__row}>
+                    <input
+                      className={styles.share__input}
+                      type="email"
+                      placeholder={TEXTS.DETAIL_SHARE_PLACEHOLDER}
+                      value={shareEmail}
+                      onChange={(e) => setShareEmail(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' ? handleShareSubmit() : undefined}
+                      aria-label={TEXTS.DETAIL_SHARE_LABEL}
+                    />
+                    <button
+                      className={styles.share__btn}
+                      onClick={handleShareSubmit}
+                      type="button"
+                      disabled={!shareEmail.trim()}
+                    >
+                      {TEXTS.DETAIL_SHARE_BTN}
+                    </button>
+                  </div>
+                </div>
+              </>
+            ) : null}
+          </div>
+        </div>
+      )}
+    </main>
+  );
+};
 
 export default memo(_DetailsForProduct);

@@ -1,20 +1,20 @@
 .image__container {
-  margin-top: 14px;
-  height: 100px;
+  margin-top: var(--spacing-14);
+  height: var(--product-img-h);
   position: relative;
   justify-content: center;
 }
 
 .image__container img {
-  width: 200px;
-  height: 100px;
-  opacity: 90%;
+  width: var(--product-img-w);
+  height: var(--product-img-h);
+  opacity: var(--opacity-high);
 }
 
 .card__img img:hover {
-  opacity: 10%;
+  opacity: var(--opacity-low);
 }
 
 .product_title {
-  margin: 3px 0 20px 0;
+  margin: var(--spacing-4) 0 var(--spacing-20) 0;
 }

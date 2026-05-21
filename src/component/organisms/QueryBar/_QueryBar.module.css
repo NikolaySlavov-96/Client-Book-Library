@@ -1,13 +1,25 @@
 .container {
   width: 100%;
-  height: 3rem;
-  margin-bottom: 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  margin-bottom: var(--spacing-24);
+  padding: var(--spacing-12) var(--spacing-16);
+  gap: var(--spacing-12);
+  background: var(--cream-2);
+  border: var(--border-default);
+  border-radius: var(--radius-lg);
 }
 
 .right__container {
   display: flex;
-  gap: 1rem;
+  align-items: center;
+  gap: var(--spacing-16);
+}
+
+@media (max-width: 640px) {
+  .container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .right__container {
+    justify-content: flex-end;
+  }
 }

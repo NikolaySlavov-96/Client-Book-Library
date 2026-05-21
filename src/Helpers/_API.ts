@@ -1,8 +1,8 @@
-import { HOST, STORAGE_KEYS } from "../constants";
+import { HOST } from "../constants";
 
-import { getDataFromStorage } from "./_Storage";
+import useStoreZ from "../hooks/_useStoreZ";
 
-export type TMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+export type TMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 export interface IOptions {
     method: TMethod;
@@ -29,11 +29,13 @@ const _API = async (method: TMethod, url: string, moreData?: IMoreData) => {
         options.body = moreData?.inputData;
     }
 
-    const token = getDataFromStorage(STORAGE_KEYS.TOKEN_DATE);
-    if (token?.accessToken) {
+    // Read the token from the active auth store (zustand). The login flow persists
+    // it here; the legacy STORAGE_KEYS.TOKEN_DATE key is no longer written.
+    const accessToken = useStoreZ.getState().token;
+    if (accessToken) {
         options.headers = {
             ...options.headers,
-            'authorization': token.accessToken,
+            'authorization': accessToken,
         }
     }
 

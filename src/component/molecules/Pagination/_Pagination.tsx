@@ -43,7 +43,7 @@ const _Pagination: FC<IPaginationProps> = (props) => {
     const twoPagesAhead = page + 2;
 
     return (
-        <div className={style['container']}>
+        <div className={`flex-center ${style['container']}`}>
             <PaginationButton content='&#x3c;' onSubmit={onPressArrowBack} />
             {
                 twoPagesBefore > 0 && (

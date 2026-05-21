@@ -1,81 +1,63 @@
 .dropdown-container {
     text-align: left;
-    border: 1px solid #ccc;
+    border: var(--border-med-default);
     position: relative;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
 }
 
 .custom__size_70 {
-    width: 70;
+    width: var(--select-sm);
 }
 
 .custom__size_240 {
-    width: 240px;
+    width: var(--select-md);
 }
 
 .dropdown__input {
-    padding: 2px 12px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
+    padding: var(--spacing-8) var(--spacing-12);
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
-    gap: 7px;
+    gap: var(--spacing-8);
 }
 
-/* TODO Improve with Constants or remove */
 .placeholder {
-    color: #df4402;
+    color: var(--error);
 }
 
 .dropdown__tool svg {
-    -webkit-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
+    transition: var(--transition-slow);
 }
 
 .dropdown__tool svg.translate {
-    -webkit-transform: rotate(180deg);
-    -ms-transform: rotate(180deg);
     transform: rotate(180deg);
 }
 
 /* Menu */
 .dropdown__menu {
-    /* padding: 2px 12px; */
     position: absolute;
-    -webkit-transform: translateY(6px);
-    -ms-transform: translateY(6px);
-    transform: translateY(6px);
-    border: 1px solid #dbdbdb;
-    border-radius: 6px;
+    transform: translateY(var(--spacing-24));
+    border: var(--border-default);
+    border-radius: var(--radius-sm);
     overflow: auto;
-    background-color: #fff;
-    z-index: 99;
+    background-color: var(--white);
+    z-index: var(--z-dropdown);
 }
 
 .dropdown__menu::-webkit-scrollbar {
-    width: 5px;
+    width: var(--scrollbar-width);
 }
 
 .dropdown__menu::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: var(--cream-2);
 }
 
 .dropdown__menu::-webkit-scrollbar-thumb {
-    background: #888;
+    background: var(--ink-3);
 }
 
 .dropdown__menu::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: var(--ink-2);
 }
 
 /* Alignment */
@@ -89,15 +71,14 @@
 
 /* Items */
 .dropdown__item {
-    padding: 7px 10px;
+    padding: var(--spacing-8) var(--spacing-10);
     cursor: pointer;
-    -webkit-transition: background-color 0.35s ease;
-    transition: background-color 0.35s ease;
-    border-radius: 6px;
-    font-weight: 500;
+    transition: var(--transition-slow);
+    border-radius: var(--radius-sm);
+    font-weight: var(--font-weight-medium);
 }
 
 .dropdown__item:hover {
-    background-color: rgba(130, 134, 139, 0.2);
-    color: #ff7300;
+    background-color: var(--cream-3);
+    color: var(--select-hover);
 }

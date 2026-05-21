@@ -1,88 +1,125 @@
-import { memo, useCallback, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { memo, useCallback, useEffect, useState } from 'react';
 
-import { useStoreZ, useViewType } from "../../../../hooks";
+import FilterPills from '../../../../component/molecules/FilterPills/FilterPills';
+import BookGrid from '../../../../component/organisms/BookGrid/BookGrid';
+import { Pagination, LayoutIcon } from '../../../molecules';
 
-import { SectionTitle } from "../../../atoms";
-import { Pagination } from "../../../molecules";
-import { QueryBar, ListRenderProduct } from "../../../organisms";
+import { useStoreZ } from '../../../../hooks';
+import { TEXTS, STORAGE_KEYS } from '../../../../constants';
+import { getDataFromStorage } from '../../../../Helpers/_Storage';
+import { TViewType } from '~/Types/Components';
 
-import { ListRenderProductSkeletons } from "../../../../Skeleton/organisms";
+import styles from './_Products.module.css';
 
-import { IQueryBar } from "../../../../Types/QueryBar";
+// statusId 0 / 'all' is the synthetic "All" filter; the rest come from the API
+const ALL_FILTER = 'all';
 
-import { QUERY_LIMIT, SEARCH_NAME } from "../../../../constants";
+const getInitialLayout = (): TViewType => {
+  const stored = getDataFromStorage(STORAGE_KEYS.VIEW_TYPE);
+  return stored === 'list' || stored === 'grid' ? stored : 'grid';
+};
 
 const _Products = () => {
-    const [searchParams, setSearchParams] = useSearchParams();
+  const [page, setPage] = useState(1);
+  const [searchContent, setSearchContent] = useState('');
+  const [activeFilter, setActiveFilter] = useState(ALL_FILTER);
+  const [layout, setLayout] = useState<TViewType>(getInitialLayout);
 
-    const [page, setPage] = useState(1);
-    const [searchContent, setSearchContent] = useState('');
+  const handleLayoutChange = useCallback((next: TViewType) => {
+    setLayout(next);
+    localStorage.setItem(STORAGE_KEYS.VIEW_TYPE, JSON.stringify(next));
+  }, []);
 
-    const { viewType, onChangeViewType } = useViewType();
-    const { products, fetchProducts, pageLimit, setPageLimit, isLoadingProducts } = useStoreZ();
+  const {
+    products,
+    fetchProducts,
+    pageLimit,
+    isLoadingProducts,
+    isAuthenticated,
+    addingProductState,
+    productStates,
+    fetchAllProductStates,
+  } = useStoreZ();
 
-    const count = Math.ceil(products.count / pageLimit) || 0;
+  const count = Math.ceil(products.count / pageLimit) || 0;
 
-    const onSearchFunction = useCallback((data: IQueryBar) => {
-        // Always set on initial search
-        setPage(1);
-        setSearchContent(data.search)
-    }, [setSearchContent, setPage]);
+  // The status filters are data: the list comes from the API, not the client
+  useEffect(() => {
+    fetchAllProductStates();
+  }, [fetchAllProductStates]);
 
-    useEffect(() => {
-        const searchPage = Number(searchParams.get(SEARCH_NAME.PAGE));
-        const searchLimit = Number(searchParams.get(SEARCH_NAME.LIMIT));
-        const searchContent = searchParams.get(SEARCH_NAME.CONTENT);
+  // "All" is always present; the rest are whatever the API returns.
+  // Guests cannot filter by shelf status, so only "All" is shown for them.
+  const filterOptions = isAuthenticated
+    ? [
+      { value: ALL_FILTER, label: TEXTS.CATALOG_FILTER_ALL },
+      ...productStates.map((s) => ({ value: String(s.id), label: s.stateName })),
+    ]
+    : [{ value: ALL_FILTER, label: TEXTS.CATALOG_FILTER_ALL }];
 
-        if (!searchPage) {
-            setPage(QUERY_LIMIT.PAGE);
-        } else {
-            setPage(searchPage);
-        }
-        if (!searchLimit) {
-            setPageLimit(QUERY_LIMIT.LIMIT);
-        } else {
-            setPageLimit(searchLimit);
-        }
+  const statusId = isAuthenticated && activeFilter !== ALL_FILTER ? Number(activeFilter) : null;
 
-        if (searchContent) {
-            setSearchContent(searchContent);
-        }
+  useEffect(() => {
+    fetchProducts({ page, limit: pageLimit, searchContent, statusId });
+  }, [fetchProducts, page, pageLimit, searchContent, statusId]);
 
-        if (!searchPage || !searchLimit) {
-            setSearchParams({ page: QUERY_LIMIT.PAGE.toString(), limit: QUERY_LIMIT.LIMIT.toString() });
-        }
-    }, []);
+  const handleFilterChange = useCallback((value: string) => {
+    setActiveFilter(value);
+    setPage(1);
+  }, []);
 
-    useEffect(() => {
-        if (page || pageLimit || searchContent) {
-            setSearchParams({ page: page.toString(), limit: pageLimit.toString(), content: searchContent });
-        }
+  const handleSearch = useCallback((value: string) => {
+    setSearchContent(value);
+    setPage(1);
+  }, []);
 
-        fetchProducts({ page: page, limit: pageLimit, searchContent });
-    }, [fetchProducts, setSearchParams, pageLimit, page, searchContent]);
+  const handleStatusChange = useCallback((productId: number, statusId: number) => {
+    addingProductState(String(productId), String(statusId));
+  }, [addingProductState]);
 
-    return (
-        <section className={'content__page'}>
+  return (
+    <section className={styles.wrap}>
+      <header className={styles.header}>
+        <h1 className={styles.header__title}>{TEXTS.CATALOG_TITLE}</h1>
+        <p className={styles.header__sub}>{TEXTS.CATALOG_SUBTITLE}</p>
+      </header>
 
-            <SectionTitle content='Catalog with Books' />
+      <div className={`flex-align ${styles.searchRow}`}>
+        <div className={styles.searchBox}>
+          <span className={styles.searchBox__icon} aria-hidden="true">⌕</span>
+          <input
+            className={styles.searchBox__input}
+            type="text"
+            placeholder={TEXTS.CATALOG_SEARCH_PLACEHOLDER}
+            value={searchContent}
+            onChange={(e) => handleSearch(e.target.value)}
+            aria-label={TEXTS.CATALOG_SEARCH_PLACEHOLDER}
+          />
+        </div>
+        <LayoutIcon typeView={layout} onChange={handleLayoutChange} />
+      </div>
 
-            <QueryBar
-                hasLeftSelector={false}
-                onPressSearch={onSearchFunction}
-                viewType={viewType}
-                onPressViewType={onChangeViewType}
-            />
+      <FilterPills
+        options={filterOptions}
+        activeValue={activeFilter}
+        onSelect={handleFilterChange}
+        className={styles.filters}
+      />
 
-            {isLoadingProducts ? (
-                <ListRenderProductSkeletons limit={pageLimit} viewType={viewType} />) : (
-                <ListRenderProduct data={products?.rows || []} viewType={viewType} />
-            )}
+      {isLoadingProducts ? (
+        <div className={styles.loading} aria-live="polite">{TEXTS.COMMON_LOADING}</div>
+      ) : (
+        <BookGrid
+          books={products.rows}
+          isAuthenticated={isAuthenticated}
+          layout={layout}
+          onStatusChange={handleStatusChange}
+        />
+      )}
 
-            <Pagination count={count} page={page} onSubmit={setPage} />
-        </section >
-    );
-}
+      <Pagination count={count} page={page} onSubmit={setPage} />
+    </section>
+  );
+};
 
 export default memo(_Products);

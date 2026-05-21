@@ -1,18 +1,38 @@
 import { memo } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { SectionTitle } from '../../atoms';
+import Button from '../../atoms/Button/Button';
+
+import { ROUT_NAMES, TEXTS, NOT_FOUND_SPINES } from '../../../constants';
+
+import styles from './_NotFound.module.css';
 
 const _NotFound = () => {
+  const navigate = useNavigate();
 
-    return (
-        <section className={`section`}>
+  return (
+    <main className={`flex-col flex-center ${styles.wrap}`}>
+      <div className={styles.spines} aria-hidden="true">
+        {NOT_FOUND_SPINES.map((s, i) => (
+          <div
+            key={i}
+            className={styles.spine}
+            style={{ height: s.height, background: s.color }}
+          />
+        ))}
+      </div>
 
-            <SectionTitle content='Page not found' />
+      <h1 className={styles.code}>{TEXTS.COMMON_NOT_FOUND_TITLE}</h1>
+      <p className={styles.message}>{TEXTS.COMMON_NOT_FOUND_SUBTITLE}</p>
 
-            {/* <div className={`global__bg-radius form__container`}> */}
-            {/* </div > */}
-        </section >
-    );
-}
+      <Button
+        label={TEXTS.COMMON_BACK_TO_HOME}
+        variant="primary"
+        size="md"
+        onClick={() => navigate(ROUT_NAMES.HOME)}
+      />
+    </main>
+  );
+};
 
 export default memo(_NotFound);

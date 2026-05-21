@@ -8,6 +8,12 @@ export { default as Pagination } from './Pagination/_Pagination';
 export { default as ProductDetails } from './ProductDetails/_ProductDetails';
 export { default as SearchField } from './SearchField/_SearchField';
 export { default as Select } from './Select/_Select';
-
-// Modals
 export { default as NewProductModal } from './Modals/NewProductModal/_NewProductModal';
+export { default as NavBar } from './NavBar/NavBar';
+export { default as BookCard } from './BookCard/BookCard';
+export { default as ShelfCard } from './ShelfCard/ShelfCard';
+export { default as FilterPills } from './FilterPills/FilterPills';
+export { default as ShelfTabs } from './ShelfTabs/ShelfTabs';
+export { default as ProgressBar } from './ProgressBar/ProgressBar';
+export { default as AuthTabs } from './AuthTabs/AuthTabs';
+export { default as SearchModal } from './SearchModal/SearchModal';

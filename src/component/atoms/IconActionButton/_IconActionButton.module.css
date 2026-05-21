@@ -1,6 +1,6 @@
 .container {
   width: 100%;
-  margin-bottom: 0.3rem;
+  margin-bottom: var(--spacing-4);
 }
 
 .btn {
@@ -9,5 +9,5 @@
 
 .btn i {
   scale: 2;
-  color: #2f394b;
+  color: var(--ink);
 }

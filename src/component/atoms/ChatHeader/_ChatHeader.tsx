@@ -10,7 +10,7 @@ const _ChatHeader: FC<IChatHeaderProps> = (props) => {
     const { children } = props;
 
     return (
-        <div className={style['container']}>
+        <div className={`flex-between ${style['container']}`}>
             {children}
         </div>
     )

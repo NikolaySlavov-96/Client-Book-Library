@@ -27,7 +27,7 @@ const _ProductCard: FC<TProductCardProps> = (props) => {
             to={`${ROUT_NAMES.PRODUCT}/${productId}`}
             state={{ productTitle }}
         >
-            <article className={`shadow ${style.container} ${style[`${viewType}__container`]}`}>
+            <article className={`shadow ${viewType === 'list' ? 'flex-between' : ''} ${style.container} ${style[`${viewType}__container`]}`}>
                 <ProductDetails {...props} hasTitle />
             </article >
         </Link>
