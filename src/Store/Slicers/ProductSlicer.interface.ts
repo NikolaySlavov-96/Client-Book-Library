@@ -12,6 +12,7 @@ export interface IProduct {
     pages: number | null;
     publishedYear: number | null;
     description: string | null;
+    statusId?: number | null; // the logged-in user's current shelf status (null when un-shelved / guest)
     ratingAverage?: number;
     ratingCount?: number;
     authorName: string;

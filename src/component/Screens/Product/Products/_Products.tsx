@@ -73,9 +73,12 @@ const _Products = () => {
     setPage(1);
   }, []);
 
-  const handleStatusChange = useCallback((productId: number, statusId: number) => {
-    addingProductState(String(productId), String(statusId));
-  }, [addingProductState]);
+  const handleStatusChange = useCallback((productId: number, newStatusId: number) => {
+    // Pass the active section so the store can drop the book from a filtered list
+    // (e.g. "Listened") once its status no longer matches — without a refetch.
+    const activeFilterId = isAuthenticated && activeFilter !== ALL_FILTER ? Number(activeFilter) : null;
+    addingProductState(String(productId), String(newStatusId), activeFilterId);
+  }, [addingProductState, isAuthenticated, activeFilter]);
 
   return (
     <section className={styles.wrap}>

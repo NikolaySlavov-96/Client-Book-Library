@@ -39,7 +39,7 @@ export interface IProductSlicer {
 
     productState: { stateId: number };
     fetchProductState: (id: string) => void;
-    addingProductState: (id: string, state: string) => void;
+    addingProductState: (id: string, state: string, activeFilterId?: number | null) => void;
 
     productRating: IProductRating;
     fetchProductRating: (id: string) => void;
@@ -54,6 +54,21 @@ export interface IProductSlicer {
 
     isProductAdded: boolean;
     addProductWithImage: (data: IAddProductWithImage['data'], fileData: IAddProductWithImage['fileDate']) => void;
+};
+
+// Recompute per-status counts after a single book moves: -1 from its old status (if any),
+// +1 to the new one. Keeps the profile shelf tallies in sync without an extra request.
+const recountStatuses = (
+    counts: IStatusCount[],
+    previousStatusId: number | null,
+    nextStatusId: number
+): IStatusCount[] => {
+    const byId = new Map(counts.map((c) => [c.statusId, c.count]));
+    if (previousStatusId != null) {
+        byId.set(previousStatusId, Math.max(0, (byId.get(previousStatusId) ?? 0) - 1));
+    }
+    byId.set(nextStatusId, (byId.get(nextStatusId) ?? 0) + 1);
+    return Array.from(byId.entries()).map(([statusId, count]) => ({ statusId, count }));
 };
 
 const createProductSlicer: StateCreator<IProductSlicer> = (set, get) => ({
@@ -151,15 +166,49 @@ const createProductSlicer: StateCreator<IProductSlicer> = (set, get) => ({
             set({ isLoadingProductState: false });
         }
     },
-    addingProductState: async (id, state) => {
-        set({ isAddingProductState: true });
+    addingProductState: async (id, state, activeFilterId = null) => {
+        const productId = Number(id);
+        const nextStatusId = Number(state);
+
+        const { products, statusCounts } = get();
+        const currentRow = products.rows.find((p) => p.productId === productId);
+        const previousStatusId = currentRow?.statusId ?? null;
+
+        // Nothing to move — the book is already in this status.
+        if (previousStatusId === nextStatusId) {
+            set({ productState: { stateId: nextStatusId } });
+            return;
+        }
+
+        // Snapshots for rollback if the request fails.
+        const previousProducts = products;
+        const previousCounts = statusCounts;
+
+        // In a filtered section (anything other than "All"), a book whose new status no longer
+        // matches the filter leaves the current list; in "All" it stays and just recolours.
+        const leavesCurrentSection =
+            activeFilterId != null && activeFilterId !== 0 && nextStatusId !== activeFilterId;
+
+        const nextRows = leavesCurrentSection
+            ? products.rows.filter((p) => p.productId !== productId)
+            : products.rows.map((p) => (p.productId === productId ? { ...p, statusId: nextStatusId } : p));
+
+        const nextCount = leavesCurrentSection ? Math.max(0, products.count - 1) : products.count;
+
+        // Optimistic: reflect the move immediately, no refetch.
+        set({
+            isAddingProductState: true,
+            products: { count: nextCount, rows: nextRows },
+            statusCounts: recountStatuses(statusCounts, previousStatusId, nextStatusId),
+            productState: { stateId: nextStatusId },
+        });
+
         try {
-            const result = await productService.addStatusOnProduct({ productId: id, statusId: state });
-            console.log("🚀 ~ addingProductState: ~ result:", result)
-            // TODO Visualize success message
-            set({ productState: { stateId: Number(state) } });
+            await productService.addStatusOnProduct({ productId: id, statusId: state });
         } catch (err) {
             console.log('addingProductState error --->: ', err);
+            // Roll back the optimistic move.
+            set({ products: previousProducts, statusCounts: previousCounts });
         } finally {
             set({ isAddingProductState: false });
         }

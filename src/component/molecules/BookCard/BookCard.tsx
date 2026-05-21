@@ -1,8 +1,6 @@
 import { memo, useCallback, type MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Badge from '../../atoms/Badge/Badge';
-
 import { cx } from '../../../Utils';
 
 import { useStatuses } from '../../../hooks';
@@ -66,11 +64,6 @@ function BookCard({
         <div className={styles.cover__gradient}>
           <span className={styles.cover__title}>{productTitle}</span>
         </div>
-        {statusId ? (
-          <div className={styles.cover__badge}>
-            <Badge statusId={statusId} badgeStyle="solid" />
-          </div>
-        ) : null}
       </div>
 
       <div className={cx(styles.meta, layout === 'list' ? 'flex-col' : '')}>
