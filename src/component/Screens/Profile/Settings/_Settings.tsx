@@ -17,7 +17,7 @@ const MAX_DISPLAY_NAME = 60;
 const _Settings = () => {
   const navigate = useNavigate();
 
-  const { profile, fetchProfile, updateProfile, uploadAvatar, isAuthenticated } = useStoreZ();
+  const { profile, fetchProfile, updateProfile, uploadAvatar, isAuthenticated, email } = useStoreZ();
 
   const [displayName, setDisplayName] = useState('');
   const [notifyByEmail, setNotifyByEmail] = useState(true);
@@ -76,7 +76,7 @@ const _Settings = () => {
     }
   }, [displayName, notifyByEmail, updateProfile]);
 
-  const initials = (profile?.displayName || profile?.email || '').slice(0, 2).toUpperCase();
+  const initials = (profile?.displayName || email || '').slice(0, 2).toUpperCase();
 
   return (
     <main className={styles.wrap}>

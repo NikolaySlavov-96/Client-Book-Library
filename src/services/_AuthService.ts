@@ -17,6 +17,9 @@ import {
 } from '~/Types/services/AuthService';
 
 const PREFIX = '/auth';
+// Profile is a separate resource from identity/auth (its own backend router),
+// so it can move independently when auth migrates to a provider.
+const PROFILE_PREFIX = '/profile';
 
 const _AuthServiceFactory = () => {
     const register = async (data: IRegisterRequest): Promise<IRegisterResponse> => api.post(`${PREFIX}/register`, { inputData: data });
@@ -33,9 +36,9 @@ const _AuthServiceFactory = () => {
 
     const verifyMagicLink = async (token: string): Promise<IVerifyMagicResponse> => api.post(`${PREFIX}/magic-link/verify`, { inputData: { token } });
 
-    const getProfile = async (): Promise<IProfile> => api.get(`${PREFIX}/profile`);
+    const getProfile = async (): Promise<IProfile> => api.get(`${PROFILE_PREFIX}`);
 
-    const updateProfile = async (data: IUpdateProfileRequest): Promise<IProfile> => api.patch(`${PREFIX}/profile`, { inputData: data });
+    const updateProfile = async (data: IUpdateProfileRequest): Promise<IProfile> => api.patch(`${PROFILE_PREFIX}`, { inputData: data });
 
     return {
         register,

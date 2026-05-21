@@ -16,11 +16,12 @@ export interface ILoginRequest {
     connectId?: string;
 }
 
+// Identity claims returned by login. Profile data (year, goal, ...) is fetched
+// separately from the /profile resource.
 export interface IAuthUserInfo {
     _id: number;
     id: number;
     email: string;
-    year: number;
     isVerify: boolean;
     accessToken: string;
     role: 'user' | 'support';
@@ -69,12 +70,11 @@ export interface IVerifyMagicResponse {
     messageCode: string;
 }
 
+// Application-owned profile resource. Identity fields (email/role/isVerify)
+// come from the auth store, not from here.
 export interface IProfile {
-    id: number;
-    email: string;
+    userId: number;
     year: number;
-    role: 'user' | 'support';
-    isVerify: boolean;
     readingGoal: number;
     displayName: string | null;
     notifyByEmail: boolean;
